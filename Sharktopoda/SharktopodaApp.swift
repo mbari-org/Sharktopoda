@@ -1,17 +1,17 @@
 //
 //  SharktopodaApp.swift
-//  Sharktopoda
+//  Created for Sharktopoda on 9/12/22.
 //
-//  Created by Paul Rogers on 9/12/22.
+//  Apache License 2.0 — See project LICENSE file
 //
 
 import SwiftUI
 
 @main
 struct SharktopodaApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
+  var body: some Scene {
+    WindowGroup {
+      ContentView()
     }
+  }
 }

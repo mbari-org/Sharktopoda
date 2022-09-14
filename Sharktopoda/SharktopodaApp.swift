@@ -13,5 +13,9 @@ struct SharktopodaApp: App {
     WindowGroup {
       ContentView()
     }
+    
+    Settings {
+      PrefSettings()
+    }
   }
 }

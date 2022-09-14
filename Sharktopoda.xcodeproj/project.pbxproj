@@ -15,6 +15,7 @@
 		E2C22EA128CFDC28003CD976 /* SharktopodaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22EA028CFDC28003CD976 /* SharktopodaUITests.swift */; };
 		E2C22EA328CFDC28003CD976 /* SharktopodaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22EA228CFDC28003CD976 /* SharktopodaUITestsLaunchTests.swift */; };
 		E2C22EC528D144B0003CD976 /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22EC428D144B0003CD976 /* AppData.swift */; };
+		E2C22EC828D2666A003CD976 /* PrefSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22EC728D2666A003CD976 /* PrefSettings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		E2C22EA028CFDC28003CD976 /* SharktopodaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharktopodaUITests.swift; sourceTree = "<group>"; };
 		E2C22EA228CFDC28003CD976 /* SharktopodaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharktopodaUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		E2C22EC428D144B0003CD976 /* AppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppData.swift; sourceTree = "<group>"; };
+		E2C22EC728D2666A003CD976 /* PrefSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefSettings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,11 +100,12 @@
 			isa = PBXGroup;
 			children = (
 				E2C22EC328D14495003CD976 /* Model */,
+				E2C22EC628D2662A003CD976 /* View */,
 				E2C22E8428CFDC26003CD976 /* SharktopodaApp.swift */,
-				E2C22E8628CFDC26003CD976 /* ContentView.swift */,
 				E2C22E8828CFDC28003CD976 /* Assets.xcassets */,
 				E2C22E8D28CFDC28003CD976 /* Sharktopoda.entitlements */,
 				E2C22E8A28CFDC28003CD976 /* Preview Content */,
+				E2C22EC928D26E60003CD976 /* Util */,
 			);
 			path = Sharktopoda;
 			sourceTree = "<group>";
@@ -138,6 +141,22 @@
 				E2C22EC428D144B0003CD976 /* AppData.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		E2C22EC628D2662A003CD976 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E2C22E8628CFDC26003CD976 /* ContentView.swift */,
+				E2C22EC728D2666A003CD976 /* PrefSettings.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E2C22EC928D26E60003CD976 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Util;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -273,6 +292,7 @@
 				E2C22E8728CFDC26003CD976 /* ContentView.swift in Sources */,
 				E2C22E8528CFDC26003CD976 /* SharktopodaApp.swift in Sources */,
 				E2C22EC528D144B0003CD976 /* AppData.swift in Sources */,
+				E2C22EC828D2666A003CD976 /* PrefSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

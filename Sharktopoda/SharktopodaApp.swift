@@ -15,7 +15,7 @@ struct SharktopodaApp: App {
     }
     
     Settings {
-      PrefSettings()
+      PreferenceSettings()
     }
   }
 }

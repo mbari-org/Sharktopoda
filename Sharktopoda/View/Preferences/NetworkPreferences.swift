@@ -10,7 +10,7 @@ import SwiftUI
 struct NetworkPreferences: View {
   @AppStorage(PrefKeys.port) private var port: Int = 8095
   @AppStorage(PrefKeys.timeout) private var timeout: Int = 1000
-
+  
   var body: some View {
     VStack {
       Form {
@@ -35,6 +35,6 @@ struct NetworkPreferences: View {
 struct NetworkPreferences_Previews: PreviewProvider {
   static var previews: some View {
     NetworkPreferences()
-            .frame(width: 568)
+      .frame(width: 568)
   }
 }

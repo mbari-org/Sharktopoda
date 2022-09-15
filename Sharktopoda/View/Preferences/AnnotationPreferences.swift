@@ -8,13 +8,10 @@
 import SwiftUI
 
 struct AnnotationPreferences: View {
-  var bg: Color = Color.red
-  
   @AppStorage(PrefKeys.creationCursorSize) private var creationCursorSize: Int = 6
-//  @AppStorage(PrefKeys.creationCursorColor) private var creationCursorColor: Color = Color.red
+  @AppStorage(PrefKeys.creationCursorColor) private var creationCursorColorHex: String = "#ff0000"
   
   var body: some View {
-//    ColorPicker()
     VStack {
       HStack {
         Text("Cursor")
@@ -22,9 +19,24 @@ struct AnnotationPreferences: View {
         Text("Size: ")
         TextField("", value: $creationCursorSize, formatter: NumberFormatter())
           .frame(width: 50)
+          .multilineTextAlignment(.trailing)
         Text("Color: ")
-//        TextField("", value: $creationCursorColor, formatter: NumberFormatter())
-//          .frame(width: 50)
+        TextField("", text: $creationCursorColorHex)
+          .disableAutocorrection(true)
+          .frame(width: 75)
+          .multilineTextAlignment(.trailing)
+        
+        ColorPicker(
+          "",
+          selection: Binding(
+            get: { UserDefaults.standard.color(forKey: PrefKeys.creationCursorColor) },
+            set: { newValue in
+              UserDefaults.standard.setColor(newValue, forKey: PrefKeys.creationCursorColor)
+            }
+          )
+        )
+        .border(.white)
+        .frame(width: 16, height: 16)
       }
     }
   }

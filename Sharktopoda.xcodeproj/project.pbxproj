@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E2989AB728D3B261009D2D65 /* NetworkPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2989AB628D3B261009D2D65 /* NetworkPreferences.swift */; };
 		E2C22E8528CFDC26003CD976 /* SharktopodaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22E8428CFDC26003CD976 /* SharktopodaApp.swift */; };
 		E2C22E8728CFDC26003CD976 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22E8628CFDC26003CD976 /* ContentView.swift */; };
 		E2C22E8928CFDC28003CD976 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2C22E8828CFDC28003CD976 /* Assets.xcassets */; };
@@ -15,7 +16,7 @@
 		E2C22EA128CFDC28003CD976 /* SharktopodaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22EA028CFDC28003CD976 /* SharktopodaUITests.swift */; };
 		E2C22EA328CFDC28003CD976 /* SharktopodaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22EA228CFDC28003CD976 /* SharktopodaUITestsLaunchTests.swift */; };
 		E2C22EC528D144B0003CD976 /* SharktopodaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22EC428D144B0003CD976 /* SharktopodaData.swift */; };
-		E2C22EC828D2666A003CD976 /* PreferenceSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22EC728D2666A003CD976 /* PreferenceSettings.swift */; };
+		E2C22EC828D2666A003CD976 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22EC728D2666A003CD976 /* Preferences.swift */; };
 		E2C22ECF28D27C2D003CD976 /* UDPServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22ECE28D27C2D003CD976 /* UDPServer.swift */; };
 		E2C22ED328D2AAF3003CD976 /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22ED228D2AAF3003CD976 /* VideoView.swift */; };
 		E2C22ED528D36832003CD976 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22ED428D36832003CD976 /* Localization.swift */; };
@@ -41,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E2989AB628D3B261009D2D65 /* NetworkPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkPreferences.swift; sourceTree = "<group>"; };
 		E2C22E8128CFDC26003CD976 /* Sharktopoda.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sharktopoda.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2C22E8428CFDC26003CD976 /* SharktopodaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharktopodaApp.swift; sourceTree = "<group>"; };
 		E2C22E8628CFDC26003CD976 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -53,7 +55,7 @@
 		E2C22EA028CFDC28003CD976 /* SharktopodaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharktopodaUITests.swift; sourceTree = "<group>"; };
 		E2C22EA228CFDC28003CD976 /* SharktopodaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharktopodaUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		E2C22EC428D144B0003CD976 /* SharktopodaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharktopodaData.swift; sourceTree = "<group>"; };
-		E2C22EC728D2666A003CD976 /* PreferenceSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceSettings.swift; sourceTree = "<group>"; };
+		E2C22EC728D2666A003CD976 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		E2C22ECE28D27C2D003CD976 /* UDPServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDPServer.swift; sourceTree = "<group>"; };
 		E2C22ED228D2AAF3003CD976 /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
 		E2C22ED428D36832003CD976 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
@@ -86,6 +88,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E2989AB528D3B22E009D2D65 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				E2C22EC728D2666A003CD976 /* Preferences.swift */,
+				E2989AB628D3B261009D2D65 /* NetworkPreferences.swift */,
+			);
+			path = Preferences;
+			sourceTree = "<group>";
+		};
 		E2C22E7828CFDC26003CD976 = {
 			isa = PBXGroup;
 			children = (
@@ -159,9 +170,9 @@
 		E2C22EC628D2662A003CD976 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				E2989AB528D3B22E009D2D65 /* Preferences */,
 				E2C22ED828D38686003CD976 /* Main */,
 				E2C22E8628CFDC26003CD976 /* ContentView.swift */,
-				E2C22EC728D2666A003CD976 /* PreferenceSettings.swift */,
 				E2C22ED228D2AAF3003CD976 /* VideoView.swift */,
 			);
 			path = View;
@@ -325,10 +336,11 @@
 				E2C22ECF28D27C2D003CD976 /* UDPServer.swift in Sources */,
 				E2C22ED528D36832003CD976 /* Localization.swift in Sources */,
 				E2C22ED728D36888003CD976 /* VideoAsset.swift in Sources */,
+				E2989AB728D3B261009D2D65 /* NetworkPreferences.swift in Sources */,
 				E2C22E8728CFDC26003CD976 /* ContentView.swift in Sources */,
 				E2C22E8528CFDC26003CD976 /* SharktopodaApp.swift in Sources */,
 				E2C22EC528D144B0003CD976 /* SharktopodaData.swift in Sources */,
-				E2C22EC828D2666A003CD976 /* PreferenceSettings.swift in Sources */,
+				E2C22EC828D2666A003CD976 /* Preferences.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

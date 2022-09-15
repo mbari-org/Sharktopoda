@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct Main: View {
+  private static var ratio: CGFloat = 1.75
   private static var height: CGFloat = 425
-  private static var width = CGFloat(Main.height * 1.618)
+  private static var width = CGFloat(Main.height * Main.ratio)
 
   var port = "'CxInc'"
   
@@ -20,7 +21,6 @@ struct Main: View {
         Image("Sharktopoda")
           .resizable()
           .scaledToFit()
-          .aspectRatio(contentMode: .fit)
         Text("Sharktopoda")
           .font(.largeTitle)
         Text(appVersion)

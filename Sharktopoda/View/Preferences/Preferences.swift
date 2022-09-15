@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct Preferences: View {
-  
+  @State private var displayAnnotations = true
   
   var body: some View {
     HStack {
@@ -30,11 +30,17 @@ struct Preferences: View {
       
       Divider()
       
-      NetworkPreferences()
-        .frame(width: 568)
+      if displayAnnotations {
+        AnnotationPreferences()
+          .frame(width: 568)
+      } else {
+        NetworkPreferences()
+          .frame(width: 568)
+      }
+      
     }
     .navigationTitle("Preferences")
-
+    
   }
 }
 

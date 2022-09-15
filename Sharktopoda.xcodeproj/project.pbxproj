@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E2989AB728D3B261009D2D65 /* NetworkPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2989AB628D3B261009D2D65 /* NetworkPreferences.swift */; };
+		E2989AB928D3B87E009D2D65 /* AnnotationPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2989AB828D3B87E009D2D65 /* AnnotationPreferences.swift */; };
 		E2C22E8528CFDC26003CD976 /* SharktopodaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22E8428CFDC26003CD976 /* SharktopodaApp.swift */; };
 		E2C22E8728CFDC26003CD976 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22E8628CFDC26003CD976 /* ContentView.swift */; };
 		E2C22E8928CFDC28003CD976 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2C22E8828CFDC28003CD976 /* Assets.xcassets */; };
@@ -43,6 +44,7 @@
 
 /* Begin PBXFileReference section */
 		E2989AB628D3B261009D2D65 /* NetworkPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkPreferences.swift; sourceTree = "<group>"; };
+		E2989AB828D3B87E009D2D65 /* AnnotationPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationPreferences.swift; sourceTree = "<group>"; };
 		E2C22E8128CFDC26003CD976 /* Sharktopoda.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sharktopoda.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2C22E8428CFDC26003CD976 /* SharktopodaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharktopodaApp.swift; sourceTree = "<group>"; };
 		E2C22E8628CFDC26003CD976 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				E2C22EC728D2666A003CD976 /* Preferences.swift */,
+				E2989AB828D3B87E009D2D65 /* AnnotationPreferences.swift */,
 				E2989AB628D3B261009D2D65 /* NetworkPreferences.swift */,
 			);
 			path = Preferences;
@@ -340,6 +343,7 @@
 				E2C22E8728CFDC26003CD976 /* ContentView.swift in Sources */,
 				E2C22E8528CFDC26003CD976 /* SharktopodaApp.swift in Sources */,
 				E2C22EC528D144B0003CD976 /* SharktopodaData.swift in Sources */,
+				E2989AB928D3B87E009D2D65 /* AnnotationPreferences.swift in Sources */,
 				E2C22EC828D2666A003CD976 /* Preferences.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

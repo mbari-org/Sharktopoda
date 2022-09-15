@@ -14,6 +14,7 @@ struct Preferences: View {
     HStack {
       VStack(alignment: .leading) {
         VStack(alignment: .leading, spacing: 20) {
+
           Text("Annotations")
           Text("Network")
         }

@@ -8,13 +8,30 @@
 import SwiftUI
 
 struct AnnotationPreferences: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+  var bg: Color = Color.red
+  
+  @AppStorage(PrefKeys.creationCursorSize) private var creationCursorSize: Int = 6
+//  @AppStorage(PrefKeys.creationCursorColor) private var creationCursorColor: Color = Color.red
+  
+  var body: some View {
+//    ColorPicker()
+    VStack {
+      HStack {
+        Text("Cursor")
+          .font(.title3)
+        Text("Size: ")
+        TextField("", value: $creationCursorSize, formatter: NumberFormatter())
+          .frame(width: 50)
+        Text("Color: ")
+//        TextField("", value: $creationCursorColor, formatter: NumberFormatter())
+//          .frame(width: 50)
+      }
     }
+  }
 }
 
 struct AnnotationPreferences_Previews: PreviewProvider {
-    static var previews: some View {
-        AnnotationPreferences()
-    }
+  static var previews: some View {
+    AnnotationPreferences()
+  }
 }

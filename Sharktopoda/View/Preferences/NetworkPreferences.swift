@@ -8,11 +8,8 @@
 import SwiftUI
 
 struct NetworkPreferences: View {
-  private static var portKey = "Sharktopoda.port"
-  private static var timeoutKey = "Sharktopoda.timout"
-  
-  @AppStorage(NetworkPreferences.portKey, store: .standard) private var port: Int = 8095
-  @AppStorage(NetworkPreferences.timeoutKey, store: .standard) private var timeout: Int = 1000
+  @AppStorage(PrefKeys.port) private var port: Int = 8095
+  @AppStorage(PrefKeys.timeout) private var timeout: Int = 1000
 
   var body: some View {
     VStack {

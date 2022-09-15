@@ -9,13 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
   var body: some View {
-    VStack {
-      Text("Video")
-        .frame(minWidth: 700, minHeight: 300)
-
-      Text("Hideable Control")
-    }
-    .padding()
+    Main()
   }
 }
 

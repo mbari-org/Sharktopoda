@@ -20,6 +20,7 @@
 		E2C22ED328D2AAF3003CD976 /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22ED228D2AAF3003CD976 /* VideoView.swift */; };
 		E2C22ED528D36832003CD976 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22ED428D36832003CD976 /* Localization.swift */; };
 		E2C22ED728D36888003CD976 /* VideoAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22ED628D36888003CD976 /* VideoAsset.swift */; };
+		E2C22EDA28D386AE003CD976 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22ED928D386AE003CD976 /* Main.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		E2C22ED228D2AAF3003CD976 /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
 		E2C22ED428D36832003CD976 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		E2C22ED628D36888003CD976 /* VideoAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAsset.swift; sourceTree = "<group>"; };
+		E2C22ED928D386AE003CD976 /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +159,7 @@
 		E2C22EC628D2662A003CD976 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				E2C22ED828D38686003CD976 /* Main */,
 				E2C22E8628CFDC26003CD976 /* ContentView.swift */,
 				E2C22EC728D2666A003CD976 /* PreferenceSettings.swift */,
 				E2C22ED228D2AAF3003CD976 /* VideoView.swift */,
@@ -177,6 +180,14 @@
 				E2C22ECE28D27C2D003CD976 /* UDPServer.swift */,
 			);
 			path = UDP;
+			sourceTree = "<group>";
+		};
+		E2C22ED828D38686003CD976 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				E2C22ED928D386AE003CD976 /* Main.swift */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -309,6 +320,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2C22EDA28D386AE003CD976 /* Main.swift in Sources */,
 				E2C22ED328D2AAF3003CD976 /* VideoView.swift in Sources */,
 				E2C22ECF28D27C2D003CD976 /* UDPServer.swift in Sources */,
 				E2C22ED528D36832003CD976 /* Localization.swift in Sources */,

@@ -8,19 +8,56 @@
 import SwiftUI
 
 struct Main: View {
-  var body: some View {
+  private static var height: CGFloat = 425
+  private static var width = CGFloat(Main.height * 1.618)
 
+  var port = "'CxInc'"
+  
+  var body: some View {
+    let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
     HStack {
-      Image("AppIcon")
-      
-      VStack {
-        Text("Video")
-        
-        Text("Hideable Control")
+      VStack(spacing: 10) {
+        Image("Sharktopoda")
+          .resizable()
+          .scaledToFit()
+          .aspectRatio(contentMode: .fit)
+        Text("Sharktopoda")
+          .font(.largeTitle)
+        Text(appVersion)
+          .font(.title3)
       }
-      .padding()
+      .frame(width: 256, height: 256)
+      .padding(.bottom, 80)
+      
+      Divider()
+      
+      VStack(alignment: .leading, spacing: 20) {
+        HStack {
+          Text("Open ...")
+            .font(.title2)
+          Spacer()
+          Text("⌘ o")
+            .padding(.trailing, 20)
+            .font(.title2)
+        }
+        HStack {
+          Text("Open URL ...")
+            .font(.title2)
+          Spacer()
+          Text("⇧ ⌘ o")
+            .padding(.trailing, 20)
+            .font(.title2)
+        }
+        
+        Spacer()
+        
+        Text("Listening on port \(port)")
+          .font(.title3)
+      }
+      .padding(20)
+      .frame(maxWidth: .infinity)
     }
-    .frame(minWidth: 700, minHeight: 300)
+    .frame(width: Main.width, height: Main.height)
   }
 }
 

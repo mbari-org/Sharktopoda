@@ -13,9 +13,10 @@ struct Main: View {
   private static var width = CGFloat(Main.height * Main.ratio)
   
   @AppStorage(PrefKeys.port) private var port: Int = 8800
-
+  
+  let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
+  
   var body: some View {
-    let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
     HStack {
       VStack(spacing: 10) {
         Image("Sharktopoda")
@@ -36,7 +37,7 @@ struct Main: View {
           Text("Open ...")
             .font(.title2)
           Spacer()
-          Text("⌘ o")
+          Text("⌘ O")
             .padding(.trailing, 20)
             .font(.title2)
         }
@@ -44,7 +45,7 @@ struct Main: View {
           Text("Open URL ...")
             .font(.title2)
           Spacer()
-          Text("⇧ ⌘ o")
+          Text("⇧ ⌘ O")
             .padding(.trailing, 20)
             .font(.title2)
         }
@@ -55,6 +56,7 @@ struct Main: View {
           .font(.title3)
       }
       .padding(20)
+      .padding(.top, 20)
       .frame(maxWidth: .infinity)
     }
     .frame(width: Main.width, height: Main.height)

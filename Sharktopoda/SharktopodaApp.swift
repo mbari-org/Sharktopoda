@@ -9,6 +9,9 @@ import SwiftUI
 
 @main
 struct SharktopodaApp: App {
+  private var port: Int = UserDefaults.standard.integer(forKey: PrefKeys.port)
+  private var udpServer: UDPServer
+  
   var body: some Scene {
     WindowGroup {
       ContentView()
@@ -17,5 +20,9 @@ struct SharktopodaApp: App {
     Settings {
       Preferences()
     }
+  }
+  
+  init() {
+    self.udpServer = UDPServer(port: port)!
   }
 }

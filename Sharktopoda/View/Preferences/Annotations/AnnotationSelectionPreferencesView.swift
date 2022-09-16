@@ -19,7 +19,7 @@ struct AnnotationSelectionPreferencesView: View {
     
     HStack {
       Text("Annotation Selection")
-        .font(.title)
+        .font(.title2)
       Spacer()
     }
     .padding(5)

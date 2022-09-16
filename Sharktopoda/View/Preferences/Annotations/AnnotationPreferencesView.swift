@@ -15,14 +15,12 @@ struct AnnotationPreferencesView: View {
   private var showAnnotations: Bool = true
   
   var body: some View {
-    
     VStack {
       HStack {
-        Text("Configure Video Annotation Display")
+        Text("Configure Annotation Display")
           .font(.title)
         Spacer()
       }
-      .padding(.top, 20)
       .padding(.leading, 10)
       
       HStack {
@@ -42,8 +40,9 @@ struct AnnotationPreferencesView: View {
       AnnotationCaptionPreferencesView()
       
       Spacer()
-      
     }
+    .padding(.top, 20)
+
   }
 }
 

@@ -25,7 +25,7 @@ struct AnnotationCreationPreferencesView: View {
 
     HStack {
       Text("Annotation Creation")
-        .font(.title)
+        .font(.title2)
       Spacer()
     }
     .padding(5)

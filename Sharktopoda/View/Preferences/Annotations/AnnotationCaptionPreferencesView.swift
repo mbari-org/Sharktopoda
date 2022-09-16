@@ -22,7 +22,7 @@ struct AnnotationCaptionPreferencesView: View {
     
     HStack {
       Text("Caption Display")
-        .font(.title)
+        .font(.title2)
       Spacer()
     }
     .padding(5)

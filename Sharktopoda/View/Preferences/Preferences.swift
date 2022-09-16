@@ -29,6 +29,7 @@ struct Preferences: View {
               Text("Annotations")
             }
             .buttonStyle(.borderless)
+            .padding(.leading, 8)
           }
           
           if (displayAnnotations) {
@@ -38,6 +39,7 @@ struct Preferences: View {
               Text("Network")
             }
             .buttonStyle(.borderless)
+            .padding(.leading, 8)
           } else {
             Button {
               displayAnnotations = false
@@ -46,7 +48,6 @@ struct Preferences: View {
             }
             .buttonStyle(.bordered)
           }
-
         }
         .padding(.top, 20)
         .padding(.leading, 10)

@@ -26,4 +26,15 @@ struct PrefKeys {
   static var creationBorderSize = "\(PrefKeys.creationBorder).size"
   static var creationBorderColor = "\(PrefKeys.creationBorder).color"
 
+  
+  private static var display = "\(PrefKeys.annotation).display"
+  
+  private static var displayCursor = "\(PrefKeys.display).cursor"
+  static var displayCursorSize = "\(PrefKeys.displayCursor).size"
+  static var displayCursorColor = "\(PrefKeys.displayCursor).color"
+  
+  private static var displayBorder = "\(PrefKeys.display).border"
+  static var displayBorderSize = "\(PrefKeys.displayBorder).size"
+  static var displayBorderColor = "\(PrefKeys.displayBorder).color"
+
 }

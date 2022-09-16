@@ -8,36 +8,67 @@
 import SwiftUI
 
 struct AnnotationPreferences: View {
-  @AppStorage(PrefKeys.creationCursorSize) private var creationCursorSize: Int = 6
-  @AppStorage(PrefKeys.creationCursorColor) private var creationCursorColorHex: String = "#ff0000"
+  private static var defaultSize = 6
+  private static var defaultColorHex = "#00ff00"
   
+  // Creation
+  @AppStorage(PrefKeys.creationCursorSize)
+  private var creationCursorSize: Int = AnnotationPreferences.defaultSize
+  
+  @AppStorage(PrefKeys.creationCursorColor)
+  private var creationCursorColorHex: String = AnnotationPreferences.defaultColorHex
+
+  @AppStorage(PrefKeys.creationBorderSize)
+  private var creationBorderSize: Int = AnnotationPreferences.defaultSize
+
+  @AppStorage(PrefKeys.creationBorderColor)
+  private var creationBorderColorHex: String = AnnotationPreferences.defaultColorHex
+
+  // Display
+  @AppStorage(PrefKeys.displayCursorSize)
+  private var displayCursorSize: Int = AnnotationPreferences.defaultSize
+  
+  @AppStorage(PrefKeys.displayCursorColor)
+  private var displayCursorColorHex: String = AnnotationPreferences.defaultColorHex
+  
+  @AppStorage(PrefKeys.displayBorderSize)
+  private var displayBorderSize: Int = AnnotationPreferences.defaultSize
+  
+  @AppStorage(PrefKeys.displayBorderColor)
+  private var displayBorderColorHex: String = AnnotationPreferences.defaultColorHex
+
   var body: some View {
     VStack {
-      HStack {
-        Text("Cursor")
-          .font(.title3)
-        Text("Size: ")
-        TextField("", value: $creationCursorSize, formatter: NumberFormatter())
-          .frame(width: 50)
-          .multilineTextAlignment(.trailing)
-        Text("Color: ")
-        TextField("", text: $creationCursorColorHex)
-          .disableAutocorrection(true)
-          .frame(width: 75)
-          .multilineTextAlignment(.trailing)
-        
-        ColorPicker(
-          "",
-          selection: Binding(
-            get: { UserDefaults.standard.color(forKey: PrefKeys.creationCursorColor) },
-            set: { newValue in
-              UserDefaults.standard.setColor(newValue, forKey: PrefKeys.creationCursorColor)
-            }
-          )
-        )
-        .border(.white)
-        .frame(width: 16, height: 16)
-      }
+      Text("Annotation Creation")
+        .font(.title)
+      SizeColorRow(
+        name: "Cursor",
+        size: $creationCursorSize,
+        hexColor: $creationCursorColorHex,
+        prefKey: PrefKeys.creationCursorColor
+      )
+      SizeColorRow(
+        name: "Border",
+        size: $creationBorderSize,
+        hexColor: $creationBorderColorHex,
+        prefKey: PrefKeys.creationBorderColor
+      )
+      Divider()
+      Text("Annotation Display")
+        .font(.title)
+      SizeColorRow(
+        name: "Cursor",
+        size: $displayCursorSize,
+        hexColor: $displayCursorColorHex,
+        prefKey: PrefKeys.displayCursorColor
+      )
+      SizeColorRow(
+        name: "Border",
+        size: $displayBorderSize,
+        hexColor: $displayBorderColorHex,
+        prefKey: PrefKeys.displayBorderColor
+      )
+
     }
   }
 }

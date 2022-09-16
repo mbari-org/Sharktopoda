@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct SizeColorRow: View {
-  private var name: String
+  private var label: String
   @Binding var size: Int
   private var colorHex: String
   private var colorPrefKey: String
   
   var body: some View {
     HStack {
-      Text(name)
+      Text(label)
         .font(.title3)
 
       Text("Size: ")
@@ -45,9 +45,9 @@ struct SizeColorRow: View {
     }
   }
   
-  init(name: String, size: Binding<Int>, colorHex: String, prefKey: String) {
+  init(label: String, size: Binding<Int>, colorHex: String, prefKey: String) {
     print("SizeColorRow \(prefKey): colorHex=\(colorHex)")
-    self.name = name
+    self.label = label
     self._size = size
     self.colorHex = colorHex
     self.colorPrefKey = prefKey

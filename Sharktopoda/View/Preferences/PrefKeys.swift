@@ -15,7 +15,9 @@ struct PrefKeys {
   static var timeout = "\(PrefKeys.network).timeout"
     
   private static var annotation = "\(PrefKeys.sharktopoda).annotation"
+  private static var caption = "\(PrefKeys.sharktopoda).caption"
   
+  // Annotation Creation
   private static var creation = "\(PrefKeys.annotation).creation"
 
   private static var creationCursor = "\(PrefKeys.creation).cursor"
@@ -26,15 +28,24 @@ struct PrefKeys {
   static var creationBorderSize = "\(PrefKeys.creationBorder).size"
   static var creationBorderColor = "\(PrefKeys.creationBorder).color"
 
-  
+  // Annotation Display
   private static var display = "\(PrefKeys.annotation).display"
-  
-  private static var displayCursor = "\(PrefKeys.display).cursor"
-  static var displayCursorSize = "\(PrefKeys.displayCursor).size"
-  static var displayCursorColor = "\(PrefKeys.displayCursor).color"
-  
+
   private static var displayBorder = "\(PrefKeys.display).border"
   static var displayBorderSize = "\(PrefKeys.displayBorder).size"
   static var displayBorderColor = "\(PrefKeys.displayBorder).color"
 
+  // Annotation Selection
+  private static var selection = "\(PrefKeys.annotation).selection"
+  
+  private static var selectionBorder = "\(PrefKeys.selection).border"
+  static var selectionBorderSize = "\(PrefKeys.selectionBorder).size"
+  static var selectionBorderColor = "\(PrefKeys.selectionBorder).color"
+
+  // Caption Display
+  private static var captionDisplay = "\(PrefKeys.caption).display"
+
+  private static var captionFont = "\(PrefKeys.captionDisplay).font"
+  static var captionFontSize = "\(PrefKeys.captionFont).size"
+  static var captionFontColor = "\(PrefKeys.captionFont).color"
 }

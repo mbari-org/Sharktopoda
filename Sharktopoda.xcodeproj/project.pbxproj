@@ -7,11 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E2989AB728D3B261009D2D65 /* NetworkPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2989AB628D3B261009D2D65 /* NetworkPreferences.swift */; };
-		E2989AB928D3B87E009D2D65 /* AnnotationPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2989AB828D3B87E009D2D65 /* AnnotationPreferences.swift */; };
+		E295627528D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295627428D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift */; };
+		E295627728D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295627628D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift */; };
+		E295627928D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295627828D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift */; };
+		E2989AB728D3B261009D2D65 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2989AB628D3B261009D2D65 /* Network.swift */; };
+		E2989AB928D3B87E009D2D65 /* AnnotationPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2989AB828D3B87E009D2D65 /* AnnotationPreferencesView.swift */; };
 		E2989ABD28D3C7F7009D2D65 /* PrefKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2989ABC28D3C7F7009D2D65 /* PrefKeys.swift */; };
 		E2989ABF28D3D083009D2D65 /* ColorPref.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2989ABE28D3D083009D2D65 /* ColorPref.swift */; };
 		E2989AC128D4BAD0009D2D65 /* SizeColorRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2989AC028D4BAD0009D2D65 /* SizeColorRow.swift */; };
+		E2989AC328D4F6EE009D2D65 /* AnnotationCreationPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2989AC228D4F6EE009D2D65 /* AnnotationCreationPreferencesView.swift */; };
 		E2C22E8528CFDC26003CD976 /* SharktopodaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22E8428CFDC26003CD976 /* SharktopodaApp.swift */; };
 		E2C22E8728CFDC26003CD976 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22E8628CFDC26003CD976 /* ContentView.swift */; };
 		E2C22E8928CFDC28003CD976 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2C22E8828CFDC28003CD976 /* Assets.xcassets */; };
@@ -46,11 +50,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		E2989AB628D3B261009D2D65 /* NetworkPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkPreferences.swift; sourceTree = "<group>"; };
-		E2989AB828D3B87E009D2D65 /* AnnotationPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationPreferences.swift; sourceTree = "<group>"; };
+		E295627428D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationDisplayPreferencesView.swift; sourceTree = "<group>"; };
+		E295627628D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationSelectionPreferencesView.swift; sourceTree = "<group>"; };
+		E295627828D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationCaptionPreferencesView.swift; sourceTree = "<group>"; };
+		E2989AB628D3B261009D2D65 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		E2989AB828D3B87E009D2D65 /* AnnotationPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationPreferencesView.swift; sourceTree = "<group>"; };
 		E2989ABC28D3C7F7009D2D65 /* PrefKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefKeys.swift; sourceTree = "<group>"; };
 		E2989ABE28D3D083009D2D65 /* ColorPref.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPref.swift; sourceTree = "<group>"; };
 		E2989AC028D4BAD0009D2D65 /* SizeColorRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeColorRow.swift; sourceTree = "<group>"; };
+		E2989AC228D4F6EE009D2D65 /* AnnotationCreationPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationCreationPreferencesView.swift; sourceTree = "<group>"; };
 		E2C22E8128CFDC26003CD976 /* Sharktopoda.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sharktopoda.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2C22E8428CFDC26003CD976 /* SharktopodaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharktopodaApp.swift; sourceTree = "<group>"; };
 		E2C22E8628CFDC26003CD976 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -96,15 +104,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E295627328D4FAC800E88ED1 /* Annotations */ = {
+			isa = PBXGroup;
+			children = (
+				E2989AB828D3B87E009D2D65 /* AnnotationPreferencesView.swift */,
+				E2989AC228D4F6EE009D2D65 /* AnnotationCreationPreferencesView.swift */,
+				E295627428D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift */,
+				E295627628D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift */,
+				E295627828D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift */,
+			);
+			path = Annotations;
+			sourceTree = "<group>";
+		};
 		E2989AB528D3B22E009D2D65 /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
 				E2C22EC728D2666A003CD976 /* Preferences.swift */,
-				E2989AB828D3B87E009D2D65 /* AnnotationPreferences.swift */,
-				E2989AB628D3B261009D2D65 /* NetworkPreferences.swift */,
 				E2989ABC28D3C7F7009D2D65 /* PrefKeys.swift */,
 				E2989ABE28D3D083009D2D65 /* ColorPref.swift */,
 				E2989AC028D4BAD0009D2D65 /* SizeColorRow.swift */,
+				E295627328D4FAC800E88ED1 /* Annotations */,
+				E2989AB628D3B261009D2D65 /* Network.swift */,
 			);
 			path = Preferences;
 			sourceTree = "<group>";
@@ -344,19 +364,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2C22EDA28D386AE003CD976 /* Main.swift in Sources */,
+				E295627928D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift in Sources */,
 				E2C22ED328D2AAF3003CD976 /* VideoView.swift in Sources */,
 				E2989ABF28D3D083009D2D65 /* ColorPref.swift in Sources */,
 				E2C22ECF28D27C2D003CD976 /* UDPServer.swift in Sources */,
+				E2989AC328D4F6EE009D2D65 /* AnnotationCreationPreferencesView.swift in Sources */,
 				E2C22ED528D36832003CD976 /* Localization.swift in Sources */,
 				E2C22ED728D36888003CD976 /* VideoAsset.swift in Sources */,
-				E2989AB728D3B261009D2D65 /* NetworkPreferences.swift in Sources */,
+				E2989AB728D3B261009D2D65 /* Network.swift in Sources */,
 				E2989ABD28D3C7F7009D2D65 /* PrefKeys.swift in Sources */,
 				E2C22E8728CFDC26003CD976 /* ContentView.swift in Sources */,
 				E2C22E8528CFDC26003CD976 /* SharktopodaApp.swift in Sources */,
 				E2C22EC528D144B0003CD976 /* SharktopodaData.swift in Sources */,
 				E2989AC128D4BAD0009D2D65 /* SizeColorRow.swift in Sources */,
-				E2989AB928D3B87E009D2D65 /* AnnotationPreferences.swift in Sources */,
+				E295627528D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift in Sources */,
+				E2989AB928D3B87E009D2D65 /* AnnotationPreferencesView.swift in Sources */,
 				E2C22EC828D2666A003CD976 /* Preferences.swift in Sources */,
+				E295627728D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

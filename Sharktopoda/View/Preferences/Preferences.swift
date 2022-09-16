@@ -32,10 +32,10 @@ struct Preferences: View {
       Divider()
       
       if displayAnnotations {
-        AnnotationPreferences()
+        AnnotationPreferencesView()
           .frame(width: 568)
       } else {
-        NetworkPreferences()
+        Network()
           .frame(width: 568)
       }
       

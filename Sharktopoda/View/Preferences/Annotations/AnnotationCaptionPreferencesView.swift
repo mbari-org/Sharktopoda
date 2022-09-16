@@ -16,8 +16,14 @@ struct AnnotationCaptionPreferencesView: View {
   
   var body: some View {
     Divider()
-    Text("Caption Display")
-      .font(.title)
+    
+    HStack {
+      Text("Caption Display")
+        .font(.title)
+      Spacer()
+    }
+    .padding(5)
+    
     SizeColorRow(
       label: "Font",
       size: $captionFontSize,

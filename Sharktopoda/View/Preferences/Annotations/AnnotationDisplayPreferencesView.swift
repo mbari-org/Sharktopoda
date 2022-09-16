@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-
-
 struct AnnotationDisplayPreferencesView: View {
   @AppStorage(PrefKeys.displayBorderSize)
   private var displayBorderSize: Int = AnnotationPreferencesView.defaultSize
@@ -18,14 +16,21 @@ struct AnnotationDisplayPreferencesView: View {
 
     var body: some View {
       Divider()
-      Text("Annotation Display")
-        .font(.title)
+      
+      HStack {
+        Text("Annotation Display")
+          .font(.title)
+        Spacer()
+      }
+      .padding(5)
+      
       SizeColorRow(
         label: "Border",
         size: $displayBorderSize,
         colorHex: displayBorderColorHex,
         prefKey: PrefKeys.displayBorderColor
       )
+      
 
     }
 }

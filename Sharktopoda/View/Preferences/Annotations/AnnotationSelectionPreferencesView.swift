@@ -16,8 +16,14 @@ struct AnnotationSelectionPreferencesView: View {
   
   var body: some View {
     Divider()
-    Text("Annotation Selection")
-      .font(.title)
+    
+    HStack {
+      Text("Annotation Selection")
+        .font(.title)
+      Spacer()
+    }
+    .padding(5)
+    
     SizeColorRow(
       label: "Border",
       size: $selectionBorderSize,

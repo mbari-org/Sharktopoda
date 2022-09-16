@@ -15,8 +15,13 @@ struct SizeColorRow: View {
   
   var body: some View {
     HStack {
-      Text(label)
-        .font(.title3)
+      HStack {
+        Spacer()
+        Text(label)
+          .font(.title3)
+      }
+      .frame(width: 60)
+      .padding(.trailing, 10)
 
       Text("Size: ")
       TextField("", value: $size, formatter: NumberFormatter())
@@ -46,7 +51,6 @@ struct SizeColorRow: View {
   }
   
   init(label: String, size: Binding<Int>, colorHex: String, prefKey: String) {
-    print("SizeColorRow \(prefKey): colorHex=\(colorHex)")
     self.label = label
     self._size = size
     self.colorHex = colorHex

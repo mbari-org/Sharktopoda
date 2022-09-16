@@ -22,14 +22,21 @@ struct AnnotationCreationPreferencesView: View {
   
   var body: some View {
     Divider()
-    Text("Annotation Creation")
-      .font(.title)
+
+    HStack {
+      Text("Annotation Creation")
+        .font(.title)
+      Spacer()
+    }
+    .padding(5)
+    
     SizeColorRow(
       label: "Cursor",
       size: $creationCursorSize,
       colorHex: creationCursorColorHex,
       prefKey: PrefKeys.creationCursorColor
     )
+
     SizeColorRow(
       label: "Border",
       size: $creationBorderSize,

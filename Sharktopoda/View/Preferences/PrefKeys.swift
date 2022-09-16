@@ -16,6 +16,8 @@ struct PrefKeys {
     
   private static var annotation = "\(PrefKeys.sharktopoda).annotation"
   private static var caption = "\(PrefKeys.sharktopoda).caption"
+
+  static var showAnnotations = "\(PrefKeys.annotation).show"
   
   // Annotation Creation
   private static var creation = "\(PrefKeys.annotation).creation"

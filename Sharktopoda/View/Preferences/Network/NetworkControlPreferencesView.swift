@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NetworkControlPreferencesView: View {
-  @AppStorage(PrefKeys.port) private var port: Int = 8095
+  @AppStorage(PrefKeys.port) private var port: Int = 8800
   @AppStorage(PrefKeys.timeout) private var timeout: Int = 1000
   
   var body: some View {

@@ -13,6 +13,8 @@ struct SizeColorRow: View {
   private var colorHex: String
   private var colorPrefKey: String
   
+  private var hexFont = Font.system(size: 12).monospaced()
+  
   var body: some View {
     HStack {
       HStack {
@@ -41,6 +43,8 @@ struct SizeColorRow: View {
 
       Text(colorHex)
         .padding(.leading, 5)
+        .font(hexFont)
+      
       
       //      TextField("", text: $colorHex)
       //        .disableAutocorrection(true)

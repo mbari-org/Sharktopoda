@@ -38,7 +38,7 @@ struct AnnotationCaptionPreferencesView: View {
       Text("Default Caption")
         .font(.title3)
         .frame(width: 120)
-        .padding(.leading, 32)
+        .padding(.leading, 23)
       TextField("", text: $captionDefault)
         .padding(.leading, 45)
       Spacer()

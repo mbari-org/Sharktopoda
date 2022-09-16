@@ -36,7 +36,7 @@ struct Preferences: View {
       if displayAnnotations {
         AnnotationPreferencesView()
       } else {
-        Network()
+        NetworkPreferencesView()
       }
       
     }

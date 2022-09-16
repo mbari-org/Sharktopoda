@@ -1,5 +1,5 @@
 //
-//  Network.swift
+//  NetworkPreferencesView.swift
 //  Created for Sharktopoda on 9/15/22.
 //
 //  Apache License 2.0 — See project LICENSE file
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Network: View {
+struct NetworkPreferencesView: View {
   @AppStorage(PrefKeys.port) private var port: Int = 8095
   @AppStorage(PrefKeys.timeout) private var timeout: Int = 1000
   
@@ -34,7 +34,7 @@ struct Network: View {
 
 struct NetworkPreferences_Previews: PreviewProvider {
   static var previews: some View {
-    Network()
+    NetworkPreferencesView()
       .frame(width: 568)
   }
 }

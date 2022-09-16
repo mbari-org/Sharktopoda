@@ -14,6 +14,9 @@ struct AnnotationCaptionPreferencesView: View {
   @AppStorage(PrefKeys.captionFontColor)
   private var captionFontColorHex: String = AnnotationPreferencesView.defaultColorHex
   
+  @AppStorage(PrefKeys.captionDefault)
+  private var captionDefault: String = "Object"
+  
   var body: some View {
     Divider()
     
@@ -30,6 +33,22 @@ struct AnnotationCaptionPreferencesView: View {
       colorHex: captionFontColorHex,
       prefKey: PrefKeys.captionFontColor
     )
+    
+    HStack {
+      Spacer()
+      Text("Default Caption")
+        .font(.title3)
+        .frame(width: 200)
+
+    TextField("", text: $captionDefault)
+        .padding(.trailing, 20)
+        .padding(.leading, 7)
+    }
+    .padding(.trailing, 10)
+
+    
+    Spacer()
+    
   }
 }
 

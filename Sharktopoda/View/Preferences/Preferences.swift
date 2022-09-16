@@ -14,11 +14,39 @@ struct Preferences: View {
     HStack {
       VStack(alignment: .leading) {
         VStack(alignment: .leading, spacing: 20) {
+          // CxNote ternary selection of buttonStyle did not work
+          if (displayAnnotations) {
+            Button {
+              displayAnnotations = true
+            } label: {
+              Text("Annotations")
+            }
+            .buttonStyle(.bordered)
+          } else {
+            Button {
+              displayAnnotations = true
+            } label: {
+              Text("Annotations")
+            }
+            .buttonStyle(.borderless)
+          }
+          
+          if (displayAnnotations) {
+            Button {
+              displayAnnotations = false
+            } label: {
+              Text("Network")
+            }
+            .buttonStyle(.borderless)
+          } else {
+            Button {
+              displayAnnotations = false
+            } label: {
+              Text("Network")
+            }
+            .buttonStyle(.bordered)
+          }
 
-          Text("Annotations")
-            .font(.title2)
-          Text("Network")
-                      .font(.title2)
         }
         .padding(.top, 20)
         .padding(.leading, 10)
@@ -39,9 +67,10 @@ struct Preferences: View {
         NetworkPreferencesView()
       }
       
+      Spacer()
     }
     .navigationTitle("Preferences")
-          .frame(width: 700, height: 700)
+    .frame(width: 700, height: 700)
     
   }
 }

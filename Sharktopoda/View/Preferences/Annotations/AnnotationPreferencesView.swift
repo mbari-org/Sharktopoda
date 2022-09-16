@@ -13,34 +13,37 @@ struct AnnotationPreferencesView: View {
   
   @AppStorage(PrefKeys.showAnnotations)
   private var showAnnotations: Bool = true
-
+  
   var body: some View {
     
     VStack {
       HStack {
-      Text("Configure Video Annotation Display")
-        .font(.title)
+        Text("Configure Video Annotation Display")
+          .font(.title)
         Spacer()
       }
+      .padding(.top, 20)
       .padding(.leading, 10)
-
+      
       HStack {
         Toggle("  Show Annotations", isOn: $showAnnotations)
           .toggleStyle(.checkbox)
-        .padding()
         Spacer()
       }
-      .padding(.leading, 20)
+      .padding(.leading, 30)
+      .padding(.bottom, 10)
       
       AnnotationCreationPreferencesView()
-
+      
       AnnotationDisplayPreferencesView()
-
+      
       AnnotationSelectionPreferencesView()
       
       AnnotationCaptionPreferencesView()
       
       Divider()
+      
+      Spacer()
       
     }
   }

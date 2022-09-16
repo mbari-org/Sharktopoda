@@ -16,7 +16,9 @@ struct Preferences: View {
         VStack(alignment: .leading, spacing: 20) {
 
           Text("Annotations")
+            .font(.title2)
           Text("Network")
+                      .font(.title2)
         }
         .padding(.top, 20)
         .padding(.leading, 10)
@@ -33,14 +35,13 @@ struct Preferences: View {
       
       if displayAnnotations {
         AnnotationPreferencesView()
-          .frame(width: 568)
       } else {
         Network()
-          .frame(width: 568)
       }
       
     }
     .navigationTitle("Preferences")
+          .frame(width: 700, height: 700)
     
   }
 }

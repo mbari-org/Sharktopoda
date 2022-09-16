@@ -13,30 +13,54 @@ struct AnnotationDisplayPreferencesView: View {
   
   @AppStorage(PrefKeys.displayBorderColor)
   private var displayBorderColorHex: String = AnnotationPreferencesView.defaultColorHex
-
-    var body: some View {
-      Divider()
-      
-      HStack {
-        Text("Annotation Display")
-          .font(.title)
-        Spacer()
-      }
-      .padding(5)
-      
-      SizeColorRow(
-        label: "Border",
-        size: $displayBorderSize,
-        colorHex: displayBorderColorHex,
-        prefKey: PrefKeys.displayBorderColor
-      )
-      
-
+  
+  @AppStorage(PrefKeys.displayTimeWindow)
+  private var displayTimeWindow: Int = 30
+  
+  @AppStorage(PrefKeys.displayUseDuration)
+  private var displayUseDuration: Bool = false
+  
+  var body: some View {
+    Divider()
+    
+    HStack {
+      Text("Annotation Display")
+        .font(.title)
+      Spacer()
     }
+    .padding(5)
+    
+    SizeColorRow(
+      label: "Border",
+      size: $displayBorderSize,
+      colorHex: displayBorderColorHex,
+      prefKey: PrefKeys.displayBorderColor
+    )
+    
+    HStack {
+      Text("Time Window")
+        .font(.title3)
+        .frame(width: 120)
+        .padding(.leading, 37)
+      TextField("", value: $displayTimeWindow, formatter: NumberFormatter())
+        .frame(width: 60)
+        .multilineTextAlignment(.trailing)
+        .padding(.leading, 38)
+      //        .frame(width: 30)
+      ////        .frame(width: 30)
+      ////      Text("millis")
+      ////        .padding(.trailing, 50)
+      ////      Toggle("  Use Duration", isOn: $displayUseDuration)
+      ////        .toggleStyle(.checkbox)
+      Spacer()
+    }
+    //    .padding(.trailing, 30)
+    
+  }
 }
 
 struct AnnotationDisplyPreferencesView_Previews: PreviewProvider {
-    static var previews: some View {
-        AnnotationDisplayPreferencesView()
-    }
+  static var previews: some View {
+    AnnotationDisplayPreferencesView()
+  }
 }

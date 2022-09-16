@@ -25,7 +25,7 @@ struct SizeColorRow: View {
 
       Text("Size: ")
       TextField("", value: $size, formatter: NumberFormatter())
-        .frame(width: 30)
+        .frame(width: 60)
         .multilineTextAlignment(.trailing)
 
       ColorPicker(

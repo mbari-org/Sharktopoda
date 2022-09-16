@@ -37,6 +37,9 @@ struct PrefKeys {
   static var displayBorderSize = "\(PrefKeys.displayBorder).size"
   static var displayBorderColor = "\(PrefKeys.displayBorder).color"
   
+  static var displayTimeWindow = "\(PrefKeys.display).timeWindow"
+  static var displayUseDuration = "\(PrefKeys.display).useDuration"
+  
   // Annotation Selection
   private static var selection = "\(PrefKeys.annotation).selection"
   

@@ -35,19 +35,15 @@ struct AnnotationCaptionPreferencesView: View {
     )
     
     HStack {
-      Spacer()
       Text("Default Caption")
         .font(.title3)
-        .frame(width: 200)
-
-    TextField("", text: $captionDefault)
-        .padding(.trailing, 20)
-        .padding(.leading, 7)
+        .frame(width: 120)
+        .padding(.leading, 32)
+      TextField("", text: $captionDefault)
+        .padding(.leading, 45)
+      Spacer()
     }
-    .padding(.trailing, 10)
-
-    
-    Spacer()
+    //    .padding(.trailing, 30)
     
   }
 }

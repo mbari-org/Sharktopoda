@@ -70,7 +70,7 @@ struct Preferences: View {
       Spacer()
     }
     .navigationTitle("Preferences")
-    .frame(width: 700, height: 700)
+    .frame(width: 700, height: 550)
     
   }
 }

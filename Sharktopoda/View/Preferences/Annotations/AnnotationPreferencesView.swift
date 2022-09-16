@@ -41,8 +41,6 @@ struct AnnotationPreferencesView: View {
       
       AnnotationCaptionPreferencesView()
       
-      Divider()
-      
       Spacer()
       
     }

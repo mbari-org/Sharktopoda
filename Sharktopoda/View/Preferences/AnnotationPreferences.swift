@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AnnotationPreferences: View {
   private static var defaultSize = 6
-  private static var defaultColorHex = "#00ff00"
+  private static var defaultColorHex = "#00ffff"
   
   // Creation
   @AppStorage(PrefKeys.creationCursorSize)
@@ -45,13 +45,13 @@ struct AnnotationPreferences: View {
       SizeColorRow(
         name: "Cursor",
         size: $creationCursorSize,
-        hexColor: $creationCursorColorHex,
+        colorHex: creationCursorColorHex,
         prefKey: PrefKeys.creationCursorColor
       )
       SizeColorRow(
         name: "Border",
         size: $creationBorderSize,
-        hexColor: $creationBorderColorHex,
+        colorHex: creationBorderColorHex,
         prefKey: PrefKeys.creationBorderColor
       )
       Divider()
@@ -60,13 +60,13 @@ struct AnnotationPreferences: View {
       SizeColorRow(
         name: "Cursor",
         size: $displayCursorSize,
-        hexColor: $displayCursorColorHex,
+        colorHex: displayCursorColorHex,
         prefKey: PrefKeys.displayCursorColor
       )
       SizeColorRow(
         name: "Border",
         size: $displayBorderSize,
-        hexColor: $displayBorderColorHex,
+        colorHex: displayBorderColorHex,
         prefKey: PrefKeys.displayBorderColor
       )
       Divider()

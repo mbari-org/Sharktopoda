@@ -10,7 +10,7 @@ import SwiftUI
 struct SizeColorRow: View {
   private var name: String
   @Binding var size: Int
-  @Binding var colorHex: String
+  private var colorHex: String
   private var colorPrefKey: String
   
   var body: some View {
@@ -26,7 +26,7 @@ struct SizeColorRow: View {
       ColorPicker(
         "Color: ",
         selection: Binding(
-          get: { UserDefaults.standard.color(forKey: colorPrefKey) },
+          get: { Color(hex: colorHex)! },
           set: { newValue in
             UserDefaults.standard.setColor(newValue, forKey: colorPrefKey)
           }
@@ -45,10 +45,11 @@ struct SizeColorRow: View {
     }
   }
   
-  init(name: String, size: Binding<Int>, hexColor: Binding<String>, prefKey: String) {
+  init(name: String, size: Binding<Int>, colorHex: String, prefKey: String) {
+    print("SizeColorRow \(prefKey): colorHex=\(colorHex)")
     self.name = name
     self._size = size
-    self._colorHex = hexColor
+    self.colorHex = colorHex
     self.colorPrefKey = prefKey
   }
 }

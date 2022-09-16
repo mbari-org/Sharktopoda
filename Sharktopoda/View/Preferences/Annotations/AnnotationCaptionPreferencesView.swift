@@ -43,7 +43,7 @@ struct AnnotationCaptionPreferencesView: View {
         .padding(.leading, 45)
       Spacer()
     }
-    //    .padding(.trailing, 30)
+    .padding(.trailing, 20)
     
   }
 }

@@ -46,16 +46,12 @@ struct AnnotationDisplayPreferencesView: View {
         .frame(width: 60)
         .multilineTextAlignment(.trailing)
         .padding(.leading, 38)
-      //        .frame(width: 30)
-      ////        .frame(width: 30)
-      ////      Text("millis")
-      ////        .padding(.trailing, 50)
-      ////      Toggle("  Use Duration", isOn: $displayUseDuration)
-      ////        .toggleStyle(.checkbox)
+      Text("millis")
+        .padding(.trailing, 42)
+      Toggle("  Use Duration", isOn: $displayUseDuration)
+        .toggleStyle(.checkbox)
       Spacer()
     }
-    //    .padding(.trailing, 30)
-    
   }
 }
 

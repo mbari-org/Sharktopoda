@@ -17,18 +17,14 @@ struct SizeColorRow: View {
     HStack {
       Text(name)
         .font(.title3)
+
       Text("Size: ")
       TextField("", value: $size, formatter: NumberFormatter())
-        .frame(width: 50)
+        .frame(width: 30)
         .multilineTextAlignment(.trailing)
-      Text("Color: ")
-      TextField("", text: $colorHex)
-        .disableAutocorrection(true)
-        .frame(width: 75)
-        .multilineTextAlignment(.trailing)
-      
+
       ColorPicker(
-        "",
+        "Color: ",
         selection: Binding(
           get: { UserDefaults.standard.color(forKey: colorPrefKey) },
           set: { newValue in
@@ -36,8 +32,16 @@ struct SizeColorRow: View {
           }
         )
       )
-      .frame(width: 16, height: 16)
-      .border(.white)
+      .padding(.leading, 30)
+
+      Text(colorHex)
+        .padding(.leading, 5)
+      
+      //      TextField("", text: $colorHex)
+      //        .disableAutocorrection(true)
+      //        .frame(width: 75)
+      //        .multilineTextAlignment(.trailing)
+      
     }
   }
   
@@ -51,7 +55,7 @@ struct SizeColorRow: View {
 
 struct SizeColorRow_Previews: PreviewProvider {
   static var previews: some View {
-//    SizeColorRow(10, .red)
+    //    SizeColorRow(10, .red)
     Text("CxInc")
   }
 }

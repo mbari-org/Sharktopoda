@@ -17,13 +17,13 @@ struct AnnotationPreferences: View {
   
   @AppStorage(PrefKeys.creationCursorColor)
   private var creationCursorColorHex: String = AnnotationPreferences.defaultColorHex
-
+  
   @AppStorage(PrefKeys.creationBorderSize)
   private var creationBorderSize: Int = AnnotationPreferences.defaultSize
-
+  
   @AppStorage(PrefKeys.creationBorderColor)
   private var creationBorderColorHex: String = AnnotationPreferences.defaultColorHex
-
+  
   // Display
   @AppStorage(PrefKeys.displayCursorSize)
   private var displayCursorSize: Int = AnnotationPreferences.defaultSize
@@ -36,9 +36,10 @@ struct AnnotationPreferences: View {
   
   @AppStorage(PrefKeys.displayBorderColor)
   private var displayBorderColorHex: String = AnnotationPreferences.defaultColorHex
-
+  
   var body: some View {
     VStack {
+      Divider()
       Text("Annotation Creation")
         .font(.title)
       SizeColorRow(
@@ -68,7 +69,7 @@ struct AnnotationPreferences: View {
         hexColor: $displayBorderColorHex,
         prefKey: PrefKeys.displayBorderColor
       )
-
+      Divider()
     }
   }
 }

@@ -9,10 +9,10 @@ import SwiftUI
 
 struct AnnotationCaptionPreferencesView: View {
   @AppStorage(PrefKeys.captionFontSize)
-  private var captionFontSize: Int = AnnotationPreferencesView.defaultSize
+  private var captionFontSize: Int = 12
   
   @AppStorage(PrefKeys.captionFontColor)
-  private var captionFontColorHex: String = AnnotationPreferencesView.defaultColorHex
+  private var captionFontColorHex: String = "#000000"
   
   @AppStorage(PrefKeys.captionDefault)
   private var captionDefault: String = "Object"

@@ -11,9 +11,9 @@ struct Main: View {
   private static var ratio: CGFloat = 1.75
   private static var height: CGFloat = 425
   private static var width = CGFloat(Main.height * Main.ratio)
-
-  var port = "'CxInc'"
   
+  @AppStorage(PrefKeys.port) private var port: Int = 8800
+
   var body: some View {
     let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
     HStack {
@@ -51,7 +51,7 @@ struct Main: View {
         
         Spacer()
         
-        Text("Listening on port \(port)")
+        Text("Listening on port \(String(port))")
           .font(.title3)
       }
       .padding(20)

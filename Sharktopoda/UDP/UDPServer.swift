@@ -10,37 +10,52 @@ import Network
 import SwiftUI
 
 class UDPServer {
-  private static var hdr = "Sharktopoda UDP Server"
-  
-  private var queue: DispatchQueue
+  private let logHdr = "Sharktopoda UDP Server"
+
   private var listener: NWListener
+  private let udpQueue: DispatchQueue
+  
+  init(port: UInt16, queue: DispatchQueue) {
+    self.udpQueue = queue
 
-  init?(port: Int) {
-    queue = DispatchQueue(label: "\(UDPServer.hdr) Queue")
+    listener = try! NWListener(using: .udp, on: NWEndpoint.Port(rawValue: port)!)
     
-    listener = try! NWListener(using: .udp, on: NWEndpoint.Port(rawValue: UInt16(port))!)
-    
-    listener.stateUpdateHandler = { update in
-      let updateHdr = "\(UDPServer.hdr) state update:"
-      switch update {
-        case .setup, .waiting, .cancelled:
-          NSLog("\(updateHdr) \(update)")
-        case .ready:
-          NSLog("\(updateHdr) ready")
-        case .failed(let error):
-          NSLog("\(updateHdr) failed with error \(error)")
-        @unknown default:
-          NSLog("\(updateHdr) unknown")
-      }
-    }
-
-    listener.newConnectionHandler = { [weak self] connection in
-      NSLog("\(connection)")
-      if let strongSelf = self {
-        connection.start(queue: strongSelf.queue)
-      }
-    }
+    listener.stateUpdateHandler = stateUpdate(to:)
+    listener.newConnectionHandler = accept(connection:)
     
     listener.start(queue: queue)
+  }
+
+  func stateUpdate(to update: NWListener.State) {
+    switch update {
+      case .setup, .waiting, .cancelled:
+        log("state \(update)")
+      case .ready:
+        log("ready")
+      case .failed(let error):
+        log("failed with error \(error)")
+        exit(EXIT_FAILURE)
+      @unknown default:
+        log("state unknown")
+    }
+  }
+  
+  private func accept(connection: NWConnection) {
+    log("connection")
+    connection.start(queue: self.udpQueue)
+  }
+  
+  func stop() {
+    listener.stateUpdateHandler = nil
+    listener.newConnectionHandler = nil
+    listener.cancel()
+    
+    let port = String(describing: listener.port?.rawValue)
+    
+    log("stopped on port \(port)")
+  }
+  
+  func log(_ msg: String) {
+    NSLog("\(logHdr) \(msg)")
   }
 }

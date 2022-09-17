@@ -26,7 +26,7 @@ class UDPServer {
         case .setup, .waiting, .cancelled:
           NSLog("\(updateHdr) \(update)")
         case .ready:
-          NSLog("\(updateHdr) is ready: CxInc")
+          NSLog("\(updateHdr) ready")
         case .failed(let error):
           NSLog("\(updateHdr) failed with error \(error)")
         @unknown default:

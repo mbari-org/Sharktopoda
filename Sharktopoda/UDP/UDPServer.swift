@@ -13,9 +13,11 @@ class UDPServer {
   private let logHdr = "Sharktopoda UDP Server"
 
   private var listener: NWListener
+  private let port: UInt16
   private let udpQueue: DispatchQueue
   
   init(port: UInt16, queue: DispatchQueue) {
+    self.port = port
     self.udpQueue = queue
 
     listener = try! NWListener(using: .udp, on: NWEndpoint.Port(rawValue: port)!)
@@ -50,12 +52,10 @@ class UDPServer {
     listener.newConnectionHandler = nil
     listener.cancel()
     
-    let port = String(describing: listener.port?.rawValue)
-    
-    log("stopped on port \(port)")
+    log("stopped")
   }
   
   func log(_ msg: String) {
-    NSLog("\(logHdr) \(msg)")
+    NSLog("\(logHdr) (\(port)) \(msg)")
   }
 }

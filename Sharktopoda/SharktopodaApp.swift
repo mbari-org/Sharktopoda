@@ -25,6 +25,7 @@ struct SharktopodaApp: App {
   }
   
   init() {
+    print("port: \(port)")
     udpQueue = DispatchQueue(label: "Sharktopoda UDP Queue")
 
     udpServer = UDPServer(port: UInt16(port), queue: udpQueue)

@@ -9,25 +9,18 @@ import SwiftUI
 
 @main
 struct SharktopodaApp: App {
-  private var port: Int = UserDefaults.standard.integer(forKey: PrefKeys.port)
-  
-  private let udpQueue: DispatchQueue
-  private var udpServer: UDPServer
+  @StateObject private var sharktopodaData = SharktopodaData()
   
   var body: some Scene {
     WindowGroup {
       ContentView()
     }
-    
+    .commands {
+      SharktopodaCommands()
+    }
+
     Settings {
       Preferences()
     }
-  }
-  
-  init() {
-    print("port: \(port)")
-    udpQueue = DispatchQueue(label: "Sharktopoda UDP Queue")
-
-    udpServer = UDPServer(port: UInt16(port), queue: udpQueue)
   }
 }

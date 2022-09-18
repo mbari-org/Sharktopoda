@@ -16,16 +16,17 @@ class UDPServer {
   private let port: UInt16
   private let udpQueue: DispatchQueue
   
-  init(port: UInt16, queue: DispatchQueue) {
+  init(port: UInt16) {
+    udpQueue = DispatchQueue(label: "Sharktopoda UDP Queue")
+    
     self.port = port
-    self.udpQueue = queue
 
     listener = try! NWListener(using: .udp, on: NWEndpoint.Port(rawValue: port)!)
     
     listener.stateUpdateHandler = stateUpdate(to:)
     listener.newConnectionHandler = accept(connection:)
     
-    listener.start(queue: queue)
+    listener.start(queue: udpQueue)
   }
 
   func stateUpdate(to update: NWListener.State) {

@@ -12,6 +12,7 @@
 		E295627928D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295627828D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift */; };
 		E295627C28D5325A00E88ED1 /* NetworkControlPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295627B28D5325A00E88ED1 /* NetworkControlPreferencesView.swift */; };
 		E295627E28D632EC00E88ED1 /* Credits.html in Resources */ = {isa = PBXBuildFile; fileRef = E295627D28D632EC00E88ED1 /* Credits.html */; };
+		E295628A28D67A6500E88ED1 /* SharktopodaCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295628928D67A6500E88ED1 /* SharktopodaCommands.swift */; };
 		E2989AB728D3B261009D2D65 /* NetworkPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2989AB628D3B261009D2D65 /* NetworkPreferencesView.swift */; };
 		E2989AB928D3B87E009D2D65 /* AnnotationPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2989AB828D3B87E009D2D65 /* AnnotationPreferencesView.swift */; };
 		E2989ABD28D3C7F7009D2D65 /* PrefKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2989ABC28D3C7F7009D2D65 /* PrefKeys.swift */; };
@@ -57,6 +58,7 @@
 		E295627828D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationCaptionPreferencesView.swift; sourceTree = "<group>"; };
 		E295627B28D5325A00E88ED1 /* NetworkControlPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkControlPreferencesView.swift; sourceTree = "<group>"; };
 		E295627D28D632EC00E88ED1 /* Credits.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = Credits.html; sourceTree = "<group>"; };
+		E295628928D67A6500E88ED1 /* SharktopodaCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharktopodaCommands.swift; sourceTree = "<group>"; };
 		E2989AB628D3B261009D2D65 /* NetworkPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkPreferencesView.swift; sourceTree = "<group>"; };
 		E2989AB828D3B87E009D2D65 /* AnnotationPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationPreferencesView.swift; sourceTree = "<group>"; };
 		E2989ABC28D3C7F7009D2D65 /* PrefKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefKeys.swift; sourceTree = "<group>"; };
@@ -172,8 +174,8 @@
 				E2C22E8828CFDC28003CD976 /* Assets.xcassets */,
 				E2C22E8D28CFDC28003CD976 /* Sharktopoda.entitlements */,
 				E2C22E8A28CFDC28003CD976 /* Preview Content */,
-				E2C22EC928D26E60003CD976 /* Util */,
 				E295627D28D632EC00E88ED1 /* Credits.html */,
+				E295628928D67A6500E88ED1 /* SharktopodaCommands.swift */,
 			);
 			path = Sharktopoda;
 			sourceTree = "<group>";
@@ -222,13 +224,6 @@
 				E2C22ED228D2AAF3003CD976 /* VideoView.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		E2C22EC928D26E60003CD976 /* Util */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Util;
 			sourceTree = "<group>";
 		};
 		E2C22ECD28D27B81003CD976 /* UDP */ = {
@@ -388,6 +383,7 @@
 				E2C22ED528D36832003CD976 /* Localization.swift in Sources */,
 				E2C22ED728D36888003CD976 /* VideoAsset.swift in Sources */,
 				E2989AB728D3B261009D2D65 /* NetworkPreferencesView.swift in Sources */,
+				E295628A28D67A6500E88ED1 /* SharktopodaCommands.swift in Sources */,
 				E2989ABD28D3C7F7009D2D65 /* PrefKeys.swift in Sources */,
 				E2C22E8728CFDC26003CD976 /* ContentView.swift in Sources */,
 				E2C22E8528CFDC26003CD976 /* SharktopodaApp.swift in Sources */,
@@ -567,7 +563,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.mbari.Sharktopoda;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -596,7 +592,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.mbari.Sharktopoda;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

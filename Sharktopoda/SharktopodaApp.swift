@@ -9,7 +9,9 @@ import SwiftUI
 
 @main
 struct SharktopodaApp: App {
-  @StateObject private var sharktopodaData = SharktopodaData()
+  init() {
+    UDPServer.singleton.start()
+  }
   
   var body: some Scene {
     WindowGroup {

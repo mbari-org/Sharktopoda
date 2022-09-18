@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct Main: View {
+  // Prefs ensure port is set
+  @AppStorage(PrefKeys.port) private var port: Int?
+
   private static var ratio: CGFloat = 1.75
   private static var height: CGFloat = 425
   private static var width = CGFloat(Main.height * Main.ratio)
-  
-  @AppStorage(PrefKeys.port) private var port: Int = 8800
   
   let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
   
@@ -52,7 +53,7 @@ struct Main: View {
         
         Spacer()
         
-        Text("Listening on port \(String(port))")
+        Text("Listening on port \(String(port!))")
           .font(.title3)
       }
       .padding(20)

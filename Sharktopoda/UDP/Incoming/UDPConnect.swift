@@ -9,7 +9,9 @@ import Foundation
 import Network
 
 class UDPConnect {
-  var connection: NWConnection
+  let connection: NWConnection
+
+  var connectCommand: ConnectCommand?
   
   init(using udpConnection: NWConnection) {
     connection = udpConnection
@@ -44,25 +46,44 @@ class UDPConnect {
         self.log("receive empty message")
         return
       }
-      let commandData = CommandData(data)
+      let commandData = CommandData(from: data)
       if let error = commandData.error {
-        let responseData = ResponseData.failed(response: "unknown", cause: error)
+        let responseData = ResponseData.failed("unknown", cause: error)
         connection.send(content: responseData, completion: .contentProcessed({ _ in }))
         return
       }
       switch commandData.command {
+        case IncomingCommand.connect.rawValue:
+          processConnect(using: commandData.data, on: connection)
+          
         case IncomingCommand.ping.rawValue:
           let responseData = ResponseData.ping()
           connection.send(content: responseData, completion: .contentProcessed({ _ in }))
+          
         default:
-          let responseData = ResponseData.failed(response: commandData.command, cause: "Not connected")
+          let responseData = ResponseData.failed(commandData.command, cause: "Not connected")
           connection.send(content: responseData, completion: .contentProcessed({ _ in }))
       }
     }
   }
   
+  func processConnect(using data: Data, on connection: NWConnection) {
+    do {
+      self.connectCommand = try ConnectCommand(from: data)
+      
+    }
+    catch let error {
+      let responseData = ResponseData.failed(IncomingCommand.connect.rawValue, cause: "\(error)")
+      connection.send(content: responseData, completion: .contentProcessed({ _ in }))
+    }
+  }
+  
   func connectionDidFail(error: Error) {
     log("Failed error: \(error)")
+    stop()
+  }
+  
+  func stop() {
     if connection.stateUpdateHandler != nil {
       self.connection.stateUpdateHandler = nil
       connection.cancel()

@@ -14,8 +14,10 @@ class UDPIncoming {
   
   var controlIsConnected = false
   
-  init(using someConnection: NWConnection) {
-    connection = someConnection
+  init(using connectCommand: ConnectCommand) {
+    let host = NWEndpoint.Host(connectCommand.host)
+    let port = NWEndpoint.Port(rawValue: UInt16(connectCommand.port))!
+    connection = NWConnection(host: host, port: port, using: .udp)
     incomingQueue = DispatchQueue(label: "Sharktopoda UDP Incoming Queue")
     
     connection.stateUpdateHandler = self.stateUpdate(to:)

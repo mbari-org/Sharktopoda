@@ -17,9 +17,7 @@ class UDPServer {
 
   var listener: NWListener?
   
-  var udpConnect: UDPConnect?
-//  var controlConnection: UDPIncoming?
-//  var controlConnection: UDPIncoming?
+  var incomingConnection: UDPIncoming?
   
   static let singleton = UDPServer()
   private init() {
@@ -52,18 +50,25 @@ class UDPServer {
   }
   
   private func messageFrom(someConnection: NWConnection) {
-      udpConnect = UDPConnect(using: someConnection)
+    guard incomingConnection == nil else {
+      let responseData = ResponseData.failed("Control already connected")
+      someConnection.send(content: responseData, completion: .contentProcessed({ _ in }))
+      return
+    }
     
-//    if let connection = controlConnection {
-//      if connection.isControl(someConnection) {
-//        print("CxInc Process message from controlEndpoint")
-//      } else {
-//        print("CxInc Ignore message from !controlEndpoint")
-//      }
-//    } else {
-//      print("CxInc Process first message to establish controlEndpoint")
-//      controlConnection = UDPIncoming(using: someConnection)
+//    UDPConnect(using: someConnection)
+    
+    
+//    if let connectCommand = udpConnect.connectCommand {
+//      self.incomingConnection = UDPIncoming(using: connectCommand)
+//      let responseData = ResponseData.ok(IncomingCommand.connect.rawValue)
+//      someConnection.send(content: responseData, completion: .contentProcessed({ _ in }))
 //    }
+  }
+  
+  func incomingConnection(using connectCommand: ConnectCommand) {
+    self.incomingConnection = UDPIncoming(using: connectCommand)
+    print("CxInc send ping on new incoming connection for validation")
   }
   
   func stop() {

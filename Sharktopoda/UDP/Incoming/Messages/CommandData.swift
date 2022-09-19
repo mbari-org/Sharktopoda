@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 struct CommandData {
   struct Command: Decodable {
     let command: String
@@ -15,7 +16,7 @@ struct CommandData {
   var data: Data
   var error: String?
   
-  init(_ messageData: Data) {
+  init(from messageData: Data) {
     data = messageData
     do {
       let messageCommand = try JSONDecoder().decode(Command.self, from: messageData)

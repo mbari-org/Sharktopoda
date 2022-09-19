@@ -8,12 +8,17 @@
 import Foundation
 
 struct ResponseData {
-
-  static func ping() -> Data {
-    StatusResponse(response: "ping", status: .ok).jsonData()
+  
+  static func ok(_ response: String) -> Data {
+    StatusResponse(response, status: .ok).jsonData()
   }
   
-  static func failed(response: String, cause: String? = nil) -> Data {
-    StatusResponse(response: response, status: .failed, cause: cause).jsonData()
+  static func failed(_ response: String, cause: String? = nil) -> Data {
+    StatusResponse(response, status: .failed, cause: cause).jsonData()
   }
+  
+  static func ping() -> Data {
+    ResponseData.ok("ping")
+  }
+  
 }

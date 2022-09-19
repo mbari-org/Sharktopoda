@@ -17,7 +17,7 @@ struct StatusResponse : Encodable {
   let status: String
   var cause: String?
   
-  init(response: String, status: ResponseMessageStatus, cause: String? = nil) {
+  init(_ response: String, status: ResponseMessageStatus, cause: String? = nil) {
     self.response = response
     self.status = status.rawValue
     self.cause = cause

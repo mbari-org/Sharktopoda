@@ -50,15 +50,14 @@ class UDPConnect {
         connection.send(content: responseData, completion: .contentProcessed({ _ in }))
         return
       }
-//      switch commandData.command {
-//        case IncomingCommand.ping:
-//          let responseData = ResponseData.ping()
-//          connection.send(content: responseData, completion: .contentProcessed({ _ in }))
-//        default:
-//          let responseData = ResponseData.failed(response: commandData.command, cause: "Invalid command")
-//          connection.send(content: responseData, completion: .contentProcessed({ _ in }))
-//      }
-      print("Command: \(commandData.command)")
+      switch commandData.command {
+        case IncomingCommand.ping.rawValue:
+          let responseData = ResponseData.ping()
+          connection.send(content: responseData, completion: .contentProcessed({ _ in }))
+        default:
+          let responseData = ResponseData.failed(response: commandData.command, cause: "Not connected")
+          connection.send(content: responseData, completion: .contentProcessed({ _ in }))
+      }
     }
   }
   

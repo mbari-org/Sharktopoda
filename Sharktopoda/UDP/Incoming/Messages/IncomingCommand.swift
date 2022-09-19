@@ -16,7 +16,7 @@ enum IncomingCommand: String {
   case play
   case pause
   case elapsedTime
-  case status
+  case playback
   case seek
   case advance
   case capture

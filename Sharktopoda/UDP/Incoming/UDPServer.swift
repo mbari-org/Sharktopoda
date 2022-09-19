@@ -13,16 +13,17 @@ class UDPServer {
   // Prefs ensure port is set
   @AppStorage(PrefKeys.port) private var port: Int?
   
-  let udpQueue: DispatchQueue
-  
+  let connectQueue: DispatchQueue
+
   var listener: NWListener?
-  var controlConnection: UDPIncoming?
   
-  private let logHdr = "Sharktopoda UDP Server"
+  var udpConnect: UDPConnect?
+//  var controlConnection: UDPIncoming?
+//  var controlConnection: UDPIncoming?
   
   static let singleton = UDPServer()
   private init() {
-    udpQueue = DispatchQueue(label: "Sharktopoda UDP Incoming Queue")
+    connectQueue = DispatchQueue(label: "Sharktopoda UDP Connect Queue")
   }
   
   func start() {
@@ -33,7 +34,7 @@ class UDPServer {
     listener!.stateUpdateHandler = stateUpdate(to:)
     listener!.newConnectionHandler = messageFrom(someConnection:)
     
-    listener!.start(queue: udpQueue)
+    listener!.start(queue: connectQueue)
   }
   
   func stateUpdate(to update: NWListener.State) {
@@ -51,16 +52,18 @@ class UDPServer {
   }
   
   private func messageFrom(someConnection: NWConnection) {
-    if let control = controlConnection {
-      if control.isControl(someConnection) {
-        print("CxInc Process message from controlEndpoint")
-      } else {
-        print("CxInc Ignore message from !controlEndpoint")
-      }
-    } else {
-      print("CxInc Process first message to establish controlEndpoint")
-      controlConnection = UDPIncoming(using: someConnection)
-    }
+      udpConnect = UDPConnect(using: someConnection)
+    
+//    if let connection = controlConnection {
+//      if connection.isControl(someConnection) {
+//        print("CxInc Process message from controlEndpoint")
+//      } else {
+//        print("CxInc Ignore message from !controlEndpoint")
+//      }
+//    } else {
+//      print("CxInc Process first message to establish controlEndpoint")
+//      controlConnection = UDPIncoming(using: someConnection)
+//    }
   }
   
   func stop() {
@@ -74,6 +77,11 @@ class UDPServer {
   }
   
   func log(_ msg: String) {
-    NSLog("\(logHdr) (\(port!)) \(msg)")
+    let logHdr = "Sharktopoda UDP Server"
+    self.log(hdr: "\(logHdr) (\(port!))", msg)
+  }
+  
+  func log(hdr: String, _ msg: String) {
+    NSLog("\(hdr) \(msg)")
   }
 }

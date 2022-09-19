@@ -10,19 +10,18 @@ import Network
 
 class UDPIncoming {
   var connection: NWConnection
+  let incomingQueue: DispatchQueue
   
   var controlIsConnected = false
   
-  private let logHdr = "Sharktopoda UDP Connection"
-  
   init(using someConnection: NWConnection) {
     connection = someConnection
+    incomingQueue = DispatchQueue(label: "Sharktopoda UDP Incoming Queue")
+    
     connection.stateUpdateHandler = self.stateUpdate(to:)
-    connection.start(queue: UDPServer.singleton.udpQueue)
+    connection.start(queue: incomingQueue)
     
     let msg = "CxInc handle init udp message".data(using: .utf8)
-
-    
 
     connection.send(content: msg, completion: .contentProcessed({ error in
       if let error = error {
@@ -74,6 +73,7 @@ class UDPIncoming {
   }
   
   func log(_ msg: String) {
-    NSLog("\(logHdr) \(msg)")
+    let logHdr = "Sharktopoda UDP Incoming Connection"
+    UDPServer.singleton.log(hdr: logHdr, msg)
   }
 }

@@ -37,6 +37,11 @@
 		E2C22EDA28D386AE003CD976 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22ED928D386AE003CD976 /* Main.swift */; };
 		E2D47E9628D8C01F0068B192 /* IncomingCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D47E9528D8C01F0068B192 /* IncomingCommand.swift */; };
 		E2D47E9A28D8C17D0068B192 /* OutgoingCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D47E9928D8C17D0068B192 /* OutgoingCommand.swift */; };
+		E2D47E9C28D8C2980068B192 /* UDPOutgoing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D47E9B28D8C2980068B192 /* UDPOutgoing.swift */; };
+		E2D47E9E28D8DF0F0068B192 /* UDPConnect.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D47E9D28D8DF0F0068B192 /* UDPConnect.swift */; };
+		E2D47EA028D8E6140068B192 /* CommandData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D47E9F28D8E6140068B192 /* CommandData.swift */; };
+		E2D47EA228D8EAF00068B192 /* ResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D47EA128D8EAF00068B192 /* ResponseData.swift */; };
+		E2D47EA528D8ED300068B192 /* StatusResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D47EA428D8ED300068B192 /* StatusResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +96,11 @@
 		E2C22ED928D386AE003CD976 /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
 		E2D47E9528D8C01F0068B192 /* IncomingCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCommand.swift; sourceTree = "<group>"; };
 		E2D47E9928D8C17D0068B192 /* OutgoingCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutgoingCommand.swift; sourceTree = "<group>"; };
+		E2D47E9B28D8C2980068B192 /* UDPOutgoing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDPOutgoing.swift; sourceTree = "<group>"; };
+		E2D47E9D28D8DF0F0068B192 /* UDPConnect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDPConnect.swift; sourceTree = "<group>"; };
+		E2D47E9F28D8E6140068B192 /* CommandData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandData.swift; sourceTree = "<group>"; };
+		E2D47EA128D8EAF00068B192 /* ResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseData.swift; sourceTree = "<group>"; };
+		E2D47EA428D8ED300068B192 /* StatusResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,8 +166,10 @@
 			isa = PBXGroup;
 			children = (
 				E2C22ECE28D27C2D003CD976 /* UDPServer.swift */,
+				E2D47E9D28D8DF0F0068B192 /* UDPConnect.swift */,
 				E2C078CC28D7CF0E00C55EEC /* UDPIncoming.swift */,
 				E2D47E9428D8C00B0068B192 /* Messages */,
+				E2D47EA328D8ECDB0068B192 /* Responses */,
 			);
 			path = Incoming;
 			sourceTree = "<group>";
@@ -264,6 +276,7 @@
 		E2D47E9428D8C00B0068B192 /* Messages */ = {
 			isa = PBXGroup;
 			children = (
+				E2D47E9F28D8E6140068B192 /* CommandData.swift */,
 				E2C078D228D8B89800C55EEC /* ControlMessage.swift */,
 				E2D47E9528D8C01F0068B192 /* IncomingCommand.swift */,
 			);
@@ -273,6 +286,7 @@
 		E2D47E9728D8C0ED0068B192 /* Outgoing */ = {
 			isa = PBXGroup;
 			children = (
+				E2D47E9B28D8C2980068B192 /* UDPOutgoing.swift */,
 				E2D47E9828D8C16E0068B192 /* Messages */,
 			);
 			path = Outgoing;
@@ -284,6 +298,15 @@
 				E2D47E9928D8C17D0068B192 /* OutgoingCommand.swift */,
 			);
 			path = Messages;
+			sourceTree = "<group>";
+		};
+		E2D47EA328D8ECDB0068B192 /* Responses */ = {
+			isa = PBXGroup;
+			children = (
+				E2D47EA128D8EAF00068B192 /* ResponseData.swift */,
+				E2D47EA428D8ED300068B192 /* StatusResponse.swift */,
+			);
+			path = Responses;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -421,8 +444,10 @@
 				E295627928D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift in Sources */,
 				E2C22ED328D2AAF3003CD976 /* VideoView.swift in Sources */,
 				E2989ABF28D3D083009D2D65 /* ColorPref.swift in Sources */,
+				E2D47EA228D8EAF00068B192 /* ResponseData.swift in Sources */,
 				E2C22ECF28D27C2D003CD976 /* UDPServer.swift in Sources */,
 				E295627C28D5325A00E88ED1 /* NetworkControlPreferencesView.swift in Sources */,
+				E2D47EA528D8ED300068B192 /* StatusResponse.swift in Sources */,
 				E2989AC328D4F6EE009D2D65 /* AnnotationCreationPreferencesView.swift in Sources */,
 				E2C22ED528D36832003CD976 /* Localization.swift in Sources */,
 				E2D47E9628D8C01F0068B192 /* IncomingCommand.swift in Sources */,
@@ -435,12 +460,15 @@
 				E2C22E8728CFDC26003CD976 /* ContentView.swift in Sources */,
 				E2C22E8528CFDC26003CD976 /* SharktopodaApp.swift in Sources */,
 				E2C22EC528D144B0003CD976 /* SharktopodaData.swift in Sources */,
+				E2D47E9E28D8DF0F0068B192 /* UDPConnect.swift in Sources */,
 				E2989AC128D4BAD0009D2D65 /* SizeColorRow.swift in Sources */,
 				E2D47E9A28D8C17D0068B192 /* OutgoingCommand.swift in Sources */,
+				E2D47E9C28D8C2980068B192 /* UDPOutgoing.swift in Sources */,
 				E295627528D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift in Sources */,
 				E2989AB928D3B87E009D2D65 /* AnnotationPreferencesView.swift in Sources */,
 				E2C22EC828D2666A003CD976 /* Preferences.swift in Sources */,
 				E295627728D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift in Sources */,
+				E2D47EA028D8E6140068B192 /* CommandData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

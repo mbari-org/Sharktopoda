@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 struct ControlMessage: Decodable {
   var command: String
   var error: String?

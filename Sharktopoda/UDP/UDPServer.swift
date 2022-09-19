@@ -15,11 +15,12 @@ class UDPServer {
   
   let udpQueue: DispatchQueue
   
-  private var listener: NWListener?
+  var listener: NWListener?
+  var controlConnection: UDPConnection?
+  
   private let logHdr = "Sharktopoda UDP Server"
   
   static let singleton = UDPServer()
-  
   private init() {
     udpQueue = DispatchQueue(label: "Sharktopoda UDP Queue")
   }
@@ -30,7 +31,7 @@ class UDPServer {
     listener = try! NWListener(using: .udp, on: NWEndpoint.Port(rawValue: UInt16(port!))!)
     
     listener!.stateUpdateHandler = stateUpdate(to:)
-    listener!.newConnectionHandler = accept(connection:)
+    listener!.newConnectionHandler = messageFrom(someConnection:)
     
     listener!.start(queue: udpQueue)
   }
@@ -49,9 +50,17 @@ class UDPServer {
     }
   }
   
-  private func accept(connection: NWConnection) {
-    log("connection")
-    connection.start(queue: self.udpQueue)
+  private func messageFrom(someConnection: NWConnection) {
+    if let control = controlConnection {
+      if control.isControl(someConnection) {
+        print("CxInc Process message from controlEndpoint")
+      } else {
+        print("CxInc Ignore message from !controlEndpoint")
+      }
+    } else {
+      print("CxInc Process first message to establish controlEndpoint")
+      controlConnection = UDPConnection(using: someConnection)
+    }
   }
   
   func stop() {

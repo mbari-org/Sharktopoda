@@ -1,5 +1,5 @@
 //
-//  UDPConnection.swift
+//  UDPIncoming.swift
 //  Created for Sharktopoda on 9/18/22.
 //
 //  Apache License 2.0 — See project LICENSE file
@@ -8,7 +8,7 @@
 import Foundation
 import Network
 
-class UDPConnection {
+class UDPIncoming {
   var connection: NWConnection
   
   var controlIsConnected = false
@@ -20,8 +20,10 @@ class UDPConnection {
     connection.stateUpdateHandler = self.stateUpdate(to:)
     connection.start(queue: UDPServer.singleton.udpQueue)
     
-    let msg = "Hey, now".data(using: .utf8)
-    log("Send msg")
+    let msg = "CxInc handle init udp message".data(using: .utf8)
+
+    
+
     connection.send(content: msg, completion: .contentProcessed({ error in
       if let error = error {
         self.log("UDP Connection initialization send error: \(error)")

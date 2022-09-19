@@ -16,13 +16,13 @@ class UDPServer {
   let udpQueue: DispatchQueue
   
   var listener: NWListener?
-  var controlConnection: UDPConnection?
+  var controlConnection: UDPIncoming?
   
   private let logHdr = "Sharktopoda UDP Server"
   
   static let singleton = UDPServer()
   private init() {
-    udpQueue = DispatchQueue(label: "Sharktopoda UDP Queue")
+    udpQueue = DispatchQueue(label: "Sharktopoda UDP Incoming Queue")
   }
   
   func start() {
@@ -59,7 +59,7 @@ class UDPServer {
       }
     } else {
       print("CxInc Process first message to establish controlEndpoint")
-      controlConnection = UDPConnection(using: someConnection)
+      controlConnection = UDPIncoming(using: someConnection)
     }
   }
   

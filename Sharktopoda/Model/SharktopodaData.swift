@@ -12,7 +12,4 @@ import SwiftUI
 
 final class SharktopodaData: ObservableObject {
   @Published var videoAssets = [String: VideoAsset]()
-  
-  @Published var wtf: String = "WTF?"
-  
 }

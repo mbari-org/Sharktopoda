@@ -8,10 +8,10 @@
 import Foundation
 
 struct PingRequest: RequestMessage {
-  var command: String
+  var command: RequestCommand
 
   init() {
-    self.command = RequestCommand.ping.rawValue
+    self.command = RequestCommand.ping
   }
   
   func jsonData() -> Data {

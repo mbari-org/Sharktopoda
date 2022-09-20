@@ -8,7 +8,7 @@
 import Foundation
 
 protocol RequestMessage: Encodable {
-  var command: String { get set }
+  var command: RequestCommand { get set }
   
   func jsonData() -> Data
 }

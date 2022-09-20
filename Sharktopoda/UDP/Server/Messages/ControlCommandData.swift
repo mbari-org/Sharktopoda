@@ -23,7 +23,7 @@ struct ControlCommandData {
       command = messageCommand.command
     } catch {
       command = .unknown
-      self.error = "Failed parsing JSON"
+      self.error = "Invalid command"
     }
   }
 }

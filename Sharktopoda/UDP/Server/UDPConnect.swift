@@ -74,7 +74,7 @@ class UDPConnect {
       UDP.server.connectClient(using: connectCommand)
     }
     catch {
-      let responseData = ControlResponse.failed(.connect, cause: "Invalid JSON data")
+      let responseData = ControlResponse.failed(.connect, cause: "Invalid message")
       connection.send(content: responseData, completion: .contentProcessed({ _ in }))
     }
   }

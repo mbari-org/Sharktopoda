@@ -7,7 +7,16 @@
 
 import Foundation
 
-//struct ControlOpen: ControlMessage {
-//
-//
-//}
+struct ControlOpen: ControlMessage {
+  var command: ControlCommand
+  var uuid: String
+  var url: String
+  
+  init(from messageData: Data) throws {
+    let controlMessage = try JSONDecoder().decode(ControlOpen.self, from: messageData)
+
+    self.command = controlMessage.command
+    self.uuid = controlMessage.uuid
+    self.url = controlMessage.url
+  }
+}

@@ -13,14 +13,14 @@ class UDPClient {
   var isReady = false
   
   init(using connectCommand: ControlConnect) {
-    let host = NWEndpoint.Host(connectCommand.host)
+    let host = NWEndpoint.Host(connectCommand.host!)
     let port = NWEndpoint.Port(rawValue: UInt16(connectCommand.port))!
     
     connection = NWConnection(host: host, port: port, using: .udp)
     connection.stateUpdateHandler = self.stateUpdate(to:)
     connection.start(queue: UDP.singleton.clientQueue)
     
-    log("connect to \(connectCommand.host) on port \(connectCommand.port)")
+    log("connect to \(connectCommand.host!) on port \(connectCommand.port)")
   }
   
   func stateUpdate(to update: NWConnection.State) {

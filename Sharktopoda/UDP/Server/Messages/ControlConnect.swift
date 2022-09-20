@@ -7,23 +7,16 @@
 
 import Foundation
 
-struct ControlConnect {
-  struct MaybeControlConnect: ControlMessage {
-    var command: ControlCommand
-    var port: Int
-    
-    var host: String? = nil
-  }
-  
-  let command: ControlCommand
-  let host: String
+struct ControlConnect: ControlMessage {
+  var command: ControlCommand
+  var host: String?
   let port: Int
   
   init(from messageData: Data) throws {
-    let connectCommand = try JSONDecoder().decode(MaybeControlConnect.self, from: messageData)
+    let controlMessage = try JSONDecoder().decode(ControlConnect.self, from: messageData)
     
-    self.command = connectCommand.command
-    self.host = connectCommand.host ?? "localhost"
-    self.port = connectCommand.port
+    self.command = controlMessage.command
+    self.host = controlMessage.host ?? "localhost"
+    self.port = controlMessage.port
   }
 }

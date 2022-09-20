@@ -54,6 +54,12 @@ class UDPConnect {
       }
       switch commandData.command {
         case IncomingCommand.connect.rawValue:
+          guard UDP.client == nil else {
+            let responseData = ResponseData.failed("UDP control client already established")
+            connection.send(content: responseData, completion: .contentProcessed({ _ in }))
+            return
+          }
+
           processConnect(using: commandData.data, on: connection)
           
         case IncomingCommand.ping.rawValue:

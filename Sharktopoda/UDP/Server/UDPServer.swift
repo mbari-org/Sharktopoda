@@ -46,12 +46,6 @@ class UDPServer {
   }
   
   private func messageFrom(incomingConnection: NWConnection) {
-    guard UDP.client == nil else {
-      let responseData = ResponseData.failed("UDP client already established")
-      incomingConnection.send(content: responseData, completion: .contentProcessed({ _ in }))
-      return
-    }
-    
     if let udpConnect = self.udpConnect {
       udpConnect.stop()
     }

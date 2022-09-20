@@ -22,15 +22,15 @@ class UDPConnect {
   func stateUpdate(to update: NWConnection.State) {
     switch update {
       case .preparing, .setup, .waiting:
-        log("state \(update)")
+        return
       case .ready:
-        log("ready")
+        log("state \(update)")
         processMessage(self.connection)
       case .failed(let error):
         log("state update failed error \(error)")
         exit(EXIT_FAILURE)
       case .cancelled:
-        print("state updated to cancelled")
+        log("state \(update)")
       @unknown default:
         log("state unknown")
     }
@@ -54,12 +54,6 @@ class UDPConnect {
       }
       switch commandData.command {
         case IncomingCommand.connect.rawValue:
-          guard UDP.client == nil else {
-            let responseData = ResponseData.failed("UDP control client already established")
-            connection.send(content: responseData, completion: .contentProcessed({ _ in }))
-            return
-          }
-
           processConnect(using: commandData.data, on: connection)
           
         case IncomingCommand.ping.rawValue:

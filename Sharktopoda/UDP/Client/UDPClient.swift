@@ -4,7 +4,6 @@
 //
 //  Apache License 2.0 — See project LICENSE file
 //
-
 import Foundation
 import Network
 
@@ -20,14 +19,16 @@ class UDPClient {
     connection = NWConnection(host: host, port: port, using: .udp)
     connection.stateUpdateHandler = self.stateUpdate(to:)
     connection.start(queue: UDP.singleton.clientQueue)
+    
+    log("connect to \(connectCommand.host) on port \(connectCommand.port)")
   }
   
   func stateUpdate(to update: NWConnection.State) {
     switch update {
       case .preparing, .setup, .waiting:
-        log("state \(update)")
+        return
       case .ready:
-        log("ready")
+        log("state \(update)")
         isReady = true
         
         let pingRequest = PingRequest().jsonData()
@@ -37,7 +38,7 @@ class UDPClient {
         log("failed with error \(error)")
         exit(EXIT_FAILURE)
       case .cancelled:
-        print("CxInc state updated to cancelled")
+        log("state \(update)")
       @unknown default:
         log("state unknown")
     }

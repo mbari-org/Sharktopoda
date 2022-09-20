@@ -27,6 +27,7 @@ class UDP {
   static func client(using connectCommand: ConnectCommand) {
     if let client = UDP.client {
       client.stop()
+      UDP.client = nil
     }
     UDP.client = UDPClient(using: connectCommand)
   }

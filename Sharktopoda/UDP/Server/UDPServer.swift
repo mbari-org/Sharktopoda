@@ -33,10 +33,10 @@ class UDPServer {
   
   func stateUpdate(to update: NWListener.State) {
     switch update {
-      case .setup, .waiting, .cancelled:
+      case .setup, .waiting:
+        return
+      case .ready, .cancelled:
         log("state \(update)")
-      case .ready:
-        log("ready")
       case .failed(let error):
         log("failed with error \(error)")
         exit(EXIT_FAILURE)

@@ -69,11 +69,8 @@ class UDPConnect {
   
   func processConnect(using data: Data, on connection: NWConnection) {
     do {
-      let connectCommand = try ConnectCommand(from: data)
-      let responseData = ResponseData.ok(IncomingCommand.connect.rawValue)
-      connection.send(content: responseData, completion: .contentProcessed({ _ in }))
+      self.connectCommand = try ConnectCommand(from: data)
       
-      UDPServer.singleton.incomingConnection(using: connectCommand)
     }
     catch let error {
       let responseData = ResponseData.failed(IncomingCommand.connect.rawValue, cause: "\(error)")

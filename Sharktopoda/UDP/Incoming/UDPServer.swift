@@ -17,10 +17,8 @@ class UDPServer {
 
   var listener: NWListener?
   
-  var udpConnect: UDPConnect?
-  
   var incomingConnection: UDPIncoming?
-    
+  
   static let singleton = UDPServer()
   private init() {
     connectQueue = DispatchQueue(label: "Sharktopoda UDP Connect Queue")
@@ -58,7 +56,8 @@ class UDPServer {
       return
     }
     
-    udpConnect = UDPConnect(using: someConnection)
+//    UDPConnect(using: someConnection)
+    
     
 //    if let connectCommand = udpConnect.connectCommand {
 //      self.incomingConnection = UDPIncoming(using: connectCommand)
@@ -69,7 +68,6 @@ class UDPServer {
   
   func incomingConnection(using connectCommand: ConnectCommand) {
     self.incomingConnection = UDPIncoming(using: connectCommand)
-
     print("CxInc send ping on new incoming connection for validation")
   }
   

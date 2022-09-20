@@ -16,7 +16,7 @@ class UDPConnect {
   init(using udpConnection: NWConnection) {
     connection = udpConnection
     connection.stateUpdateHandler = self.stateUpdate(to:)
-    connection.start(queue: UDPServer.singleton.connectQueue)
+    connection.start(queue: UDP.singleton.serverQueue)
   }
   
   func stateUpdate(to update: NWConnection.State) {
@@ -69,8 +69,8 @@ class UDPConnect {
   
   func processConnect(using data: Data, on connection: NWConnection) {
     do {
-      self.connectCommand = try ConnectCommand(from: data)
-      
+      let connectCommand = try ConnectCommand(from: data)
+      UDP.server.connectClient(using: connectCommand)
     }
     catch let error {
       let responseData = ResponseData.failed(IncomingCommand.connect.rawValue, cause: "\(error)")
@@ -92,6 +92,6 @@ class UDPConnect {
   
   func log(_ msg: String) {
     let logHdr = "Sharktopoda UDP Connect"
-    UDPServer.singleton.log(hdr: logHdr, msg)
+    UDP.log(hdr: logHdr, msg)
   }
 }

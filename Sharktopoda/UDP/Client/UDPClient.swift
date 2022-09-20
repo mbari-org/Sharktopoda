@@ -18,7 +18,7 @@ class UDPClient {
     let host = NWEndpoint.Host(connectCommand.host)
     let port = NWEndpoint.Port(rawValue: UInt16(connectCommand.port))!
     connection = NWConnection(host: host, port: port, using: .udp)
-    incomingQueue = DispatchQueue(label: "Sharktopoda UDP Incoming Queue")
+    incomingQueue = DispatchQueue(label: "Sharktopoda UDP Client Queue")
     
     connection.stateUpdateHandler = self.stateUpdate(to:)
     connection.start(queue: incomingQueue)
@@ -76,6 +76,6 @@ class UDPClient {
   
   func log(_ msg: String) {
     let logHdr = "Sharktopoda UDP Incoming Connection"
-    UDPServer.singleton.log(hdr: logHdr, msg)
+    UDP.log(hdr: logHdr, msg)
   }
 }

@@ -10,7 +10,7 @@ import SwiftUI
 @main
 struct SharktopodaApp: App {
   init() {
-    UDPServer.singleton.start()
+    UDP.start()
   }
   
   var body: some Scene {

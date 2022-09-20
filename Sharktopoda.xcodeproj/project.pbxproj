@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		E21DEEDF28DA13CB00A2AC01 /* PingRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21DEEDD28DA13CB00A2AC01 /* PingRequest.swift */; };
 		E21DEEE028DA13CB00A2AC01 /* RequestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21DEEDE28DA13CB00A2AC01 /* RequestData.swift */; };
+		E21DEEE228DA1F3D00A2AC01 /* UDP.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21DEEE128DA1F3D00A2AC01 /* UDP.swift */; };
 		E229F4C228D9150A001F220E /* ConnectCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = E229F4C128D9150A001F220E /* ConnectCommand.swift */; };
 		E295627528D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295627428D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift */; };
 		E295627728D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295627628D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift */; };
@@ -65,6 +66,7 @@
 /* Begin PBXFileReference section */
 		E21DEEDD28DA13CB00A2AC01 /* PingRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PingRequest.swift; sourceTree = "<group>"; };
 		E21DEEDE28DA13CB00A2AC01 /* RequestData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestData.swift; sourceTree = "<group>"; };
+		E21DEEE128DA1F3D00A2AC01 /* UDP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDP.swift; sourceTree = "<group>"; };
 		E229F4C128D9150A001F220E /* ConnectCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectCommand.swift; sourceTree = "<group>"; };
 		E295627428D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationDisplayPreferencesView.swift; sourceTree = "<group>"; };
 		E295627628D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationSelectionPreferencesView.swift; sourceTree = "<group>"; };
@@ -269,6 +271,7 @@
 		E2C22ECD28D27B81003CD976 /* UDP */ = {
 			isa = PBXGroup;
 			children = (
+				E21DEEE128DA1F3D00A2AC01 /* UDP.swift */,
 				E2C078D128D8B86C00C55EEC /* Server */,
 				E2D47E9728D8C0ED0068B192 /* Client */,
 			);
@@ -454,6 +457,7 @@
 				E2C22EDA28D386AE003CD976 /* Main.swift in Sources */,
 				E295627928D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift in Sources */,
 				E2C22ED328D2AAF3003CD976 /* VideoView.swift in Sources */,
+				E21DEEE228DA1F3D00A2AC01 /* UDP.swift in Sources */,
 				E2989ABF28D3D083009D2D65 /* ColorPref.swift in Sources */,
 				E2D47EA228D8EAF00068B192 /* ResponseData.swift in Sources */,
 				E2C22ECF28D27C2D003CD976 /* UDPServer.swift in Sources */,

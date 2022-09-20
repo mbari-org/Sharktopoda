@@ -13,26 +13,22 @@ class UDPServer {
   // Prefs ensure port is set
   @AppStorage(PrefKeys.port) private var port: Int?
   
-  let connectQueue: DispatchQueue
-
   var listener: NWListener?
-  
-  var updClient: UDPClient?
+  var udpConnect: UDPConnect?
   
   static let singleton = UDPServer()
   private init() {
-    connectQueue = DispatchQueue(label: "Sharktopoda UDP Connect Queue")
   }
   
-  func start() {
+  func start(queue: DispatchQueue) {
     if let _ = listener { stop() }
     
     listener = try! NWListener(using: .udp, on: NWEndpoint.Port(rawValue: UInt16(port!))!)
     
     listener!.stateUpdateHandler = stateUpdate(to:)
-    listener!.newConnectionHandler = messageFrom(someConnection:)
+    listener!.newConnectionHandler = messageFrom(incomingConnection:)
     
-    listener!.start(queue: connectQueue)
+    listener!.start(queue: queue)
   }
   
   func stateUpdate(to update: NWListener.State) {
@@ -49,26 +45,29 @@ class UDPServer {
     }
   }
   
-  private func messageFrom(someConnection: NWConnection) {
-    guard updClient == nil else {
-      let responseData = ResponseData.failed("Control already connected")
-      someConnection.send(content: responseData, completion: .contentProcessed({ _ in }))
+  private func messageFrom(incomingConnection: NWConnection) {
+    guard UDP.client == nil else {
+      let responseData = ResponseData.failed("UDP client already established")
+      incomingConnection.send(content: responseData, completion: .contentProcessed({ _ in }))
       return
     }
     
-//    UDPConnect(using: someConnection)
-    
-    
-//    if let connectCommand = udpConnect.connectCommand {
-//      self.incomingConnection = UDPIncoming(using: connectCommand)
-//      let responseData = ResponseData.ok(IncomingCommand.connect.rawValue)
-//      someConnection.send(content: responseData, completion: .contentProcessed({ _ in }))
-//    }
+    if let udpConnect = self.udpConnect {
+      udpConnect.stop()
+    }
+    udpConnect = UDPConnect(using: incomingConnection)
+
+    let responseData = ResponseData.ok(IncomingCommand.connect.rawValue)
+    incomingConnection.send(content: responseData, completion: .contentProcessed({ _ in }))
   }
   
-  func incomingConnection(using connectCommand: ConnectCommand) {
-    self.updClient = UDPClient(using: connectCommand)
-    print("CxInc send ping on new incoming connection for validation")
+  func connectClient(using connectCommand: ConnectCommand) {
+    if let udpConnect = self.udpConnect {
+      udpConnect.stop()
+    }
+    self.udpConnect = nil
+
+    UDP.client(using: connectCommand)
   }
   
   func stop() {
@@ -83,10 +82,7 @@ class UDPServer {
   
   func log(_ msg: String) {
     let logHdr = "Sharktopoda UDP Server"
-    self.log(hdr: "\(logHdr) (\(port!))", msg)
+    UDP.log(hdr: "\(logHdr) (\(port!))", msg)
   }
-  
-  func log(hdr: String, _ msg: String) {
-    NSLog("\(hdr) \(msg)")
-  }
+
 }

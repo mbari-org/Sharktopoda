@@ -10,30 +10,20 @@ import Foundation
 struct ControlConnect {
   struct MaybeControlConnect: ControlMessage {
     var command: ControlCommand
+    var port: Int
     
     var host: String? = nil
-    var port: String? = nil
   }
   
-  enum ControlConnectError: Error {
-    case message(String)
-  }
-  
-  let command: String
+  let command: ControlCommand
   let host: String
   let port: Int
   
   init(from messageData: Data) throws {
     let connectCommand = try JSONDecoder().decode(MaybeControlConnect.self, from: messageData)
     
-    self.command = connectCommand.command.rawValue
+    self.command = connectCommand.command
     self.host = connectCommand.host ?? "localhost"
-    guard let commandPort = connectCommand.port else {
-      throw ControlConnectError.message("Missing port")
-    }
-    guard let port = Int(commandPort) else {
-      throw ControlConnectError.message("Invalid port value")
-    }
-    self.port = port
+    self.port = connectCommand.port
   }
 }

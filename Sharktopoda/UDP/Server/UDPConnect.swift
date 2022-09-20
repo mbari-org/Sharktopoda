@@ -73,8 +73,8 @@ class UDPConnect {
       let connectCommand = try ControlConnect(from: data)
       UDP.server.connectClient(using: connectCommand)
     }
-    catch let error {
-      let responseData = ControlResponse.failed(.connect, cause: "\(error)")
+    catch {
+      let responseData = ControlResponse.failed(.connect, cause: "Invalid JSON data")
       connection.send(content: responseData, completion: .contentProcessed({ _ in }))
     }
   }

@@ -11,7 +11,7 @@ struct ClientPing: ClientMessage {
   var command: ClientCommand
 
   init() {
-    self.command = ClientCommand.ping
+    self.command = .ping
   }
   
   func jsonData() -> Data {

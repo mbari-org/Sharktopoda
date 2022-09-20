@@ -15,7 +15,7 @@ struct SharktopodaApp: App {
   
   var body: some Scene {
     WindowGroup {
-      ContentView()
+      Main()
     }
     .commands {
       SharktopodaCommands()

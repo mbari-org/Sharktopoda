@@ -8,7 +8,7 @@
 import Foundation
 import Network
 
-class UDPIncoming {
+class UDPClient {
   var connection: NWConnection
   let incomingQueue: DispatchQueue
   

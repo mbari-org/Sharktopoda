@@ -17,7 +17,7 @@ class UDPServer {
 
   var listener: NWListener?
   
-  var incomingConnection: UDPIncoming?
+  var updClient: UDPClient?
   
   static let singleton = UDPServer()
   private init() {
@@ -50,7 +50,7 @@ class UDPServer {
   }
   
   private func messageFrom(someConnection: NWConnection) {
-    guard incomingConnection == nil else {
+    guard updClient == nil else {
       let responseData = ResponseData.failed("Control already connected")
       someConnection.send(content: responseData, completion: .contentProcessed({ _ in }))
       return
@@ -67,7 +67,7 @@ class UDPServer {
   }
   
   func incomingConnection(using connectCommand: ConnectCommand) {
-    self.incomingConnection = UDPIncoming(using: connectCommand)
+    self.updClient = UDPClient(using: connectCommand)
     print("CxInc send ping on new incoming connection for validation")
   }
   

@@ -209,10 +209,10 @@
 		E2C22E8328CFDC26003CD976 /* Sharktopoda */ = {
 			isa = PBXGroup;
 			children = (
+				E2C22E8428CFDC26003CD976 /* SharktopodaApp.swift */,
 				E2C22ECD28D27B81003CD976 /* UDP */,
 				E2C22EC328D14495003CD976 /* Model */,
 				E2C22EC628D2662A003CD976 /* View */,
-				E2C22E8428CFDC26003CD976 /* SharktopodaApp.swift */,
 				E2C22E8828CFDC28003CD976 /* Assets.xcassets */,
 				E2C22E8D28CFDC28003CD976 /* Sharktopoda.entitlements */,
 				E2C22E8A28CFDC28003CD976 /* Preview Content */,
@@ -259,9 +259,9 @@
 		E2C22EC628D2662A003CD976 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				E295628928D67A6500E88ED1 /* SharktopodaCommands.swift */,
-				E2989AB528D3B22E009D2D65 /* Preferences */,
 				E2C22ED828D38686003CD976 /* Main */,
+				E2989AB528D3B22E009D2D65 /* Preferences */,
+				E295628928D67A6500E88ED1 /* SharktopodaCommands.swift */,
 				E2C22E8628CFDC26003CD976 /* ContentView.swift */,
 				E2C22ED228D2AAF3003CD976 /* VideoView.swift */,
 			);

@@ -11,7 +11,7 @@ import Network
 class UDPConnect {
   let connection: NWConnection
 
-  var connectCommand: ConnectCommand?
+  var connectCommand: ControlConnect?
   
   init(using udpConnection: NWConnection) {
     connection = udpConnection
@@ -39,29 +39,30 @@ class UDPConnect {
   func processMessage(_ connection: NWConnection) {
     connection.receiveMessage { [self] (data, _, isComplete, error) in
       guard isComplete else {
-        self.log("receive not complete")
+        self.log("message not complete")
         return
       }
       guard let data = data, !data.isEmpty else {
-        self.log("receive empty message")
+        self.log("empty message")
         return
       }
-      let commandData = CommandData(from: data)
+      let commandData = ControlCommandData(from: data)
+      self.log(commandData.command.rawValue)
       if let error = commandData.error {
-        let responseData = ResponseData.failed("unknown", cause: error)
+        let responseData = ControlResponse.failed(.unknown, cause: error)
         connection.send(content: responseData, completion: .contentProcessed({ _ in }))
         return
       }
       switch commandData.command {
-        case IncomingCommand.connect.rawValue:
+        case .connect:
           processConnect(using: commandData.data, on: connection)
           
-        case IncomingCommand.ping.rawValue:
-          let responseData = ResponseData.ping()
+        case .ping:
+          let responseData = ControlResponse.ping()
           connection.send(content: responseData, completion: .contentProcessed({ _ in }))
           
         default:
-          let responseData = ResponseData.failed(commandData.command, cause: "Not connected")
+          let responseData = ControlResponse.failed(commandData.command, cause: "Not connected")
           connection.send(content: responseData, completion: .contentProcessed({ _ in }))
       }
     }
@@ -69,11 +70,11 @@ class UDPConnect {
   
   func processConnect(using data: Data, on connection: NWConnection) {
     do {
-      let connectCommand = try ConnectCommand(from: data)
+      let connectCommand = try ControlConnect(from: data)
       UDP.server.connectClient(using: connectCommand)
     }
     catch let error {
-      let responseData = ResponseData.failed(IncomingCommand.connect.rawValue, cause: "\(error)")
+      let responseData = ControlResponse.failed(.connect, cause: "\(error)")
       connection.send(content: responseData, completion: .contentProcessed({ _ in }))
     }
   }

@@ -1,5 +1,5 @@
 //
-//  PingRequest.swift
+//  ClientPing.swift
 //  Created for Sharktopoda on 9/20/22.
 //
 //  Apache License 2.0 — See project LICENSE file
@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct PingRequest: RequestMessage {
-  var command: RequestCommand
+struct ClientPing: ClientMessage {
+  var command: ClientCommand
 
   init() {
-    self.command = RequestCommand.ping
+    self.command = ClientCommand.ping
   }
   
   func jsonData() -> Data {

@@ -51,11 +51,11 @@ class UDPServer {
     }
     udpConnect = UDPConnect(using: incomingConnection)
 
-    let responseData = ResponseData.ok(IncomingCommand.connect.rawValue)
+    let responseData = ControlResponse.ok(.connect)
     incomingConnection.send(content: responseData, completion: .contentProcessed({ _ in }))
   }
   
-  func connectClient(using connectCommand: ConnectCommand) {
+  func connectClient(using connectCommand: ControlConnect) {
     if let udpConnect = self.udpConnect {
       udpConnect.stop()
     }

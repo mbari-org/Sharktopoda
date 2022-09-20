@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum RequestCommand: String, Codable {
+enum ClientCommand: String, Codable {
   case captureDone
   case addLocalizations
   case removeLocalizations

@@ -12,12 +12,12 @@ enum ResponseMessageStatus: String {
   case failed
 }
 
-struct StatusResponse : Encodable {
-  let response: String
+struct StatusResponse : ControlResponseMessage {
+  var response: ControlCommand
   let status: String
   var cause: String?
   
-  init(_ response: String, status: ResponseMessageStatus, cause: String? = nil) {
+  init(_ response: ControlCommand, status: ResponseMessageStatus, cause: String? = nil) {
     self.response = response
     self.status = status.rawValue
     self.cause = cause

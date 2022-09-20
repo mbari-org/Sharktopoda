@@ -24,7 +24,7 @@ class UDP {
     UDP.server.start(queue: UDP.singleton.serverQueue)
   }
 
-  static func client(using connectCommand: ConnectCommand) {
+  static func client(using connectCommand: ControlConnect) {
     if let client = UDP.client {
       client.stop()
       UDP.client = nil

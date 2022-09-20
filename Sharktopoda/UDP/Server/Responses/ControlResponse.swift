@@ -7,18 +7,17 @@
 
 import Foundation
 
-struct ResponseData {
-  
-  static func ok(_ response: String) -> Data {
+struct ControlResponse {
+  static func ok(_ response: ControlCommand) -> Data {
     StatusResponse(response, status: .ok).jsonData()
   }
   
-  static func failed(_ response: String, cause: String? = nil) -> Data {
+  static func failed(_ response: ControlCommand, cause: String? = nil) -> Data {
     StatusResponse(response, status: .failed, cause: cause).jsonData()
   }
   
   static func ping() -> Data {
-    ResponseData.ok("ping")
+    ControlResponse.ok(.ping)
   }
   
 }

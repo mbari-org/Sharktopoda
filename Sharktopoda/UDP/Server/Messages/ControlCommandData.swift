@@ -1,5 +1,5 @@
 //
-//  CommandData.swift
+//  ControlCommandData.swift
 //  Created for Sharktopoda on 9/19/22.
 //
 //  Apache License 2.0 — See project LICENSE file
@@ -7,22 +7,22 @@
 
 import Foundation
 
-struct CommandData {
-  struct Command: Decodable {
-    let command: String
+struct ControlCommandData {
+  struct MaybeControlMessage: ControlMessage {
+    var command: ControlCommand
   }
   
-  var command: String
+  var command: ControlCommand
   var data: Data
   var error: String?
   
   init(from messageData: Data) {
     data = messageData
     do {
-      let messageCommand = try JSONDecoder().decode(Command.self, from: messageData)
+      let messageCommand = try JSONDecoder().decode(MaybeControlMessage.self, from: messageData)
       command = messageCommand.command
     } catch {
-      command = ""
+      command = .unknown
       self.error = "Failed parsing JSON"
     }
   }

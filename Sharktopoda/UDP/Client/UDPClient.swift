@@ -12,7 +12,7 @@ class UDPClient {
   
   var isReady = false
   
-  init(using connectCommand: ConnectCommand) {
+  init(using connectCommand: ControlConnect) {
     let host = NWEndpoint.Host(connectCommand.host)
     let port = NWEndpoint.Port(rawValue: UInt16(connectCommand.port))!
     
@@ -31,7 +31,7 @@ class UDPClient {
         log("state \(update)")
         isReady = true
         
-        send(PingRequest())
+        send(ClientPing())
         
       case .failed(let error):
         log("failed with error \(error)")
@@ -43,7 +43,7 @@ class UDPClient {
     }
   }
   
-  func send(_ message: RequestMessage) {
+  func send(_ message: ClientMessage) {
     if !isReady {
       log("attempted send when connection not ready")
       return

@@ -1,5 +1,5 @@
 //
-//  IncomingCommand.swift
+//  ControlCommand.swift
 //  Created for Sharktopoda on 9/19/22.
 //
 //  Apache License 2.0 — See project LICENSE file
@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum IncomingCommand: String {
+enum ControlCommand: String, Codable {
   case connect
   case open
   case close
@@ -21,4 +21,5 @@ enum IncomingCommand: String {
   case advance
   case capture
   case ping
+  case unknown
 }

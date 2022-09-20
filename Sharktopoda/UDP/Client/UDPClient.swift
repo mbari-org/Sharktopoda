@@ -31,8 +31,7 @@ class UDPClient {
         log("state \(update)")
         isReady = true
         
-        let pingRequest = PingRequest().jsonData()
-        send(pingRequest)
+        send(PingRequest())
         
       case .failed(let error):
         log("failed with error \(error)")
@@ -44,15 +43,18 @@ class UDPClient {
     }
   }
   
-  func send(_ data: Data) {
+  func send(_ message: RequestMessage) {
     if !isReady {
       log("attempted send when connection not ready")
       return
     }
     
+    log("send \(message.command)")
+    
+    let data = message.jsonData()
     connection.send(content: data, completion: .contentProcessed({ error in
       if let error = error {
-        self.log("UDP Client send error: \(error)")
+        self.log("send error: \(error)")
       }
     }))
   }
@@ -79,7 +81,7 @@ class UDPClient {
   }
   
   func log(_ msg: String) {
-    let logHdr = "Sharktopoda UDP Incoming Connection"
+    let logHdr = "Sharktopoda UDP Client"
     UDP.log(hdr: logHdr, msg)
   }
 }

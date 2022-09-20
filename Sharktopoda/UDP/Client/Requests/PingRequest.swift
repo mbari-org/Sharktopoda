@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct PingRequest: Encodable {
-  let command: String
+struct PingRequest: RequestMessage {
+  var command: String
 
   init() {
-    self.command = OutgoingCommand.ping.rawValue
+    self.command = RequestCommand.ping.rawValue
   }
   
   func jsonData() -> Data {

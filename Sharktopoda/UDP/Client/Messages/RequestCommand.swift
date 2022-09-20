@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum OutgoingCommand: String {
+enum RequestCommand: String {
   case captureDone
   case addLocalizations
   case removeLocalizations

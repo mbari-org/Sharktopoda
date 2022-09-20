@@ -10,30 +10,16 @@ import Network
 
 class UDPClient {
   var connection: NWConnection
-  let incomingQueue: DispatchQueue
   
-  var controlIsConnected = false
+  var isReady = false
   
   init(using connectCommand: ConnectCommand) {
     let host = NWEndpoint.Host(connectCommand.host)
     let port = NWEndpoint.Port(rawValue: UInt16(connectCommand.port))!
+    
     connection = NWConnection(host: host, port: port, using: .udp)
-    incomingQueue = DispatchQueue(label: "Sharktopoda UDP Client Queue")
-    
     connection.stateUpdateHandler = self.stateUpdate(to:)
-    connection.start(queue: incomingQueue)
-    
-    let msg = "CxInc handle init udp message".data(using: .utf8)
-
-    connection.send(content: msg, completion: .contentProcessed({ error in
-      if let error = error {
-        self.log("UDP Connection initialization send error: \(error)")
-      }
-    }))
-  }
-  
-  func isControl(_ someConnection: NWConnection) -> Bool {
-    someConnection.endpoint == connection.endpoint
+    connection.start(queue: UDP.singleton.clientQueue)
   }
   
   func stateUpdate(to update: NWConnection.State) {
@@ -42,7 +28,11 @@ class UDPClient {
         log("state \(update)")
       case .ready:
         log("ready")
-        receiveLoop()
+        isReady = true
+        
+        let pingRequest = PingRequest().jsonData()
+        send(pingRequest)
+        
       case .failed(let error):
         log("failed with error \(error)")
         exit(EXIT_FAILURE)
@@ -53,21 +43,34 @@ class UDPClient {
     }
   }
   
-  private func receiveLoop() {
-    self.connection.receiveMessage { data, _, isComplete, error in
-      if let error = error {
-        self.log("receive message error \(error)")
-        return
-      }
-      guard isComplete, let data = data else {
-        self.log("receive nil data")
-        return
-      }
-      let msg = String(decoding: data, as: UTF8.self)
-      self.log("CxInc handle msg: \(msg)")
-      self.receiveLoop()
+  func send(_ data: Data) {
+    if !isReady {
+      log("attempted send when connection not ready")
+      return
     }
+    
+    connection.send(content: data, completion: .contentProcessed({ error in
+      if let error = error {
+        self.log("UDP Client send error: \(error)")
+      }
+    }))
   }
+  
+  //  private func receiveLoop() {
+  //    self.connection.receiveMessage { data, _, isComplete, error in
+  //      if let error = error {
+  //        self.log("receive message error \(error)")
+  //        return
+  //      }
+  //      guard isComplete, let data = data else {
+  //        self.log("receive nil data")
+  //        return
+  //      }
+  //      let msg = String(decoding: data, as: UTF8.self)
+  //      self.log("CxInc handle msg: \(msg)")
+  //      self.receiveLoop()
+  //    }
+  //  }
   
   func stop()  {
     connection.stateUpdateHandler = nil

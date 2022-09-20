@@ -10,8 +10,8 @@ import Foundation
 struct PingRequest: Encodable {
   let command: String
 
-  init(_ command: String) {
-    self.command = command
+  init() {
+    self.command = OutgoingCommand.ping.rawValue
   }
   
   func jsonData() -> Data {

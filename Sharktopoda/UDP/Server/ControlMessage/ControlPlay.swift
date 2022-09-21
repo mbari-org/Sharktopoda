@@ -13,8 +13,7 @@ struct ControlPlay: ControlMessage {
   @Default<Double.PlaybackRate> var rate: Double
 
   func process() -> Data {
-    print("CxInc handle control play: \(self)")
-
+    print("CxInc handle: \(self)")
     return ControlResponse.ok(command)
   }
 }

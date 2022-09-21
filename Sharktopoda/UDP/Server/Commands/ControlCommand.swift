@@ -7,22 +7,23 @@
 
 import Foundation
 
+// CxInc add control localization commands
+
 enum ControlCommand: String, Codable {
-  case allInfo
-  case capture
+  case advance = "frame advance"
+  case all = "request all information"
+  case capture = "frame capture"
   case close
   case connect
-  case elapsedTime
-  case frameAdvance
-  case info
-//  case localizationsAdd = "add localizations"
+  case elapsed = "request elapsed time"
+  case info = "request information"
   case open
   case pause
   case ping
   case play
-  case playback
-  case seek
+  case seek = "seek elapsed time"
   case show
+  case status = "request status"
   case unknown
   
   struct ControlMessageCommand: Decodable {
@@ -52,15 +53,27 @@ enum ControlCommand: String, Codable {
     do {
       var controlMessageType: ControlMessage.Type
       switch controlCommand {
+        case .advance:
+          controlMessageType = ControlAdvance.self
+
+        case .all:
+          controlMessageType = ControlAll.self
+          
+        case .capture:
+          controlMessageType = ControlCapture.self
+
         case .close:
           controlMessageType = ControlClose.self
           
         case .connect:
           controlMessageType = ControlConnect.self
+
+        case .elapsed:
+          controlMessageType = ControlElapsed.self
           
-        case .frameAdvance:
-          controlMessageType = ControlFrameAdvance.self
-          
+        case .info:
+          controlMessageType = ControlInfo.self
+
         case .open:
           controlMessageType = ControlOpen.self
           
@@ -72,11 +85,17 @@ enum ControlCommand: String, Codable {
           
         case .ping:
           controlMessageType = ControlPing.self
-          
+
+        case .seek:
+          controlMessageType = ControlSeek.self
+
         case .show:
           controlMessageType = ControlShow.self
-          
-        default:
+
+        case .status:
+          controlMessageType = ControlStatus.self
+
+        case .unknown:
           controlMessageType = ControlUnknown.self
       }
       

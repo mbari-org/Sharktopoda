@@ -22,7 +22,7 @@
 		E2675E2C28DB5F9400F5F114 /* DefaultlValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2B28DB5F9400F5F114 /* DefaultlValue.swift */; };
 		E2675E2F28DB729900F5F114 /* ControlInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2E28DB729900F5F114 /* ControlInfo.swift */; };
 		E2675E3228DB751600F5F114 /* ResponseStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E3128DB751600F5F114 /* ResponseStatus.swift */; };
-		E2675E3428DB7A4000F5F114 /* ControlFrameAdvance.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E3328DB7A4000F5F114 /* ControlFrameAdvance.swift */; };
+		E2675E3428DB7A4000F5F114 /* ControlAdvance.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E3328DB7A4000F5F114 /* ControlAdvance.swift */; };
 		E295627528D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295627428D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift */; };
 		E295627728D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295627628D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift */; };
 		E295627928D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295627828D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift */; };
@@ -56,6 +56,11 @@
 		E2D47EA228D8EAF00068B192 /* ControlResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D47EA128D8EAF00068B192 /* ControlResponse.swift */; };
 		E2D47EA528D8ED300068B192 /* ResponseControlStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D47EA428D8ED300068B192 /* ResponseControlStatus.swift */; };
 		E2E5962D28DA63700058D054 /* ControlOpen.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E5962C28DA63700058D054 /* ControlOpen.swift */; };
+		E2EE0E3828DB9A6600138A86 /* ControlElapsed.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EE0E3728DB9A6600138A86 /* ControlElapsed.swift */; };
+		E2EE0E3A28DB9AAD00138A86 /* ControlStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EE0E3928DB9AAD00138A86 /* ControlStatus.swift */; };
+		E2EE0E3C28DB9B3B00138A86 /* ControlSeek.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EE0E3B28DB9B3B00138A86 /* ControlSeek.swift */; };
+		E2EE0E3E28DB9B9F00138A86 /* ControlCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EE0E3D28DB9B9F00138A86 /* ControlCapture.swift */; };
+		E2EE0E4028DB9DD200138A86 /* ControlAll.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EE0E3F28DB9DD200138A86 /* ControlAll.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,7 +96,7 @@
 		E2675E2B28DB5F9400F5F114 /* DefaultlValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultlValue.swift; sourceTree = "<group>"; };
 		E2675E2E28DB729900F5F114 /* ControlInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlInfo.swift; sourceTree = "<group>"; };
 		E2675E3128DB751600F5F114 /* ResponseStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseStatus.swift; sourceTree = "<group>"; };
-		E2675E3328DB7A4000F5F114 /* ControlFrameAdvance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlFrameAdvance.swift; sourceTree = "<group>"; };
+		E2675E3328DB7A4000F5F114 /* ControlAdvance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlAdvance.swift; sourceTree = "<group>"; };
 		E295627428D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationDisplayPreferencesView.swift; sourceTree = "<group>"; };
 		E295627628D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationSelectionPreferencesView.swift; sourceTree = "<group>"; };
 		E295627828D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationCaptionPreferencesView.swift; sourceTree = "<group>"; };
@@ -129,6 +134,11 @@
 		E2D47EA128D8EAF00068B192 /* ControlResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponse.swift; sourceTree = "<group>"; };
 		E2D47EA428D8ED300068B192 /* ResponseControlStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseControlStatus.swift; sourceTree = "<group>"; };
 		E2E5962C28DA63700058D054 /* ControlOpen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlOpen.swift; sourceTree = "<group>"; };
+		E2EE0E3728DB9A6600138A86 /* ControlElapsed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlElapsed.swift; sourceTree = "<group>"; };
+		E2EE0E3928DB9AAD00138A86 /* ControlStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlStatus.swift; sourceTree = "<group>"; };
+		E2EE0E3B28DB9B3B00138A86 /* ControlSeek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlSeek.swift; sourceTree = "<group>"; };
+		E2EE0E3D28DB9B9F00138A86 /* ControlCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlCapture.swift; sourceTree = "<group>"; };
+		E2EE0E3F28DB9DD200138A86 /* ControlAll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlAll.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,17 +170,22 @@
 			isa = PBXGroup;
 			children = (
 				E22F0EA328DA57800097A34E /* ControlMessage.swift */,
+				E2675E3328DB7A4000F5F114 /* ControlAdvance.swift */,
+				E2EE0E3F28DB9DD200138A86 /* ControlAll.swift */,
+				E2EE0E3D28DB9B9F00138A86 /* ControlCapture.swift */,
 				E2675E2128DABE4900F5F114 /* ControlClose.swift */,
 				E229F4C128D9150A001F220E /* ControlConnect.swift */,
-				E2675E3328DB7A4000F5F114 /* ControlFrameAdvance.swift */,
+				E2EE0E3728DB9A6600138A86 /* ControlElapsed.swift */,
 				E2675E2E28DB729900F5F114 /* ControlInfo.swift */,
 				E2E5962C28DA63700058D054 /* ControlOpen.swift */,
 				E2675E2728DAC08D00F5F114 /* ControlPause.swift */,
 				E2675E2528DABF5600F5F114 /* ControlPlay.swift */,
 				E2675E1D28DAB65D00F5F114 /* ControlPing.swift */,
 				E2675E2328DABEAC00F5F114 /* ControlShow.swift */,
+				E2EE0E3928DB9AAD00138A86 /* ControlStatus.swift */,
 				E2675E2928DB52C600F5F114 /* ControlUnknown.swift */,
 				E2A6B39528DB8E8500C1A5EA /* ControlInvalid.swift */,
+				E2EE0E3B28DB9B3B00138A86 /* ControlSeek.swift */,
 			);
 			path = ControlMessage;
 			sourceTree = "<group>";
@@ -495,7 +510,10 @@
 				E22F72FD28DA5D9100253A48 /* ControlResponseMessage.swift in Sources */,
 				E2C22EDA28D386AE003CD976 /* Main.swift in Sources */,
 				E295627928D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift in Sources */,
+				E2EE0E4028DB9DD200138A86 /* ControlAll.swift in Sources */,
+				E2EE0E3C28DB9B3B00138A86 /* ControlSeek.swift in Sources */,
 				E22F0EA428DA57800097A34E /* ControlMessage.swift in Sources */,
+				E2EE0E3E28DB9B9F00138A86 /* ControlCapture.swift in Sources */,
 				E2C22ED328D2AAF3003CD976 /* VideoView.swift in Sources */,
 				E2E5962D28DA63700058D054 /* ControlOpen.swift in Sources */,
 				E21DEEE228DA1F3D00A2AC01 /* UDP.swift in Sources */,
@@ -515,7 +533,7 @@
 				E21DEEE428DA533100A2AC01 /* ClientMessage.swift in Sources */,
 				E2D47E9628D8C01F0068B192 /* ControlCommand.swift in Sources */,
 				E2C078CD28D7CF0E00C55EEC /* UDPClient.swift in Sources */,
-				E2675E3428DB7A4000F5F114 /* ControlFrameAdvance.swift in Sources */,
+				E2675E3428DB7A4000F5F114 /* ControlAdvance.swift in Sources */,
 				E2C22ED728D36888003CD976 /* VideoAsset.swift in Sources */,
 				E2989AB728D3B261009D2D65 /* NetworkPreferencesView.swift in Sources */,
 				E2675E1E28DAB65D00F5F114 /* ControlPing.swift in Sources */,
@@ -526,8 +544,10 @@
 				E2C22EC528D144B0003CD976 /* SharktopodaData.swift in Sources */,
 				E2675E2C28DB5F9400F5F114 /* DefaultlValue.swift in Sources */,
 				E2D47E9E28D8DF0F0068B192 /* UDPMessage.swift in Sources */,
+				E2EE0E3A28DB9AAD00138A86 /* ControlStatus.swift in Sources */,
 				E2989AC128D4BAD0009D2D65 /* SizeColorRow.swift in Sources */,
 				E2D47E9A28D8C17D0068B192 /* ClientCommand.swift in Sources */,
+				E2EE0E3828DB9A6600138A86 /* ControlElapsed.swift in Sources */,
 				E295627528D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift in Sources */,
 				E2A6B39628DB8E8500C1A5EA /* ControlInvalid.swift in Sources */,
 				E2989AB928D3B87E009D2D65 /* AnnotationPreferencesView.swift in Sources */,

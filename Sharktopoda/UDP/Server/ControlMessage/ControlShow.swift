@@ -12,7 +12,7 @@ struct ControlShow: ControlMessage {
   var uuid: String
   
   func process() -> Data {
-    print("CxInc handle control show: \(self)")
+    print("CxInc handle: \(self)")
     return ControlResponse.ok(command)
   }
 }

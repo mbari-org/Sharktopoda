@@ -12,7 +12,7 @@ struct ControlPause: ControlMessage {
   var uuid: String
   
   func process() -> Data {
-    print("CxInc handle control pause: \(self)")
+    print("CxInc handle: \(self)")
     return ControlResponse.ok(command)
   }
 }

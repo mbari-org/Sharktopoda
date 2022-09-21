@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct Main: View {
-  // Prefs ensure port is set
-  @AppStorage(PrefKeys.port) private var port: Int?
+//  // Prefs ensure port is set
+//  @AppStorage(PrefKeys.port) private var port: Int?
 
   private static var ratio: CGFloat = 1.75
   private static var height: CGFloat = 425
@@ -53,7 +53,7 @@ struct Main: View {
         
         Spacer()
         
-        Text("Listening on port \(String(port!))")
+        Text("Listening on port \(String(UDP.server.runningOnPort()))")
           .font(.title3)
       }
       .padding(20)

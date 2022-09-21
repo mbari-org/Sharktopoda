@@ -32,6 +32,14 @@ class UDPServer {
     listener!.start(queue: UDPServer.queue)
   }
   
+  func runningOnPort() -> Int {
+    Int(listener?.port?.rawValue ?? 0)
+  }
+  
+  func needsRestart() -> Bool {
+    port != runningOnPort()
+  }
+  
   func stateUpdate(to update: NWListener.State) {
     switch update {
       case .setup, .waiting:

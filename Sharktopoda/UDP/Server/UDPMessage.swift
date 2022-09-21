@@ -68,15 +68,27 @@ class UDPMessage {
       }
       do {
         switch controlMessage.command {
+          case .close:
+            completion(try ControlClose(from: data).process())
+            
           case .connect:
             completion(try ControlConnect(from: data).process())
             
           case .open:
             completion(try ControlOpen(from: data).process())
-            
+
+          case .pause:
+            completion(try ControlPause(from: data).process())
+
+          case .play:
+            completion(try ControlPlay(from: data).process())
+
           case .ping:
             completion(try ControlPing(from: data).process())
-            
+
+          case .show:
+            completion(try ControlShow(from: data).process())
+
           default:
             completion(ControlResponse.failed(controlMessage.command, cause: "Not connected"))
         }

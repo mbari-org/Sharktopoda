@@ -8,18 +8,19 @@
 import Foundation
 
 enum ControlCommand: String, Codable {
-  case connect
-  case open
-  case close
-  case info
+  case advance
   case allInfo
-  case play
-  case pause
+  case capture
+  case close
+  case connect
   case elapsedTime
+  case info
+  case open
+  case pause
+  case ping
+  case play
   case playback
   case seek
-  case advance
-  case capture
-  case ping
+  case show
   case unknown
 }

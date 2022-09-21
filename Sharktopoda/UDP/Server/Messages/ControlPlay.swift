@@ -1,5 +1,5 @@
 //
-//  ControlOpen.swift
+//  ControlPlay.swift
 //  Created for Sharktopoda on 9/20/22.
 //
 //  Apache License 2.0 — See project LICENSE file
@@ -7,21 +7,22 @@
 
 import Foundation
 
-struct ControlOpen: ControlMessage {
+struct ControlPlay: ControlMessage {
   var command: ControlCommand
-  var uuid: String
-  var url: String
+  let uuid: String
+  var rate: Float?
   
   init(from messageData: Data) throws {
-    let controlMessage = try JSONDecoder().decode(ControlOpen.self, from: messageData)
-
+    let controlMessage = try JSONDecoder().decode(ControlPlay.self, from: messageData)
+    
     self.command = controlMessage.command
     self.uuid = controlMessage.uuid
-    self.url = controlMessage.url
+    self.rate = controlMessage.rate ?? 1.0
   }
   
   func process() -> Data {
-    print("CxInc handle control open: \(self)")
+    print("CxInc handle control play: \(self)")
+
     return ControlResponse.ok(command)
   }
 }

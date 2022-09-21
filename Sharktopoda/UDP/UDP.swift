@@ -8,10 +8,10 @@
 import Foundation
 
 class UDP {
+  // Prefs ensure port is set
   static let server: UDPServer = UDPServer.singleton
   static var client: UDPClient?
   
-
   static let singleton = UDP()
   private init() {
   }
@@ -19,7 +19,7 @@ class UDP {
   static func start() {
     UDP.server.start()
   }
-
+  
   static func client(using connectCommand: ControlConnect) {
     if let client = UDP.client {
       client.stop()
@@ -27,7 +27,7 @@ class UDP {
     }
     UDP.client = UDPClient(using: connectCommand)
   }
-
+  
   static func log(hdr: String, _ msg: String) {
     NSLog("\(hdr) \(msg)")
   }

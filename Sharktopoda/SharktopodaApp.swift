@@ -9,6 +9,8 @@ import SwiftUI
 
 @main
 struct SharktopodaApp: App {
+  @StateObject private var sharktopodaData = SharktopodaData()
+  
   init() {
     UDP.start()
   }
@@ -16,13 +18,15 @@ struct SharktopodaApp: App {
   var body: some Scene {
     WindowGroup {
       Main()
+        .environmentObject(sharktopodaData)
     }
     .commands {
       SharktopodaCommands()
     }
-
+    
     Settings {
       Preferences()
+        .environmentObject(sharktopodaData)
     }
   }
 }

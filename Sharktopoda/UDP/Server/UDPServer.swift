@@ -10,10 +10,7 @@ import Network
 import SwiftUI
 
 class UDPServer {
-  private static let queue = DispatchQueue(label: "Sharktopoda UDP Server Queue")
-  
-  // Prefs ensure port is set
-  @AppStorage(PrefKeys.port) private var port: Int?
+  @AppStorage(PrefKeys.port) private var prefPort: Int = 8800
   
   var listener: NWListener?
   
@@ -21,23 +18,27 @@ class UDPServer {
   private init() {
   }
   
+  private static let queue = DispatchQueue(label: "Sharktopoda UDP Server Queue")
+  
   func start() {
-    if let _ = listener { stop() }
+    if let _ = listener {
+      guard prefPort != runningOnPort() else {
+        return
+      }
+      stop()
+    }
     
-    listener = try! NWListener(using: .udp, on: NWEndpoint.Port(rawValue: UInt16(port!))!)
-    
+    listener = try! NWListener(using: .udp, on: NWEndpoint.Port(rawValue: UInt16(prefPort))!)
     listener!.stateUpdateHandler = stateUpdate(to:)
     listener!.newConnectionHandler = processConnection(from:)
-
+    
     listener!.start(queue: UDPServer.queue)
+    
+    log("started on port \(prefPort)")
   }
   
   func runningOnPort() -> Int {
     Int(listener?.port?.rawValue ?? 0)
-  }
-  
-  func needsRestart() -> Bool {
-    port != runningOnPort()
   }
   
   func stateUpdate(to update: NWListener.State) {
@@ -63,20 +64,22 @@ class UDPServer {
     }
     udpMessage.start()
   }
-
+  
   func stop() {
+    let port = runningOnPort()
+    
     listener?.stateUpdateHandler = nil
     listener?.newConnectionHandler = nil
     listener?.cancel()
     
     listener = nil
     
-    log("stopped")
+    log("stopped on port \(port)")
   }
   
   func log(_ msg: String) {
     let logHdr = "Sharktopoda UDP Server"
-    UDP.log(hdr: "\(logHdr) (\(port!))", msg)
+    UDP.log(hdr: "\(logHdr)", msg)
   }
-
+  
 }

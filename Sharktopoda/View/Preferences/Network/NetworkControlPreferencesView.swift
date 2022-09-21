@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct NetworkControlPreferencesView: View {
-  @AppStorage(PrefKeys.port) private var port: Int = 8800
+  @EnvironmentObject var sharktopodaData: SharktopodaData
+  
+  // CxNote UPDServer binding ensure pref port is set
+  @AppStorage(PrefKeys.port) private var prefPort: Int!
   @AppStorage(PrefKeys.timeout) private var timeout: Int = 1000
   
   var body: some View {
@@ -26,9 +29,19 @@ struct NetworkControlPreferencesView: View {
         Text("Port: ")
           .font(.title3)
         
-        TextField("", value: $port, formatter: NumberFormatter())
+        TextField("", value: $prefPort, formatter: NumberFormatter())
           .frame(width: 60)
           .multilineTextAlignment(.trailing)
+        
+        if sharktopodaData.port != prefPort {
+          Button {
+            UDP.server.start()
+            sharktopodaData.port = prefPort
+          } label: {
+            Text("Restart UDP Server")
+          }
+          .buttonStyle(.borderedProminent)
+        }
         
         Spacer()
       }

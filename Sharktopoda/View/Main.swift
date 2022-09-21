@@ -8,14 +8,13 @@
 import SwiftUI
 
 struct Main: View {
-//  // Prefs ensure port is set
-//  @AppStorage(PrefKeys.port) private var port: Int?
-
+  @EnvironmentObject var sharktopodaData: SharktopodaData
+  
+  let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
+  
   private static var ratio: CGFloat = 1.75
   private static var height: CGFloat = 425
   private static var width = CGFloat(Main.height * Main.ratio)
-  
-  let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
   
   var body: some View {
     HStack {
@@ -53,8 +52,9 @@ struct Main: View {
         
         Spacer()
         
-        Text("Listening on port \(String(UDP.server.runningOnPort()))")
+        Text("Running on port \(String(sharktopodaData.port))")
           .font(.title3)
+          .environmentObject(sharktopodaData)
       }
       .padding(20)
       .padding(.top, 20)
@@ -67,5 +67,6 @@ struct Main: View {
 struct Main_Previews: PreviewProvider {
   static var previews: some View {
     Main()
+      .environmentObject(SharktopodaData())
   }
 }

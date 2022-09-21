@@ -5,11 +5,9 @@
 //  Apache License 2.0 — See project LICENSE file
 //
 
-import Combine
 import Foundation
-import Network
-import SwiftUI
 
 final class SharktopodaData: ObservableObject {
+  @Published var port: Int = (UserDefaults.standard.object(forKey: PrefKeys.port) as? Int ?? 8800)
   @Published var videoAssets = [String: VideoAsset]()
 }

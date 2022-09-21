@@ -9,17 +9,24 @@ import Foundation
 import Network
 
 class UDPMessage {
-  let connection: NWConnection
+  typealias ResponseCompletion = (_ response: Data) -> Void
   
-  init(using connection: NWConnection) {
+  let connection: NWConnection
+  let completion: ResponseCompletion
+  
+  init(using connection: NWConnection, completion: @escaping ResponseCompletion) {
     self.connection = connection
+    self.completion = completion
+    
     connection.stateUpdateHandler = self.stateUpdate(to:)
-    connection.start(queue: UDP.singleton.serverQueue)
   }
   
-  static func processMessage(on connection: NWConnection) {
-    let udpMessage = UDPMessage(using: connection)
-    
+  deinit {
+    stop()
+  }
+  
+  func start() {
+    connection.start(queue: UDP.singleton.serverQueue)
   }
   
   func stateUpdate(to update: NWConnection.State) {
@@ -28,7 +35,7 @@ class UDPMessage {
         return
       case .ready:
         self.log("state \(update)")
-        processMessage(self.connection)
+        processMessage()
       case .failed(let error):
         print(error)
         log("state update failed error \(error)")
@@ -42,48 +49,45 @@ class UDPMessage {
     }
   }
   
-  func processMessage(_ connection: NWConnection) {
+  func processMessage() {
     connection.receiveMessage { [self] (data, _, isComplete, error) in
       guard isComplete else {
         self.log("message not complete")
         return
       }
       guard let data = data, !data.isEmpty else {
+        completion(ControlResponse.failed(.unknown, cause: "empty message"))
         self.log("empty message")
         return
       }
       let controlMessage = ControlMessageData(from: data)
       self.log(controlMessage.command.rawValue)
       if let error = controlMessage.error {
-        respond(ControlResponse.failed(.unknown, cause: error))
+        completion(ControlResponse.failed(.unknown, cause: error))
         return
       }
       do {
         switch controlMessage.command {
           case .connect:
-            let connectResponse = try ControlConnect.process(data: data)
-            respond(connectResponse)
+            completion(try ControlConnect.process(data: data))
             
           case .ping:
-            respond(ControlResponse.ping())
+            completion(ControlResponse.ping())
             
           default:
-            respond(ControlResponse.failed(controlMessage.command, cause: "Not connected"))
+            completion(ControlResponse.failed(controlMessage.command, cause: "Not connected"))
         }
       }
       catch {
-        respond(ControlResponse.failed(.connect, cause: "Invalid message"))
+        completion(ControlResponse.failed(.connect, cause: "Invalid message"))
       }
     }
   }
   
-  func respond(_ data: Data) {
-    connection.send(content: data, completion: .contentProcessed({ _ in }))
-    stop()
-  }
-  
   func connectionDidFail(error: Error) {
-    log("Failed error: \(error)")
+    let msg = "Failed error: \(error)"
+    completion(ControlResponse.failed(.unknown, cause: msg))
+    log(msg)
     stop()
   }
   

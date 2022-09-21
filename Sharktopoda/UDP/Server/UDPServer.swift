@@ -28,7 +28,7 @@ class UDPServer {
     
     listener!.stateUpdateHandler = stateUpdate(to:)
     listener!.newConnectionHandler = processConnection(from:)
-    
+
     listener!.start(queue: queue)
   }
   
@@ -47,10 +47,10 @@ class UDPServer {
   }
   
   private func processConnection(from connection: NWConnection) {
-    let udpMessage = UDPMessage(using: connection)
-
-//    let responseData = ControlResponse.ok(.connect)
-//    connection.send(content: responseData, completion: .contentProcessed({ _ in }))
+    let udpMessage = UDPMessage(using: connection) { data in
+      connection.send(content: data, completion: .contentProcessed({ _ in }))
+    }
+    udpMessage.start()
   }
 
   func stop() {

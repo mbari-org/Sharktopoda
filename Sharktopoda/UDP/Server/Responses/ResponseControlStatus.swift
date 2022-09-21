@@ -7,23 +7,18 @@
 
 import Foundation
 
-enum ResponseMessageStatus: String {
-  case ok
-  case failed
-}
-
-struct StatusResponse : ControlResponseMessage {
+struct ResponseControlStatus : ControlResponseMessage {
   var response: ControlCommand
-  let status: String
+  var status: ResponseStatus
   var cause: String?
   
-  init(_ response: ControlCommand, status: ResponseMessageStatus, cause: String? = nil) {
+  init(_ response: ControlCommand, status: ResponseStatus, cause: String? = nil) {
     self.response = response
-    self.status = status.rawValue
+    self.status = status
     self.cause = cause
   }
   
-  func jsonData() -> Data {
+  func data() -> Data {
     try! JSONEncoder().encode(self)
   }
 }

@@ -9,6 +9,7 @@ import Foundation
 
 protocol ControlResponseMessage: Encodable {
   var response: ControlCommand { get set }
+  var status: ResponseStatus { get set }
   
-  func jsonData() -> Data
+  func data() -> Data
 }

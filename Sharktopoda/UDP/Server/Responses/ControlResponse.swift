@@ -9,10 +9,10 @@ import Foundation
 
 struct ControlResponse {
   static func ok(_ response: ControlCommand) -> Data {
-    StatusResponse(response, status: .ok).jsonData()
+    ResponseControlStatus(response, status: .ok).data()
   }
   
   static func failed(_ response: ControlCommand, cause: String? = nil) -> Data {
-    StatusResponse(response, status: .failed, cause: cause).jsonData()
+    ResponseControlStatus(response, status: .failed, cause: cause).data()
   }
 }

@@ -60,40 +60,18 @@ class UDPMessage {
         self.log("empty message")
         return
       }
-      let controlMessage = ControlMessageData(from: data)
-      self.log(controlMessage.command.rawValue)
-      if let error = controlMessage.error {
+
+      let controlCommandData = ControlCommandData(from: data)
+      self.log(controlCommandData.command.rawValue)
+      
+      if let error = controlCommandData.error {
         completion(ControlResponse.failed(.unknown, cause: error))
         return
       }
+      
       do {
-        switch controlMessage.command {
-          case .close:
-            completion(try ControlClose(from: data).process())
-            
-          case .connect:
-            completion(try ControlConnect(from: data).process())
-            
-          case .open:
-            completion(try ControlOpen(from: data).process())
-
-          case .pause:
-            completion(try ControlPause(from: data).process())
-
-          case .play:
-            completion(try ControlPlay(from: data).process())
-
-          case .ping:
-            completion(try ControlPing(from: data).process())
-
-          case .show:
-            completion(try ControlShow(from: data).process())
-
-          default:
-            completion(ControlResponse.failed(controlMessage.command, cause: "Not connected"))
-        }
-      }
-      catch {
+        completion(try controlCommandData.controlMessage().process())
+      } catch {
         completion(ControlResponse.failed(.connect, cause: "Invalid message"))
       }
     }

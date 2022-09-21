@@ -18,6 +18,8 @@
 		E2675E2428DABEAC00F5F114 /* ControlShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2328DABEAC00F5F114 /* ControlShow.swift */; };
 		E2675E2628DABF5600F5F114 /* ControlPlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2528DABF5600F5F114 /* ControlPlay.swift */; };
 		E2675E2828DAC08D00F5F114 /* ControlPause.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2728DAC08D00F5F114 /* ControlPause.swift */; };
+		E2675E2A28DB52C600F5F114 /* ControlUnknown.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2928DB52C600F5F114 /* ControlUnknown.swift */; };
+		E2675E2C28DB5F9400F5F114 /* DefaultlValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2B28DB5F9400F5F114 /* DefaultlValue.swift */; };
 		E295627528D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295627428D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift */; };
 		E295627728D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295627628D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift */; };
 		E295627928D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295627828D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift */; };
@@ -47,7 +49,7 @@
 		E2D47E9628D8C01F0068B192 /* ControlCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D47E9528D8C01F0068B192 /* ControlCommand.swift */; };
 		E2D47E9A28D8C17D0068B192 /* ClientCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D47E9928D8C17D0068B192 /* ClientCommand.swift */; };
 		E2D47E9E28D8DF0F0068B192 /* UDPMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D47E9D28D8DF0F0068B192 /* UDPMessage.swift */; };
-		E2D47EA028D8E6140068B192 /* ControlMessageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D47E9F28D8E6140068B192 /* ControlMessageData.swift */; };
+		E2D47EA028D8E6140068B192 /* ControlCommandData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D47E9F28D8E6140068B192 /* ControlCommandData.swift */; };
 		E2D47EA228D8EAF00068B192 /* ControlResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D47EA128D8EAF00068B192 /* ControlResponse.swift */; };
 		E2D47EA528D8ED300068B192 /* StatusResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D47EA428D8ED300068B192 /* StatusResponse.swift */; };
 		E2E5962D28DA63700058D054 /* ControlOpen.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E5962C28DA63700058D054 /* ControlOpen.swift */; };
@@ -82,6 +84,8 @@
 		E2675E2328DABEAC00F5F114 /* ControlShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlShow.swift; sourceTree = "<group>"; };
 		E2675E2528DABF5600F5F114 /* ControlPlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlPlay.swift; sourceTree = "<group>"; };
 		E2675E2728DAC08D00F5F114 /* ControlPause.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlPause.swift; sourceTree = "<group>"; };
+		E2675E2928DB52C600F5F114 /* ControlUnknown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlUnknown.swift; sourceTree = "<group>"; };
+		E2675E2B28DB5F9400F5F114 /* DefaultlValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultlValue.swift; sourceTree = "<group>"; };
 		E295627428D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationDisplayPreferencesView.swift; sourceTree = "<group>"; };
 		E295627628D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationSelectionPreferencesView.swift; sourceTree = "<group>"; };
 		E295627828D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationCaptionPreferencesView.swift; sourceTree = "<group>"; };
@@ -115,7 +119,7 @@
 		E2D47E9528D8C01F0068B192 /* ControlCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlCommand.swift; sourceTree = "<group>"; };
 		E2D47E9928D8C17D0068B192 /* ClientCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientCommand.swift; sourceTree = "<group>"; };
 		E2D47E9D28D8DF0F0068B192 /* UDPMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDPMessage.swift; sourceTree = "<group>"; };
-		E2D47E9F28D8E6140068B192 /* ControlMessageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlMessageData.swift; sourceTree = "<group>"; };
+		E2D47E9F28D8E6140068B192 /* ControlCommandData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlCommandData.swift; sourceTree = "<group>"; };
 		E2D47EA128D8EAF00068B192 /* ControlResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponse.swift; sourceTree = "<group>"; };
 		E2D47EA428D8ED300068B192 /* StatusResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusResponse.swift; sourceTree = "<group>"; };
 		E2E5962C28DA63700058D054 /* ControlOpen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlOpen.swift; sourceTree = "<group>"; };
@@ -287,7 +291,7 @@
 			children = (
 				E2D47E9528D8C01F0068B192 /* ControlCommand.swift */,
 				E22F0EA328DA57800097A34E /* ControlMessage.swift */,
-				E2D47E9F28D8E6140068B192 /* ControlMessageData.swift */,
+				E2D47E9F28D8E6140068B192 /* ControlCommandData.swift */,
 				E2675E2128DABE4900F5F114 /* ControlClose.swift */,
 				E229F4C128D9150A001F220E /* ControlConnect.swift */,
 				E2E5962C28DA63700058D054 /* ControlOpen.swift */,
@@ -295,6 +299,8 @@
 				E2675E2528DABF5600F5F114 /* ControlPlay.swift */,
 				E2675E1D28DAB65D00F5F114 /* ControlPing.swift */,
 				E2675E2328DABEAC00F5F114 /* ControlShow.swift */,
+				E2675E2928DB52C600F5F114 /* ControlUnknown.swift */,
+				E2675E2B28DB5F9400F5F114 /* DefaultlValue.swift */,
 			);
 			path = Messages;
 			sourceTree = "<group>";
@@ -476,6 +482,7 @@
 				E2D47EA528D8ED300068B192 /* StatusResponse.swift in Sources */,
 				E2989AC328D4F6EE009D2D65 /* AnnotationCreationPreferencesView.swift in Sources */,
 				E2675E2428DABEAC00F5F114 /* ControlShow.swift in Sources */,
+				E2675E2A28DB52C600F5F114 /* ControlUnknown.swift in Sources */,
 				E2C22ED528D36832003CD976 /* Localization.swift in Sources */,
 				E21DEEDF28DA13CB00A2AC01 /* ClientPing.swift in Sources */,
 				E21DEEE428DA533100A2AC01 /* ClientMessage.swift in Sources */,
@@ -489,6 +496,7 @@
 				E2675E2228DABE4900F5F114 /* ControlClose.swift in Sources */,
 				E2C22E8528CFDC26003CD976 /* SharktopodaApp.swift in Sources */,
 				E2C22EC528D144B0003CD976 /* SharktopodaData.swift in Sources */,
+				E2675E2C28DB5F9400F5F114 /* DefaultlValue.swift in Sources */,
 				E2D47E9E28D8DF0F0068B192 /* UDPMessage.swift in Sources */,
 				E2989AC128D4BAD0009D2D65 /* SizeColorRow.swift in Sources */,
 				E2D47E9A28D8C17D0068B192 /* ClientCommand.swift in Sources */,
@@ -496,7 +504,7 @@
 				E2989AB928D3B87E009D2D65 /* AnnotationPreferencesView.swift in Sources */,
 				E2C22EC828D2666A003CD976 /* Preferences.swift in Sources */,
 				E295627728D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift in Sources */,
-				E2D47EA028D8E6140068B192 /* ControlMessageData.swift in Sources */,
+				E2D47EA028D8E6140068B192 /* ControlCommandData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

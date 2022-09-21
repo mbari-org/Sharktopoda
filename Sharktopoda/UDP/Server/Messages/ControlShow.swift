@@ -11,13 +11,6 @@ struct ControlShow: ControlMessage {
   var command: ControlCommand
   var uuid: String
   
-  init(from messageData: Data) throws {
-    let controlMessage = try JSONDecoder().decode(ControlShow.self, from: messageData)
-    
-    self.command = controlMessage.command
-    self.uuid = controlMessage.uuid
-  }
-  
   func process() -> Data {
     print("CxInc handle control show: \(self)")
     return ControlResponse.ok(command)

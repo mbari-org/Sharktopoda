@@ -10,6 +10,8 @@ import Network
 import SwiftUI
 
 class UDPServer {
+  private static let queue = DispatchQueue(label: "Sharktopoda UDP Server Queue")
+  
   // Prefs ensure port is set
   @AppStorage(PrefKeys.port) private var port: Int?
   
@@ -19,7 +21,7 @@ class UDPServer {
   private init() {
   }
   
-  func start(queue: DispatchQueue) {
+  func start() {
     if let _ = listener { stop() }
     
     listener = try! NWListener(using: .udp, on: NWEndpoint.Port(rawValue: UInt16(port!))!)
@@ -27,7 +29,7 @@ class UDPServer {
     listener!.stateUpdateHandler = stateUpdate(to:)
     listener!.newConnectionHandler = processConnection(from:)
 
-    listener!.start(queue: queue)
+    listener!.start(queue: UDPServer.queue)
   }
   
   func stateUpdate(to update: NWListener.State) {

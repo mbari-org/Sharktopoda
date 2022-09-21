@@ -8,6 +8,8 @@ import Foundation
 import Network
 
 class UDPClient {
+  private static let queue = DispatchQueue(label: "Sharktopoda UDP Client Queue")
+  
   var connection: NWConnection
   
   var isReady = false
@@ -18,7 +20,7 @@ class UDPClient {
     
     connection = NWConnection(host: host, port: port, using: .udp)
     connection.stateUpdateHandler = self.stateUpdate(to:)
-    connection.start(queue: UDP.singleton.clientQueue)
+    connection.start(queue: UDPClient.queue)
     
     log("connect to \(connectCommand.host) on port \(connectCommand.port)")
   }

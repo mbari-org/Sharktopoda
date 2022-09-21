@@ -9,6 +9,8 @@ import Foundation
 import Network
 
 class UDPMessage {
+  private static let queue = DispatchQueue(label: "Sharktopoda UDP Message Queue")
+  
   typealias ResponseCompletion = (_ response: Data) -> Void
   
   let connection: NWConnection
@@ -22,7 +24,7 @@ class UDPMessage {
   }
   
   func start() {
-    connection.start(queue: UDP.singleton.serverQueue)
+    connection.start(queue: UDPMessage.queue)
   }
   
   func stateUpdate(to update: NWConnection.State) {

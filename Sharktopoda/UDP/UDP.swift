@@ -11,17 +11,13 @@ class UDP {
   static let server: UDPServer = UDPServer.singleton
   static var client: UDPClient?
   
-  let serverQueue: DispatchQueue
-  let clientQueue: DispatchQueue
-  
+
   static let singleton = UDP()
   private init() {
-    serverQueue = DispatchQueue(label: "Sharktopoda UDP Server Queue")
-    clientQueue = DispatchQueue(label: "Sharktopoda UDP Client Queue")
   }
   
   static func start() {
-    UDP.server.start(queue: UDP.singleton.serverQueue)
+    UDP.server.start()
   }
 
   static func client(using connectCommand: ControlConnect) {

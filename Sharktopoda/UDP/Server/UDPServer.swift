@@ -9,8 +9,6 @@ import Foundation
 import Network
 import SwiftUI
 
-//protocol ProcessMessageCompletion
-
 class UDPServer {
   // Prefs ensure port is set
   @AppStorage(PrefKeys.port) private var port: Int?
@@ -36,11 +34,14 @@ class UDPServer {
     switch update {
       case .setup, .waiting:
         return
+        
       case .ready, .cancelled:
         log("state \(update)")
+        
       case .failed(let error):
         log("failed with error \(error)")
         exit(EXIT_FAILURE)
+        
       @unknown default:
         log("state unknown")
     }

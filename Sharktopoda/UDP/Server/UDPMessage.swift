@@ -21,10 +21,6 @@ class UDPMessage {
     connection.stateUpdateHandler = self.stateUpdate(to:)
   }
   
-  deinit {
-    stop()
-  }
-  
   func start() {
     connection.start(queue: UDP.singleton.serverQueue)
   }
@@ -33,16 +29,20 @@ class UDPMessage {
     switch update {
       case .preparing, .setup, .waiting:
         return
+
       case .ready:
         self.log("state \(update)")
         processMessage()
+
       case .failed(let error):
         print(error)
         log("state update failed error \(error)")
         exit(EXIT_FAILURE)
+
       case .cancelled:
         log("state \(update)")
         return
+
       @unknown default:
         log("state unknown")
         return
@@ -52,9 +52,10 @@ class UDPMessage {
   func processMessage() {
     connection.receiveMessage { [self] (data, _, isComplete, error) in
       guard isComplete else {
-        self.log("message not complete")
         return
       }
+      
+      // CxTBD guard may not be necessary: Preliminary futzing shows empty data never gets here
       guard let data = data, !data.isEmpty else {
         completion(ControlResponse.failed(.unknown, cause: "empty message"))
         self.log("empty message")
@@ -82,5 +83,9 @@ class UDPMessage {
   func log(_ msg: String) {
     let logHdr = "Sharktopoda UDP Connect"
     UDP.log(hdr: logHdr, msg)
+  }
+  
+  deinit {
+    stop()
   }
 }

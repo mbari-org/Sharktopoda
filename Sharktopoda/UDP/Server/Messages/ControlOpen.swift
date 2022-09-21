@@ -12,11 +12,17 @@ struct ControlOpen: ControlMessage {
   var uuid: String
   var url: String
   
-  init(from messageData: Data) throws {
+  private init(from messageData: Data) throws {
     let controlMessage = try JSONDecoder().decode(ControlOpen.self, from: messageData)
 
     self.command = controlMessage.command
     self.uuid = controlMessage.uuid
     self.url = controlMessage.url
+  }
+  
+  static func process(data: Data) throws -> Data {
+    let controlOpen = try ControlOpen(from: data)
+    print("CxInc handle open message: \(controlOpen)")
+    return ControlResponse.ok(controlOpen.command)
   }
 }

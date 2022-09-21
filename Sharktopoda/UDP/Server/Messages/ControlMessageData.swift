@@ -8,7 +8,7 @@
 import Foundation
 
 struct ControlMessageData {
-  struct MaybeControlMessage: ControlMessage {
+  struct MaybeControlMessage: Decodable {
     var command: ControlCommand
   }
   

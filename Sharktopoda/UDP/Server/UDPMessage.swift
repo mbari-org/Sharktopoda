@@ -71,6 +71,9 @@ class UDPMessage {
           case .connect:
             completion(try ControlConnect.process(data: data))
             
+          case .open:
+            completion(try ControlOpen.process(data: data))
+            
           case .ping:
             completion(ControlResponse.ping())
             

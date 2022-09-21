@@ -150,6 +150,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E2675E2D28DB707500F5F114 /* ControlMessage */ = {
+			isa = PBXGroup;
+			children = (
+				E22F0EA328DA57800097A34E /* ControlMessage.swift */,
+				E2675E2128DABE4900F5F114 /* ControlClose.swift */,
+				E229F4C128D9150A001F220E /* ControlConnect.swift */,
+				E2E5962C28DA63700058D054 /* ControlOpen.swift */,
+				E2675E2728DAC08D00F5F114 /* ControlPause.swift */,
+				E2675E2528DABF5600F5F114 /* ControlPlay.swift */,
+				E2675E1D28DAB65D00F5F114 /* ControlPing.swift */,
+				E2675E2328DABEAC00F5F114 /* ControlShow.swift */,
+				E2675E2928DB52C600F5F114 /* ControlUnknown.swift */,
+			);
+			path = ControlMessage;
+			sourceTree = "<group>";
+		};
 		E295627328D4FAC800E88ED1 /* Annotations */ = {
 			isa = PBXGroup;
 			children = (
@@ -189,7 +205,8 @@
 			children = (
 				E2C22ECE28D27C2D003CD976 /* UDPServer.swift */,
 				E2D47E9D28D8DF0F0068B192 /* UDPMessage.swift */,
-				E2D47E9428D8C00B0068B192 /* Messages */,
+				E2D47E9428D8C00B0068B192 /* Commands */,
+				E2675E2D28DB707500F5F114 /* ControlMessage */,
 				E2D47EA328D8ECDB0068B192 /* Responses */,
 			);
 			path = Server;
@@ -258,6 +275,7 @@
 		E2C22EC328D14495003CD976 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E2675E2B28DB5F9400F5F114 /* DefaultlValue.swift */,
 				E2C22EC428D144B0003CD976 /* SharktopodaData.swift */,
 				E2C22ED428D36832003CD976 /* Localization.swift */,
 				E2C22ED628D36888003CD976 /* VideoAsset.swift */,
@@ -286,23 +304,13 @@
 			path = UDP;
 			sourceTree = "<group>";
 		};
-		E2D47E9428D8C00B0068B192 /* Messages */ = {
+		E2D47E9428D8C00B0068B192 /* Commands */ = {
 			isa = PBXGroup;
 			children = (
 				E2D47E9528D8C01F0068B192 /* ControlCommand.swift */,
-				E22F0EA328DA57800097A34E /* ControlMessage.swift */,
 				E2D47E9F28D8E6140068B192 /* ControlCommandData.swift */,
-				E2675E2128DABE4900F5F114 /* ControlClose.swift */,
-				E229F4C128D9150A001F220E /* ControlConnect.swift */,
-				E2E5962C28DA63700058D054 /* ControlOpen.swift */,
-				E2675E2728DAC08D00F5F114 /* ControlPause.swift */,
-				E2675E2528DABF5600F5F114 /* ControlPlay.swift */,
-				E2675E1D28DAB65D00F5F114 /* ControlPing.swift */,
-				E2675E2328DABEAC00F5F114 /* ControlShow.swift */,
-				E2675E2928DB52C600F5F114 /* ControlUnknown.swift */,
-				E2675E2B28DB5F9400F5F114 /* DefaultlValue.swift */,
 			);
-			path = Messages;
+			path = Commands;
 			sourceTree = "<group>";
 		};
 		E2D47E9728D8C0ED0068B192 /* Client */ = {

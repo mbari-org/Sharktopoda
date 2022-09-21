@@ -15,9 +15,4 @@ struct ControlResponse {
   static func failed(_ response: ControlCommand, cause: String? = nil) -> Data {
     StatusResponse(response, status: .failed, cause: cause).jsonData()
   }
-  
-  static func ping() -> Data {
-    ControlResponse.ok(.ping)
-  }
-  
 }

@@ -75,7 +75,7 @@ class UDPMessage {
             completion(try ControlOpen.process(data: data))
             
           case .ping:
-            completion(ControlResponse.ping())
+            completion(try ControlPing.process(data: data))
             
           default:
             completion(ControlResponse.failed(controlMessage.command, cause: "Not connected"))
@@ -86,6 +86,10 @@ class UDPMessage {
       }
     }
   }
+  
+//  func processData(_ data: Data, using controlMessage: ControlMessage, completion: ResponseCompletion) throws {
+//    completion(try controlMessage.process(data: data))
+//  }
   
   func connectionDidFail(error: Error) {
     let msg = "Failed error: \(error)"

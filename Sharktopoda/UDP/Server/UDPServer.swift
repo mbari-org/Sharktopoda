@@ -9,12 +9,13 @@ import Foundation
 import Network
 import SwiftUI
 
+//protocol ProcessMessageCompletion
+
 class UDPServer {
   // Prefs ensure port is set
   @AppStorage(PrefKeys.port) private var port: Int?
   
   var listener: NWListener?
-  var udpConnect: UDPConnect?
   
   static let singleton = UDPServer()
   private init() {
@@ -46,24 +47,12 @@ class UDPServer {
   }
   
   private func processConnection(from connection: NWConnection) {
-    if let udpConnect = self.udpConnect {
-      udpConnect.stop()
-    }
-    udpConnect = UDPConnect(using: connection)
+    let udpMessage = UDPMessage(using: connection)
 
-    let responseData = ControlResponse.ok(.connect)
-    connection.send(content: responseData, completion: .contentProcessed({ _ in }))
+//    let responseData = ControlResponse.ok(.connect)
+//    connection.send(content: responseData, completion: .contentProcessed({ _ in }))
   }
-  
-  func connectClient(using connectCommand: ControlConnect) {
-    if let udpConnect = self.udpConnect {
-      udpConnect.stop()
-    }
-    self.udpConnect = nil
 
-    UDP.client(using: connectCommand)
-  }
-  
   func stop() {
     listener?.stateUpdateHandler = nil
     listener?.newConnectionHandler = nil

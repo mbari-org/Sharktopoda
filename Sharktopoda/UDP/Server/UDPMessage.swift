@@ -1,5 +1,5 @@
 //
-//  UDPConnect.swift
+//  UDPMessage.swift
 //  Created for Sharktopoda on 9/19/22.
 //
 //  Apache License 2.0 — See project LICENSE file
@@ -8,10 +8,8 @@
 import Foundation
 import Network
 
-class UDPConnect {
+class UDPMessage {
   let connection: NWConnection
-
-  var connectCommand: ControlConnect?
   
   init(using connection: NWConnection) {
     self.connection = connection
@@ -19,20 +17,28 @@ class UDPConnect {
     connection.start(queue: UDP.singleton.serverQueue)
   }
   
+  static func processMessage(on connection: NWConnection) {
+    let udpMessage = UDPMessage(using: connection)
+    
+  }
+  
   func stateUpdate(to update: NWConnection.State) {
     switch update {
       case .preparing, .setup, .waiting:
         return
       case .ready:
-        log("state \(update)")
+        self.log("state \(update)")
         processMessage(self.connection)
       case .failed(let error):
+        print(error)
         log("state update failed error \(error)")
         exit(EXIT_FAILURE)
       case .cancelled:
         log("state \(update)")
+        return
       @unknown default:
         log("state unknown")
+        return
     }
   }
   
@@ -46,37 +52,34 @@ class UDPConnect {
         self.log("empty message")
         return
       }
-      let commandData = ControlCommandData(from: data)
-      self.log(commandData.command.rawValue)
-      if let error = commandData.error {
-        let responseData = ControlResponse.failed(.unknown, cause: error)
-        connection.send(content: responseData, completion: .contentProcessed({ _ in }))
+      let controlMessage = ControlMessageData(from: data)
+      self.log(controlMessage.command.rawValue)
+      if let error = controlMessage.error {
+        respond(ControlResponse.failed(.unknown, cause: error))
         return
       }
-      switch commandData.command {
-        case .connect:
-          processConnect(using: commandData.data, on: connection)
-          
-        case .ping:
-          let responseData = ControlResponse.ping()
-          connection.send(content: responseData, completion: .contentProcessed({ _ in }))
-          
-        default:
-          let responseData = ControlResponse.failed(commandData.command, cause: "Not connected")
-          connection.send(content: responseData, completion: .contentProcessed({ _ in }))
+      do {
+        switch controlMessage.command {
+          case .connect:
+            let connectResponse = try ControlConnect.process(data: data)
+            respond(connectResponse)
+            
+          case .ping:
+            respond(ControlResponse.ping())
+            
+          default:
+            respond(ControlResponse.failed(controlMessage.command, cause: "Not connected"))
+        }
+      }
+      catch {
+        respond(ControlResponse.failed(.connect, cause: "Invalid message"))
       }
     }
   }
   
-  func processConnect(using data: Data, on connection: NWConnection) {
-    do {
-      let connectCommand = try ControlConnect(from: data)
-      UDP.server.connectClient(using: connectCommand)
-    }
-    catch {
-      let responseData = ControlResponse.failed(.connect, cause: "Invalid message")
-      connection.send(content: responseData, completion: .contentProcessed({ _ in }))
-    }
+  func respond(_ data: Data) {
+    connection.send(content: data, completion: .contentProcessed({ _ in }))
+    stop()
   }
   
   func connectionDidFail(error: Error) {

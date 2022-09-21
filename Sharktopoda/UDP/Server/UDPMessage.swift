@@ -69,13 +69,13 @@ class UDPMessage {
       do {
         switch controlMessage.command {
           case .connect:
-            completion(try ControlConnect.process(data: data))
+            completion(try ControlConnect(from: data).process())
             
           case .open:
-            completion(try ControlOpen.process(data: data))
+            completion(try ControlOpen(from: data).process())
             
           case .ping:
-            completion(try ControlPing.process(data: data))
+            completion(try ControlPing(from: data).process())
             
           default:
             completion(ControlResponse.failed(controlMessage.command, cause: "Not connected"))
@@ -86,11 +86,7 @@ class UDPMessage {
       }
     }
   }
-  
-//  func processData(_ data: Data, using controlMessage: ControlMessage, completion: ResponseCompletion) throws {
-//    completion(try controlMessage.process(data: data))
-//  }
-  
+
   func connectionDidFail(error: Error) {
     let msg = "Failed error: \(error)"
     completion(ControlResponse.failed(.unknown, cause: msg))

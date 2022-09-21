@@ -13,7 +13,7 @@ struct ControlConnect: ControlMessage {
   var host: String?
   let port: Int
   
-  private init(from messageData: Data) throws {
+  init(from messageData: Data) throws {
     let controlMessage = try JSONDecoder().decode(ControlConnect.self, from: messageData)
     
     self.command = controlMessage.command
@@ -21,9 +21,8 @@ struct ControlConnect: ControlMessage {
     self.port = controlMessage.port
   }
   
-  static func process(data: Data) throws -> Data {
-    let controlConnect = try ControlConnect(from: data)
-    UDP.client(using: controlConnect)
-    return ControlResponse.ok(controlConnect.command)
+  func process() -> Data {
+    UDP.client(using: self)
+    return ControlResponse.ok(command)
   }
 }

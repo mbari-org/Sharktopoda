@@ -10,7 +10,11 @@ import Foundation
 struct ControlPing: ControlMessage {
   var command: ControlCommand
   
-  static func process(data: Data) throws -> Data {
-    ControlResponse.ok(.ping)
+  init(from _: Data) throws {
+    command = .ping
+  }
+  
+  func process() -> Data {
+    ControlResponse.ok(command)
   }
 }

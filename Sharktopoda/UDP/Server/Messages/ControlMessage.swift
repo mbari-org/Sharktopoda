@@ -10,5 +10,7 @@ import Foundation
 protocol ControlMessage: Decodable {
   var command: ControlCommand { get set }
   
-  static func process(data: Data) throws -> Data
+  init(from: Data) throws
+  
+  func process() -> Data
 }

@@ -26,7 +26,7 @@ class UDPServer {
     listener = try! NWListener(using: .udp, on: NWEndpoint.Port(rawValue: UInt16(port!))!)
     
     listener!.stateUpdateHandler = stateUpdate(to:)
-    listener!.newConnectionHandler = messageFrom(incomingConnection:)
+    listener!.newConnectionHandler = processConnection(from:)
     
     listener!.start(queue: queue)
   }
@@ -45,14 +45,14 @@ class UDPServer {
     }
   }
   
-  private func messageFrom(incomingConnection: NWConnection) {
+  private func processConnection(from connection: NWConnection) {
     if let udpConnect = self.udpConnect {
       udpConnect.stop()
     }
-    udpConnect = UDPConnect(using: incomingConnection)
+    udpConnect = UDPConnect(using: connection)
 
     let responseData = ControlResponse.ok(.connect)
-    incomingConnection.send(content: responseData, completion: .contentProcessed({ _ in }))
+    connection.send(content: responseData, completion: .contentProcessed({ _ in }))
   }
   
   func connectClient(using connectCommand: ControlConnect) {

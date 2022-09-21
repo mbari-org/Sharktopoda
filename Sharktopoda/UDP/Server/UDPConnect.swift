@@ -13,8 +13,8 @@ class UDPConnect {
 
   var connectCommand: ControlConnect?
   
-  init(using udpConnection: NWConnection) {
-    connection = udpConnection
+  init(using connection: NWConnection) {
+    self.connection = connection
     connection.stateUpdateHandler = self.stateUpdate(to:)
     connection.start(queue: UDP.singleton.serverQueue)
   }

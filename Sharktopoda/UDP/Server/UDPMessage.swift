@@ -60,20 +60,8 @@ class UDPMessage {
         self.log("empty message")
         return
       }
-
-      let controlCommandData = ControlCommandData(from: data)
-      self.log(controlCommandData.command.rawValue)
       
-      if let error = controlCommandData.error {
-        completion(ControlResponse.failed(.unknown, cause: error))
-        return
-      }
-      
-      do {
-        completion(try controlCommandData.controlMessage().process())
-      } catch {
-        completion(ControlResponse.failed(.connect, cause: "Invalid message"))
-      }
+      completion(ControlCommand.controlMessage(from: data).process())
     }
   }
 

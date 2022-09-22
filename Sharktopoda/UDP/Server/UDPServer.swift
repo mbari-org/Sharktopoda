@@ -9,13 +9,22 @@ import Foundation
 import Network
 
 class UDPServer {
+  private static var defaultPort = 8800
+  
   var listener: NWListener
   var queue: DispatchQueue
   var port: Int
   
   init() {
-    port = UserDefaults.standard.object(forKey: PrefKeys.port) as? Int ?? 8800
+    let prefPort: Int = UserDefaults.standard.integer(forKey: PrefKeys.port)
     
+    if prefPort == 0 {
+      port = UDPServer.defaultPort
+      UserDefaults.standard.setValue(port, forKey: PrefKeys.port)
+    } else {
+      port = prefPort
+    }
+
     queue = DispatchQueue(label: "Sharktopoda UDP Server Queue")
     
     listener = try! NWListener(using: .udp, on: NWEndpoint.Port(rawValue: UInt16(port))!)
@@ -26,7 +35,7 @@ class UDPServer {
     
     log("started on port \(port)")
   }
-
+  
   func runningOnPort() -> Int {
     Int(listener.port?.rawValue ?? 0)
   }

@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 final class SharktopodaData: ObservableObject {
   @Published var udpServer: UDPServer = UDPServer()
 

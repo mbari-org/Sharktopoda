@@ -7,38 +7,28 @@
 
 import Foundation
 import Network
-import SwiftUI
 
 class UDPServer {
-  @AppStorage(PrefKeys.port) private var prefPort: Int = 8800
+  var listener: NWListener
+  var queue: DispatchQueue
+  var port: Int
   
-  var listener: NWListener?
-  
-  static let singleton = UDPServer()
-  private init() {
+  init() {
+    port = UserDefaults.standard.object(forKey: PrefKeys.port) as? Int ?? 8800
+    
+    queue = DispatchQueue(label: "Sharktopoda UDP Server Queue")
+    
+    listener = try! NWListener(using: .udp, on: NWEndpoint.Port(rawValue: UInt16(port))!)
+    listener.stateUpdateHandler = stateUpdate(to:)
+    listener.newConnectionHandler = processConnection(from:)
+    
+    listener.start(queue: queue)
+    
+    log("started on port \(port)")
   }
-  
-  private static let queue = DispatchQueue(label: "Sharktopoda UDP Server Queue")
-  
-  func start() {
-    if let _ = listener {
-      guard prefPort != runningOnPort() else {
-        return
-      }
-      stop()
-    }
-    
-    listener = try! NWListener(using: .udp, on: NWEndpoint.Port(rawValue: UInt16(prefPort))!)
-    listener!.stateUpdateHandler = stateUpdate(to:)
-    listener!.newConnectionHandler = processConnection(from:)
-    
-    listener!.start(queue: UDPServer.queue)
-    
-    log("started on port \(prefPort)")
-  }
-  
+
   func runningOnPort() -> Int {
-    Int(listener?.port?.rawValue ?? 0)
+    Int(listener.port?.rawValue ?? 0)
   }
   
   func stateUpdate(to update: NWListener.State) {
@@ -68,11 +58,9 @@ class UDPServer {
   func stop() {
     let port = runningOnPort()
     
-    listener?.stateUpdateHandler = nil
-    listener?.newConnectionHandler = nil
-    listener?.cancel()
-    
-    listener = nil
+    listener.stateUpdateHandler = nil
+    listener.newConnectionHandler = nil
+    listener.cancel()
     
     log("stopped on port \(port)")
   }

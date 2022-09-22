@@ -9,7 +9,7 @@ import Foundation
 
 class UDP {
   // Prefs ensure port is set
-  static let server: UDPServer = UDPServer.singleton
+//  static let server: UDPServer = UDPServer.singleton
   static var client: UDPClient?
   
   static let singleton = UDP()
@@ -17,7 +17,7 @@ class UDP {
   }
   
   static func start() {
-    UDP.server.start()
+//    UDP.server.start()
   }
   
   static func client(using connectCommand: ControlConnect) {

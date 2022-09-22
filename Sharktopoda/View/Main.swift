@@ -54,7 +54,7 @@ struct Main: View {
         
         Spacer()
         
-        Text("UDP <-- port \(String(sharktopodaData.serverPort))")
+        Text("UDP <-- port \(String(sharktopodaData.udpServer.port))")
           .font(updConnectionFont)
         
         if let clientData = UDP.client?.clientData, clientData.active {

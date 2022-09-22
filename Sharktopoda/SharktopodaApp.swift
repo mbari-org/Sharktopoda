@@ -10,11 +10,7 @@ import SwiftUI
 @main
 struct SharktopodaApp: App {
   @StateObject private var sharktopodaData = SharktopodaData()
-  
-  init() {
-    UDP.start()
-  }
-  
+
   var body: some Scene {
     WindowGroup {
       Main()

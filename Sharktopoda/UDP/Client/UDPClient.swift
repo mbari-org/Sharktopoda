@@ -8,21 +8,37 @@ import Foundation
 import Network
 
 class UDPClient {
+  struct ClientData {
+    let host: String
+    let port: Int
+    var active: Bool = false
+    var error: String? = nil
+    
+    var endpoint: String {
+      "\(host):\(port)"
+    }
+  }
+
   private static let queue = DispatchQueue(label: "Sharktopoda UDP Client Queue")
   
   var connection: NWConnection
   
-  var isReady = false
+  var clientData: ClientData
   
   init(using connectCommand: ControlConnect) {
-    let host = NWEndpoint.Host(connectCommand.host)
-    let port = NWEndpoint.Port(rawValue: UInt16(connectCommand.port))!
+    let host = connectCommand.host
+    let port = connectCommand.port
+    clientData = ClientData(host: host, port: port)
+
+    let endpointHost = NWEndpoint.Host(host)
+    let endpointPort = NWEndpoint.Port(rawValue: UInt16(port))!
+    let endpoint = NWEndpoint.hostPort(host: endpointHost, port: endpointPort)
     
-    connection = NWConnection(host: host, port: port, using: .udp)
+    connection = NWConnection(to: endpoint, using: .udp)
     connection.stateUpdateHandler = self.stateUpdate(to:)
     connection.start(queue: UDPClient.queue)
-    
-    log("connect to \(connectCommand.host) on port \(connectCommand.port)")
+
+    log("connecting to \(clientData.endpoint)")
   }
   
   func stateUpdate(to update: NWConnection.State) {
@@ -31,55 +47,64 @@ class UDPClient {
         return
       case .ready:
         log("state \(update)")
-        isReady = true
-        
-        send(ClientPing())
-        
+        ping()
       case .failed(let error):
+        udpError(error: error)
         log("failed with error \(error)")
         exit(EXIT_FAILURE)
       case .cancelled:
+        udpActive(active: false)
         log("state \(update)")
       @unknown default:
         log("state unknown")
     }
   }
   
-  func send(_ message: ClientMessage) {
-    if !isReady {
-      log("attempted send when connection not ready")
+  func ping() {
+    log("ping \(clientData.endpoint)")
+    
+    let data = ClientPing().jsonData()
+    connection.send(content: data, completion: .contentProcessed({ [weak self] error in
+      if let error = error {
+        self?.udpError(error: error)
+        self?.log("ping error: \(error)")
+      } else {
+        self?.udpActive(active: true)
+      }
+    }))
+  }
+  
+  func send(_ message: ClientMessage, completion: NWConnection.SendCompletion) {
+    guard clientData.active else {
+      log("client connection not active ")
       return
     }
     
     log("send \(message.command)")
     
     let data = message.jsonData()
-    connection.send(content: data, completion: .contentProcessed({ error in
-      if let error = error {
-        self.log("send error: \(error)")
-      }
-    }))
+    connection.send(content: data, completion: completion)
   }
+
+  func udpActive(active: Bool) {
+    let host = clientData.host
+    let port = clientData.port
+    clientData = ClientData(host: host, port: port, active: active)
   
-  //  private func receiveLoop() {
-  //    self.connection.receiveMessage { data, _, isComplete, error in
-  //      if let error = error {
-  //        self.log("receive message error \(error)")
-  //        return
-  //      }
-  //      guard isComplete, let data = data else {
-  //        self.log("receive nil data")
-  //        return
-  //      }
-  //      let msg = String(decoding: data, as: UTF8.self)
-  //      self.log("CxInc handle msg: \(msg)")
-  //      self.receiveLoop()
-  //    }
-  //  }
+    let activeState = (clientData.active ? "" : "in") + "active"
+    log("\(clientData.endpoint) \(activeState)")
+  }
+
+  func udpError(error: Error) {
+    let host = clientData.host
+    let port = clientData.port
+    clientData = ClientData(host: host, port: port, error: error.localizedDescription)
+  }
   
   func stop()  {
     connection.stateUpdateHandler = nil
     connection.cancel()
+    clientData = ClientData(host: "N/A", port: 0)
   }
   
   func log(_ msg: String) {

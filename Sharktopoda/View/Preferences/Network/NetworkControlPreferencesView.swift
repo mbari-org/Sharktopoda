@@ -33,10 +33,10 @@ struct NetworkControlPreferencesView: View {
           .frame(width: 60)
           .multilineTextAlignment(.trailing)
         
-        if sharktopodaData.port != prefPort {
+        if sharktopodaData.serverPort != prefPort {
           Button {
             UDP.server.start()
-            sharktopodaData.port = prefPort
+            sharktopodaData.serverPort = prefPort
           } label: {
             Text("Restart UDP Server")
           }

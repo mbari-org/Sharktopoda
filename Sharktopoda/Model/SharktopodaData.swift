@@ -7,7 +7,10 @@
 
 import Foundation
 
+
 final class SharktopodaData: ObservableObject {
-  @Published var port: Int = (UserDefaults.standard.object(forKey: PrefKeys.port) as? Int ?? 8800)
+  @Published var serverPort: Int = (UserDefaults.standard.object(forKey: PrefKeys.port) as? Int ?? 8800)
+  @Published var clientToggle: Bool = false
+  
   @Published var videoAssets = [String: VideoAsset]()
 }

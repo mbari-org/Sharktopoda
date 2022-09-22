@@ -44,13 +44,6 @@ struct SizeColorRow: View {
       Text(colorHex)
         .padding(.leading, 5)
         .font(hexFont)
-      
-      
-      //      TextField("", text: $colorHex)
-      //        .disableAutocorrection(true)
-      //        .frame(width: 75)
-      //        .multilineTextAlignment(.trailing)
-      
     }
   }
   

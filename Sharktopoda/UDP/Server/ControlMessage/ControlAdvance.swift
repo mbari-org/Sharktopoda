@@ -12,6 +12,10 @@ struct ControlAdvance: ControlMessage {
   var uuid: String
   var direction: Int
   
+  var description: String {
+    command.rawValue
+  }
+  
   func process() -> Data {
     print("CxInc handle: \(self)")
     return ControlResponse.ok(command)

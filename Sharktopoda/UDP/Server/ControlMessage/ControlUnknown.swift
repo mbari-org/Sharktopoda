@@ -11,6 +11,10 @@ struct ControlUnknown: ControlMessage {
   var command: ControlCommand = .unknown
   var cause: String
 
+  var description: String {
+    command.rawValue
+  }
+
   func process() -> Data {
     ControlResponse.failed(command, cause: cause)
   }

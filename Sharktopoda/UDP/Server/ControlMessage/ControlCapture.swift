@@ -13,6 +13,10 @@ struct ControlCapture: ControlMessage {
   var imageLocation: String
   var imageReferenceUuid: String
   
+  var description: String {
+    command.rawValue
+  }
+  
   func process() -> Data {
     print("CxInc handle: \(self)")
     return ControlResponse.ok(command)

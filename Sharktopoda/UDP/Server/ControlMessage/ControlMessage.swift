@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol ControlMessage: Decodable {
+protocol ControlMessage: Decodable, CustomStringConvertible {
   var command: ControlCommand { get set }
   
   func process() -> Data

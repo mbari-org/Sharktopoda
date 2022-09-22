@@ -13,6 +13,10 @@ struct ControlConnect: ControlMessage {
   @Default<String.Localhost> var host: String
   let port: Int
   
+  var description: String {
+    command.rawValue
+  }
+
   func process() -> Data {
     UDP.client(using: self)
     return ControlResponse.ok(command)

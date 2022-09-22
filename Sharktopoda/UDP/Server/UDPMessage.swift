@@ -52,24 +52,26 @@ class UDPMessage {
   }
   
   func processMessage() {
-    connection.receiveMessage { [self] (data, _, isComplete, error) in
+    connection.receiveMessage { [weak self] (data, _, isComplete, error) in
       guard isComplete else {
         return
       }
       
       // CxTBD guard may not be necessary: Preliminary futzing shows empty data never gets here
       guard let data = data, !data.isEmpty else {
-        completion(ControlResponse.failed(.unknown, cause: "empty message"))
-        self.log("empty message")
+        self?.completion(ControlResponse.failed(.unknown, cause: "empty message"))
+        self?.log("empty message")
         return
       }
-      
-      completion(ControlCommand.controlMessage(from: data).process())
+
+      let controlMessage = ControlCommand.controlMessage(from: data)
+      self?.log("\(controlMessage)")
+      self?.completion(controlMessage.process())
     }
   }
 
   func connectionDidFail(error: Error) {
-    let msg = "Failed error: \(error)"
+    let msg = error.localizedDescription
     completion(ControlResponse.failed(.unknown, cause: msg))
     log(msg)
     stop()
@@ -83,7 +85,7 @@ class UDPMessage {
   }
   
   func log(_ msg: String) {
-    let logHdr = "Sharktopoda UDP Connect"
+    let logHdr = "Sharktopoda UDP Server message"
     UDP.log(hdr: logHdr, msg)
   }
   

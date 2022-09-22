@@ -9,6 +9,7 @@ import Foundation
 
 final class SharktopodaData: ObservableObject {
   @Published var udpServer: UDPServer = UDPServer()
+  @Published var udpClient: UDPClient? = nil
 
   @Published var videoAssets = [String: VideoAsset]()
 }

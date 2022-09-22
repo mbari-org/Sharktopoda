@@ -13,4 +13,8 @@ struct ControlPing: ControlMessage {
   func process() -> Data {
     ControlResponse.ok(command)
   }
+  
+  var description: String {
+    "ping"
+  }
 }

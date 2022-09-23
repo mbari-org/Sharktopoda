@@ -7,7 +7,7 @@
 import Foundation
 import Network
 
-class UDPClient {
+class UDPClient: ObservableObject {
   struct ClientData {
     let host: String
     let port: Int

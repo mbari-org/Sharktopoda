@@ -12,7 +12,6 @@ struct Main: View {
   
   let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
   
-  
   private static var ratio: CGFloat = 1.75
   private static var height: CGFloat = 425
   private static var width = CGFloat(Main.height * Main.ratio)
@@ -56,8 +55,9 @@ struct Main: View {
         
         Text("UDP <-- port \(String(sharktopodaData.udpServer.port))")
           .font(Main.updConnectionFont)
-        
-        if let clientData = sharktopodaData.udpClient.clientData, clientData.active {
+
+        let clientData = sharktopodaData.udpClient.clientData
+        if clientData.active {
           Text("UDP --> port \(String(clientData.port)) on host \(clientData.host)")
             .font(Main.updConnectionFont)
         } else {

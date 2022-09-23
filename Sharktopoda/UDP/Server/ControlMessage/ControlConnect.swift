@@ -13,6 +13,10 @@ struct ControlConnect: ControlMessage {
   @Default<String.Localhost> var host: String
   let port: Int
   
+  var endpoint: String {
+    "\(host):\(port)"
+  }
+  
   var description: String {
     command.rawValue
   }

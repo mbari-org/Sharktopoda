@@ -18,7 +18,7 @@ struct ControlConnect: ControlMessage {
   }
 
   func process() -> Data {
-    UDP.client(using: self)
+    UDP.startClient(using: self)
     return ControlResponse.ok(command)
   }
 }

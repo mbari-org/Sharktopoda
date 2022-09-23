@@ -12,12 +12,12 @@ struct Main: View {
   
   let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
   
-  private var updConnectionFont = Font.system(size: 12).monospaced()
   
   private static var ratio: CGFloat = 1.75
   private static var height: CGFloat = 425
   private static var width = CGFloat(Main.height * Main.ratio)
-  
+  private static var updConnectionFont = Font.system(size: 12).monospaced()
+
   var body: some View {
     HStack {
       VStack(spacing: 10) {
@@ -55,14 +55,14 @@ struct Main: View {
         Spacer()
         
         Text("UDP <-- port \(String(sharktopodaData.udpServer.port))")
-          .font(updConnectionFont)
+          .font(Main.updConnectionFont)
         
-        if let clientData = UDP.client?.clientData, clientData.active {
+        if let clientData = sharktopodaData.udpClient.clientData, clientData.active {
           Text("UDP --> port \(String(clientData.port)) on host \(clientData.host)")
-            .font(updConnectionFont)
+            .font(Main.updConnectionFont)
         } else {
           Text("UDP --> not connected")
-            .font(updConnectionFont)
+            .font(Main.updConnectionFont)
         }
       }
       .padding(20)

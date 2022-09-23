@@ -8,7 +8,7 @@
 import Foundation
 import Network
 
-class UDPServer {
+class UDPServer: ObservableObject {
   private static var defaultPort = 8800
   
   var listener: NWListener

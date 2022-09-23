@@ -8,24 +8,26 @@
 import Foundation
 
 class UDP {
-  // Prefs ensure port is set
-//  static let server: UDPServer = UDPServer.singleton
-  static var client: UDPClient?
+  static var server: UDPServer = UDPServer()
+  static var client: UDPClient = UDPClient()
+  
+  static var sharktopodaData: SharktopodaData!
   
   static let singleton = UDP()
   private init() {
   }
   
-  static func start() {
-//    UDP.server.start()
+  static func restartServer() {
+    sharktopodaData.udpServer.stop()
+    sharktopodaData.udpServer = UDPServer()
   }
   
-  static func client(using connectCommand: ControlConnect) {
-    if let client = UDP.client {
-      client.stop()
-      UDP.client = nil
+  static func startClient(using connectCommand: ControlConnect) {
+    sharktopodaData.udpClient.stop()
+    let udpClient = UDPClient(using: connectCommand)
+    DispatchQueue.main.async {
+      sharktopodaData.udpClient = udpClient
     }
-    UDP.client = UDPClient(using: connectCommand)
   }
   
   static func log(hdr: String, _ msg: String) {

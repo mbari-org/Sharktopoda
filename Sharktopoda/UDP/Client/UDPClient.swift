@@ -21,10 +21,14 @@ class UDPClient {
 
   private static let queue = DispatchQueue(label: "Sharktopoda UDP Client Queue")
   
-  var connection: NWConnection
-  
+  var connection: NWConnection?
+
   var clientData: ClientData
   
+  init() {
+    clientData = ClientData(host: "", port: 0)
+  }
+
   init(using connectCommand: ControlConnect) {
     let host = connectCommand.host
     let port = connectCommand.port
@@ -34,13 +38,16 @@ class UDPClient {
     let endpointPort = NWEndpoint.Port(rawValue: UInt16(port))!
     let endpoint = NWEndpoint.hostPort(host: endpointHost, port: endpointPort)
     
-    connection = NWConnection(to: endpoint, using: .udp)
+    let connection = NWConnection(to: endpoint, using: .udp)
     connection.stateUpdateHandler = self.stateUpdate(to:)
     connection.start(queue: UDPClient.queue)
 
+    self.connection = connection
+    
     log("connecting to \(clientData.endpoint)")
+
   }
-  
+
   func stateUpdate(to update: NWConnection.State) {
     switch update {
       case .preparing, .setup, .waiting:
@@ -64,7 +71,7 @@ class UDPClient {
     log("ping \(clientData.endpoint)")
     
     let data = ClientPing().jsonData()
-    connection.send(content: data, completion: .contentProcessed({ [weak self] error in
+    connection?.send(content: data, completion: .contentProcessed({ [weak self] error in
       if let error = error {
         self?.udpError(error: error)
         self?.log("ping error: \(error)")
@@ -83,7 +90,7 @@ class UDPClient {
     log("send \(message.command)")
     
     let data = message.jsonData()
-    connection.send(content: data, completion: completion)
+    connection?.send(content: data, completion: completion)
   }
 
   func udpActive(active: Bool) {
@@ -102,9 +109,15 @@ class UDPClient {
   }
   
   func stop()  {
-    connection.stateUpdateHandler = nil
-    connection.cancel()
-    clientData = ClientData(host: "N/A", port: 0)
+    if let connection = connection {
+      connection.stateUpdateHandler = nil
+      connection.cancel()
+      
+      let endpoint = clientData.endpoint
+      clientData = ClientData(host: "", port: 0)
+
+      log("stopped \(endpoint)")
+    }
   }
   
   func log(_ msg: String) {

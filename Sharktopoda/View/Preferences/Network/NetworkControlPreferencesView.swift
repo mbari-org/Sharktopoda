@@ -18,7 +18,7 @@ struct NetworkControlPreferencesView: View {
     Divider()
     
     HStack {
-      Text("Remote UDP Control")
+      Text("UDP Messaging")
         .font(.title2)
       Spacer()
     }
@@ -26,7 +26,7 @@ struct NetworkControlPreferencesView: View {
     
     Form {
       HStack {
-        Text("Port: ")
+        Text("Server Port: ")
           .font(.title3)
         
         TextField("", value: $prefPort, formatter: NumberFormatter())
@@ -46,7 +46,7 @@ struct NetworkControlPreferencesView: View {
       }
       
       HStack {
-        Text("Timeout: ")
+        Text("Client Timeout: ")
           .font(.title3)
         
         TextField("", value: $timeout, formatter: NumberFormatter())

@@ -29,7 +29,7 @@ class UDPServer: ObservableObject {
     
     listener = try! NWListener(using: .udp, on: NWEndpoint.Port(rawValue: UInt16(port))!)
     listener.stateUpdateHandler = stateUpdate(to:)
-    listener.newConnectionHandler = processConnection(from:)
+    listener.newConnectionHandler = UDPMessage.process(on:)
     
     listener.start(queue: queue)
     
@@ -55,13 +55,6 @@ class UDPServer: ObservableObject {
       @unknown default:
         log("state unknown")
     }
-  }
-  
-  private func processConnection(from connection: NWConnection) {
-    let udpMessage = UDPMessage(using: connection) { data in
-      connection.send(content: data, completion: .contentProcessed({ _ in }))
-    }
-    udpMessage.start()
   }
   
   func stop() {

@@ -11,20 +11,23 @@ import Network
 class UDPMessage {
   private static let queue = DispatchQueue(label: "Sharktopoda UDP Message Queue")
   
-  typealias ResponseCompletion = (_ response: Data) -> Void
+  typealias ProcessCompletion = (_ data: Data) -> Void
   
   let connection: NWConnection
-  let completion: ResponseCompletion
-  
-  init(using connection: NWConnection, completion: @escaping ResponseCompletion) {
+  let completion: ProcessCompletion
+
+  static func process(on connection: NWConnection) {
+    let _ = UDPMessage(using: connection, completion: { data in
+      connection.send(content: data, completion: .contentProcessed({ _ in }))
+    })
+    connection.start(queue: UDPMessage.queue)
+  }
+
+  private
+  init(using connection: NWConnection, completion: @escaping ProcessCompletion) {
     self.connection = connection
     self.completion = completion
-    
     connection.stateUpdateHandler = self.stateUpdate(to:)
-  }
-  
-  func start() {
-    connection.start(queue: UDPMessage.queue)
   }
   
   func stateUpdate(to update: NWConnection.State) {

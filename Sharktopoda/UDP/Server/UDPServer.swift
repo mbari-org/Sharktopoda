@@ -24,7 +24,7 @@ class UDPServer: ObservableObject {
     } else {
       port = prefPort
     }
-
+    
     queue = DispatchQueue(label: "Sharktopoda UDP Server Queue")
     
     listener = try! NWListener(using: .udp, on: NWEndpoint.Port(rawValue: UInt16(port))!)

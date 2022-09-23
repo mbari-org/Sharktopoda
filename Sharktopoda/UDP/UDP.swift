@@ -28,8 +28,10 @@ class UDP {
     }
     sharktopodaData.udpClient.stop()
     let udpClient = UDPClient(using: connectCommand)
-    DispatchQueue.main.async {
-      sharktopodaData.udpClient = udpClient
+    udpClient.connect { clientData in
+      DispatchQueue.main.async {
+        sharktopodaData.udpClient = udpClient
+      }
     }
   }
   

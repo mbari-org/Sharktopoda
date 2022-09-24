@@ -19,14 +19,15 @@ class UDPClient: ObservableObject {
     }
   }
   
-  typealias UDPClientCompletion = (UDPClient) -> Void
+  typealias UDPClientConnectCompletion = (UDPClient) -> Void
+  typealias UDPClientMessageCompletion = (Data) -> Void
   
   private static let queue = DispatchQueue(label: "Sharktopoda UDP Client Queue")
   
   var connection: NWConnection?
   
   var clientData: ClientData
-  var completion: UDPClientCompletion?
+  var connectCompletion: UDPClientConnectCompletion?
   var timeout: TimeInterval
   
   static func clientTimeout() -> TimeInterval {
@@ -35,9 +36,9 @@ class UDPClient: ObservableObject {
     return TimeInterval(prefMillis) / 1000.0
   }
   
-  static func connect(using connectCommand: ControlConnect, completion: @escaping UDPClientCompletion) {
+  static func connect(using connectCommand: ControlConnect, completion: @escaping UDPClientConnectCompletion) {
     let udpClient = UDPClient(using: connectCommand)
-    udpClient.completion = completion
+    udpClient.connectCompletion = completion
     udpClient.connection?.start(queue: UDPClient.queue)
   }
   
@@ -76,11 +77,11 @@ class UDPClient: ObservableObject {
       case .failed(let error):
         udpError(error: error)
         log("failed with error \(error)")
-        completion?(self)
+        connectCompletion?(self)
       case .cancelled:
         udpActive(active: false)
         log("state \(update)")
-        completion?(self)
+        connectCompletion?(self)
       @unknown default:
         log("state unknown")
     }
@@ -97,9 +98,7 @@ class UDPClient: ObservableObject {
     
     UDPClient.queue.asyncAfter(deadline: .now() + timeout) { [weak self] in
       guard receivedReply == false else { return }
-      if let completion = self?.completion {
-        completion(self!)
-      }
+      self?.connectCompletion?(self!)
     }
 
     if let connection = self.connection {
@@ -114,9 +113,7 @@ class UDPClient: ObservableObject {
         } else {
           self?.udpActive(active: true)
         }
-        if let completion = self?.completion {
-          completion(self!)
-        }
+        self?.connectCompletion?(self!)
       })
     }
   }

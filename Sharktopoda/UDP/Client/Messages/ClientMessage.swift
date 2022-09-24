@@ -10,5 +10,5 @@ import Foundation
 protocol ClientMessage: Encodable {
   var command: ClientCommand { get set }
   
-  func jsonData() -> Data
+  func data() -> Data
 }

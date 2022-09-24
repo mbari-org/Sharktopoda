@@ -22,13 +22,16 @@ class UDP {
     sharktopodaData.udpServer = UDPServer()
   }
   
-  static func startClient(using connectCommand: ControlConnect) {
+  static func connectClient(using connectCommand: ControlConnect) {
     guard connectCommand.endpoint != client.clientData.endpoint else {
       return
     }
-    sharktopodaData.udpClient.stop()
-    let udpClient = UDPClient(using: connectCommand)
-    udpClient.connect { clientData in
+    UDPClient.connect(using: connectCommand) { udpClient in
+      guard udpClient.clientData.active else {
+        return
+      }
+
+      sharktopodaData.udpClient.stop()
       DispatchQueue.main.async {
         sharktopodaData.udpClient = udpClient
       }

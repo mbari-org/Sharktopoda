@@ -14,7 +14,7 @@ struct ClientPing: ClientMessage {
     self.command = .ping
   }
   
-  func jsonData() -> Data {
+  func data() -> Data {
     try! JSONEncoder().encode(self)
   }
 }

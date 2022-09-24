@@ -58,7 +58,7 @@ struct Main: View {
         
         let clientData = sharktopodaData.udpClient.clientData
         if clientData.active {
-          Text("UDP  →  port \(String(clientData.port)) on host \(clientData.host)")
+          Text("UDP  →  port \(String(clientData.port)) on \(clientData.host)")
             .font(Main.updConnectionFont)
         } else {
           Text("UDP  →  not connected")

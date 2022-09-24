@@ -20,7 +20,7 @@ class UDPClient: ObservableObject {
   }
   
   typealias UDPClientConnectCompletion = (UDPClient) -> Void
-  typealias UDPClientMessageCompletion = (Data) -> Void
+  typealias UDPClientMessageCompletion = (Data?) -> Void
   
   private static let queue = DispatchQueue(label: "Sharktopoda UDP Client Queue")
   
@@ -88,17 +88,25 @@ class UDPClient: ObservableObject {
   }
   
   func verifyConnection() {
-    process(ClientPing())
+    process(ClientPing()) { [weak self] data in
+      guard let data = data else {
+        self?.connectCompletion?(self!)
+        return
+      }
+      self?.log("Inspect ping response data: \(String(decoding: data, as: UTF8.self))")
+      self?.udpActive(active: true)
+      self?.connectCompletion?(self!)
+    }
   }
   
-  func process(_ message: ClientMessage) {
+  func process(_ message: ClientMessage, completion: @escaping UDPClientMessageCompletion) {
     let data = message.data()
     
     var receivedReply = false
     
-    UDPClient.queue.asyncAfter(deadline: .now() + timeout) { [weak self] in
+    UDPClient.queue.asyncAfter(deadline: .now() + timeout) {
       guard receivedReply == false else { return }
-      self?.connectCompletion?(self!)
+      completion(nil)
     }
 
     if let connection = self.connection {
@@ -110,10 +118,8 @@ class UDPClient: ObservableObject {
         if let error = error {
           self?.udpError(error: error)
           self?.log("ping error: \(error)")
-        } else {
-          self?.udpActive(active: true)
         }
-        self?.connectCompletion?(self!)
+        completion(data)
       })
     }
   }

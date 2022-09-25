@@ -13,3 +13,14 @@ protocol ControlResponse: Encodable, CustomStringConvertible {
   
   func data() -> Data
 }
+
+extension ControlResponse {
+  var description: String {
+    response.rawValue
+  }
+  
+  func data() -> Data {
+    try! JSONEncoder().encode(self)
+  }
+}
+

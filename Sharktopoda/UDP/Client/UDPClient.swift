@@ -55,11 +55,7 @@ class UDPClient: ObservableObject {
     
     self.timeout = UDPClient.clientTimeout()
     
-    let endpointHost = NWEndpoint.Host(host)
-    let endpointPort = NWEndpoint.Port(rawValue: UInt16(port))!
-    let endpoint = NWEndpoint.hostPort(host: endpointHost, port: endpointPort)
-    
-    let connection = NWConnection(to: endpoint, using: .udp)
+    let connection = UDP.connection(host: host, port: port)
     connection.stateUpdateHandler = self.stateUpdate(to:)
     
     self.connection = connection

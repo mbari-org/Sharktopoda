@@ -20,9 +20,12 @@ struct ControlConnect: ControlMessage {
   var description: String {
     command.rawValue
   }
-
+  
   func process() -> Data {
-    UDP.connectClient(using: self)
+    let client = UDP.client
+    if endpoint != client.clientData.endpoint {
+      UDP.connectClient(using: self)
+    }
     return ControlResponse.ok(command)
   }
 }

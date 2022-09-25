@@ -27,7 +27,8 @@ class UDPServer: ObservableObject {
     
     queue = DispatchQueue(label: "Sharktopoda UDP Server Queue")
     
-    listener = try! NWListener(using: .udp, on: NWEndpoint.Port(rawValue: UInt16(port))!)
+    // CxInc Throw from this init and deal with error in caller
+    listener = try! UDP.listener(port: port)
     listener.stateUpdateHandler = stateUpdate(to:)
     listener.newConnectionHandler = UDPMessage.process(on:)
     

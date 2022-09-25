@@ -9,7 +9,7 @@ import Foundation
 
 protocol ControlResponse: Encodable, CustomStringConvertible {
   var response: ControlCommand { get set }
-  var status: ResponseStatus { get set }
+  var status: ControlResponseCommand.Status { get set }
   
   func data() -> Data
 }

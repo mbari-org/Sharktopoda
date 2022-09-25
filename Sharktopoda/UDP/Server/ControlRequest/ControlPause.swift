@@ -17,6 +17,6 @@ struct ControlPause: ControlRequest {
 
   func process() -> ControlResponse {
     print("CxInc handle: \(self)")
-    return ControlResponseStatus.ok(command)
+    return ControlResponseCommand.ok(command)
   }
 }

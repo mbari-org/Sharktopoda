@@ -63,7 +63,7 @@ class UDPMessage {
       
       // CxTBD guard may not be necessary: Preliminary futzing shows empty data never gets here
       guard let data = data, !data.isEmpty else {
-        self?.completion(ControlResponseStatus.failed(.unknown, cause: "empty message"))
+        self?.completion(ControlResponseCommand.failed(.unknown, cause: "empty message"))
         self?.log("empty message")
         return
       }
@@ -76,7 +76,7 @@ class UDPMessage {
 
   func connectionDidFail(error: Error) {
     let msg = error.localizedDescription
-    completion(ControlResponseStatus.failed(.unknown, cause: msg))
+    completion(ControlResponseCommand.failed(.unknown, cause: msg))
     log(msg)
     stop()
   }

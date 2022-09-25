@@ -7,25 +7,26 @@
 
 import Foundation
 
-enum ResponseStatus: String, Codable {
-  case ok
-  case failed
-}
 
-struct ControlResponseStatus : ControlResponse {
+struct ControlResponseCommand : ControlResponse {
+  enum Status: String, Codable {
+    case ok
+    case failed
+  }
+
   var response: ControlCommand
-  var status: ResponseStatus
+  var status: Status
   var cause: String?
   
   static func ok(_ response: ControlCommand) -> ControlResponse {
-    ControlResponseStatus(response, status: .ok)
+    ControlResponseCommand(response, status: .ok)
   }
   
   static func failed(_ response: ControlCommand, cause: String? = nil) -> ControlResponse {
-    ControlResponseStatus(response, status: .failed, cause: cause)
+    ControlResponseCommand(response, status: .failed, cause: cause)
   }
   
-  init(_ response: ControlCommand, status: ResponseStatus, cause: String? = nil) {
+  init(_ response: ControlCommand, status: Status, cause: String? = nil) {
     self.response = response
     self.status = status
     self.cause = cause

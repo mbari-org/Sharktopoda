@@ -26,6 +26,6 @@ struct ControlConnect: ControlRequest {
     if endpoint != client.clientData.endpoint {
       UDP.connectClient(using: self)
     }
-    return ControlResponseStatus.ok(command)
+    return ControlResponseCommand.ok(command)
   }
 }

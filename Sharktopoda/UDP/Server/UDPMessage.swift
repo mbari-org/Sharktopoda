@@ -11,14 +11,15 @@ import Network
 class UDPMessage {
   private static let queue = DispatchQueue(label: "Sharktopoda UDP Message Queue")
   
-  typealias ProcessCompletion = (_ data: Data) -> Void
+  typealias ProcessCompletion = (_ response: ControlResponse) -> Void
   
   let connection: NWConnection
   let completion: ProcessCompletion
 
   static func process(on connection: NWConnection) {
-    let _ = UDPMessage(using: connection, completion: { data in
-      connection.send(content: data, completion: .contentProcessed({ _ in }))
+    let _ = UDPMessage(using: connection, completion: { response in
+        
+      connection.send(content: response.data(), completion: .contentProcessed({ _ in }))
     })
     connection.start(queue: UDPMessage.queue)
   }
@@ -62,7 +63,7 @@ class UDPMessage {
       
       // CxTBD guard may not be necessary: Preliminary futzing shows empty data never gets here
       guard let data = data, !data.isEmpty else {
-        self?.completion(ControlResponse.failed(.unknown, cause: "empty message"))
+        self?.completion(ControlResponseMessage.failed(.unknown, cause: "empty message"))
         self?.log("empty message")
         return
       }
@@ -75,7 +76,7 @@ class UDPMessage {
 
   func connectionDidFail(error: Error) {
     let msg = error.localizedDescription
-    completion(ControlResponse.failed(.unknown, cause: msg))
+    completion(ControlResponseMessage.failed(.unknown, cause: msg))
     log(msg)
     stop()
   }

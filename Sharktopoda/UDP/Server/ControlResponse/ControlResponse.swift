@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol ControlResponseMessage: Encodable {
+protocol ControlResponse: Encodable, CustomStringConvertible {
   var response: ControlCommand { get set }
   var status: ResponseStatus { get set }
   

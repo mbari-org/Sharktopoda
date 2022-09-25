@@ -30,7 +30,7 @@ enum ControlCommand: String, Codable {
     var command: String
   }
   
-  static func controlMessage(from data: Data) -> ControlMessage {
+  static func controlMessage(from data: Data) -> ControlRequest {
     let json = JSONDecoder()
 
     // Ensure control command is valid
@@ -51,7 +51,7 @@ enum ControlCommand: String, Codable {
     }
     
     do {
-      var controlMessageType: ControlMessage.Type
+      var controlMessageType: ControlRequest.Type
       switch controlCommand {
         case .advance:
           controlMessageType = ControlAdvance.self

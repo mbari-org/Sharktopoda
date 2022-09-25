@@ -1,5 +1,5 @@
 //
-//  ControlPlay.swift
+//  ControlOpen.swift
 //  Created for Sharktopoda on 9/20/22.
 //
 //  Apache License 2.0 — See project LICENSE file
@@ -7,17 +7,17 @@
 
 import Foundation
 
-struct ControlPlay: ControlMessage {
+struct ControlOpen: ControlRequest {
   var command: ControlCommand
-  let uuid: String
-  @Default<Double.PlaybackRate> var rate: Double
-
+  var uuid: String
+  var url: String
+  
   var description: String {
     command.rawValue
   }
 
-  func process() -> Data {
+  func process() -> ControlResponse {
     print("CxInc handle: \(self)")
-    return ControlResponse.ok(command)
+    return ControlResponseMessage.ok(command)
   }
 }

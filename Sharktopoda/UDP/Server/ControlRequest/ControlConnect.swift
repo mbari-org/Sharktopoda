@@ -8,7 +8,7 @@
 import Foundation
 import Network
 
-struct ControlConnect: ControlMessage {
+struct ControlConnect: ControlRequest {
   var command: ControlCommand
   @Default<String.Localhost> var host: String
   let port: Int
@@ -21,11 +21,11 @@ struct ControlConnect: ControlMessage {
     command.rawValue
   }
   
-  func process() -> Data {
+  func process() -> ControlResponse {
     let client = UDP.client
     if endpoint != client.clientData.endpoint {
       UDP.connectClient(using: self)
     }
-    return ControlResponse.ok(command)
+    return ControlResponseMessage.ok(command)
   }
 }

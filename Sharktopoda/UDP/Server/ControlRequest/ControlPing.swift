@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct ControlPing: ControlMessage {
+struct ControlPing: ControlRequest {
   var command: ControlCommand
 
-  func process() -> Data {
-    ControlResponse.ok(command)
+  func process() -> ControlResponse {
+    ControlResponseMessage.ok(command)
   }
   
   var description: String {

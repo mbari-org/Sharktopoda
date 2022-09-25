@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ResponseControlStatus : ControlResponseMessage {
+struct ResponseControlStatus : ControlResponse {
   var response: ControlCommand
   var status: ResponseStatus
   var cause: String?
@@ -21,4 +21,9 @@ struct ResponseControlStatus : ControlResponseMessage {
   func data() -> Data {
     try! JSONEncoder().encode(self)
   }
+  
+  var description: String {
+    response.rawValue
+  }
+
 }

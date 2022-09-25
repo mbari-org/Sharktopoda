@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 struct ControlResponseCommand : ControlResponse {
   enum Status: String, Codable {
     case ok

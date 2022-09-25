@@ -59,6 +59,7 @@
 		E2EE0E3C28DB9B3B00138A86 /* ControlSeek.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EE0E3B28DB9B3B00138A86 /* ControlSeek.swift */; };
 		E2EE0E3E28DB9B9F00138A86 /* ControlCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EE0E3D28DB9B9F00138A86 /* ControlCapture.swift */; };
 		E2EE0E4028DB9DD200138A86 /* ControlAll.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EE0E3F28DB9DD200138A86 /* ControlAll.swift */; };
+		E2FAB20828E104D3006D2676 /* ControlResponsePing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB20728E104D3006D2676 /* ControlResponsePing.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,6 +136,7 @@
 		E2EE0E3B28DB9B3B00138A86 /* ControlSeek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlSeek.swift; sourceTree = "<group>"; };
 		E2EE0E3D28DB9B9F00138A86 /* ControlCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlCapture.swift; sourceTree = "<group>"; };
 		E2EE0E3F28DB9DD200138A86 /* ControlAll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlAll.swift; sourceTree = "<group>"; };
+		E2FAB20728E104D3006D2676 /* ControlResponsePing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponsePing.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -356,6 +358,7 @@
 			children = (
 				E22F72FC28DA5D9100253A48 /* ControlResponse.swift */,
 				E2D47EA428D8ED300068B192 /* ControlResponseCommand.swift */,
+				E2FAB20728E104D3006D2676 /* ControlResponsePing.swift */,
 			);
 			path = ControlResponse;
 			sourceTree = "<group>";
@@ -537,6 +540,7 @@
 				E2989AB928D3B87E009D2D65 /* AnnotationPreferencesView.swift in Sources */,
 				E2C22EC828D2666A003CD976 /* Preferences.swift in Sources */,
 				E295627728D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift in Sources */,
+				E2FAB20828E104D3006D2676 /* ControlResponsePing.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

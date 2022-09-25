@@ -11,7 +11,7 @@ struct ControlPing: ControlRequest {
   var command: ControlCommand
 
   func process() -> ControlResponse {
-    ControlResponseCommand.ok(command)
+    ControlResponsePing()
   }
   
   var description: String {

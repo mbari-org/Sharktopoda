@@ -15,7 +15,8 @@ struct Main: View {
   private static var ratio: CGFloat = 1.75
   private static var height: CGFloat = 425
   private static var width = CGFloat(Main.height * Main.ratio)
-  private static var updConnectionFont = Font.title3
+
+  private let updStatusFont = Font.title3
   
   var body: some View {
     HStack {
@@ -53,16 +54,32 @@ struct Main: View {
         
         Spacer()
         
-        Text("UDP  ←  port \(String(sharktopodaData.udpServer.port))")
-          .font(Main.updConnectionFont)
+        
+        if let error = sharktopodaData.udpServer.error {
+          HStack {
+            Text("UDP  ←")
+              .font(updStatusFont)
+            Text("\(error)")
+              .font(updStatusFont)
+              .foregroundColor(.red)
+          }
+        } else {
+          Text("UDP  ←  port \(String(sharktopodaData.udpServer.port))")
+            .font(updStatusFont)
+        }
         
         let clientData = sharktopodaData.udpClient.clientData
         if clientData.active {
           Text("UDP  →  port \(String(clientData.port)) on \(clientData.host)")
-            .font(Main.updConnectionFont)
+            .font(updStatusFont)
         } else {
-          Text("UDP  →  not connected")
-            .font(Main.updConnectionFont)
+          HStack {
+            Text("UDP  →")
+              .font(updStatusFont)
+            Text("Not connected")
+              .font(updStatusFont)
+              .foregroundColor(.red)
+          }
         }
       }
       .padding(20)

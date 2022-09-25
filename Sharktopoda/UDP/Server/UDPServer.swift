@@ -15,6 +15,8 @@ class UDPServer: ObservableObject {
   var queue: DispatchQueue
   var port: Int
   
+  var error: String?
+  
   init() {
     let prefPort: Int = UserDefaults.standard.integer(forKey: PrefKeys.port)
     
@@ -27,7 +29,6 @@ class UDPServer: ObservableObject {
     
     queue = DispatchQueue(label: "Sharktopoda UDP Server Queue")
     
-    // CxInc Throw from this init and deal with error in caller
     listener = try! UDP.listener(port: port)
     listener.stateUpdateHandler = stateUpdate(to:)
     listener.newConnectionHandler = UDPMessage.process(on:)
@@ -50,8 +51,12 @@ class UDPServer: ObservableObject {
         log("state \(update)")
         
       case .failed(let error):
-        log("failed with error \(error)")
-        exit(EXIT_FAILURE)
+        // CxNote This is a bit fragile. 
+        let errorLast = "\(error)".split(separator: ":").last
+        let errorMsg: String = "\(errorLast ?? "Failed to connect")".trimmingCharacters(in: .whitespaces)
+        
+        log("failed with error \(errorMsg))")
+        self.error = errorMsg
         
       @unknown default:
         log("state unknown")

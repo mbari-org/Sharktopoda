@@ -18,6 +18,6 @@ struct ControlAdvance: ControlRequest {
   
   func process() -> ControlResponse {
     print("CxInc handle: \(self)")
-    return ControlResponseMessage.ok(command)
+    return ControlResponseStatus.ok(command)
   }
 }

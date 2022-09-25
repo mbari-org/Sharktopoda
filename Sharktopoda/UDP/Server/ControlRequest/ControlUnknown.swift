@@ -16,6 +16,6 @@ struct ControlUnknown: ControlRequest {
   }
 
   func process() -> ControlResponse {
-    ControlResponseMessage.failed(command, cause: cause)
+    ControlResponseStatus.failed(command, cause: cause)
   }
 }

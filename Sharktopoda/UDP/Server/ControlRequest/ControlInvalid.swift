@@ -15,6 +15,6 @@ struct ControlInvalid: ControlRequest {
   }
 
   func process() -> ControlResponse {
-    ControlResponseMessage.failed(command, cause: "invalid message")
+    ControlResponseStatus.failed(command, cause: "invalid message")
   }
 }

@@ -7,10 +7,23 @@
 
 import Foundation
 
-struct ResponseControlStatus : ControlResponse {
+enum ResponseStatus: String, Codable {
+  case ok
+  case failed
+}
+
+struct ControlResponseStatus : ControlResponse {
   var response: ControlCommand
   var status: ResponseStatus
   var cause: String?
+  
+  static func ok(_ response: ControlCommand) -> ControlResponse {
+    ControlResponseStatus(response, status: .ok)
+  }
+  
+  static func failed(_ response: ControlCommand, cause: String? = nil) -> ControlResponse {
+    ControlResponseStatus(response, status: .failed, cause: cause)
+  }
   
   init(_ response: ControlCommand, status: ResponseStatus, cause: String? = nil) {
     self.response = response

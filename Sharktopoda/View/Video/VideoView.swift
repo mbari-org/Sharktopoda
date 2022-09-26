@@ -8,6 +8,12 @@
 import SwiftUI
 
 struct VideoView: View {
+  let videoAsset: VideoAsset
+  
+  init(videoAsset: VideoAsset) {
+    self.videoAsset = videoAsset
+  }
+  
   var body: some View {
     VStack {
       Text("Video")
@@ -21,6 +27,6 @@ struct VideoView: View {
 
 struct VideoView_Previews: PreviewProvider {
   static var previews: some View {
-    VideoView()
+    VideoView(videoAsset: VideoAsset(uuid: "VideoAsset UUID"))
   }
 }

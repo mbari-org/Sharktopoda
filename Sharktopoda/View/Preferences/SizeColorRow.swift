@@ -57,7 +57,7 @@ struct SizeColorRow: View {
 
 struct SizeColorRow_Previews: PreviewProvider {
   static var previews: some View {
-    //    SizeColorRow(10, .red)
-    Text("CxInc")
+//    SizeColorRow(10, .red)
+    Text("CxTBD")
   }
 }

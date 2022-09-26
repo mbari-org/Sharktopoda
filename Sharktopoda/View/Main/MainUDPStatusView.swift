@@ -13,6 +13,16 @@ struct MainUDPStatusView: View {
   private let updStatusFont = Font.title3
 
   var body: some View {
+    Button(action: {
+      let uuid = "b52cf7f1-e19c-40ba-b176-a7e479a3b170"
+      let videoView = VideoView(videoAsset: VideoAsset(uuid: uuid))
+      sharktopodaData.videoViews[uuid] = videoView
+      videoView.openWindow()
+    }) {
+      Text("Open Video View Window")
+    }
+    
+
     if let error = sharktopodaData.udpServer.error {
       HStack {
         Text("UDP  ←")

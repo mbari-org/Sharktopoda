@@ -308,8 +308,8 @@
 			isa = PBXGroup;
 			children = (
 				E2C22EC428D144B0003CD976 /* SharktopodaData.swift */,
-				E2C22ED428D36832003CD976 /* Localization.swift */,
 				E2C22ED628D36888003CD976 /* VideoAsset.swift */,
+				E2C22ED428D36832003CD976 /* Localization.swift */,
 				E2675E2B28DB5F9400F5F114 /* DefaultlValue.swift */,
 			);
 			path = Model;

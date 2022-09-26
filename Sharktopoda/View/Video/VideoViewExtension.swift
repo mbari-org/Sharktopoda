@@ -21,7 +21,7 @@ extension VideoView {
     return window
   }
   
-  func openVideo(with title: String = "CxInc Video Window") {
-    self.newWindow(with: title).contentView = NSHostingView(rootView: self)
+  func openWindow() {
+    self.newWindow(with: self.videoAsset.uuid).contentView = NSHostingView(rootView: self)
   }
 }

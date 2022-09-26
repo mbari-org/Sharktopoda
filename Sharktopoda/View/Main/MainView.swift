@@ -24,12 +24,7 @@ struct MainView: View {
         MainShortcutsView()
         
         Spacer()
-        Button(action: {
-          VideoView().openVideo()
-        }) {
-          Text("Open New Window")
-        }
-        
+
         MainUDPStatusView()
           .environmentObject(SharktopodaData())
       }

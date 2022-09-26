@@ -10,11 +10,14 @@ import Foundation
 final class SharktopodaData: ObservableObject {
   @Published var udpServer: UDPServer = UDP.server
   @Published var udpClient: UDPClient = UDP.client
-
-  @Published var videoAssets = [String: VideoAsset]()
   
+  @Published var videoViews = [String: VideoView]()
+  
+  // This allows non-View access to sharktopoda data to update observing Views
   init() {
-    // This allows non-view access to sharktopoda data to update observing views
     UDP.sharktopodaData = self
   }
+  
+  
+  
 }

@@ -24,8 +24,9 @@ struct ControlOpen: ControlRequest {
     UDP.log("ControlOpen \(urlRef.absoluteString)")
     
     if let videoWindow = UDP.sharktopodaData.videoWindows[uuid] {
-      let videoUUID = videoWindow.videoView.videoAsset.uuid
-      UDP.log("bring forward video view \(videoUUID)")
+      DispatchQueue.main.async {
+        videoWindow.orderFrontRegardless()
+      }
     } else {
       DispatchQueue.main.async {
         UDP.sharktopodaData.videoWindows[uuid] = VideoWindow(for: VideoAsset(uuid: uuid))

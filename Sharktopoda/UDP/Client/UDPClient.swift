@@ -67,19 +67,22 @@ class UDPClient: ObservableObject {
     switch update {
       case .preparing, .setup, .waiting:
         return
+
       case .ready:
-        log("state \(update)")
         verifyConnection()
+
       case .failed(let error):
         udpError(error: error)
         log("failed with error \(error)")
         connectCompletion?(self)
+
       case .cancelled:
         udpActive(active: false)
         log("state \(update)")
         connectCompletion?(self)
+
       @unknown default:
-        log("state unknown")
+        log("unknown state \(update)")
     }
   }
   
@@ -175,7 +178,6 @@ class UDPClient: ObservableObject {
   }
   
   func log(_ msg: String) {
-    let logHdr = "Sharktopoda UDP Client"
-    UDP.log(hdr: logHdr, msg)
+    UDP.log("-> \(msg)")
   }
 }

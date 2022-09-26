@@ -44,10 +44,10 @@ class UDPServer: ObservableObject {
   
   func stateUpdate(to update: NWListener.State) {
     switch update {
-      case .setup, .waiting:
+      case .setup, .waiting, .ready:
         return
         
-      case .ready, .cancelled:
+      case .cancelled:
         log("state \(update)")
         
       case .failed(let error):
@@ -74,8 +74,7 @@ class UDPServer: ObservableObject {
   }
   
   func log(_ msg: String) {
-    let logHdr = "Sharktopoda UDP Server"
-    UDP.log(hdr: "\(logHdr)", msg)
+    UDP.log("Server \(msg)")
   }
   
 }

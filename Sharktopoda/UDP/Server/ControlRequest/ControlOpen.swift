@@ -6,14 +6,23 @@
 //
 
 import Foundation
+import AppKit
+
 
 struct ControlOpen: ControlRequest {
   var command: ControlCommand
   var uuid: String
   var url: String
   
+  var description: String {
+    "\(command) \(uuid) from \(url)"
+  }
+  
   func process() -> ControlResponse {
-    print("CxInc handle: \(self)")
+    guard let urlRef = URL(string: url) else {
+      return ControlResponseCommand.failed(command, cause: "Malformed URL")
+    }
+    UDP.log("ControlOpen \(urlRef.absoluteString)")
     return ControlResponseCommand.ok(command)
   }
 }

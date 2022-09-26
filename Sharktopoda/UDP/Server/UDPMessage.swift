@@ -37,7 +37,6 @@ class UDPMessage {
         return
 
       case .ready:
-        self.log("state \(update)")
         processMessage()
 
       case .failed(let error):
@@ -89,8 +88,7 @@ class UDPMessage {
   }
   
   func log(_ msg: String) {
-    let logHdr = "Sharktopoda UDP Server message"
-    UDP.log(hdr: logHdr, msg)
+    UDP.log("<- \(msg)")
   }
   
   deinit {

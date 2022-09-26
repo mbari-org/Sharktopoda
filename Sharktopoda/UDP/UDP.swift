@@ -55,7 +55,7 @@ class UDP {
     NWEndpoint.hostPort(host: NWEndpoint.Host(host), port: UDP.port(port))
   }
   
-  static func log(hdr: String, _ msg: String) {
-    NSLog("\(hdr) \(msg)")
+  static func log(_ msg: String) {
+    NSLog("UDP \(msg)")
   }
 }

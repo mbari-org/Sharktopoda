@@ -23,6 +23,17 @@ struct ControlOpen: ControlRequest {
       return ControlResponseCommand.failed(command, cause: "Malformed URL")
     }
     UDP.log("ControlOpen \(urlRef.absoluteString)")
+    
+    if let videoView = UDP.sharktopodaData.videoViews[uuid] {
+      UDP.log("bring forward video view \(videoView.videoAsset.uuid)")
+    } else {
+      DispatchQueue.main.async {
+        let videoView = VideoView(videoAsset: VideoAsset(uuid: uuid))
+        UDP.sharktopodaData.videoViews[uuid] = videoView
+        videoView.openWindow()
+      }
+    }
+    
     return ControlResponseCommand.ok(command)
   }
 }

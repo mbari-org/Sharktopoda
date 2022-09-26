@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension VideoView {
-  private func newWindow(with title: String) -> NSWindow {
+  private func newWindow(with videoAsset: VideoAsset) -> NSWindow {
     let window = NSWindow(
       contentRect: NSRect(x: 20, y: 20, width: 680, height: 600),
       styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
@@ -16,12 +16,14 @@ extension VideoView {
       defer: false)
     window.center()
     window.isReleasedWhenClosed = false
-    window.title = title
+    window.title = videoAsset.uuid
     window.makeKeyAndOrderFront(nil)
     return window
   }
   
-  func openWindow() {
-    self.newWindow(with: self.videoAsset.uuid).contentView = NSHostingView(rootView: self)
+  func openInWindow() -> NSWindow {
+    let window = self.newWindow(with: self.videoAsset)
+    window.contentView = NSHostingView(rootView: self)
+    return window
   }
 }

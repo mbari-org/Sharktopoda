@@ -11,13 +11,3 @@ struct VideoAsset {
   var uuid: String
   var localizations: [Localization] = []
 }
-
-//extension VideoAsset: Hashable {
-//  static func == (lhs: VideoAsset, rhs: VideoAsset) -> Bool {
-//    lhs.uuid == rhs.uuid
-//  }
-//  
-//  func hash(into hasher: inout Hasher) {
-//    hasher.combine(uuid)
-//  }
-//}

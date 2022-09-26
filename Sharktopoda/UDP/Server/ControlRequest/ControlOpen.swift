@@ -8,7 +8,6 @@
 import Foundation
 import AppKit
 
-
 struct ControlOpen: ControlRequest {
   var command: ControlCommand
   var uuid: String
@@ -24,13 +23,12 @@ struct ControlOpen: ControlRequest {
     }
     UDP.log("ControlOpen \(urlRef.absoluteString)")
     
-    if let videoView = UDP.sharktopodaData.videoViews[uuid] {
-      UDP.log("bring forward video view \(videoView.videoAsset.uuid)")
+    if let videoWindow = UDP.sharktopodaData.videoWindows[uuid] {
+      let videoUUID = videoWindow.videoView.videoAsset.uuid
+      UDP.log("bring forward video view \(videoUUID)")
     } else {
       DispatchQueue.main.async {
-        let videoView = VideoView(videoAsset: VideoAsset(uuid: uuid))
-        UDP.sharktopodaData.videoViews[uuid] = videoView
-        videoView.openWindow()
+        UDP.sharktopodaData.videoWindows[uuid] = VideoWindow(for: VideoAsset(uuid: uuid))
       }
     }
     

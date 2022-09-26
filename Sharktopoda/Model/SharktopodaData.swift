@@ -6,12 +6,13 @@
 //
 
 import Foundation
+import AppKit
 
 final class SharktopodaData: ObservableObject {
   @Published var udpServer: UDPServer = UDP.server
   @Published var udpClient: UDPClient = UDP.client
   
-  @Published var videoViews = [String: VideoView]()
+  @Published var videoWindows = [String: VideoWindow]()
   
   // This allows non-View access to sharktopoda data to update observing Views
   init() {

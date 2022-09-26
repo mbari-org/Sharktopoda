@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct Main: View {
+struct MainView: View {
   @EnvironmentObject var sharktopodaData: SharktopodaData
   
   let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
   
   private static var ratio: CGFloat = 1.75
   private static var height: CGFloat = 425
-  private static var width = CGFloat(Main.height * Main.ratio)
+  private static var width = CGFloat(MainView.height * MainView.ratio)
 
   private let updStatusFont = Font.title3
   
@@ -86,13 +86,13 @@ struct Main: View {
       .padding(.top, 20)
       .frame(maxWidth: .infinity)
     }
-    .frame(width: Main.width, height: Main.height)
+    .frame(width: MainView.width, height: MainView.height)
   }
 }
 
 struct Main_Previews: PreviewProvider {
   static var previews: some View {
-    Main()
+    MainView()
       .environmentObject(SharktopodaData())
   }
 }

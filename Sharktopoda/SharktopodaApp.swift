@@ -13,7 +13,7 @@ struct SharktopodaApp: App {
 
   var body: some Scene {
     WindowGroup {
-      Main()
+      MainView()
         .environmentObject(sharktopodaData)
     }
     .commands {

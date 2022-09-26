@@ -48,7 +48,7 @@
 		E2C22ED328D2AAF3003CD976 /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22ED228D2AAF3003CD976 /* VideoView.swift */; };
 		E2C22ED528D36832003CD976 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22ED428D36832003CD976 /* Localization.swift */; };
 		E2C22ED728D36888003CD976 /* VideoAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22ED628D36888003CD976 /* VideoAsset.swift */; };
-		E2C22EDA28D386AE003CD976 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22ED928D386AE003CD976 /* Main.swift */; };
+		E2C22EDA28D386AE003CD976 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22ED928D386AE003CD976 /* MainView.swift */; };
 		E2D47E9628D8C01F0068B192 /* ControlCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D47E9528D8C01F0068B192 /* ControlCommand.swift */; };
 		E2D47E9A28D8C17D0068B192 /* ClientCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D47E9928D8C17D0068B192 /* ClientCommand.swift */; };
 		E2D47E9E28D8DF0F0068B192 /* UDPMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D47E9D28D8DF0F0068B192 /* UDPMessage.swift */; };
@@ -126,7 +126,7 @@
 		E2C22ED228D2AAF3003CD976 /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
 		E2C22ED428D36832003CD976 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		E2C22ED628D36888003CD976 /* VideoAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAsset.swift; sourceTree = "<group>"; };
-		E2C22ED928D386AE003CD976 /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
+		E2C22ED928D386AE003CD976 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		E2D47E9528D8C01F0068B192 /* ControlCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlCommand.swift; sourceTree = "<group>"; };
 		E2D47E9928D8C17D0068B192 /* ClientCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientCommand.swift; sourceTree = "<group>"; };
 		E2D47E9D28D8DF0F0068B192 /* UDPMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDPMessage.swift; sourceTree = "<group>"; };
@@ -310,10 +310,10 @@
 		E2C22EC628D2662A003CD976 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				E2C22ED928D386AE003CD976 /* Main.swift */,
-				E2989AB528D3B22E009D2D65 /* Preferences */,
-				E295628928D67A6500E88ED1 /* SharktopodaCommands.swift */,
+				E2C22ED928D386AE003CD976 /* MainView.swift */,
 				E2C22ED228D2AAF3003CD976 /* VideoView.swift */,
+				E2FAB20D28E20D66006D2676 /* MenuBar */,
+				E2989AB528D3B22E009D2D65 /* Preferences */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -364,6 +364,14 @@
 				E2FAB20728E104D3006D2676 /* ControlResponsePing.swift */,
 			);
 			path = ControlResponse;
+			sourceTree = "<group>";
+		};
+		E2FAB20D28E20D66006D2676 /* MenuBar */ = {
+			isa = PBXGroup;
+			children = (
+				E295628928D67A6500E88ED1 /* SharktopodaCommands.swift */,
+			);
+			path = MenuBar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -500,7 +508,7 @@
 				E2675E2828DAC08D00F5F114 /* ControlPause.swift in Sources */,
 				E2FAB20A28E1087C006D2676 /* ControlResponseConnect.swift in Sources */,
 				E22F72FD28DA5D9100253A48 /* ControlResponse.swift in Sources */,
-				E2C22EDA28D386AE003CD976 /* Main.swift in Sources */,
+				E2C22EDA28D386AE003CD976 /* MainView.swift in Sources */,
 				E295627928D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift in Sources */,
 				E2EE0E4028DB9DD200138A86 /* ControlAll.swift in Sources */,
 				E2EE0E3C28DB9B3B00138A86 /* ControlSeek.swift in Sources */,

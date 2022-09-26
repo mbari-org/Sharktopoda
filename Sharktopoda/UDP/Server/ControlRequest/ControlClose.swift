@@ -10,9 +10,18 @@ import Foundation
 struct ControlClose: ControlRequest {
   var command: ControlCommand
   var uuid: String
-
+  
+  var description: String {
+    "\(command) \(uuid)"
+  }
+  
   func process() -> ControlResponse {
-    print("CxInc handle: \(self)")
+    if let window = UDP.sharktopodaData.videoWindows[uuid] {
+      DispatchQueue.main.async {
+        UDP.sharktopodaData.videoWindows.removeValue(forKey: self.uuid)
+        window.close()
+      }
+    }
     return ControlResponseCommand.ok(command)
   }
 }

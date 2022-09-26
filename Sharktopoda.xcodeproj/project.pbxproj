@@ -64,6 +64,7 @@
 		E2FAB21028E213A9006D2676 /* MainTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB20F28E213A9006D2676 /* MainTitleView.swift */; };
 		E2FAB21228E2157C006D2676 /* MainShortcutsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB21128E2157C006D2676 /* MainShortcutsView.swift */; };
 		E2FAB21428E215F6006D2676 /* MainUDPStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB21328E215F6006D2676 /* MainUDPStatusView.swift */; };
+		E2FAB21728E216CC006D2676 /* VideoViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB21628E216CC006D2676 /* VideoViewExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -145,6 +146,7 @@
 		E2FAB20F28E213A9006D2676 /* MainTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTitleView.swift; sourceTree = "<group>"; };
 		E2FAB21128E2157C006D2676 /* MainShortcutsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainShortcutsView.swift; sourceTree = "<group>"; };
 		E2FAB21328E215F6006D2676 /* MainUDPStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainUDPStatusView.swift; sourceTree = "<group>"; };
+		E2FAB21628E216CC006D2676 /* VideoViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -305,10 +307,10 @@
 		E2C22EC328D14495003CD976 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				E2675E2B28DB5F9400F5F114 /* DefaultlValue.swift */,
 				E2C22EC428D144B0003CD976 /* SharktopodaData.swift */,
 				E2C22ED428D36832003CD976 /* Localization.swift */,
 				E2C22ED628D36888003CD976 /* VideoAsset.swift */,
+				E2675E2B28DB5F9400F5F114 /* DefaultlValue.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -317,7 +319,7 @@
 			isa = PBXGroup;
 			children = (
 				E2FAB20E28E2134F006D2676 /* Main */,
-				E2C22ED228D2AAF3003CD976 /* VideoView.swift */,
+				E2FAB21528E2168F006D2676 /* Video */,
 				E2FAB20D28E20D66006D2676 /* MenuBar */,
 				E2989AB528D3B22E009D2D65 /* Preferences */,
 			);
@@ -389,6 +391,15 @@
 				E2FAB21328E215F6006D2676 /* MainUDPStatusView.swift */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		E2FAB21528E2168F006D2676 /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				E2C22ED228D2AAF3003CD976 /* VideoView.swift */,
+				E2FAB21628E216CC006D2676 /* VideoViewExtension.swift */,
+			);
+			path = Video;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -545,6 +556,7 @@
 				E2675E2A28DB52C600F5F114 /* ControlUnknown.swift in Sources */,
 				E2C22ED528D36832003CD976 /* Localization.swift in Sources */,
 				E21DEEDF28DA13CB00A2AC01 /* ClientPing.swift in Sources */,
+				E2FAB21728E216CC006D2676 /* VideoViewExtension.swift in Sources */,
 				E2675E2F28DB729900F5F114 /* ControlInfo.swift in Sources */,
 				E21DEEE428DA533100A2AC01 /* ClientMessage.swift in Sources */,
 				E2D47E9628D8C01F0068B192 /* ControlCommand.swift in Sources */,

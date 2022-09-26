@@ -11,7 +11,7 @@ struct MainView: View {
   private static var ratio: CGFloat = 1.75
   private static var height: CGFloat = 425
   private static var width = CGFloat(MainView.height * MainView.ratio)
-
+  
   var body: some View {
     HStack {
       MainTitleView()
@@ -24,8 +24,14 @@ struct MainView: View {
         MainShortcutsView()
         
         Spacer()
+        Button(action: {
+          VideoView().openVideo()
+        }) {
+          Text("Open New Window")
+        }
         
         MainUDPStatusView()
+          .environmentObject(SharktopodaData())
       }
       .padding(20)
       .padding(.top, 20)

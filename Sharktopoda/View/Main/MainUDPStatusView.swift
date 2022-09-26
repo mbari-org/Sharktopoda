@@ -39,7 +39,6 @@ struct MainUDPStatusView: View {
           .foregroundColor(.red)
       }
     }
-    
   }
 }
 

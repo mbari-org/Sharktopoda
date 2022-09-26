@@ -61,6 +61,9 @@
 		E2EE0E4028DB9DD200138A86 /* ControlAll.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EE0E3F28DB9DD200138A86 /* ControlAll.swift */; };
 		E2FAB20828E104D3006D2676 /* ControlResponsePing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB20728E104D3006D2676 /* ControlResponsePing.swift */; };
 		E2FAB20A28E1087C006D2676 /* ControlResponseConnect.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB20928E1087C006D2676 /* ControlResponseConnect.swift */; };
+		E2FAB21028E213A9006D2676 /* MainTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB20F28E213A9006D2676 /* MainTitleView.swift */; };
+		E2FAB21228E2157C006D2676 /* MainShortcutsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB21128E2157C006D2676 /* MainShortcutsView.swift */; };
+		E2FAB21428E215F6006D2676 /* MainUDPStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB21328E215F6006D2676 /* MainUDPStatusView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -139,6 +142,9 @@
 		E2EE0E3F28DB9DD200138A86 /* ControlAll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlAll.swift; sourceTree = "<group>"; };
 		E2FAB20728E104D3006D2676 /* ControlResponsePing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponsePing.swift; sourceTree = "<group>"; };
 		E2FAB20928E1087C006D2676 /* ControlResponseConnect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseConnect.swift; sourceTree = "<group>"; };
+		E2FAB20F28E213A9006D2676 /* MainTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTitleView.swift; sourceTree = "<group>"; };
+		E2FAB21128E2157C006D2676 /* MainShortcutsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainShortcutsView.swift; sourceTree = "<group>"; };
+		E2FAB21328E215F6006D2676 /* MainUDPStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainUDPStatusView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -310,7 +316,7 @@
 		E2C22EC628D2662A003CD976 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				E2C22ED928D386AE003CD976 /* MainView.swift */,
+				E2FAB20E28E2134F006D2676 /* Main */,
 				E2C22ED228D2AAF3003CD976 /* VideoView.swift */,
 				E2FAB20D28E20D66006D2676 /* MenuBar */,
 				E2989AB528D3B22E009D2D65 /* Preferences */,
@@ -372,6 +378,17 @@
 				E295628928D67A6500E88ED1 /* SharktopodaCommands.swift */,
 			);
 			path = MenuBar;
+			sourceTree = "<group>";
+		};
+		E2FAB20E28E2134F006D2676 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				E2C22ED928D386AE003CD976 /* MainView.swift */,
+				E2FAB20F28E213A9006D2676 /* MainTitleView.swift */,
+				E2FAB21128E2157C006D2676 /* MainShortcutsView.swift */,
+				E2FAB21328E215F6006D2676 /* MainUDPStatusView.swift */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -536,6 +553,7 @@
 				E2C22ED728D36888003CD976 /* VideoAsset.swift in Sources */,
 				E2989AB728D3B261009D2D65 /* NetworkPreferencesView.swift in Sources */,
 				E2675E1E28DAB65D00F5F114 /* ControlPing.swift in Sources */,
+				E2FAB21028E213A9006D2676 /* MainTitleView.swift in Sources */,
 				E295628A28D67A6500E88ED1 /* SharktopodaCommands.swift in Sources */,
 				E2989ABD28D3C7F7009D2D65 /* PrefKeys.swift in Sources */,
 				E2675E2228DABE4900F5F114 /* ControlClose.swift in Sources */,
@@ -549,9 +567,11 @@
 				E2EE0E3828DB9A6600138A86 /* ControlElapsed.swift in Sources */,
 				E295627528D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift in Sources */,
 				E2A6B39628DB8E8500C1A5EA /* ControlInvalid.swift in Sources */,
+				E2FAB21228E2157C006D2676 /* MainShortcutsView.swift in Sources */,
 				E2989AB928D3B87E009D2D65 /* AnnotationPreferencesView.swift in Sources */,
 				E2C22EC828D2666A003CD976 /* Preferences.swift in Sources */,
 				E295627728D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift in Sources */,
+				E2FAB21428E215F6006D2676 /* MainUDPStatusView.swift in Sources */,
 				E2FAB20828E104D3006D2676 /* ControlResponsePing.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

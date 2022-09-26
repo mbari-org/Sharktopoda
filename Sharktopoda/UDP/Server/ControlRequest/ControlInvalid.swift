@@ -10,10 +10,6 @@ import Foundation
 struct ControlInvalid: ControlRequest {
   var command: ControlCommand = .unknown
   
-  var description: String {
-    command.rawValue
-  }
-
   func process() -> ControlResponse {
     ControlResponseCommand.failed(command, cause: "invalid message")
   }

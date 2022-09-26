@@ -13,8 +13,4 @@ struct ControlPing: ControlRequest {
   func process() -> ControlResponse {
     ControlResponsePing()
   }
-  
-  var description: String {
-    "ping"
-  }
 }

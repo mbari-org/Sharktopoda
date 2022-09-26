@@ -12,10 +12,6 @@ struct ControlSeek: ControlRequest {
   let uuid: String
   let elapsedTime: Int
   
-  var description: String {
-    command.rawValue
-  }
-
   func process() -> ControlResponse {
     print("CxInc handle: \(self)")
     return ControlResponseCommand.ok(command)

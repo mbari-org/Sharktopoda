@@ -17,10 +17,6 @@ struct ControlConnect: ControlRequest {
     "\(host):\(port)"
   }
   
-  var description: String {
-    command.rawValue
-  }
-  
   func process() -> ControlResponse {
     let client = UDP.client
     if endpoint != client.clientData.endpoint {

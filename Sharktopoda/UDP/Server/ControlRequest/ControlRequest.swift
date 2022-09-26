@@ -12,3 +12,9 @@ protocol ControlRequest: Decodable, CustomStringConvertible {
   
   func process() -> ControlResponse
 }
+
+extension ControlRequest {
+  var description: String {
+    command.rawValue
+  }
+}

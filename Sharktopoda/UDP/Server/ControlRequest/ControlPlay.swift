@@ -12,10 +12,6 @@ struct ControlPlay: ControlRequest {
   let uuid: String
   @Default<Double.PlaybackRate> var rate: Double
 
-  var description: String {
-    command.rawValue
-  }
-
   func process() -> ControlResponse {
     print("CxInc handle: \(self)")
     return ControlResponseCommand.ok(command)

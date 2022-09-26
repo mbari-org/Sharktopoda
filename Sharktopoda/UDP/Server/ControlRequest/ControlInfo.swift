@@ -10,10 +10,6 @@ import Foundation
 struct ControlInfo: ControlRequest {
   var command: ControlCommand
   
-  var description: String {
-    command.rawValue
-  }
-
   func process() -> ControlResponse {
     print("CxInc handle: \(self)")
     return ControlResponseCommand.ok(command)

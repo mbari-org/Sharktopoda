@@ -12,10 +12,6 @@ struct ControlOpen: ControlRequest {
   var uuid: String
   var url: String
   
-  var description: String {
-    command.rawValue
-  }
-
   func process() -> ControlResponse {
     print("CxInc handle: \(self)")
     return ControlResponseCommand.ok(command)

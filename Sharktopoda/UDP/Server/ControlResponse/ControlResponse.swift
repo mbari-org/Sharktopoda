@@ -20,6 +20,8 @@ protocol ControlResponse: Encodable, CustomStringConvertible {
 }
 
 extension ControlResponse {
+
+  
   var description: String {
     response.rawValue
   }

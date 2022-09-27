@@ -52,18 +52,18 @@
 		E2D47E9628D8C01F0068B192 /* ControlCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D47E9528D8C01F0068B192 /* ControlCommand.swift */; };
 		E2D47E9A28D8C17D0068B192 /* ClientCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D47E9928D8C17D0068B192 /* ClientCommand.swift */; };
 		E2D47E9E28D8DF0F0068B192 /* UDPMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D47E9D28D8DF0F0068B192 /* UDPMessage.swift */; };
-		E2D47EA528D8ED300068B192 /* ControlResponseCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D47EA428D8ED300068B192 /* ControlResponseCommand.swift */; };
 		E2E5962D28DA63700058D054 /* ControlOpen.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E5962C28DA63700058D054 /* ControlOpen.swift */; };
 		E2EE0E3828DB9A6600138A86 /* ControlElapsed.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EE0E3728DB9A6600138A86 /* ControlElapsed.swift */; };
 		E2EE0E3A28DB9AAD00138A86 /* ControlStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EE0E3928DB9AAD00138A86 /* ControlStatus.swift */; };
 		E2EE0E3C28DB9B3B00138A86 /* ControlSeek.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EE0E3B28DB9B3B00138A86 /* ControlSeek.swift */; };
 		E2EE0E3E28DB9B9F00138A86 /* ControlCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EE0E3D28DB9B9F00138A86 /* ControlCapture.swift */; };
 		E2EE0E4028DB9DD200138A86 /* ControlAll.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EE0E3F28DB9DD200138A86 /* ControlAll.swift */; };
-		E2FAB20A28E1087C006D2676 /* ControlResponseConnect.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB20928E1087C006D2676 /* ControlResponseConnect.swift */; };
 		E2FAB21028E213A9006D2676 /* MainTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB20F28E213A9006D2676 /* MainTitleView.swift */; };
 		E2FAB21228E2157C006D2676 /* MainShortcutsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB21128E2157C006D2676 /* MainShortcutsView.swift */; };
 		E2FAB21428E215F6006D2676 /* MainUDPStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB21328E215F6006D2676 /* MainUDPStatusView.swift */; };
 		E2FAB21B28E24A7C006D2676 /* VideoWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB21A28E24A7C006D2676 /* VideoWindow.swift */; };
+		E2FFE1FC28E37B8000425F04 /* ControlResponseFailed.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFE1FB28E37B8000425F04 /* ControlResponseFailed.swift */; };
+		E2FFE1FE28E37C5000425F04 /* ControlResponseOk.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFE1FD28E37C5000425F04 /* ControlResponseOk.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -133,18 +133,18 @@
 		E2D47E9528D8C01F0068B192 /* ControlCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlCommand.swift; sourceTree = "<group>"; };
 		E2D47E9928D8C17D0068B192 /* ClientCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientCommand.swift; sourceTree = "<group>"; };
 		E2D47E9D28D8DF0F0068B192 /* UDPMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDPMessage.swift; sourceTree = "<group>"; };
-		E2D47EA428D8ED300068B192 /* ControlResponseCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseCommand.swift; sourceTree = "<group>"; };
 		E2E5962C28DA63700058D054 /* ControlOpen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlOpen.swift; sourceTree = "<group>"; };
 		E2EE0E3728DB9A6600138A86 /* ControlElapsed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlElapsed.swift; sourceTree = "<group>"; };
 		E2EE0E3928DB9AAD00138A86 /* ControlStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlStatus.swift; sourceTree = "<group>"; };
 		E2EE0E3B28DB9B3B00138A86 /* ControlSeek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlSeek.swift; sourceTree = "<group>"; };
 		E2EE0E3D28DB9B9F00138A86 /* ControlCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlCapture.swift; sourceTree = "<group>"; };
 		E2EE0E3F28DB9DD200138A86 /* ControlAll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlAll.swift; sourceTree = "<group>"; };
-		E2FAB20928E1087C006D2676 /* ControlResponseConnect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseConnect.swift; sourceTree = "<group>"; };
 		E2FAB20F28E213A9006D2676 /* MainTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTitleView.swift; sourceTree = "<group>"; };
 		E2FAB21128E2157C006D2676 /* MainShortcutsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainShortcutsView.swift; sourceTree = "<group>"; };
 		E2FAB21328E215F6006D2676 /* MainUDPStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainUDPStatusView.swift; sourceTree = "<group>"; };
 		E2FAB21A28E24A7C006D2676 /* VideoWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoWindow.swift; sourceTree = "<group>"; };
+		E2FFE1FB28E37B8000425F04 /* ControlResponseFailed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseFailed.swift; sourceTree = "<group>"; };
+		E2FFE1FD28E37C5000425F04 /* ControlResponseOk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseOk.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -357,8 +357,8 @@
 			isa = PBXGroup;
 			children = (
 				E22F72FC28DA5D9100253A48 /* ControlResponse.swift */,
-				E2D47EA428D8ED300068B192 /* ControlResponseCommand.swift */,
-				E2FAB20928E1087C006D2676 /* ControlResponseConnect.swift */,
+				E2FFE1FD28E37C5000425F04 /* ControlResponseOk.swift */,
+				E2FFE1FB28E37B8000425F04 /* ControlResponseFailed.swift */,
 			);
 			path = ControlResponse;
 			sourceTree = "<group>";
@@ -523,7 +523,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2675E2828DAC08D00F5F114 /* ControlPause.swift in Sources */,
-				E2FAB20A28E1087C006D2676 /* ControlResponseConnect.swift in Sources */,
 				E22F72FD28DA5D9100253A48 /* ControlResponse.swift in Sources */,
 				E2C22EDA28D386AE003CD976 /* MainView.swift in Sources */,
 				E295627928D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift in Sources */,
@@ -532,6 +531,7 @@
 				E22F0EA428DA57800097A34E /* ControlRequest.swift in Sources */,
 				E2EE0E3E28DB9B9F00138A86 /* ControlCapture.swift in Sources */,
 				E2C22ED328D2AAF3003CD976 /* VideoView.swift in Sources */,
+				E2FFE1FE28E37C5000425F04 /* ControlResponseOk.swift in Sources */,
 				E2E5962D28DA63700058D054 /* ControlOpen.swift in Sources */,
 				E21DEEE228DA1F3D00A2AC01 /* UDP.swift in Sources */,
 				E2989ABF28D3D083009D2D65 /* ColorPref.swift in Sources */,
@@ -539,7 +539,6 @@
 				E295627C28D5325A00E88ED1 /* NetworkControlPreferencesView.swift in Sources */,
 				E2675E2628DABF5600F5F114 /* ControlPlay.swift in Sources */,
 				E229F4C228D9150A001F220E /* ControlConnect.swift in Sources */,
-				E2D47EA528D8ED300068B192 /* ControlResponseCommand.swift in Sources */,
 				E2989AC328D4F6EE009D2D65 /* AnnotationCreationPreferencesView.swift in Sources */,
 				E2675E2428DABEAC00F5F114 /* ControlShow.swift in Sources */,
 				E2675E2A28DB52C600F5F114 /* ControlUnknown.swift in Sources */,
@@ -557,6 +556,7 @@
 				E295628A28D67A6500E88ED1 /* SharktopodaCommands.swift in Sources */,
 				E2989ABD28D3C7F7009D2D65 /* PrefKeys.swift in Sources */,
 				E2675E2228DABE4900F5F114 /* ControlClose.swift in Sources */,
+				E2FFE1FC28E37B8000425F04 /* ControlResponseFailed.swift in Sources */,
 				E2FAB21B28E24A7C006D2676 /* VideoWindow.swift in Sources */,
 				E2C22E8528CFDC26003CD976 /* SharktopodaApp.swift in Sources */,
 				E2C22EC528D144B0003CD976 /* SharktopodaData.swift in Sources */,

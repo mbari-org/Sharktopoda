@@ -21,7 +21,8 @@ struct ControlConnect: ControlRequest {
     let client = UDP.client
     if endpoint != client.clientData.endpoint {
       UDP.connectClient(using: self)
+      return ControlResponseOk(response: command)
     }
-    return ControlResponseConnect()
+    return ControlResponseFailed(response: command, cause: "Connection not established")
   }
 }

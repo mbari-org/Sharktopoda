@@ -7,6 +7,7 @@
 
 import Foundation
 import AppKit
+import AVFoundation
 
 struct ControlOpen: ControlRequest {
   var command: ControlCommand
@@ -25,14 +26,17 @@ struct ControlOpen: ControlRequest {
     
     if let videoWindow = UDP.sharktopodaData.videoWindows[uuid] {
       DispatchQueue.main.async {
-        videoWindow.orderFrontRegardless()
+        videoWindow.makeKeyAndOrderFront(nil)
       }
     } else {
+      let videoAsset = VideoAsset(uuid: uuid, url: urlRef)
+      guard videoAsset.avAsset.isPlayable else {
+        return ControlResponseCommand.failed(command, cause: "URL not playable")
+      }
       DispatchQueue.main.async {
-        UDP.sharktopodaData.videoWindows[uuid] = VideoWindow(for: VideoAsset(uuid: uuid))
+        UDP.sharktopodaData.videoWindows[uuid] = VideoWindow(for: videoAsset)
       }
     }
-    
     return ControlResponseCommand.ok(command)
   }
 }

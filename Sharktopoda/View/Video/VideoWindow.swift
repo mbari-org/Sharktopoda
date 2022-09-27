@@ -14,7 +14,7 @@ class VideoWindow: NSWindow {
   
   init(for videoAsset: VideoAsset) {
     self.videoView = VideoView(videoAsset: videoAsset)
-
+    
     super.init(
       contentRect: NSRect(x: 20, y: 20, width: 680, height: 600),
       styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],

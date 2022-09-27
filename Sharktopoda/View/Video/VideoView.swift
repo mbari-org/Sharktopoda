@@ -27,6 +27,6 @@ struct VideoView: View {
 
 struct VideoView_Previews: PreviewProvider {
   static var previews: some View {
-    VideoView(videoAsset: VideoAsset(uuid: "VideoAsset UUID"))
+    VideoView(videoAsset: VideoAsset(uuid: "VideoAsset UUID", url: URL(string: "http://cxInc.com")!))
   }
 }

@@ -6,8 +6,18 @@
 //
 
 import Foundation
+import AVFoundation
 
 struct VideoAsset {
-  var uuid: String
+  let uuid: String
+  let url: URL
+  
+  var avAsset: AVAsset
   var localizations: [Localization] = []
+
+  init(uuid: String, url: URL) {
+    self.uuid = uuid
+    self.url = url
+    self.avAsset = AVAsset(url: url)
+  }
 }

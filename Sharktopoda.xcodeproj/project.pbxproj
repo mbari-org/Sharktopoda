@@ -64,7 +64,6 @@
 		E2FAB21028E213A9006D2676 /* MainTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB20F28E213A9006D2676 /* MainTitleView.swift */; };
 		E2FAB21228E2157C006D2676 /* MainShortcutsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB21128E2157C006D2676 /* MainShortcutsView.swift */; };
 		E2FAB21428E215F6006D2676 /* MainUDPStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB21328E215F6006D2676 /* MainUDPStatusView.swift */; };
-		E2FAB21728E216CC006D2676 /* VideoViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB21628E216CC006D2676 /* VideoViewExtension.swift */; };
 		E2FAB21B28E24A7C006D2676 /* VideoWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB21A28E24A7C006D2676 /* VideoWindow.swift */; };
 /* End PBXBuildFile section */
 
@@ -147,7 +146,6 @@
 		E2FAB20F28E213A9006D2676 /* MainTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTitleView.swift; sourceTree = "<group>"; };
 		E2FAB21128E2157C006D2676 /* MainShortcutsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainShortcutsView.swift; sourceTree = "<group>"; };
 		E2FAB21328E215F6006D2676 /* MainUDPStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainUDPStatusView.swift; sourceTree = "<group>"; };
-		E2FAB21628E216CC006D2676 /* VideoViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewExtension.swift; sourceTree = "<group>"; };
 		E2FAB21A28E24A7C006D2676 /* VideoWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoWindow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -391,7 +389,6 @@
 			isa = PBXGroup;
 			children = (
 				E2C22ED228D2AAF3003CD976 /* VideoView.swift */,
-				E2FAB21628E216CC006D2676 /* VideoViewExtension.swift */,
 				E2FAB21A28E24A7C006D2676 /* VideoWindow.swift */,
 			);
 			path = Video;
@@ -551,7 +548,6 @@
 				E2675E2A28DB52C600F5F114 /* ControlUnknown.swift in Sources */,
 				E2C22ED528D36832003CD976 /* Localization.swift in Sources */,
 				E21DEEDF28DA13CB00A2AC01 /* ClientPing.swift in Sources */,
-				E2FAB21728E216CC006D2676 /* VideoViewExtension.swift in Sources */,
 				E2675E2F28DB729900F5F114 /* ControlInfo.swift in Sources */,
 				E21DEEE428DA533100A2AC01 /* ClientMessage.swift in Sources */,
 				E2D47E9628D8C01F0068B192 /* ControlCommand.swift in Sources */,

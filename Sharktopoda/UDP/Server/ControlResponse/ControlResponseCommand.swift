@@ -16,15 +16,7 @@ struct ControlResponseCommand : ControlResponse {
   var response: ControlCommand
   var status: Status
   var cause: String?
-  
-  static func ok(_ response: ControlCommand) -> ControlResponse {
-    ControlResponseCommand(response, status: .ok)
-  }
-  
-  static func failed(_ response: ControlCommand, cause: String? = nil) -> ControlResponse {
-    ControlResponseCommand(response, status: .failed, cause: cause)
-  }
-  
+    
   init(_ response: ControlCommand, status: Status, cause: String? = nil) {
     self.response = response
     self.status = status

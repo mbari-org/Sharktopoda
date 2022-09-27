@@ -20,7 +20,7 @@ struct ControlOpen: ControlRequest {
   
   func process() -> ControlResponse {
     guard let urlRef = URL(string: url) else {
-      return ControlResponseCommand.failed(command, cause: "Malformed URL")
+      return failed("Malformed URL")
     }
     UDP.log("ControlOpen \(urlRef.absoluteString)")
     
@@ -31,12 +31,12 @@ struct ControlOpen: ControlRequest {
     } else {
       let videoAsset = VideoAsset(uuid: uuid, url: urlRef)
       guard videoAsset.avAsset.isPlayable else {
-        return ControlResponseCommand.failed(command, cause: "URL not playable")
+        return failed("URL not playable")
       }
       DispatchQueue.main.async {
         UDP.sharktopodaData.videoWindows[uuid] = VideoWindow(for: videoAsset)
       }
     }
-    return ControlResponseCommand.ok(command)
+    return ok()
   }
 }

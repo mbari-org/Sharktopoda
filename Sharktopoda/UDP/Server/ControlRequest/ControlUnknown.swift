@@ -10,8 +10,16 @@ import Foundation
 struct ControlUnknown: ControlRequest {
   var command: ControlCommand = .unknown
   var cause: String
+  
+  init(_ cause: String) {
+    self.cause = cause
+  }
 
   func process() -> ControlResponse {
-    ControlResponseCommand.failed(command, cause: cause)
+    failed(cause)
+  }
+  
+  static func failed(_ cause: String) -> ControlResponse {
+    ControlUnknown(cause).process()
   }
 }

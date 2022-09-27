@@ -17,4 +17,12 @@ extension ControlRequest {
   var description: String {
     command.rawValue
   }
+  
+  func ok() -> ControlResponse {
+    ControlResponseCommand(command, status: .ok)
+  }
+
+  func failed(_ cause: String? = nil) -> ControlResponse {
+    ControlResponseCommand(command, status: .failed, cause: cause)
+  }
 }

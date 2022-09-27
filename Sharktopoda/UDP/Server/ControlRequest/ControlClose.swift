@@ -22,6 +22,6 @@ struct ControlClose: ControlRequest {
         window.close()
       }
     }
-    return ControlResponseCommand.ok(command)
+    return ok()
   }
 }

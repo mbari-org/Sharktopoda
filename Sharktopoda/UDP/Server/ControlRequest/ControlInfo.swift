@@ -12,6 +12,6 @@ struct ControlInfo: ControlRequest {
   
   func process() -> ControlResponse {
     print("CxInc handle: \(self)")
-    return ControlResponseCommand.ok(command)
+    return ok()
   }
 }

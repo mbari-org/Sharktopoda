@@ -59,7 +59,6 @@
 		E2EE0E3C28DB9B3B00138A86 /* ControlSeek.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EE0E3B28DB9B3B00138A86 /* ControlSeek.swift */; };
 		E2EE0E3E28DB9B9F00138A86 /* ControlCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EE0E3D28DB9B9F00138A86 /* ControlCapture.swift */; };
 		E2EE0E4028DB9DD200138A86 /* ControlAll.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EE0E3F28DB9DD200138A86 /* ControlAll.swift */; };
-		E2FAB20828E104D3006D2676 /* ControlResponsePing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB20728E104D3006D2676 /* ControlResponsePing.swift */; };
 		E2FAB20A28E1087C006D2676 /* ControlResponseConnect.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB20928E1087C006D2676 /* ControlResponseConnect.swift */; };
 		E2FAB21028E213A9006D2676 /* MainTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB20F28E213A9006D2676 /* MainTitleView.swift */; };
 		E2FAB21228E2157C006D2676 /* MainShortcutsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB21128E2157C006D2676 /* MainShortcutsView.swift */; };
@@ -141,7 +140,6 @@
 		E2EE0E3B28DB9B3B00138A86 /* ControlSeek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlSeek.swift; sourceTree = "<group>"; };
 		E2EE0E3D28DB9B9F00138A86 /* ControlCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlCapture.swift; sourceTree = "<group>"; };
 		E2EE0E3F28DB9DD200138A86 /* ControlAll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlAll.swift; sourceTree = "<group>"; };
-		E2FAB20728E104D3006D2676 /* ControlResponsePing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponsePing.swift; sourceTree = "<group>"; };
 		E2FAB20928E1087C006D2676 /* ControlResponseConnect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseConnect.swift; sourceTree = "<group>"; };
 		E2FAB20F28E213A9006D2676 /* MainTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTitleView.swift; sourceTree = "<group>"; };
 		E2FAB21128E2157C006D2676 /* MainShortcutsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainShortcutsView.swift; sourceTree = "<group>"; };
@@ -361,7 +359,6 @@
 				E22F72FC28DA5D9100253A48 /* ControlResponse.swift */,
 				E2D47EA428D8ED300068B192 /* ControlResponseCommand.swift */,
 				E2FAB20928E1087C006D2676 /* ControlResponseConnect.swift */,
-				E2FAB20728E104D3006D2676 /* ControlResponsePing.swift */,
 			);
 			path = ControlResponse;
 			sourceTree = "<group>";
@@ -576,7 +573,6 @@
 				E2C22EC828D2666A003CD976 /* Preferences.swift in Sources */,
 				E295627728D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift in Sources */,
 				E2FAB21428E215F6006D2676 /* MainUDPStatusView.swift in Sources */,
-				E2FAB20828E104D3006D2676 /* ControlResponsePing.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

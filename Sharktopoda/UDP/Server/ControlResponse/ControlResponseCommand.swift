@@ -8,27 +8,7 @@
 import Foundation
 
 struct ControlResponseCommand : ControlResponse {
-  enum Status: String, Codable {
-    case ok
-    case failed
-  }
-
   var response: ControlCommand
-  var status: Status
-  var cause: String?
-    
-  init(_ response: ControlCommand, status: Status, cause: String? = nil) {
-    self.response = response
-    self.status = status
-    self.cause = cause
-  }
-  
-  func data() -> Data {
-    try! JSONEncoder().encode(self)
-  }
-  
-  var description: String {
-    response.rawValue
-  }
-
+  var status: ControlResponseStatus
+  var cause: String? = nil
 }

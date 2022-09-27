@@ -7,9 +7,14 @@
 
 import Foundation
 
+enum ControlResponseStatus: String, Codable {
+  case ok
+  case failed
+}
+
 protocol ControlResponse: Encodable, CustomStringConvertible {
   var response: ControlCommand { get set }
-  var status: ControlResponseCommand.Status { get set }
+  var status: ControlResponseStatus { get set }
   
   func data() -> Data
 }

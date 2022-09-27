@@ -9,5 +9,5 @@ import Foundation
 
 struct ControlResponseConnect: ControlResponse {
   var response: ControlCommand = .connect
-  var status: ControlResponseCommand.Status = .ok
+  var status: ControlResponseStatus = .ok
 }

@@ -19,10 +19,10 @@ extension ControlRequest {
   }
   
   func ok() -> ControlResponse {
-    ControlResponseCommand(command, status: .ok)
+    ControlResponseCommand(response: command, status: .ok)
   }
 
   func failed(_ cause: String? = nil) -> ControlResponse {
-    ControlResponseCommand(command, status: .failed, cause: cause)
+    ControlResponseCommand(response: command, status: .failed, cause: cause)
   }
 }

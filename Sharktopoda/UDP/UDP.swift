@@ -17,27 +17,6 @@ class UDP {
   static let singleton = UDP()
   private init() {
   }
-  
-  static func restartServer() {
-    sharktopodaData.udpServer.stop()
-    sharktopodaData.udpServer = UDPServer()
-  }
-  
-  static func connectClient(using connectCommand: ControlConnect) {
-    guard connectCommand.endpoint != client.clientData.endpoint else {
-      return
-    }
-    UDPClient.connect(using: connectCommand) { udpClient in
-      guard udpClient.clientData.active else {
-        return
-      }
-
-      sharktopodaData.udpClient.stop()
-      DispatchQueue.main.async {
-        sharktopodaData.udpClient = udpClient
-      }
-    }
-  }
 
   static func listener(port: Int) throws -> NWListener {
     try NWListener(using: .udp, on: UDP.port(port))

@@ -35,7 +35,8 @@ struct NetworkControlPreferencesView: View {
         
         if sharktopodaData.udpServer.port != prefPort {
           Button {
-            UDP.restartServer()
+            UDP.sharktopodaData.udpServer.stop()
+            UDP.sharktopodaData.udpServer = UDPServer()
           } label: {
             Text("Restart UDP Server")
           }

@@ -18,7 +18,4 @@ final class SharktopodaData: ObservableObject {
   init() {
     UDP.sharktopodaData = self
   }
-  
-  
-  
 }

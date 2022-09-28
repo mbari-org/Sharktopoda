@@ -18,7 +18,7 @@ class UDP {
 
   private static func startupServerPort() -> Int {
     var port: Int = UserDefaults.standard.integer(forKey: PrefKeys.port)
-    if port == 0 {
+    if port == 0 || UInt16.max < port {
       port = UDP.defaultServerPort
       UserDefaults.standard.setValue(port, forKey: PrefKeys.port)
     }

@@ -17,15 +17,10 @@ class UDPServer: ObservableObject {
   
   var error: String?
   
-  init() {
-    let prefPort: Int = UserDefaults.standard.integer(forKey: PrefKeys.port)
+  init(port: Int) {
+    self.port = port
     
-    if prefPort == 0 {
-      port = UDPServer.defaultPort
-      UserDefaults.standard.setValue(port, forKey: PrefKeys.port)
-    } else {
-      port = prefPort
-    }
+    UserDefaults.standard.setValue(port, forKey: PrefKeys.port)
     
     queue = DispatchQueue(label: "Sharktopoda UDP Server Queue")
     

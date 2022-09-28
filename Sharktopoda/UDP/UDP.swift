@@ -9,13 +9,20 @@ import Foundation
 import Network
 
 class UDP {
-  static var server: UDPServer = UDPServer()
+  private static var defaultServerPort = 8800
+  
+  static var server: UDPServer = UDPServer(port: UDP.startupServerPort())
   static var client: UDPClient = UDPClient()
   
   static var sharktopodaData: SharktopodaData!
-  
-  static let singleton = UDP()
-  private init() {
+
+  private static func startupServerPort() -> Int {
+    var port: Int = UserDefaults.standard.integer(forKey: PrefKeys.port)
+    if port == 0 {
+      port = UDP.defaultServerPort
+      UserDefaults.standard.setValue(port, forKey: PrefKeys.port)
+    }
+    return port
   }
 
   static func listener(port: Int) throws -> NWListener {

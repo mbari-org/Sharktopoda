@@ -30,10 +30,6 @@ enum ControlCommand: String, Codable {
     var command: String
   }
   
-//  static func controlFailed(_ cause: String) -> ControlRequest {
-//    return 
-//  }
-  
   static func controlMessage(from data: Data) -> ControlRequest {
     let json = JSONDecoder()
 

@@ -138,14 +138,7 @@ class UDPClient: ObservableObject {
   func receive() {
     
   }
-  
-  //  func timeout(for message: ClientMessage, on connection: NWConnection) {
-  //    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-  //      self.heyNow()
-  //    }
-  //
-  //  }
-  
+    
   func udpActive(active: Bool) {
     let host = clientData.host
     let port = clientData.port

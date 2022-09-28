@@ -13,7 +13,7 @@ struct MainUDPStatusView: View {
   private let updStatusFont = Font.title3
 
   var body: some View {
-    if let error = sharktopodaData.udpServer.error {
+    if let error = sharktopodaData.udpServerError {
       HStack {
         Text("UDP  ←")
           .font(updStatusFont)

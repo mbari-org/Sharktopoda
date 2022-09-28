@@ -15,12 +15,13 @@ class UDPServer: ObservableObject {
   var queue: DispatchQueue
   var port: Int
   
-  var error: String?
-  
   init(port: Int) {
     self.port = port
-    
     UserDefaults.standard.setValue(port, forKey: PrefKeys.port)
+    
+    if let _ = UDP.sharktopodaData?.udpServerError {
+      UDP.sharktopodaData.udpServerError = nil
+    }
     
     queue = DispatchQueue(label: "Sharktopoda UDP Server Queue")
     
@@ -51,7 +52,9 @@ class UDPServer: ObservableObject {
         let errorMsg: String = "\(errorLast ?? "Failed to connect")".trimmingCharacters(in: .whitespaces)
         
         log("failed with error \(errorMsg))")
-        self.error = errorMsg
+        DispatchQueue.main.async {
+          UDP.sharktopodaData.udpServerError = errorMsg
+        }
         
       @unknown default:
         log("state unknown")

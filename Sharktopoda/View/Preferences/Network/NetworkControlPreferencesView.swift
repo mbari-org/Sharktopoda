@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct NetworkControlPreferencesView: View {
-  // CxNote SharktopodaData UPDServer binding ensures pref port is set
-//  @AppStorage(PrefKeys.port) private var prefPort: Int!
+  @EnvironmentObject var sharktopodaData: SharktopodaData
+  
   @AppStorage(PrefKeys.timeout) private var timeout: Int = 1000
   
   @State private var prefPort: Int = UserDefaults.standard.integer(forKey: PrefKeys.port)
@@ -41,13 +41,18 @@ struct NetworkControlPreferencesView: View {
             prefPortValid = prefPort <= UInt16.max
           }
         
-        if prefPortValid && UDP.sharktopodaData.udpServer.port != prefPort {
+        if prefPortValid && sharktopodaData.udpServer.port != prefPort {
           Button {
             restartServer()
           } label: {
             Text("Restart UDP Server")
           }
           .buttonStyle(.borderedProminent)
+        }
+        
+        if let error = sharktopodaData.udpServerError, sharktopodaData.udpServer.port == prefPort {
+          Text("\(error)")
+            .foregroundColor(.red)
         }
         
         Spacer()
@@ -73,8 +78,8 @@ struct NetworkControlPreferencesView: View {
     prefPortValid = prefPort <= UInt16.max
     guard prefPortValid else { return }
     
-    UDP.sharktopodaData.udpServer.stop()
-    UDP.sharktopodaData.udpServer = UDPServer(port: prefPort)
+    sharktopodaData.udpServer.stop()
+    sharktopodaData.udpServer = UDPServer(port: prefPort)
   }
 }
 

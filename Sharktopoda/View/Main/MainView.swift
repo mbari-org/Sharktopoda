@@ -26,7 +26,6 @@ struct MainView: View {
         Spacer()
 
         MainUDPStatusView()
-          .environmentObject(SharktopodaData())
       }
       .padding(20)
       .padding(.top, 20)

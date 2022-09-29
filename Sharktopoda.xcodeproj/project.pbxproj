@@ -45,7 +45,6 @@
 		E2C22EC528D144B0003CD976 /* SharktopodaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22EC428D144B0003CD976 /* SharktopodaData.swift */; };
 		E2C22EC828D2666A003CD976 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22EC728D2666A003CD976 /* Preferences.swift */; };
 		E2C22ECF28D27C2D003CD976 /* UDPServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22ECE28D27C2D003CD976 /* UDPServer.swift */; };
-		E2C22ED328D2AAF3003CD976 /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22ED228D2AAF3003CD976 /* VideoView.swift */; };
 		E2C22ED528D36832003CD976 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22ED428D36832003CD976 /* Localization.swift */; };
 		E2C22ED728D36888003CD976 /* VideoAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22ED628D36888003CD976 /* VideoAsset.swift */; };
 		E2C22EDA28D386AE003CD976 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22ED928D386AE003CD976 /* MainView.swift */; };
@@ -126,7 +125,6 @@
 		E2C22EC428D144B0003CD976 /* SharktopodaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharktopodaData.swift; sourceTree = "<group>"; };
 		E2C22EC728D2666A003CD976 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		E2C22ECE28D27C2D003CD976 /* UDPServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDPServer.swift; sourceTree = "<group>"; };
-		E2C22ED228D2AAF3003CD976 /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
 		E2C22ED428D36832003CD976 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		E2C22ED628D36888003CD976 /* VideoAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAsset.swift; sourceTree = "<group>"; };
 		E2C22ED928D386AE003CD976 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -385,7 +383,6 @@
 		E2FAB21528E2168F006D2676 /* Video */ = {
 			isa = PBXGroup;
 			children = (
-				E2C22ED228D2AAF3003CD976 /* VideoView.swift */,
 				E2FAB21A28E24A7C006D2676 /* VideoWindow.swift */,
 			);
 			path = Video;
@@ -530,7 +527,6 @@
 				E2EE0E3C28DB9B3B00138A86 /* ControlSeek.swift in Sources */,
 				E22F0EA428DA57800097A34E /* ControlRequest.swift in Sources */,
 				E2EE0E3E28DB9B9F00138A86 /* ControlCapture.swift in Sources */,
-				E2C22ED328D2AAF3003CD976 /* VideoView.swift in Sources */,
 				E2FFE1FE28E37C5000425F04 /* ControlResponseOk.swift in Sources */,
 				E2E5962D28DA63700058D054 /* ControlOpen.swift in Sources */,
 				E21DEEE228DA1F3D00A2AC01 /* UDP.swift in Sources */,

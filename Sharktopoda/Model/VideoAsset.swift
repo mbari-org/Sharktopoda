@@ -18,6 +18,12 @@ struct VideoAsset {
   init(uuid: String, url: URL) {
     self.uuid = uuid
     self.url = url
-    self.avAsset = AVAsset(url: url)
+    avAsset = AVAsset(url: url)
+  }
+  
+  func size() -> NSSize? {
+    guard let firstTrack = avAsset.tracks(withMediaType: AVMediaType.video).first else { return nil }
+    let size = firstTrack.naturalSize.applying(firstTrack.preferredTransform)
+    return NSMakeSize(abs(size.width), abs(size.height))
   }
 }

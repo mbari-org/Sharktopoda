@@ -6,22 +6,24 @@
 //
 
 import SwiftUI
+import AVKit
 
 struct VideoView: View {
+  @State var player = AVPlayer()
+  
   let videoAsset: VideoAsset
+  
+  //  override static var layerClass: AnyClass { AVPlayerLayer.self }
   
   init(videoAsset: VideoAsset) {
     self.videoAsset = videoAsset
   }
   
   var body: some View {
-    VStack {
-      Text("Video")
-        .frame(minWidth: 700, minHeight: 300)
-      
-      Text("Hideable Control")
-    }
-    .padding()
+    VideoPlayer(player: player)
+      .onAppear() {
+        self.player = AVPlayer(url: self.videoAsset.url)
+      }
   }
 }
 

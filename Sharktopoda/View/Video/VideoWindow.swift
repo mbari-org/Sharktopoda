@@ -8,22 +8,15 @@
 import Foundation
 import AppKit
 import AVKit
+import SwiftUI
 
 class VideoWindow: NSWindow {
-  let videoAsset: VideoAsset
-
-  let videoPlayer: AVPlayer
-  let videoPlayerView: AVPlayerView
+  let videoView: VideoView
   
   init(for videoAsset: VideoAsset) {
-    self.videoAsset = videoAsset
-    
-    videoPlayer = AVPlayer(url: videoAsset.url)
-    videoPlayerView = AVPlayerView()
+    videoView = VideoView(videoAsset: videoAsset)
 
-    videoPlayerView.player = videoPlayer
-
-    let videoSize = self.videoAsset.size() ?? NSMakeSize(600, 600)
+    let videoSize = videoView.fullSize()
     let windowSize = VideoWindow.scaleSize(size: videoSize)
     
     super.init(
@@ -36,7 +29,7 @@ class VideoWindow: NSWindow {
     self.title = videoAsset.uuid
     self.makeKeyAndOrderFront(nil)
 
-    self.contentView = self.videoPlayerView
+    self.contentView = NSHostingView(rootView: self.videoView)
     
     self.delegate = self
   }
@@ -62,8 +55,15 @@ extension VideoWindow {
 
 extension VideoWindow: NSWindowDelegate {
   func windowWillClose(_ notification: Notification) {
-    DispatchQueue.main.async {
-      UDP.sharktopodaData.videoWindows.removeValue(forKey: self.videoAsset.uuid)
+    if UDP.sharktopodaData.activeWindow == self {
+      UDP.sharktopodaData.activeWindow = nil
     }
+    DispatchQueue.main.async {
+      UDP.sharktopodaData.videoWindows.removeValue(forKey: self.videoView.videoAsset.uuid)
+    }
+  }
+  
+  func windowDidBecomeKey(_ notification: Notification) {
+    UDP.sharktopodaData.activeWindow = self
   }
 }

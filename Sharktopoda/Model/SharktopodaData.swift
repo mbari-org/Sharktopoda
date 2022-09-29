@@ -15,6 +15,7 @@ final class SharktopodaData: ObservableObject {
   @Published var udpServerError: String? = nil
   
   @Published var videoWindows = [String: VideoWindow]()
+  @Published var activeWindow: VideoWindow? = nil
   
   // This allows non-View access to sharktopoda data to update observing Views
   init() {

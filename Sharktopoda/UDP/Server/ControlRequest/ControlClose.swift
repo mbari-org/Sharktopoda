@@ -18,7 +18,6 @@ struct ControlClose: ControlRequest {
   func process() -> ControlResponse {
     if let window = UDP.sharktopodaData.videoWindows[uuid] {
       DispatchQueue.main.async {
-        UDP.sharktopodaData.videoWindows.removeValue(forKey: self.uuid)
         window.close()
       }
     }

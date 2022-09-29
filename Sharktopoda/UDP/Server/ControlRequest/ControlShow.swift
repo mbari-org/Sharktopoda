@@ -10,9 +10,18 @@ import Foundation
 struct ControlShow: ControlRequest {
   var command: ControlCommand
   var uuid: String
-
+  
+  var description: String {
+    "\(command) \(uuid)"
+  }
+  
   func process() -> ControlResponse {
-    print("CxInc handle: \(self)")
+    if let window = UDP.sharktopodaData.videoWindows[uuid] {
+      DispatchQueue.main.async {
+        window.makeKeyAndOrderFront(nil)
+      }
     return ok()
+    }
+    return failed("video not open")
   }
 }

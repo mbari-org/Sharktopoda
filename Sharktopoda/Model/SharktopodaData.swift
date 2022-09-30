@@ -29,6 +29,6 @@ final class SharktopodaData: ObservableObject {
     if let videoWindow = windows.first(where: { $0.keyInfo.isKey }) {
       return videoWindow
     }
-    return windows.sorted(by: { $0 < $1 }).first
+    return windows.sorted(by: { $0 < $1 }).last
   }
 }

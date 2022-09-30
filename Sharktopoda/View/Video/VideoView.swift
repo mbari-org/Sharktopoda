@@ -41,12 +41,14 @@ extension VideoView {
       avPlayer.rate = newValue
     }
   }
-//  func rate() {
-//    avPlayer.rate =
-//  }
-  
+
   func pause() {
     avPlayer.pause()
+  }
+  
+  func elaspsed() -> Int {
+    guard var currentTime = avPlayer.currentItem?.currentTime() else { return 0 }
+    return Int(CMTimeGetSeconds(currentTime) * 1000)
   }
 }
 

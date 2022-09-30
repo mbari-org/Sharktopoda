@@ -12,7 +12,11 @@ struct ControlElapsed: ControlRequest {
   var uuid: String
   
   func process() -> ControlResponse {
-    print("CxInc handle: \(self)")
-    return ok()
+    guard let videoWindow = UDP.sharktopodaData.videoWindows[uuid] else {
+      return failed("No video for uuid")
+    }
+    
+    return ControlResponseElapsed(from: videoWindow)
   }
+
 }

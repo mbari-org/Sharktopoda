@@ -80,7 +80,10 @@ extension VideoWindow {
   func pause() {
     videoView.pause()
   }
-
+  
+  func elapsed() -> Int {
+    videoView.elaspsed()
+  }
 }
 
 extension VideoWindow: NSWindowDelegate {

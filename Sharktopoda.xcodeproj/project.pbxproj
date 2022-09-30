@@ -67,6 +67,7 @@
 		E2FFE20A28E64DDC00425F04 /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFE20928E64DDC00425F04 /* VideoPlayerView.swift */; };
 		E2FFE20C28E7619900425F04 /* ControlResponseInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFE20B28E7619900425F04 /* ControlResponseInfo.swift */; };
 		E2FFE21028E79AE000425F04 /* ControlResponseAllInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFE20F28E79AE000425F04 /* ControlResponseAllInfo.swift */; };
+		E2FFE21228E7A8CA00425F04 /* ControlResponseElapsed.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFE21128E7A8CA00425F04 /* ControlResponseElapsed.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -151,6 +152,7 @@
 		E2FFE20928E64DDC00425F04 /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
 		E2FFE20B28E7619900425F04 /* ControlResponseInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseInfo.swift; sourceTree = "<group>"; };
 		E2FFE20F28E79AE000425F04 /* ControlResponseAllInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseAllInfo.swift; sourceTree = "<group>"; };
+		E2FFE21128E7A8CA00425F04 /* ControlResponseElapsed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseElapsed.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -367,6 +369,7 @@
 				E2FFE1FB28E37B8000425F04 /* ControlResponseFailed.swift */,
 				E2FFE20B28E7619900425F04 /* ControlResponseInfo.swift */,
 				E2FFE20F28E79AE000425F04 /* ControlResponseAllInfo.swift */,
+				E2FFE21128E7A8CA00425F04 /* ControlResponseElapsed.swift */,
 			);
 			path = ControlResponse;
 			sourceTree = "<group>";
@@ -569,6 +572,7 @@
 				E2675E2228DABE4900F5F114 /* ControlClose.swift in Sources */,
 				E2FFE1FC28E37B8000425F04 /* ControlResponseFailed.swift in Sources */,
 				E2FAB21B28E24A7C006D2676 /* VideoWindow.swift in Sources */,
+				E2FFE21228E7A8CA00425F04 /* ControlResponseElapsed.swift in Sources */,
 				E2C22E8528CFDC26003CD976 /* SharktopodaApp.swift in Sources */,
 				E2C22EC528D144B0003CD976 /* SharktopodaData.swift in Sources */,
 				E2675E2C28DB5F9400F5F114 /* DefaultlValue.swift in Sources */,

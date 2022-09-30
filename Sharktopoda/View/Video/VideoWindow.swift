@@ -11,12 +11,21 @@ import AVKit
 import SwiftUI
 
 class VideoWindow: NSWindow {
+  struct KeyInfo {
+    var keyTime: Date
+    var isKey: Bool = false
+  
+    static func <(lhs: KeyInfo, rhs: KeyInfo) -> Bool {
+      lhs.keyTime < rhs.keyTime
+    }
+  }
+  
   let videoView: VideoView
-  var keyTime: Date
+  var keyInfo: KeyInfo
   
   init(for videoAsset: VideoAsset) {
     videoView = VideoView(videoAsset: videoAsset)
-    keyTime = Date()
+    keyInfo = KeyInfo(keyTime: Date())
 
     let videoSize = videoView.fullSize()
     let windowSize = VideoWindow.scaleSize(size: videoSize)
@@ -39,6 +48,15 @@ class VideoWindow: NSWindow {
 
 extension VideoWindow {
 
+  override func makeKeyAndOrderFront(_ sender: Any?) {
+    super.makeKeyAndOrderFront(sender)
+    self.keyInfo = KeyInfo(keyTime: Date(), isKey: true)
+  }
+
+  static func <(lhs: VideoWindow, rhs: VideoWindow) -> Bool {
+    lhs.keyInfo < rhs.keyInfo
+  }
+  
   static func scaleSize(size: NSSize) -> NSSize {
     let screenFrame = NSScreen.main!.frame
     let maxSize = NSMakeSize(0.9 * screenFrame.width, 0.9 * screenFrame.height)
@@ -55,14 +73,6 @@ extension VideoWindow {
     return NSMakeSize(size.width * scale, size.height * scale)
   }
 
-  override func makeKeyAndOrderFront(_ sender: Any?) {
-    super.makeKeyAndOrderFront(sender)
-    DispatchQueue.main.async {
-      
-    }
-
-  }
-
 }
 
 extension VideoWindow: NSWindowDelegate {
@@ -73,7 +83,11 @@ extension VideoWindow: NSWindowDelegate {
   }
   
   func windowDidBecomeKey(_ notification: Notification) {
-    keyTime = Date()
+    self.keyInfo = KeyInfo(keyTime: Date(), isKey: true)
+  }
+  
+  func windowDidResignKey(_ notification: Notification) {
+    self.keyInfo = KeyInfo(keyTime: self.keyInfo.keyTime, isKey: false)
   }
 
 }

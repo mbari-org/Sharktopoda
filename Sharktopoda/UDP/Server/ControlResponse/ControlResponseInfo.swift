@@ -8,20 +8,44 @@
 import Foundation
 
 struct ControlResponseInfo: ControlResponse {
+  struct WindowInfo {
+    var uuid: String
+    var url: String
+    var durationMillis: Int
+    var frameRate: Float
+    var isKey: Bool
+    
+    init(from videoWindow: VideoWindow) {
+      let videoAsset = videoWindow.videoView.videoAsset
+      self.uuid = videoAsset.uuid
+      self.url = videoAsset.url.absoluteString
+      self.durationMillis = videoAsset.durationMillis
+      self.frameRate = round(videoAsset.frameRate * 100) / 100.0
+      self.isKey = videoWindow.keyInfo.isKey
+    }
+  }
+  
   var response: ControlCommand
   var status: ControlResponseStatus
-  
+
   var uuid: String?
+  var url: String?
   var durationMillis: Int?
   var frameRate: Float?
-  var key: Bool?
+  var isKey: Bool?
   
-  init(uuid: String, durationMillis: Int, frameRate: Float, key: Bool) {
+  init(from windowInfo: WindowInfo) {
     response = .info
     status = .ok
-    self.uuid = uuid
-    self.durationMillis = durationMillis
-    self.frameRate = frameRate
-    self.key = key
+    self.uuid = windowInfo.uuid
+    self.url = windowInfo.url
+    self.durationMillis = windowInfo.durationMillis
+    self.frameRate = windowInfo.frameRate
+    self.isKey = windowInfo.isKey
+  }
+
+  init(from videoWindow: VideoWindow) {
+    let windowInfo = WindowInfo(from: videoWindow)
+    self.init(from: windowInfo)
   }
 }

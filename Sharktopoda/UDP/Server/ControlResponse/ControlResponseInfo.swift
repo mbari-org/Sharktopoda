@@ -15,7 +15,7 @@ struct ControlResponseInfo: ControlResponse {
     var frameRate: Float
     var isKey: Bool
     
-    init(from videoWindow: VideoWindow) {
+    init(using videoWindow: VideoWindow) {
       let videoAsset = videoWindow.videoView.videoAsset
       self.uuid = videoAsset.uuid
       self.url = videoAsset.url.absoluteString
@@ -34,7 +34,7 @@ struct ControlResponseInfo: ControlResponse {
   var frameRate: Float?
   var isKey: Bool?
   
-  init(from windowInfo: VideoInfo) {
+  init(using windowInfo: VideoInfo) {
     response = .info
     status = .ok
     self.uuid = windowInfo.uuid
@@ -44,8 +44,8 @@ struct ControlResponseInfo: ControlResponse {
     self.isKey = windowInfo.isKey
   }
 
-  init(from videoWindow: VideoWindow) {
-    let windowInfo = VideoInfo(from: videoWindow)
-    self.init(from: windowInfo)
+  init(using videoWindow: VideoWindow) {
+    let windowInfo = VideoInfo(using: videoWindow)
+    self.init(using: windowInfo)
   }
 }

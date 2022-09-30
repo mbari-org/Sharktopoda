@@ -16,7 +16,7 @@ struct ControlElapsed: ControlRequest {
       return failed("No video for uuid")
     }
     
-    return ControlResponseElapsed(from: videoWindow)
+    return ControlResponseElapsed(using: videoWindow)
   }
 
 }

@@ -12,10 +12,10 @@ struct ControlResponseAllInfo: ControlResponse {
   var status: ControlResponseStatus
   var videos: [ControlResponseInfo.VideoInfo]
   
-  init(from videoWindows: [VideoWindow]) {
+  init(using videoWindows: [VideoWindow]) {
     response = .all
     status = .ok
-    videos = videoWindows.map({ ControlResponseInfo.VideoInfo(from: $0) })
+    videos = videoWindows.map({ ControlResponseInfo.VideoInfo(using: $0) })
   }
 }
   

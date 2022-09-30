@@ -47,7 +47,7 @@ extension VideoView {
   }
   
   func elaspsed() -> Int {
-    guard var currentTime = avPlayer.currentItem?.currentTime() else { return 0 }
+    guard let currentTime = avPlayer.currentItem?.currentTime() else { return 0 }
     return Int(CMTimeGetSeconds(currentTime) * 1000)
   }
 }

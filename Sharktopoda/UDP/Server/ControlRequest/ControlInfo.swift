@@ -12,7 +12,7 @@ struct ControlInfo: ControlRequest {
   
   func process() -> ControlResponse {
     if let latestWindow = UDP.sharktopodaData.latedVideoWindow() {
-      return ControlResponseInfo(from: latestWindow)
+      return ControlResponseInfo(using: latestWindow)
     }
 
     return failed("No open videos")

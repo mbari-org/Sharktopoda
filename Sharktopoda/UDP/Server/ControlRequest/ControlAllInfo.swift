@@ -15,6 +15,6 @@ struct ControlAllInfo: ControlRequest {
     guard !videoWindows.isEmpty else {
       return failed("No open videos")
     }
-    return ControlResponseAllInfo(from: videoWindows)
+    return ControlResponseAllInfo(using: videoWindows)
   }
 }

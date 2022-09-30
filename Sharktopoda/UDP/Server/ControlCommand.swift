@@ -31,13 +31,11 @@ enum ControlCommand: String, Codable {
   }
   
   static func controlMessage(from data: Data) -> ControlRequest {
-    let json = JSONDecoder()
-
     // Ensure control command is valid
     var controlCommand: ControlCommand
     do {
       // Ensure message has command field
-      let controlMessageCommand = try json.decode(ControlMessageCommand.self, from: data)
+      let controlMessageCommand = try UDP.decoder.decode(ControlMessageCommand.self, from: data)
 
       // Ensure command is known
       let rawCommand = controlMessageCommand.command
@@ -99,7 +97,7 @@ enum ControlCommand: String, Codable {
           controlMessageType = ControlUnknown.self
       }
       
-      return try json.decode(controlMessageType, from: data)
+      return try UDP.decoder.decode(controlMessageType, from: data)
     } catch {
       return ControlInvalid(command: controlCommand)
     }

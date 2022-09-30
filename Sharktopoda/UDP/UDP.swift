@@ -16,6 +16,14 @@ class UDP {
   
   static var sharktopodaData: SharktopodaData!
 
+  
+  static var encoder: JSONEncoder = {
+    let encoder = JSONEncoder()
+    encoder.outputFormatting = JSONEncoder.OutputFormatting(arrayLiteral: .sortedKeys, .withoutEscapingSlashes)
+    return encoder
+  }()
+  static var decoder = JSONDecoder()
+
   private static func startupServerPort() -> Int {
     var port: Int = UserDefaults.standard.integer(forKey: PrefKeys.port)
     if port == 0 || UInt16.max < port {

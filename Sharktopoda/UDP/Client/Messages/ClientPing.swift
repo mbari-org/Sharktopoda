@@ -15,6 +15,6 @@ struct ClientPing: ClientMessage {
   }
   
   func data() -> Data {
-    try! JSONEncoder().encode(self)
+    try! UDP.encoder.encode(self)
   }
 }

@@ -12,9 +12,11 @@ import SwiftUI
 
 class VideoWindow: NSWindow {
   let videoView: VideoView
+  var keyTime: Date
   
   init(for videoAsset: VideoAsset) {
     videoView = VideoView(videoAsset: videoAsset)
+    keyTime = Date()
 
     let videoSize = videoView.fullSize()
     let windowSize = VideoWindow.scaleSize(size: videoSize)
@@ -36,6 +38,7 @@ class VideoWindow: NSWindow {
 }
 
 extension VideoWindow {
+
   static func scaleSize(size: NSSize) -> NSSize {
     let screenFrame = NSScreen.main!.frame
     let maxSize = NSMakeSize(0.9 * screenFrame.width, 0.9 * screenFrame.height)
@@ -51,19 +54,26 @@ extension VideoWindow {
 
     return NSMakeSize(size.width * scale, size.height * scale)
   }
+
+  override func makeKeyAndOrderFront(_ sender: Any?) {
+    super.makeKeyAndOrderFront(sender)
+    DispatchQueue.main.async {
+      
+    }
+
+  }
+
 }
 
 extension VideoWindow: NSWindowDelegate {
   func windowWillClose(_ notification: Notification) {
-    if UDP.sharktopodaData.activeWindow == self {
-      UDP.sharktopodaData.activeWindow = nil
-    }
     DispatchQueue.main.async {
       UDP.sharktopodaData.videoWindows.removeValue(forKey: self.videoView.videoAsset.uuid)
     }
   }
   
   func windowDidBecomeKey(_ notification: Notification) {
-    UDP.sharktopodaData.activeWindow = self
+    keyTime = Date()
   }
+
 }

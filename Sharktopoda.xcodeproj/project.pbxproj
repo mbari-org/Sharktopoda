@@ -65,6 +65,7 @@
 		E2FFE1FE28E37C5000425F04 /* ControlResponseOk.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFE1FD28E37C5000425F04 /* ControlResponseOk.swift */; };
 		E2FFE20828E6248600425F04 /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFE20728E6248600425F04 /* VideoView.swift */; };
 		E2FFE20A28E64DDC00425F04 /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFE20928E64DDC00425F04 /* VideoPlayerView.swift */; };
+		E2FFE20C28E7619900425F04 /* ControlResponseInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFE20B28E7619900425F04 /* ControlResponseInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -147,6 +148,7 @@
 		E2FFE1FD28E37C5000425F04 /* ControlResponseOk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseOk.swift; sourceTree = "<group>"; };
 		E2FFE20728E6248600425F04 /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
 		E2FFE20928E64DDC00425F04 /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
+		E2FFE20B28E7619900425F04 /* ControlResponseInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -361,6 +363,7 @@
 				E22F72FC28DA5D9100253A48 /* ControlResponse.swift */,
 				E2FFE1FD28E37C5000425F04 /* ControlResponseOk.swift */,
 				E2FFE1FB28E37B8000425F04 /* ControlResponseFailed.swift */,
+				E2FFE20B28E7619900425F04 /* ControlResponseInfo.swift */,
 			);
 			path = ControlResponse;
 			sourceTree = "<group>";
@@ -557,6 +560,7 @@
 				E2675E1E28DAB65D00F5F114 /* ControlPing.swift in Sources */,
 				E2FAB21028E213A9006D2676 /* MainTitleView.swift in Sources */,
 				E295628A28D67A6500E88ED1 /* SharktopodaCommands.swift in Sources */,
+				E2FFE20C28E7619900425F04 /* ControlResponseInfo.swift in Sources */,
 				E2989ABD28D3C7F7009D2D65 /* PrefKeys.swift in Sources */,
 				E2675E2228DABE4900F5F114 /* ControlClose.swift in Sources */,
 				E2FFE1FC28E37B8000425F04 /* ControlResponseFailed.swift in Sources */,

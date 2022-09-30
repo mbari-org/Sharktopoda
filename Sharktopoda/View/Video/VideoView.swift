@@ -29,7 +29,7 @@ struct VideoView: View {
 
 extension VideoView {
   func fullSize() -> NSSize {
-    let videoSize = self.videoAsset.size() ?? NSMakeSize(600, 600)
+    let videoSize = self.videoAsset.size ?? NSMakeSize(600, 600)
     return NSMakeSize(videoSize.width, videoSize.height + 110)
   }
 }

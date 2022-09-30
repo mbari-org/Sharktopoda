@@ -34,7 +34,9 @@ struct ControlOpen: ControlRequest {
         return failed("URL not playable")
       }
       DispatchQueue.main.async {
-        UDP.sharktopodaData.videoWindows[uuid] = VideoWindow(for: videoAsset)
+        let videoWindow = VideoWindow(for: videoAsset)
+        videoWindow.makeKeyAndOrderFront(nil)
+        UDP.sharktopodaData.videoWindows[uuid] = videoWindow
       }
     }
     return ok()

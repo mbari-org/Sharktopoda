@@ -5,13 +5,20 @@
 //  Apache License 2.0 — See project LICENSE file
 //
 
-import Foundation
+import AVFoundation
 
 struct ControlInfo: ControlRequest {
   var command: ControlCommand
   
   func process() -> ControlResponse {
-    print("CxInc handle: \(self)")
-    return ok()
+    if let latestWindow = UDP.sharktopodaData.latedVideoWindow() {
+      let videoAsset = latestWindow.videoView.videoAsset
+      return ControlResponseInfo(uuid: videoAsset.uuid,
+                                 durationMillis: videoAsset.durationMillis,
+                                 frameRate: videoAsset.frameRate,
+                                 key: latestWindow.isKeyWindow)
+    }
+
+    return failed("No open videos")
   }
 }

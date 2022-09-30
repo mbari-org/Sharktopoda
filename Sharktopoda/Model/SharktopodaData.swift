@@ -15,10 +15,20 @@ final class SharktopodaData: ObservableObject {
   @Published var udpServerError: String? = nil
   
   @Published var videoWindows = [String: VideoWindow]()
-  @Published var activeWindow: VideoWindow? = nil
   
   // This allows non-View access to sharktopoda data to update observing Views
   init() {
     UDP.sharktopodaData = self
+  }
+  
+  func latedVideoWindow() -> VideoWindow? {
+    guard !videoWindows.isEmpty else { return nil }
+     
+    let windows: [VideoWindow] = Array(videoWindows.values)
+    
+    if let videoWindow = windows.first(where: { $0.isKeyWindow }) {
+      return videoWindow
+    }
+    return windows.sorted(by: { $0.keyTime < $1.keyTime }).first
   }
 }

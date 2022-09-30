@@ -20,7 +20,7 @@ class VideoWindow: NSWindow {
     }
   }
   
-  let videoView: VideoView
+  var videoView: VideoView
   var keyInfo: KeyInfo
   
   init(for videoAsset: VideoAsset) {
@@ -71,6 +71,14 @@ extension VideoWindow {
     let scale = widthScale < heightScale ? widthScale : heightScale
 
     return NSMakeSize(size.width * scale, size.height * scale)
+  }
+
+  func play(rate: Float) {
+    videoView.rate = rate
+  }
+
+  func pause() {
+    videoView.pause()
   }
 
 }

@@ -32,6 +32,22 @@ extension VideoView {
     let videoSize = self.videoAsset.size ?? NSMakeSize(600, 600)
     return NSMakeSize(videoSize.width, videoSize.height + 110)
   }
+  
+  var rate: Float {
+    get {
+      avPlayer.rate
+    }
+    set {
+      avPlayer.rate = newValue
+    }
+  }
+//  func rate() {
+//    avPlayer.rate =
+//  }
+  
+  func pause() {
+    avPlayer.pause()
+  }
 }
 
 //struct VideoView_Previews: PreviewProvider {

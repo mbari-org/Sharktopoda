@@ -31,9 +31,9 @@ extension KeyedDecodingContainer {
   }
 }
 
-extension Double {
+extension Float {
   struct PlaybackRate: DefaultValue {
-    static var defaultValue = 1.0
+    static var defaultValue: Float = 1.0
   }
 }
 

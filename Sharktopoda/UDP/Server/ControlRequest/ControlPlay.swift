@@ -10,10 +10,13 @@ import Foundation
 struct ControlPlay: ControlRequest {
   var command: ControlCommand
   let uuid: String
-  @Default<Double.PlaybackRate> var rate: Double
+  @Default<Float.PlaybackRate> var rate: Float
 
   func process() -> ControlResponse {
-    print("CxInc handle: \(self)")
+    guard let videoWindow = UDP.sharktopodaData.videoWindows[uuid] else {
+      return failed("No video for uuid")
+    }
+    videoWindow.play(rate: rate)
     return ok()
   }
 }

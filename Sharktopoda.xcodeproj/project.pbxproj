@@ -56,7 +56,7 @@
 		E2EE0E3A28DB9AAD00138A86 /* ControlStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EE0E3928DB9AAD00138A86 /* ControlStatus.swift */; };
 		E2EE0E3C28DB9B3B00138A86 /* ControlSeek.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EE0E3B28DB9B3B00138A86 /* ControlSeek.swift */; };
 		E2EE0E3E28DB9B9F00138A86 /* ControlCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EE0E3D28DB9B9F00138A86 /* ControlCapture.swift */; };
-		E2EE0E4028DB9DD200138A86 /* ControlAll.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EE0E3F28DB9DD200138A86 /* ControlAll.swift */; };
+		E2EE0E4028DB9DD200138A86 /* ControlAllInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EE0E3F28DB9DD200138A86 /* ControlAllInfo.swift */; };
 		E2FAB21028E213A9006D2676 /* MainTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB20F28E213A9006D2676 /* MainTitleView.swift */; };
 		E2FAB21228E2157C006D2676 /* MainShortcutsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB21128E2157C006D2676 /* MainShortcutsView.swift */; };
 		E2FAB21428E215F6006D2676 /* MainUDPStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB21328E215F6006D2676 /* MainUDPStatusView.swift */; };
@@ -66,6 +66,7 @@
 		E2FFE20828E6248600425F04 /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFE20728E6248600425F04 /* VideoView.swift */; };
 		E2FFE20A28E64DDC00425F04 /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFE20928E64DDC00425F04 /* VideoPlayerView.swift */; };
 		E2FFE20C28E7619900425F04 /* ControlResponseInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFE20B28E7619900425F04 /* ControlResponseInfo.swift */; };
+		E2FFE21028E79AE000425F04 /* ControlResponseAllInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFE20F28E79AE000425F04 /* ControlResponseAllInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -139,7 +140,7 @@
 		E2EE0E3928DB9AAD00138A86 /* ControlStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlStatus.swift; sourceTree = "<group>"; };
 		E2EE0E3B28DB9B3B00138A86 /* ControlSeek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlSeek.swift; sourceTree = "<group>"; };
 		E2EE0E3D28DB9B9F00138A86 /* ControlCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlCapture.swift; sourceTree = "<group>"; };
-		E2EE0E3F28DB9DD200138A86 /* ControlAll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlAll.swift; sourceTree = "<group>"; };
+		E2EE0E3F28DB9DD200138A86 /* ControlAllInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlAllInfo.swift; sourceTree = "<group>"; };
 		E2FAB20F28E213A9006D2676 /* MainTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTitleView.swift; sourceTree = "<group>"; };
 		E2FAB21128E2157C006D2676 /* MainShortcutsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainShortcutsView.swift; sourceTree = "<group>"; };
 		E2FAB21328E215F6006D2676 /* MainUDPStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainUDPStatusView.swift; sourceTree = "<group>"; };
@@ -149,6 +150,7 @@
 		E2FFE20728E6248600425F04 /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
 		E2FFE20928E64DDC00425F04 /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
 		E2FFE20B28E7619900425F04 /* ControlResponseInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseInfo.swift; sourceTree = "<group>"; };
+		E2FFE20F28E79AE000425F04 /* ControlResponseAllInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseAllInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,7 +183,7 @@
 			children = (
 				E22F0EA328DA57800097A34E /* ControlRequest.swift */,
 				E2675E3328DB7A4000F5F114 /* ControlAdvance.swift */,
-				E2EE0E3F28DB9DD200138A86 /* ControlAll.swift */,
+				E2EE0E3F28DB9DD200138A86 /* ControlAllInfo.swift */,
 				E2EE0E3D28DB9B9F00138A86 /* ControlCapture.swift */,
 				E2675E2128DABE4900F5F114 /* ControlClose.swift */,
 				E229F4C128D9150A001F220E /* ControlConnect.swift */,
@@ -364,6 +366,7 @@
 				E2FFE1FD28E37C5000425F04 /* ControlResponseOk.swift */,
 				E2FFE1FB28E37B8000425F04 /* ControlResponseFailed.swift */,
 				E2FFE20B28E7619900425F04 /* ControlResponseInfo.swift */,
+				E2FFE20F28E79AE000425F04 /* ControlResponseAllInfo.swift */,
 			);
 			path = ControlResponse;
 			sourceTree = "<group>";
@@ -532,7 +535,7 @@
 				E22F72FD28DA5D9100253A48 /* ControlResponse.swift in Sources */,
 				E2C22EDA28D386AE003CD976 /* MainView.swift in Sources */,
 				E295627928D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift in Sources */,
-				E2EE0E4028DB9DD200138A86 /* ControlAll.swift in Sources */,
+				E2EE0E4028DB9DD200138A86 /* ControlAllInfo.swift in Sources */,
 				E2EE0E3C28DB9B3B00138A86 /* ControlSeek.swift in Sources */,
 				E22F0EA428DA57800097A34E /* ControlRequest.swift in Sources */,
 				E2EE0E3E28DB9B9F00138A86 /* ControlCapture.swift in Sources */,
@@ -552,6 +555,7 @@
 				E21DEEDF28DA13CB00A2AC01 /* ClientPing.swift in Sources */,
 				E2675E2F28DB729900F5F114 /* ControlInfo.swift in Sources */,
 				E21DEEE428DA533100A2AC01 /* ClientMessage.swift in Sources */,
+				E2FFE21028E79AE000425F04 /* ControlResponseAllInfo.swift in Sources */,
 				E2D47E9628D8C01F0068B192 /* ControlCommand.swift in Sources */,
 				E2C078CD28D7CF0E00C55EEC /* UDPClient.swift in Sources */,
 				E2675E3428DB7A4000F5F114 /* ControlAdvance.swift in Sources */,

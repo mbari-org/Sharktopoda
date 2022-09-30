@@ -8,7 +8,7 @@
 import Foundation
 
 struct ControlResponseInfo: ControlResponse {
-  struct WindowInfo {
+  struct VideoInfo: Codable {
     var uuid: String
     var url: String
     var durationMillis: Int
@@ -34,7 +34,7 @@ struct ControlResponseInfo: ControlResponse {
   var frameRate: Float?
   var isKey: Bool?
   
-  init(from windowInfo: WindowInfo) {
+  init(from windowInfo: VideoInfo) {
     response = .info
     status = .ok
     self.uuid = windowInfo.uuid
@@ -45,7 +45,7 @@ struct ControlResponseInfo: ControlResponse {
   }
 
   init(from videoWindow: VideoWindow) {
-    let windowInfo = WindowInfo(from: videoWindow)
+    let windowInfo = VideoInfo(from: videoWindow)
     self.init(from: windowInfo)
   }
 }

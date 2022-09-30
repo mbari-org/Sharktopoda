@@ -55,7 +55,7 @@ enum ControlCommand: String, Codable {
           controlMessageType = ControlAdvance.self
 
         case .all:
-          controlMessageType = ControlAll.self
+          controlMessageType = ControlAllInfo.self
           
         case .capture:
           controlMessageType = ControlCapture.self

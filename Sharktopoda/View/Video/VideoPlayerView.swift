@@ -13,7 +13,6 @@ final class VideoPlayerView: NSViewRepresentable {
 
   init(for avPlayer: AVPlayer) {
     avPlayerView = AVPlayerView()
-    avPlayerView.controlsStyle = .inline
     avPlayerView.player = avPlayer
   }
   

@@ -18,12 +18,12 @@ struct VideoView: View {
     
     avPlayer = AVPlayer(url: videoAsset.url)
     videoPlayerView = VideoPlayerView(for: avPlayer)
-//    videoPlayerView.avPlayerView.controlsStyle = .inline
+    videoPlayerView.avPlayerView.controlsStyle = .inline
   }
   
   var body: some View {
     videoPlayerView
-    // CxTBD This could hold a custom control panel w/ .inline changed to .none
+    // CxTBD This   could hold a custom control panel w/ .inline changed to .none
   }
 }
 

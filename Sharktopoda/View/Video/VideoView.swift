@@ -28,23 +28,34 @@ struct VideoView: View {
 }
 
 extension VideoView {
+  func canStep(_ steps: Int) -> Bool {
+    guard let item = avPlayer.currentItem else {
+      return false
+    }
+    return steps < 0 ? item.canStepBackward : item.canStepForward
+  }
+  
+  func step(_ steps: Int) {
+    avPlayer.currentItem?.step(byCount: steps)
+  }
+  
+  func elapsed() -> Int {
+    guard let currentTime = avPlayer.currentItem?.currentTime() else { return 0 }
+    return Int(CMTimeGetSeconds(currentTime)) * VideoAsset.timescale
+  }
+  
   func fullSize() -> NSSize {
     let videoSize = self.videoAsset.size ?? NSMakeSize(600, 600)
     return NSMakeSize(videoSize.width, videoSize.height + 110)
-  }
-  
-  var rate: Float {
-    get { avPlayer.rate }
-    set { avPlayer.rate = newValue }
   }
 
   func pause() {
     avPlayer.pause()
   }
   
-  func elapsed() -> Int {
-    guard let currentTime = avPlayer.currentItem?.currentTime() else { return 0 }
-    return Int(CMTimeGetSeconds(currentTime)) * VideoAsset.timescale
+  var rate: Float {
+    get { avPlayer.rate }
+    set { avPlayer.rate = newValue }
   }
   
   func seek(elapsed: Int) {

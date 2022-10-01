@@ -47,7 +47,6 @@ class VideoWindow: NSWindow {
 }
 
 extension VideoWindow {
-
   override func makeKeyAndOrderFront(_ sender: Any?) {
     super.makeKeyAndOrderFront(sender)
     self.keyInfo = KeyInfo(keyTime: Date(), isKey: true)
@@ -71,6 +70,14 @@ extension VideoWindow {
     let scale = widthScale < heightScale ? widthScale : heightScale
 
     return NSMakeSize(size.width * scale, size.height * scale)
+  }
+  
+  func canStep(_ steps: Int) -> Bool {
+    videoView.canStep(steps)
+  }
+  
+  func step(_ steps: Int) {
+    videoView.step(steps)
   }
 
   func play(rate: Float) {

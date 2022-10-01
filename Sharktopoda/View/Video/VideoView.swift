@@ -34,12 +34,8 @@ extension VideoView {
   }
   
   var rate: Float {
-    get {
-      avPlayer.rate
-    }
-    set {
-      avPlayer.rate = newValue
-    }
+    get { avPlayer.rate }
+    set { avPlayer.rate = newValue }
   }
 
   func pause() {

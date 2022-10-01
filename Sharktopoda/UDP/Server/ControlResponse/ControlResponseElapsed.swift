@@ -9,7 +9,7 @@ import Foundation
 
 struct ControlResponseElapsed: ControlResponse {
   var response: ControlCommand
-  var status: ControlResponseStatus = .failed
+  var status: ControlResponseStatus
   var elapsedTimeMillies: Int
   
   init(using videoWindow: VideoWindow) {

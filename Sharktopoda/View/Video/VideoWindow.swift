@@ -85,6 +85,10 @@ extension VideoWindow {
     videoView.elapsed()
   }
   
+  var rate: Float {
+    videoView.rate
+  }
+  
   func seek(elapsed: Int) {
     videoView.seek(elapsed: elapsed)
   }

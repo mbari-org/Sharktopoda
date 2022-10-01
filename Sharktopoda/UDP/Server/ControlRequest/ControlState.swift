@@ -7,14 +7,14 @@
 
 import Foundation
 
-struct ControlStatus: ControlRequest {
+struct ControlState: ControlRequest {
   var command: ControlCommand
   var uuid: String
   
   func process() -> ControlResponse {
-//    if let window = UDP.sharktopodaData.videoWindows[uuid] {
-//          return ok()
-//    }
-      return failed("No video for uuid")
+    if let window = UDP.sharktopodaData.videoWindows[uuid] {
+      return ControlResponseState(using: window)
+    }
+    return failed("No video for uuid")
   }
 }

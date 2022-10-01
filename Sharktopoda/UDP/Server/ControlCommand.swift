@@ -23,7 +23,7 @@ enum ControlCommand: String, Codable {
   case play
   case seek = "seek elapsed time"
   case show
-  case status = "request status"
+  case state = "request state"
   case unknown
   
   struct ControlMessageCommand: Decodable {
@@ -90,8 +90,8 @@ enum ControlCommand: String, Codable {
         case .show:
           controlMessageType = ControlShow.self
 
-        case .status:
-          controlMessageType = ControlStatus.self
+        case .state:
+          controlMessageType = ControlState.self
 
         case .unknown:
           controlMessageType = ControlUnknown.self

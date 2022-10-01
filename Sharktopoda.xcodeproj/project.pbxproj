@@ -53,7 +53,7 @@
 		E2D47E9E28D8DF0F0068B192 /* UDPMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D47E9D28D8DF0F0068B192 /* UDPMessage.swift */; };
 		E2E5962D28DA63700058D054 /* ControlOpen.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E5962C28DA63700058D054 /* ControlOpen.swift */; };
 		E2EE0E3828DB9A6600138A86 /* ControlElapsed.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EE0E3728DB9A6600138A86 /* ControlElapsed.swift */; };
-		E2EE0E3A28DB9AAD00138A86 /* ControlStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EE0E3928DB9AAD00138A86 /* ControlStatus.swift */; };
+		E2EE0E3A28DB9AAD00138A86 /* ControlState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EE0E3928DB9AAD00138A86 /* ControlState.swift */; };
 		E2EE0E3C28DB9B3B00138A86 /* ControlSeek.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EE0E3B28DB9B3B00138A86 /* ControlSeek.swift */; };
 		E2EE0E3E28DB9B9F00138A86 /* ControlCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EE0E3D28DB9B9F00138A86 /* ControlCapture.swift */; };
 		E2EE0E4028DB9DD200138A86 /* ControlAllInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EE0E3F28DB9DD200138A86 /* ControlAllInfo.swift */; };
@@ -68,6 +68,7 @@
 		E2FFE20C28E7619900425F04 /* ControlResponseInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFE20B28E7619900425F04 /* ControlResponseInfo.swift */; };
 		E2FFE21028E79AE000425F04 /* ControlResponseAllInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFE20F28E79AE000425F04 /* ControlResponseAllInfo.swift */; };
 		E2FFE21228E7A8CA00425F04 /* ControlResponseElapsed.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFE21128E7A8CA00425F04 /* ControlResponseElapsed.swift */; };
+		E2FFE21428E8824100425F04 /* ControlResponseState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFE21328E8824100425F04 /* ControlResponseState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,7 +139,7 @@
 		E2D47E9D28D8DF0F0068B192 /* UDPMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDPMessage.swift; sourceTree = "<group>"; };
 		E2E5962C28DA63700058D054 /* ControlOpen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlOpen.swift; sourceTree = "<group>"; };
 		E2EE0E3728DB9A6600138A86 /* ControlElapsed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlElapsed.swift; sourceTree = "<group>"; };
-		E2EE0E3928DB9AAD00138A86 /* ControlStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlStatus.swift; sourceTree = "<group>"; };
+		E2EE0E3928DB9AAD00138A86 /* ControlState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlState.swift; sourceTree = "<group>"; };
 		E2EE0E3B28DB9B3B00138A86 /* ControlSeek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlSeek.swift; sourceTree = "<group>"; };
 		E2EE0E3D28DB9B9F00138A86 /* ControlCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlCapture.swift; sourceTree = "<group>"; };
 		E2EE0E3F28DB9DD200138A86 /* ControlAllInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlAllInfo.swift; sourceTree = "<group>"; };
@@ -153,6 +154,7 @@
 		E2FFE20B28E7619900425F04 /* ControlResponseInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseInfo.swift; sourceTree = "<group>"; };
 		E2FFE20F28E79AE000425F04 /* ControlResponseAllInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseAllInfo.swift; sourceTree = "<group>"; };
 		E2FFE21128E7A8CA00425F04 /* ControlResponseElapsed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseElapsed.swift; sourceTree = "<group>"; };
+		E2FFE21328E8824100425F04 /* ControlResponseState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,11 +197,11 @@
 				E2675E2728DAC08D00F5F114 /* ControlPause.swift */,
 				E2675E2528DABF5600F5F114 /* ControlPlay.swift */,
 				E2675E1D28DAB65D00F5F114 /* ControlPing.swift */,
+				E2EE0E3B28DB9B3B00138A86 /* ControlSeek.swift */,
 				E2675E2328DABEAC00F5F114 /* ControlShow.swift */,
-				E2EE0E3928DB9AAD00138A86 /* ControlStatus.swift */,
+				E2EE0E3928DB9AAD00138A86 /* ControlState.swift */,
 				E2675E2928DB52C600F5F114 /* ControlUnknown.swift */,
 				E2A6B39528DB8E8500C1A5EA /* ControlInvalid.swift */,
-				E2EE0E3B28DB9B3B00138A86 /* ControlSeek.swift */,
 			);
 			path = ControlRequest;
 			sourceTree = "<group>";
@@ -370,6 +372,7 @@
 				E2FFE20B28E7619900425F04 /* ControlResponseInfo.swift */,
 				E2FFE20F28E79AE000425F04 /* ControlResponseAllInfo.swift */,
 				E2FFE21128E7A8CA00425F04 /* ControlResponseElapsed.swift */,
+				E2FFE21328E8824100425F04 /* ControlResponseState.swift */,
 			);
 			path = ControlResponse;
 			sourceTree = "<group>";
@@ -544,6 +547,7 @@
 				E2EE0E3E28DB9B9F00138A86 /* ControlCapture.swift in Sources */,
 				E2FFE1FE28E37C5000425F04 /* ControlResponseOk.swift in Sources */,
 				E2E5962D28DA63700058D054 /* ControlOpen.swift in Sources */,
+				E2FFE21428E8824100425F04 /* ControlResponseState.swift in Sources */,
 				E21DEEE228DA1F3D00A2AC01 /* UDP.swift in Sources */,
 				E2FFE20A28E64DDC00425F04 /* VideoPlayerView.swift in Sources */,
 				E2989ABF28D3D083009D2D65 /* ColorPref.swift in Sources */,
@@ -578,7 +582,7 @@
 				E2675E2C28DB5F9400F5F114 /* DefaultlValue.swift in Sources */,
 				E2D47E9E28D8DF0F0068B192 /* UDPMessage.swift in Sources */,
 				E2FFE20828E6248600425F04 /* VideoView.swift in Sources */,
-				E2EE0E3A28DB9AAD00138A86 /* ControlStatus.swift in Sources */,
+				E2EE0E3A28DB9AAD00138A86 /* ControlState.swift in Sources */,
 				E2989AC128D4BAD0009D2D65 /* SizeColorRow.swift in Sources */,
 				E2D47E9A28D8C17D0068B192 /* ClientCommand.swift in Sources */,
 				E2EE0E3828DB9A6600138A86 /* ControlElapsed.swift in Sources */,

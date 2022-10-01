@@ -46,9 +46,13 @@ extension VideoView {
     avPlayer.pause()
   }
   
-  func elaspsed() -> Int {
+  func elapsed() -> Int {
     guard let currentTime = avPlayer.currentItem?.currentTime() else { return 0 }
-    return Int(CMTimeGetSeconds(currentTime) * 1000)
+    return Int(CMTimeGetSeconds(currentTime)) * VideoAsset.timescale
+  }
+  
+  func seek(elapsed: Int) {
+    avPlayer.seek(to: CMTimeMake(value: Int64(elapsed), timescale: Int32(VideoAsset.timescale)))
   }
 }
 

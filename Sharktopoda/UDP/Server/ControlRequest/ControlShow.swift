@@ -22,6 +22,6 @@ struct ControlShow: ControlRequest {
       }
     return ok()
     }
-    return failed("video not open")
+    return failed("No video for uuid")
   }
 }

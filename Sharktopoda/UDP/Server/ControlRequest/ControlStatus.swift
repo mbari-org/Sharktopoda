@@ -12,7 +12,9 @@ struct ControlStatus: ControlRequest {
   var uuid: String
   
   func process() -> ControlResponse {
-    print("CxInc handle: \(self)")
-    return ok()
+//    if let window = UDP.sharktopodaData.videoWindows[uuid] {
+//          return ok()
+//    }
+      return failed("No video for uuid")
   }
 }

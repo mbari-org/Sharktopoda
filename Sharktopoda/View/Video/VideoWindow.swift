@@ -82,7 +82,11 @@ extension VideoWindow {
   }
   
   func elapsed() -> Int {
-    videoView.elaspsed()
+    videoView.elapsed()
+  }
+  
+  func seek(elapsed: Int) {
+    videoView.seek(elapsed: elapsed)
   }
 }
 

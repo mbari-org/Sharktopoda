@@ -26,7 +26,7 @@ extension ControlResponse {
   }
   
   func data() -> Data {
-    try! UDP.encoder.encode(self)
+    try! UDPMessageCoder.encode(self)
   }
 }
 

@@ -35,7 +35,7 @@ enum ControlCommand: String, Codable {
     var controlCommand: ControlCommand
     do {
       // Ensure message has command field
-      let controlMessageCommand = try UDP.decoder.decode(ControlMessageCommand.self, from: data)
+      let controlMessageCommand = try UDPMessageCoder.decode(ControlMessageCommand.self, from: data)
 
       // Ensure command is known
       let rawCommand = controlMessageCommand.command
@@ -97,7 +97,7 @@ enum ControlCommand: String, Codable {
           controlMessageType = ControlUnknown.self
       }
       
-      return try UDP.decoder.decode(controlMessageType, from: data)
+      return try UDPMessageCoder.decode(controlMessageType, from: data)
     } catch {
       return ControlInvalid(command: controlCommand)
     }

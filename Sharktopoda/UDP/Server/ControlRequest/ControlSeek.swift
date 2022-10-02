@@ -10,13 +10,13 @@ import Foundation
 struct ControlSeek: ControlRequest {
   var command: ControlCommand
   let uuid: String
-  let elapsedTime: Int
+  let elapsedTimeMillis: Int
   
   func process() -> ControlResponse {
     guard let videoWindow = UDP.sharktopodaData.videoWindows[uuid] else {
       return failed("No video for uuid")
     }
-    videoWindow.seek(elapsed: elapsedTime)
+    videoWindow.seek(elapsed: elapsedTimeMillis)
     return ok()
   }
 }

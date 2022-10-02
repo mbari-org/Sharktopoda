@@ -15,6 +15,6 @@ struct ControlInfo: ControlRequest {
       return ControlResponseInfo(using: latestWindow)
     }
 
-    return failed("No open videos")
+    return failed("No open video for uuid")
   }
 }

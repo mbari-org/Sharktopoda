@@ -19,7 +19,7 @@ struct VideoAsset {
   
   var localizations: [Localization] = []
   
-  static let timescale: Int = 1000
+  static let timescale: Int32 = 1000
   
   init(uuid: String, url: URL) {
     self.uuid = uuid
@@ -35,7 +35,7 @@ struct VideoAsset {
   }
   
   var durationMillis: Int {
-    Int(CMTimeGetSeconds(avAsset.duration)) * VideoAsset.timescale
+    Int(CMTimeGetSeconds(avAsset.duration)) * Int(VideoAsset.timescale)
   }
   
   var frameRate: Float {

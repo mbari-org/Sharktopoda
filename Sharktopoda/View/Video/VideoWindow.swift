@@ -99,6 +99,10 @@ extension VideoWindow {
   func seek(elapsed: Int) {
     videoView.seek(elapsed: elapsed)
   }
+  
+  func frameGrab(at captureTime: Int, destination: URL) async -> (Int?, String?) {
+    await videoView.frameGrab(at: captureTime, destination: destination)
+  }
 }
 
 extension VideoWindow: NSWindowDelegate {

@@ -10,11 +10,11 @@ import Foundation
 struct ControlResponseElapsed: ControlResponse {
   var response: ControlCommand
   var status: ControlResponseStatus
-  var elapsedTimeMillies: Int
+  var elapsedTimeMillis: Int
   
   init(using videoWindow: VideoWindow) {
     response = .info
     status = .ok
-    elapsedTimeMillies = videoWindow.elapsed()
+    elapsedTimeMillis = videoWindow.elapsed()
   }
 }

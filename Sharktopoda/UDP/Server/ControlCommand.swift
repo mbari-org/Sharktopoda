@@ -13,6 +13,7 @@ enum ControlCommand: String, Codable {
   case advance = "frame advance"
   case all = "request all information"
   case capture = "frame capture"
+  case captureDone = "frame capture done"
   case close
   case connect
   case elapsed = "request elapsed time"
@@ -59,6 +60,9 @@ enum ControlCommand: String, Codable {
           
         case .capture:
           controlMessageType = ControlCapture.self
+
+        case .captureDone:
+          controlMessageType = ControlUnknown.self
 
         case .close:
           controlMessageType = ControlClose.self

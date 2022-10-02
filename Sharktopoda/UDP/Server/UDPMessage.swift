@@ -27,7 +27,8 @@ struct UDPMessageCoder {
 }
 
 class UDPMessage {
-  private static let queue = DispatchQueue(label: "Sharktopoda UDP Message Queue")
+  private static let messageQueue = DispatchQueue(label: "Sharktopoda UDP Message Queue")
+  private static let captureQueue = DispatchQueue(label: "Sharktopoda UDP Capture Queue")
 
   typealias ProcessCompletion = (_ response: ControlResponse) -> Void
   
@@ -36,10 +37,9 @@ class UDPMessage {
 
   static func process(on connection: NWConnection) {
     let _ = UDPMessage(using: connection, completion: { response in
-        
       connection.send(content: response.data(), completion: .contentProcessed({ _ in }))
     })
-    connection.start(queue: UDPMessage.queue)
+    connection.start(queue: UDPMessage.messageQueue)
   }
 
   private
@@ -87,7 +87,28 @@ class UDPMessage {
 
       let controlMessage = ControlCommand.controlMessage(from: data)
       self?.log("\(controlMessage)")
-      self?.completion(controlMessage.process())
+
+      let controlResponse = controlMessage.process()
+      self?.completion(controlResponse)
+
+      // If frame capture, send a second response re: async frame grab
+      if controlMessage.command == .capture,
+         controlResponse.status == .ok,
+         let controlCapture = controlMessage as? ControlCapture,
+         let connection = self?.connection,
+         let controlResponseOk = controlResponse as? ControlResponseCaptureOk {
+        UDPMessage.captureQueue.async {
+          Task {
+            let captureTime = controlResponseOk.elapsedTimeMillis
+            let controlCaptureDone = await controlCapture.doCapture(captureTime: captureTime)
+            connection.send(content: controlCaptureDone.data(), completion: .contentProcessed({ _ in }))
+            connection.cancel()
+            connection.stateUpdateHandler = nil
+          }
+        }
+      } else {
+        self?.stop()
+      }
     }
   }
 
@@ -99,10 +120,8 @@ class UDPMessage {
   }
   
   func stop() {
-    if connection.stateUpdateHandler != nil {
-      self.connection.stateUpdateHandler = nil
-      connection.cancel()
-    }
+    connection.cancel()
+    connection.stateUpdateHandler = nil
   }
   
   func log(_ msg: String) {

@@ -7,6 +7,8 @@
 
 import SwiftUI
 import AVKit
+import AVFoundation
+import UniformTypeIdentifiers
 
 struct VideoView: View {
   let videoAsset: VideoAsset
@@ -28,6 +30,11 @@ struct VideoView: View {
 }
 
 extension VideoView {
+  func fullSize() -> NSSize {
+    let videoSize = self.videoAsset.size ?? NSMakeSize(600, 600)
+    return NSMakeSize(videoSize.width, videoSize.height + 110)
+  }
+  
   func canStep(_ steps: Int) -> Bool {
     guard let item = avPlayer.currentItem else {
       return false
@@ -41,14 +48,9 @@ extension VideoView {
   
   func elapsed() -> Int {
     guard let currentTime = avPlayer.currentItem?.currentTime() else { return 0 }
-    return Int(CMTimeGetSeconds(currentTime)) * VideoAsset.timescale
+    return timeAsInt(currentTime)
   }
   
-  func fullSize() -> NSSize {
-    let videoSize = self.videoAsset.size ?? NSMakeSize(600, 600)
-    return NSMakeSize(videoSize.width, videoSize.height + 110)
-  }
-
   func pause() {
     avPlayer.pause()
   }
@@ -59,7 +61,35 @@ extension VideoView {
   }
   
   func seek(elapsed: Int) {
-    avPlayer.seek(to: CMTimeMake(value: Int64(elapsed), timescale: Int32(VideoAsset.timescale)))
+    avPlayer.seek(to: CMTimeMake(value: Int64(elapsed), timescale: VideoAsset.timescale))
+  }
+  
+  func frameGrab(at captureTime: Int, destination: URL) async -> (grabFrame: Int?, error: String?) {
+    let frameTime = CMTimeMake(value: Int64(captureTime), timescale: VideoAsset.timescale)
+
+    let asset = AVURLAsset(url: destination)
+    let imageGenerator = AVAssetImageGenerator(asset: asset)
+    imageGenerator.requestedTimeToleranceAfter = CMTime.zero
+    imageGenerator.requestedTimeToleranceBefore = CMTime.zero
+
+    var grabTime: CMTime = .indefinite
+    do {
+      let cgImage = try imageGenerator.copyCGImage(at: frameTime, actualTime: &grabTime)
+      
+      let cfDestination: CFURL = destination as CFURL
+      let cfPng: CFString = UTType.png as! CFString
+      let cgDestination: CGImageDestination = CGImageDestinationCreateWithURL(cfDestination, cfPng, 1, nil)!
+
+      CGImageDestinationAddImage(cgDestination, cgImage, nil);
+
+      return(timeAsInt(grabTime), nil)
+    } catch {
+      return (nil, "unable to grab image at time \(timeAsInt(frameTime))")
+    }
+  }
+  
+  private func timeAsInt(_ cmTime: CMTime) -> Int {
+    Int(CMTimeGetSeconds(cmTime)) * Int(VideoAsset.timescale)
   }
 }
 

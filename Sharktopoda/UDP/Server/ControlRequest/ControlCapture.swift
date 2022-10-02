@@ -29,13 +29,12 @@ struct ControlCapture: ControlRequest {
     let fileUrl = URL(fileURLWithPath: imageLocation)
     do {
       if try fileUrl.checkResourceIsReachable() {
-        return ControlResponseCaptureOk(currentTime)
-      } else {
-        return failed("Cannot save image to designated location")
+        return failed("Image exists")
       }
     } catch let error {
       return failed(error.localizedDescription)
     }
+    return ControlResponseCaptureOk(currentTime)
   }
   
   func doCapture(captureTime: Int) async -> ControlResponse {

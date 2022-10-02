@@ -101,13 +101,14 @@ class UDPMessage {
           Task {
             let captureTime = controlResponseOk.elapsedTimeMillis
             let controlCaptureDone = await controlCapture.doCapture(captureTime: captureTime)
-            connection.send(content: controlCaptureDone.data(), completion: .contentProcessed({ _ in }))
-            connection.cancel()
-            connection.stateUpdateHandler = nil
+            connection.send(content: controlCaptureDone.data(), completion: .contentProcessed({ _ in
+              connection.cancel()
+              connection.stateUpdateHandler = nil
+            }))
           }
         }
       } else {
-        self?.stop()
+//        self?.stop()
       }
     }
   }

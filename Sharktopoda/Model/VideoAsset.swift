@@ -19,7 +19,7 @@ struct VideoAsset {
   
   var localizations: [Localization] = []
   
-  static let timescale: Int32 = 1000
+  static let timescaleMillis: Int32 = 1000
   
   init(uuid: String, url: URL) {
     self.uuid = uuid
@@ -35,11 +35,21 @@ struct VideoAsset {
   }
   
   var durationMillis: Int {
-    Int(CMTimeGetSeconds(avAsset.duration)) * Int(VideoAsset.timescale)
+    avAsset.duration.asMillis()
   }
   
   var frameRate: Float {
     guard let track = avAssetTrack else { return Float(0) }
     return track.nominalFrameRate
+  }
+}
+
+extension CMTime {
+  func asMillis() -> Int {
+    Int(CMTimeGetSeconds(self)) * Int(VideoAsset.timescaleMillis)
+  }
+  
+  static func fromMillis(_ time: Int) -> CMTime {
+    CMTimeMake(value: Int64(time), timescale: VideoAsset.timescaleMillis)
   }
 }

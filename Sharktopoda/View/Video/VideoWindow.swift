@@ -75,23 +75,23 @@ extension VideoWindow {
   func canStep(_ steps: Int) -> Bool {
     videoView.canStep(steps)
   }
-  
-  func step(_ steps: Int) {
-    videoView.step(steps)
-  }
 
-  func play(rate: Float) {
-    videoView.rate = rate
+  func elapsed() -> Int {
+    videoView.elapsed()
   }
 
   func pause() {
     videoView.pause()
   }
   
-  func elapsed() -> Int {
-    videoView.elapsed()
+  func frameGrab(at captureTime: Int, destination: URL) async -> (Int?, String?) {
+    await videoView.frameGrab(at: captureTime, destination: destination)
   }
-  
+
+  func play(rate: Float) {
+    videoView.rate = rate
+  }
+
   var rate: Float {
     videoView.rate
   }
@@ -99,9 +99,9 @@ extension VideoWindow {
   func seek(elapsed: Int) {
     videoView.seek(elapsed: elapsed)
   }
-  
-  func frameGrab(at captureTime: Int, destination: URL) async -> (Int?, String?) {
-    await videoView.frameGrab(at: captureTime, destination: destination)
+
+  func step(_ steps: Int) {
+    videoView.step(steps)
   }
 }
 

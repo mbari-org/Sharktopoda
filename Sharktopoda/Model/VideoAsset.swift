@@ -46,7 +46,7 @@ struct VideoAsset {
 
 extension CMTime {
   func asMillis() -> Int {
-    Int(CMTimeGetSeconds(self)) * Int(VideoAsset.timescaleMillis)
+    Int(self.seconds * Double(VideoAsset.timescaleMillis))
   }
   
   static func fromMillis(_ time: Int) -> CMTime {

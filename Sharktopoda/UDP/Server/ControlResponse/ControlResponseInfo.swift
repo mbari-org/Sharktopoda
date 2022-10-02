@@ -11,7 +11,7 @@ struct ControlResponseInfo: ControlResponse {
   struct VideoInfo: Codable {
     var uuid: String
     var url: String
-    var durationInt: Int
+    var durationMillis: Int
     var frameRate: Float
     var isKey: Bool
     
@@ -19,7 +19,7 @@ struct ControlResponseInfo: ControlResponse {
       let videoAsset = videoWindow.videoView.videoAsset
       self.uuid = videoAsset.uuid
       self.url = videoAsset.url.absoluteString
-      self.durationInt = videoAsset.durationMillis
+      self.durationMillis = videoAsset.durationMillis
       self.frameRate = round(videoAsset.frameRate * 100) / 100.0
       self.isKey = videoWindow.keyInfo.isKey
     }
@@ -30,7 +30,7 @@ struct ControlResponseInfo: ControlResponse {
 
   var uuid: String?
   var url: String?
-  var durationInt: Int?
+  var durationMillis: Int?
   var frameRate: Float?
   var isKey: Bool?
   
@@ -39,7 +39,7 @@ struct ControlResponseInfo: ControlResponse {
     status = .ok
     self.uuid = windowInfo.uuid
     self.url = windowInfo.url
-    self.durationInt = windowInfo.durationInt
+    self.durationMillis = windowInfo.durationMillis
     self.frameRate = windowInfo.frameRate
     self.isKey = windowInfo.isKey
   }

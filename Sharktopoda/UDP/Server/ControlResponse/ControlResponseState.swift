@@ -28,12 +28,13 @@ struct ControlResponseState: ControlResponse {
 
   var rate: Float = 0.0
   var state: ControlResponsePlayState
-
+  var elapsedTimeMillis: Int
   
   init(using videoWindow: VideoWindow) {
     response = .state
     status = .ok
     rate = videoWindow.rate
     state = ControlResponsePlayState(rate: rate)
+    elapsedTimeMillis = videoWindow.elapsedTimeMillis()
   }
 }

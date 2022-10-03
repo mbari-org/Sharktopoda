@@ -76,15 +76,15 @@ extension VideoWindow {
     videoView.canStep(steps)
   }
 
-  func elapsed() -> Int {
-    videoView.elapsed()
+  func elapsedTimeMillis() -> Int {
+    videoView.elapsedTimeMillis()
   }
 
   func pause() {
     videoView.pause()
   }
   
-  func frameGrab(at captureTime: Int, destination: URL) async -> (Int?, String?) {
+  func frameGrab(at captureTime: Int, destination: String) async -> FrameGrabResult {
     await videoView.frameGrab(at: captureTime, destination: destination)
   }
 

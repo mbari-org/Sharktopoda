@@ -25,7 +25,7 @@ struct VideoView: View {
   
   var body: some View {
     videoPlayerView
-    // CxTBD This   could hold a custom control panel w/ .inline changed to .none
+    // CxTBD Could this hold a custom control panel w/ .inline changed to .none
   }
 }
 
@@ -37,33 +37,13 @@ extension VideoView {
     return steps < 0 ? item.canStepBackward : item.canStepForward
   }
   
-  func elapsed() -> Int {
+  func elapsedTimeMillis() -> Int {
     guard let currentTime = avPlayer.currentItem?.currentTime() else { return 0 }
     return currentTime.asMillis()
   }
   
-  func frameGrab(at captureTime: Int, destination: URL) async -> (grabFrame: Int?, error: String?) {
-    let frameTime = CMTime.fromMillis(captureTime)
-    
-    let asset = AVURLAsset(url: destination)
-    let imageGenerator = AVAssetImageGenerator(asset: asset)
-    imageGenerator.requestedTimeToleranceAfter = CMTime.zero
-    imageGenerator.requestedTimeToleranceBefore = CMTime.zero
-    
-    var grabTime: CMTime = .indefinite
-    do {
-      let cgImage = try imageGenerator.copyCGImage(at: frameTime, actualTime: &grabTime)
-      
-      let cfDestination: CFURL = destination as CFURL
-      let cfPng: CFString = UTType.png as! CFString
-      let cgDestination: CGImageDestination = CGImageDestinationCreateWithURL(cfDestination, cfPng, 1, nil)!
-      
-      CGImageDestinationAddImage(cgDestination, cgImage, nil);
-      
-      return(grabTime.asMillis(), nil)
-    } catch {
-      return (nil, "unable to grab image at time \(frameTime.asMillis()))")
-    }
+  func frameGrab(at captureTime: Int, destination: String) async -> FrameGrabResult {
+    videoAsset.avAsset.frameGrab(at: captureTime, destination: destination)
   }
 
   func fullSize() -> NSSize {

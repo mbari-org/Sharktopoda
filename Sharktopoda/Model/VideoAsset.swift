@@ -5,7 +5,6 @@
 //  Apache License 2.0 — See project LICENSE file
 //
 
-import Foundation
 import AVFoundation
 
 // CxNote Assume that a VideoAsset has one and only one track
@@ -14,7 +13,7 @@ struct VideoAsset {
   let uuid: String
   let url: URL
   
-  var avAsset: AVAsset
+  var avAsset: AVURLAsset
   var avAssetTrack: AVAssetTrack?
   
   var localizations: [Localization] = []
@@ -24,7 +23,7 @@ struct VideoAsset {
   init(uuid: String, url: URL) {
     self.uuid = uuid
     self.url = url
-    avAsset = AVAsset(url: url)
+    avAsset = AVURLAsset(url: url)
     avAssetTrack = avAsset.tracks(withMediaType: AVMediaType.video).first
   }
 
@@ -42,14 +41,9 @@ struct VideoAsset {
     guard let track = avAssetTrack else { return Float(0) }
     return track.nominalFrameRate
   }
-}
-
-extension CMTime {
-  func asMillis() -> Int {
-    Int(self.seconds * Double(VideoAsset.timescaleMillis))
-  }
   
-  static func fromMillis(_ time: Int) -> CMTime {
-    CMTimeMake(value: Int64(time), timescale: VideoAsset.timescaleMillis)
+  var frameDurataionMillis: Int {
+    guard let track = avAssetTrack else { return 0 }
+    return track.minFrameDuration.asMillis()
   }
 }

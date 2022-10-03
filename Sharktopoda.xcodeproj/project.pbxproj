@@ -19,7 +19,7 @@
 		E2675E2628DABF5600F5F114 /* ControlPlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2528DABF5600F5F114 /* ControlPlay.swift */; };
 		E2675E2828DAC08D00F5F114 /* ControlPause.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2728DAC08D00F5F114 /* ControlPause.swift */; };
 		E2675E2A28DB52C600F5F114 /* ControlUnknown.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2928DB52C600F5F114 /* ControlUnknown.swift */; };
-		E2675E2C28DB5F9400F5F114 /* DefaultlValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2B28DB5F9400F5F114 /* DefaultlValue.swift */; };
+		E2675E2C28DB5F9400F5F114 /* DefaultValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2B28DB5F9400F5F114 /* DefaultValue.swift */; };
 		E2675E2F28DB729900F5F114 /* ControlInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2E28DB729900F5F114 /* ControlInfo.swift */; };
 		E2675E3428DB7A4000F5F114 /* ControlAdvance.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E3328DB7A4000F5F114 /* ControlAdvance.swift */; };
 		E295627528D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295627428D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift */; };
@@ -31,11 +31,16 @@
 		E2989AB728D3B261009D2D65 /* NetworkPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2989AB628D3B261009D2D65 /* NetworkPreferencesView.swift */; };
 		E2989AB928D3B87E009D2D65 /* AnnotationPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2989AB828D3B87E009D2D65 /* AnnotationPreferencesView.swift */; };
 		E2989ABD28D3C7F7009D2D65 /* PrefKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2989ABC28D3C7F7009D2D65 /* PrefKeys.swift */; };
-		E2989ABF28D3D083009D2D65 /* ColorPref.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2989ABE28D3D083009D2D65 /* ColorPref.swift */; };
+		E2989ABF28D3D083009D2D65 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2989ABE28D3D083009D2D65 /* Color.swift */; };
 		E2989AC128D4BAD0009D2D65 /* SizeColorRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2989AC028D4BAD0009D2D65 /* SizeColorRow.swift */; };
 		E2989AC328D4F6EE009D2D65 /* AnnotationCreationPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2989AC228D4F6EE009D2D65 /* AnnotationCreationPreferencesView.swift */; };
 		E2A6B39628DB8E8500C1A5EA /* ControlInvalid.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A6B39528DB8E8500C1A5EA /* ControlInvalid.swift */; };
 		E2BC08E228E8EC4F007F4B5D /* ControlResponseCaptureDone.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC08E128E8EC4F007F4B5D /* ControlResponseCaptureDone.swift */; };
+		E2BC08E528EB76D6007F4B5D /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC08E428EB76D6007F4B5D /* UserDefaults.swift */; };
+		E2BC08E728EB7703007F4B5D /* CMTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC08E628EB7703007F4B5D /* CMTime.swift */; };
+		E2BC08E928EB7795007F4B5D /* NSImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC08E828EB7795007F4B5D /* NSImage.swift */; };
+		E2BC08EB28EB781C007F4B5D /* CGImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC08EA28EB781C007F4B5D /* CGImage.swift */; };
+		E2BC08ED28EB7914007F4B5D /* AVAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC08EC28EB7914007F4B5D /* AVAsset.swift */; };
 		E2C078CD28D7CF0E00C55EEC /* UDPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C078CC28D7CF0E00C55EEC /* UDPClient.swift */; };
 		E2C22E8528CFDC26003CD976 /* SharktopodaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22E8428CFDC26003CD976 /* SharktopodaApp.swift */; };
 		E2C22E8928CFDC28003CD976 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2C22E8828CFDC28003CD976 /* Assets.xcassets */; };
@@ -102,7 +107,7 @@
 		E2675E2528DABF5600F5F114 /* ControlPlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlPlay.swift; sourceTree = "<group>"; };
 		E2675E2728DAC08D00F5F114 /* ControlPause.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlPause.swift; sourceTree = "<group>"; };
 		E2675E2928DB52C600F5F114 /* ControlUnknown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlUnknown.swift; sourceTree = "<group>"; };
-		E2675E2B28DB5F9400F5F114 /* DefaultlValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultlValue.swift; sourceTree = "<group>"; };
+		E2675E2B28DB5F9400F5F114 /* DefaultValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultValue.swift; sourceTree = "<group>"; };
 		E2675E2E28DB729900F5F114 /* ControlInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlInfo.swift; sourceTree = "<group>"; };
 		E2675E3328DB7A4000F5F114 /* ControlAdvance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlAdvance.swift; sourceTree = "<group>"; };
 		E295627428D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationDisplayPreferencesView.swift; sourceTree = "<group>"; };
@@ -114,11 +119,16 @@
 		E2989AB628D3B261009D2D65 /* NetworkPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkPreferencesView.swift; sourceTree = "<group>"; };
 		E2989AB828D3B87E009D2D65 /* AnnotationPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationPreferencesView.swift; sourceTree = "<group>"; };
 		E2989ABC28D3C7F7009D2D65 /* PrefKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefKeys.swift; sourceTree = "<group>"; };
-		E2989ABE28D3D083009D2D65 /* ColorPref.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPref.swift; sourceTree = "<group>"; };
+		E2989ABE28D3D083009D2D65 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		E2989AC028D4BAD0009D2D65 /* SizeColorRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeColorRow.swift; sourceTree = "<group>"; };
 		E2989AC228D4F6EE009D2D65 /* AnnotationCreationPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationCreationPreferencesView.swift; sourceTree = "<group>"; };
 		E2A6B39528DB8E8500C1A5EA /* ControlInvalid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlInvalid.swift; sourceTree = "<group>"; };
 		E2BC08E128E8EC4F007F4B5D /* ControlResponseCaptureDone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseCaptureDone.swift; sourceTree = "<group>"; };
+		E2BC08E428EB76D6007F4B5D /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
+		E2BC08E628EB7703007F4B5D /* CMTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMTime.swift; sourceTree = "<group>"; };
+		E2BC08E828EB7795007F4B5D /* NSImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSImage.swift; sourceTree = "<group>"; };
+		E2BC08EA28EB781C007F4B5D /* CGImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGImage.swift; sourceTree = "<group>"; };
+		E2BC08EC28EB7914007F4B5D /* AVAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVAsset.swift; sourceTree = "<group>"; };
 		E2C078CC28D7CF0E00C55EEC /* UDPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDPClient.swift; sourceTree = "<group>"; };
 		E2C22E8128CFDC26003CD976 /* Sharktopoda.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sharktopoda.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2C22E8428CFDC26003CD976 /* SharktopodaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharktopodaApp.swift; sourceTree = "<group>"; };
@@ -234,12 +244,25 @@
 			children = (
 				E2C22EC728D2666A003CD976 /* Preferences.swift */,
 				E2989ABC28D3C7F7009D2D65 /* PrefKeys.swift */,
-				E2989ABE28D3D083009D2D65 /* ColorPref.swift */,
 				E2989AC028D4BAD0009D2D65 /* SizeColorRow.swift */,
 				E295627328D4FAC800E88ED1 /* Annotations */,
 				E295627A28D5322D00E88ED1 /* Network */,
 			);
 			path = Preferences;
+			sourceTree = "<group>";
+		};
+		E2BC08E328EB7686007F4B5D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E2BC08EC28EB7914007F4B5D /* AVAsset.swift */,
+				E2BC08E628EB7703007F4B5D /* CMTime.swift */,
+				E2989ABE28D3D083009D2D65 /* Color.swift */,
+				E2675E2B28DB5F9400F5F114 /* DefaultValue.swift */,
+				E2BC08E828EB7795007F4B5D /* NSImage.swift */,
+				E2BC08E428EB76D6007F4B5D /* UserDefaults.swift */,
+				E2BC08EA28EB781C007F4B5D /* CGImage.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		E2C078D128D8B86C00C55EEC /* Server */ = {
@@ -281,6 +304,7 @@
 				E2C22ECD28D27B81003CD976 /* UDP */,
 				E2C22EC328D14495003CD976 /* Model */,
 				E2C22EC628D2662A003CD976 /* View */,
+				E2BC08E328EB7686007F4B5D /* Extensions */,
 				E2C22E8828CFDC28003CD976 /* Assets.xcassets */,
 				E2C22E8D28CFDC28003CD976 /* Sharktopoda.entitlements */,
 				E2C22E8A28CFDC28003CD976 /* Preview Content */,
@@ -320,7 +344,6 @@
 				E2C22EC428D144B0003CD976 /* SharktopodaData.swift */,
 				E2C22ED628D36888003CD976 /* VideoAsset.swift */,
 				E2C22ED428D36832003CD976 /* Localization.swift */,
-				E2675E2B28DB5F9400F5F114 /* DefaultlValue.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -540,9 +563,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2BC08E528EB76D6007F4B5D /* UserDefaults.swift in Sources */,
 				E2675E2828DAC08D00F5F114 /* ControlPause.swift in Sources */,
 				E22F72FD28DA5D9100253A48 /* ControlResponse.swift in Sources */,
 				E2C22EDA28D386AE003CD976 /* MainView.swift in Sources */,
+				E2BC08E928EB7795007F4B5D /* NSImage.swift in Sources */,
 				E295627928D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift in Sources */,
 				E2EE0E4028DB9DD200138A86 /* ControlAllInfo.swift in Sources */,
 				E2EE0E3C28DB9B3B00138A86 /* ControlSeek.swift in Sources */,
@@ -553,7 +578,7 @@
 				E2FFE21428E8824100425F04 /* ControlResponseState.swift in Sources */,
 				E21DEEE228DA1F3D00A2AC01 /* UDP.swift in Sources */,
 				E2FFE20A28E64DDC00425F04 /* VideoPlayerView.swift in Sources */,
-				E2989ABF28D3D083009D2D65 /* ColorPref.swift in Sources */,
+				E2989ABF28D3D083009D2D65 /* Color.swift in Sources */,
 				E2C22ECF28D27C2D003CD976 /* UDPServer.swift in Sources */,
 				E295627C28D5325A00E88ED1 /* NetworkControlPreferencesView.swift in Sources */,
 				E2675E2628DABF5600F5F114 /* ControlPlay.swift in Sources */,
@@ -561,6 +586,7 @@
 				E2989AC328D4F6EE009D2D65 /* AnnotationCreationPreferencesView.swift in Sources */,
 				E2675E2428DABEAC00F5F114 /* ControlShow.swift in Sources */,
 				E2675E2A28DB52C600F5F114 /* ControlUnknown.swift in Sources */,
+				E2BC08E728EB7703007F4B5D /* CMTime.swift in Sources */,
 				E2C22ED528D36832003CD976 /* Localization.swift in Sources */,
 				E21DEEDF28DA13CB00A2AC01 /* ClientPing.swift in Sources */,
 				E2675E2F28DB729900F5F114 /* ControlInfo.swift in Sources */,
@@ -579,10 +605,12 @@
 				E2675E2228DABE4900F5F114 /* ControlClose.swift in Sources */,
 				E2FFE1FC28E37B8000425F04 /* ControlResponseFailed.swift in Sources */,
 				E2FAB21B28E24A7C006D2676 /* VideoWindow.swift in Sources */,
+				E2BC08EB28EB781C007F4B5D /* CGImage.swift in Sources */,
 				E2FFE21228E7A8CA00425F04 /* ControlResponseElapsed.swift in Sources */,
 				E2C22E8528CFDC26003CD976 /* SharktopodaApp.swift in Sources */,
 				E2C22EC528D144B0003CD976 /* SharktopodaData.swift in Sources */,
-				E2675E2C28DB5F9400F5F114 /* DefaultlValue.swift in Sources */,
+				E2675E2C28DB5F9400F5F114 /* DefaultValue.swift in Sources */,
+				E2BC08ED28EB7914007F4B5D /* AVAsset.swift in Sources */,
 				E2D47E9E28D8DF0F0068B192 /* UDPMessage.swift in Sources */,
 				E2FFE20828E6248600425F04 /* VideoView.swift in Sources */,
 				E2EE0E3A28DB9AAD00138A86 /* ControlState.swift in Sources */,

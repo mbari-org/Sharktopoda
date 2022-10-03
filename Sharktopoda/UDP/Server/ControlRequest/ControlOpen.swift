@@ -23,6 +23,14 @@ struct ControlOpen: ControlRequest {
       return failed("Malformed URL")
     }
     UDP.log("ControlOpen \(urlRef.absoluteString)")
+
+    do {
+      if !(try urlRef.checkResourceIsReachable()) {
+        return failed("Video file does not reachable")
+      }
+    } catch let error {
+      return failed(error.localizedDescription)
+    }
     
     if let videoWindow = UDP.sharktopodaData.videoWindows[uuid] {
       DispatchQueue.main.async {

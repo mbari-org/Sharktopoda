@@ -40,14 +40,3 @@ extension Color {
   }
 }
 
-extension UserDefaults {
-  func setColor(_ color: Color, forKey key: String) {
-    set(color.toHex(), forKey: key)
-  }
-  
-  func color(forKey key: String) -> Color {
-    guard let hex = object(forKey: key) as? String else { return .black }
-    guard let color = Color(hex: hex) else { return .red }
-    return color
-  }
-}

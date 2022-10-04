@@ -554,9 +554,82 @@ or the following in the UUID does not exist:
 }
 ```
 
-### -- Frame capture
+[Back](#control_commands)
 
-Sharktopoda should immediately grab the current frame from the video along with the elapsed time of that frame. The image should be saved (in a separate non-blocking thread. I think this is the default in AVFoundation). This action should not interfere with video playback or block incoming UDP commands.
+### <a name="frame_capture"></a> Frame capture
+
+The frame capture command specifies the local image file path as well as a reference id for the image (used by the calling controller, not Sharktopoda). 
+
+```json
+{
+  "command": "frame capture",
+  "uuid": "b52cf7f1-e19c-40ba-b176-a7e479a3b170",
+  "imageLocation": "/Some/path/to/save/image.png",
+  "imageReferenceUuid": "aa4cf7f1-e19c-40ba-b176-a7e479a3cdef"
+}
+```
+
+Sharktopoda should grab the current elapsed time for the specified **uuid** and respond immediately. 
+
+```json
+{
+  "response": "frame capture",
+  "status": "ok",
+  "captureTime": 12354
+}
+```
+
+The returned **captureTime** is used by Sharktopoda in further processing of the command.
+
+A frame capture request shall report errors as:
+
+```json
+{
+  "response": "frame capture",
+  "status": "failed",
+  "cause": <error message>
+}
+```
+
+Errors include:
+
+- Video for **uuid** not open
+- Cannot write image to specified location
+- Image at specified location exists
+- Specified image location is a malformed file path
+- Process fails to create a PNG image from capture
+
+Upon sending an **ok** response, Sharktopoda will proceed with frame capture processing on a background thread.
+
+Upon completion of background frame capture processing, Sharktopoda shall use the same connection as the prior **ok** message to send the response:
+
+```json
+{
+  "command": "frame capture done",
+  "elapsedTimeMillis": 12345,
+  "imageReferenceUuid": "aa4cf7f1-e19c-40ba-b176-a7e479a3cdef",
+  "imageLocation": "/Some/path/to/save/image.png",
+  "status": "ok",
+  "uuid": "b52cf7f1-e19c-40ba-b176-a7e479a3b170"
+}
+```
+
+Note that **elapsedTimeMillis** may be slightly different than the prior reported **captureTime** due to AVFoundation image capture processing.
+
+If an error occurres in frame capture processing, Sharktopoda shall send the response:
+
+```json
+{
+  "cause": <error message>,
+  "command": "frame capture done",
+  "imageReferenceUuid": "aa4cf7f1-e19c-40ba-b176-a7e479a3cdef",
+  "imageLocation": "/Some/path/to/save/image.png",
+  "status": "ok",
+  "uuid": "b52cf7f1-e19c-40ba-b176-a7e479a3b170"
+}
+```
+
+The frame capture processing flow is as follows:
 
 ```mermaid
 sequenceDiagram 
@@ -590,60 +663,6 @@ sequenceDiagram
     end
 ```
 
-The frame capture command specifies the path to save the image too as well as provides a UUID for the image. If an image already exists at that location, do not overwrite the image and respond with a "failed" status message.
-
-```json
-{
-  "command": "frame capture",
-  "uuid": "b52cf7f1-e19c-40ba-b176-a7e479a3b170",
-  "imageLocation": "/Some/path/to/save/image.png",
-  "imageReferenceUuid": "aa4cf7f1-e19c-40ba-b176-a7e479a3cdef"
-}
-```
-
-When Sharktopoda receives the command is should response with an ok if the video UUID exists:
-
-```json
-{
-  "response": "frame capture",
-  "status" : "ok"
-}
-```
-
-If the video UUID does not exist or an image already exists at `imageLocation` respond with:
-
-```json
-{
-  "response": "frame capture",
-  "status" : "failed"
-}
-```
-
-After the image has been written to disk, Sharktopoda should inform the remote app that the image has successfully been written to disk via the remote UDP port specified in the _connect_ command.
-
-```json
-{
-  "command": "frame capture done",
-  "elapsedTimeMillis": 12345,
-  "imageReferenceUuid": "aa4cf7f1-e19c-40ba-b176-a7e479a3cdef",
-  "imageLocation": "/Some/path/to/save/image.png",
-  "status": "ok",
-  "uuid": "b52cf7f1-e19c-40ba-b176-a7e479a3b170"
-}
-```
-
-The _status_ field should be `"failed"` if Sharktopus is unable to capture and write the image to disk.
-
-```json
-{
-  "command": "frame capture done",
-  "imageReferenceUuid": "aa4cf7f1-e19c-40ba-b176-a7e479a3cdef",
-  "imageLocation": "/Some/path/to/save/image.png",
-  "status": "failed",
-  "uuid": "b52cf7f1-e19c-40ba-b176-a7e479a3b170"
-}
-```
-
 Finally, the remote app will respond with an ok:
 
 ```json
@@ -653,7 +672,9 @@ Finally, the remote app will respond with an ok:
 }
 ```
 
-### --- Ping
+CxTBD This message is superfluous as Sharktopoda has neither a reference as to what frame capture the message refers to (there could be multiple background frame capture processes) nor does Sharktopoda have any conditional processing branches based on the message itself.
+
+
 [Back](#control_commands)
 
 ### <a name="ping"></a> Ping

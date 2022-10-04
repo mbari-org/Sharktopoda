@@ -41,6 +41,7 @@
 		E2BC08E928EB7795007F4B5D /* NSImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC08E828EB7795007F4B5D /* NSImage.swift */; };
 		E2BC08EB28EB781C007F4B5D /* CGImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC08EA28EB781C007F4B5D /* CGImage.swift */; };
 		E2BC08ED28EB7914007F4B5D /* AVAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC08EC28EB7914007F4B5D /* AVAsset.swift */; };
+		E2BC08F028EC797D007F4B5D /* FrameCaptureError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC08EF28EC797D007F4B5D /* FrameCaptureError.swift */; };
 		E2C078CD28D7CF0E00C55EEC /* UDPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C078CC28D7CF0E00C55EEC /* UDPClient.swift */; };
 		E2C22E8528CFDC26003CD976 /* SharktopodaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22E8428CFDC26003CD976 /* SharktopodaApp.swift */; };
 		E2C22E8928CFDC28003CD976 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2C22E8828CFDC28003CD976 /* Assets.xcassets */; };
@@ -129,6 +130,7 @@
 		E2BC08E828EB7795007F4B5D /* NSImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSImage.swift; sourceTree = "<group>"; };
 		E2BC08EA28EB781C007F4B5D /* CGImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGImage.swift; sourceTree = "<group>"; };
 		E2BC08EC28EB7914007F4B5D /* AVAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVAsset.swift; sourceTree = "<group>"; };
+		E2BC08EF28EC797D007F4B5D /* FrameCaptureError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameCaptureError.swift; sourceTree = "<group>"; };
 		E2C078CC28D7CF0E00C55EEC /* UDPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDPClient.swift; sourceTree = "<group>"; };
 		E2C22E8128CFDC26003CD976 /* Sharktopoda.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sharktopoda.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2C22E8428CFDC26003CD976 /* SharktopodaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharktopodaApp.swift; sourceTree = "<group>"; };
@@ -251,7 +253,7 @@
 			path = Preferences;
 			sourceTree = "<group>";
 		};
-		E2BC08E328EB7686007F4B5D /* Extensions */ = {
+		E2BC08E328EB7686007F4B5D /* Extension */ = {
 			isa = PBXGroup;
 			children = (
 				E2BC08EC28EB7914007F4B5D /* AVAsset.swift */,
@@ -262,7 +264,15 @@
 				E2BC08E428EB76D6007F4B5D /* UserDefaults.swift */,
 				E2BC08EA28EB781C007F4B5D /* CGImage.swift */,
 			);
-			path = Extensions;
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		E2BC08EE28EC7925007F4B5D /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				E2BC08EF28EC797D007F4B5D /* FrameCaptureError.swift */,
+			);
+			path = Error;
 			sourceTree = "<group>";
 		};
 		E2C078D128D8B86C00C55EEC /* Server */ = {
@@ -304,7 +314,8 @@
 				E2C22ECD28D27B81003CD976 /* UDP */,
 				E2C22EC328D14495003CD976 /* Model */,
 				E2C22EC628D2662A003CD976 /* View */,
-				E2BC08E328EB7686007F4B5D /* Extensions */,
+				E2BC08EE28EC7925007F4B5D /* Error */,
+				E2BC08E328EB7686007F4B5D /* Extension */,
 				E2C22E8828CFDC28003CD976 /* Assets.xcassets */,
 				E2C22E8D28CFDC28003CD976 /* Sharktopoda.entitlements */,
 				E2C22E8A28CFDC28003CD976 /* Preview Content */,
@@ -571,6 +582,7 @@
 				E295627928D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift in Sources */,
 				E2EE0E4028DB9DD200138A86 /* ControlAllInfo.swift in Sources */,
 				E2EE0E3C28DB9B3B00138A86 /* ControlSeek.swift in Sources */,
+				E2BC08F028EC797D007F4B5D /* FrameCaptureError.swift in Sources */,
 				E22F0EA428DA57800097A34E /* ControlRequest.swift in Sources */,
 				E2EE0E3E28DB9B9F00138A86 /* ControlCapture.swift in Sources */,
 				E2FFE1FE28E37C5000425F04 /* ControlResponseOk.swift in Sources */,

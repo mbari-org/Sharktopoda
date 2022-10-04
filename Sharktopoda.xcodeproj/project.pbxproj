@@ -257,12 +257,12 @@
 			isa = PBXGroup;
 			children = (
 				E2BC08EC28EB7914007F4B5D /* AVAsset.swift */,
+				E2BC08EA28EB781C007F4B5D /* CGImage.swift */,
 				E2BC08E628EB7703007F4B5D /* CMTime.swift */,
 				E2989ABE28D3D083009D2D65 /* Color.swift */,
 				E2675E2B28DB5F9400F5F114 /* DefaultValue.swift */,
 				E2BC08E828EB7795007F4B5D /* NSImage.swift */,
 				E2BC08E428EB76D6007F4B5D /* UserDefaults.swift */,
-				E2BC08EA28EB781C007F4B5D /* CGImage.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";

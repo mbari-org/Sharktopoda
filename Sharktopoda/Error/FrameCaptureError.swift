@@ -10,6 +10,7 @@ import Foundation
 enum FrameCaptureError: Error {
   case notWritable
   case exists
+  case malformedUrl
   case pngRepresentation
   case notFileUrl
   
@@ -19,6 +20,8 @@ enum FrameCaptureError: Error {
         return "Image location not writable"
       case .exists:
         return "Image file exists"
+      case .malformedUrl:
+        return "Image location is malformed URL"
       case .pngRepresentation:
         return "Failed representing image as PNG"
       case .notFileUrl:

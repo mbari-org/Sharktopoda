@@ -99,7 +99,7 @@ class UDPMessage {
          let controlResponseOk = controlResponse as? ControlResponseCaptureOk {
         UDPMessage.captureQueue.async {
           Task {
-            let captureTime = controlResponseOk.elapsedTimeMillis
+            let captureTime = controlResponseOk.captureTime
             let controlCaptureDone = await controlCapture.doCapture(captureTime: captureTime)
             connection.send(content: controlCaptureDone.data(), completion: .contentProcessed({ _ in
 //              connection.cancel()

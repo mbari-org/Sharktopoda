@@ -14,12 +14,12 @@ extension NSImage {
     return bitmapImage.representation(using: .png, properties: [:])
   }
   
-  func writePng(to fileUrl: URL, options: Data.WritingOptions = .withoutOverwriting) -> Error? {
+  func writePng(to destination: String) -> Error? {
     do {
-      guard fileUrl.isFileURL else {
+      guard let fileUrl = URL(string: destination) else {
         return FrameCaptureError.notFileUrl
       }
-      
+
       guard !FileManager.default.fileExists(atPath: fileUrl.path) else {
         return FrameCaptureError.exists
       }
@@ -29,15 +29,18 @@ extension NSImage {
         return FrameCaptureError.notWritable
       }
       
-      print("Write to file URL: \(fileUrl)")
       
       guard let data = pngData else {
         return FrameCaptureError.pngRepresentation
       }
-      try data.write(to: fileUrl, options: options)
+
+      print("Write image data to: \(fileUrl)")
+
+      try data.write(to: fileUrl, options: .withoutOverwriting)
 
       return nil
     } catch {
+      
       return error
     }
   }

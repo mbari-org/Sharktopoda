@@ -10,7 +10,6 @@ import AVFoundation
 extension AVAsset {
   func frameGrab(at captureTime: Int, destination: String) -> FrameGrabResult {
     let frameTime = CMTime.fromMillis(captureTime)
-    let imageUrl = URL(fileURLWithPath: destination)
     
     let imageGenerator = AVAssetImageGenerator(asset: self)
     imageGenerator.requestedTimeToleranceAfter = CMTime.zero
@@ -19,7 +18,7 @@ extension AVAsset {
     var grabTime: CMTime = .indefinite
     do {
       let cgImage = try imageGenerator.copyCGImage(at: frameTime, actualTime: &grabTime)
-      if let error = cgImage.pngWrite(to: imageUrl) {
+      if let error = cgImage.pngWrite(to: destination) {
         return .failure(error)
       } else {
         return .success(grabTime.asMillis())

@@ -46,4 +46,10 @@ struct VideoAsset {
     guard let track = avAssetTrack else { return 0 }
     return track.minFrameDuration.asMillis()
   }
+  
+  func frameGrab(at captureTime: Int, destination: String) async -> FrameGrabResult {
+    avAsset.frameGrab(at: captureTime, destination: destination)
+  }
 }
+
+

@@ -28,7 +28,9 @@ struct ControlCapture: ControlRequest {
     // the command contoller can just ignore it.
     let currentTime = videoWindow.elapsedTimeMillis()
     
-    let fileUrl = URL(fileURLWithPath: imageLocation)
+    guard let fileUrl = URL(string: imageLocation) else {
+      return failed("Image location is malformed URL")
+    }
     
     guard !FileManager.default.fileExists(atPath: fileUrl.path) else {
       return failed("Image exists at location")
@@ -59,10 +61,10 @@ struct ControlCapture: ControlRequest {
 struct ControlResponseCaptureOk : ControlResponse {
   var response: ControlCommand = .capture
   var status: ControlResponseStatus = .ok
-  var elapsedTimeMillis: Int
+  var captureTime: Int
 
   init(_ frameTime: Int) {
-    self.elapsedTimeMillis = frameTime
+    self.captureTime = frameTime
   }
 }
 

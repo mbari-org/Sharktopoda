@@ -8,8 +8,8 @@
 import AppKit
 
 extension CGImage {
-  func pngWrite(to fileUrl: URL) -> Error? {
+  func pngWrite(to destination: String) -> Error? {
     let nsImage = NSImage(cgImage: self, size: .zero)
-    return nsImage.writePng(to: fileUrl)
+    return nsImage.writePng(to: destination)
   }
 }

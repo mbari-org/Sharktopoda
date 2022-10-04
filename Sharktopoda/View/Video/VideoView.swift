@@ -43,7 +43,7 @@ extension VideoView {
   }
   
   func frameGrab(at captureTime: Int, destination: String) async -> FrameGrabResult {
-    videoAsset.avAsset.frameGrab(at: captureTime, destination: destination)
+    await videoAsset.frameGrab(at: captureTime, destination: destination)
   }
 
   func fullSize() -> NSSize {

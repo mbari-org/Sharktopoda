@@ -1,29 +1,30 @@
 # UDP Remote Protocol
 
-## Overview
+## <a name="overview">Overview
 
 ### Incoming commands
 
-##### Control Commands
+##### <a name="control_commands"></a>Control Commands
 
 `Sharktopoda 2` will support a remote protocol that will allow other applications to send commands to it via UDP. The protocol will support the following control commands:
 
-- [Connect](#---connect)
-- [Open](#---open)
-- [Close](#---close)
-- [Show](#---show)
-- [Request information](#---request-video-information-for-the-focused-or-top-most-in-z--order-window)
-- [Request all information](#---request-information-for-all-open-videos)
-- [Play](#---play)
-- [Pause](#---pause)
-- [Request elapsed time](#---request-elapsed-time)
-- [Request status](#---request-status)
-- [Seek elapsed time](#---seek-elapsed-time)
-- [Frame advance](#---frame-advance)
-- [Frame capture](#---frame-capture)
-- [Ping](#---ping)
+- [Connect](#connect)
+- [Open](#open)
+- [Close](#close)
+- [Show](#show)
+- [Request information](#req_info)
+- [Request all information](#req_info_all)
+- [Play](#play)
+- [Pause](#pause)
+- [Request elapsed time](#elapsed)
+- [Request status](#request_state)
+- [Seek elapsed time](#seek)
+- [Frame advance](#frame_advance)
+- [Frame capture](#frame_capture)
+- [Ping](#ping)
 
-##### Localization Commands
+
+##### <a name="localization_commands"></a> Localization Commands
 
 In addition to the control commands, the remote protocol will also support commands for managing information about localizations, aka rectangular regions of interest, displayed over video during playback.
 
@@ -72,7 +73,7 @@ Invalid JSON message structure will be reported as:
 NOTE: Sharktopoda does not determine or report why the message structure was invalid. It is expected the developer of the control messaging app will consult these requirements to determine the actual cause.
 
 
-### Outgoing commands
+### <a name="outgoing_commands"></a>Outgoing commands
 
 Sharktopoda can also send certain commands to the Remote App. These commands are explicitly sent to the **host/port** established by a preceding [connect](#---connect) control command. The amount of time to wait for a response (i.e. timeout) will be set in the preferences UI. These commands are:
 
@@ -100,7 +101,9 @@ Sharktopoda will receive JSON messages and respond with JSON via the UDP port co
 
 The application should support the following commands and corresponding functions:
 
-### -- Connect
+[Back](#control_commands)
+
+### <a name="connect"></a> Connect
 
  Establishes a remote host and port number that Sharktopoda (the video player) can send outgoing UDP messages to another application. When a `connect` command is received, Sharktopoda should send a [ping](#---ping) command to verify that the port is reachable.
 
@@ -156,7 +159,9 @@ It should respond with an ok:
 
 Note, the response is always "ok".
 
-### -- Open
+[Back](#control_commands)
+
+### <a name="open"></a> Open
 
 Opens the specified video in a new window. The application should associate the URL and UUID with the window. (More on that later). If a new window is opened, the video should be immediately paused. (We don't want the video to autoplay when it is first opened)
 
@@ -223,7 +228,9 @@ Either open command should respond with a success or failure message:
 }
 ```
 
-### -- Close
+[Back](#control_commands)
+
+### <a name="close"></a> Close
 
 It should close the window with the corresponding UUID:
 
@@ -243,7 +250,9 @@ Close should respond with an ack even if no window with a matching UUID is found
 }
 ```
 
-### -- Show
+[Back](#control_commands)
+
+### <a name="show"></a> Show
 
 Focuses the window containing the video with the given UUID and brings it to the front of all open Sharktopoda windows. Some UI toolkits do not grab focus if the app is not already focused. In that case, simply bring the window to the front of the other open Sharktopoda windows.
 
@@ -272,7 +281,9 @@ If the window with UUID does not exist it should respond with
 }
 ```
 
-### -- Request Video Information for the focused or top most (in Z- order) Window
+[Back](#control_commands)
+
+### <a name="req_info"></a> Request Video Information for the focused or top most (in Z- order) Window
 
 ```json
 {"command": "request information"}
@@ -302,7 +313,9 @@ If no video windows are currently available (i.e., either no successful **open**
 }
 ```
 
-### -- Request information for all open videos
+[Back](#control_commands)
+
+### <a name="req_info_all"></a> Request information for all open videos
 
 ```json
 {"command": "request all information"}
@@ -335,7 +348,9 @@ It should return info for all open videos like the following:
 
 If no currently available video windows, it should respond the same as **request information**.
 
-### -- Play
+[Back](#control_commands)
+
+### <a name="play"></a> Play
 
 Play the video associated with the UUID. The play rate will be 1.0 which is normal playback speed.
 
@@ -375,7 +390,9 @@ or
 }
 ```
 
-### -- Pause
+[Back](#control_commands)
+
+### <a name="pause"></a> Pause
 
 Pauses the playback for the video specified by the UUID
 
@@ -404,7 +421,9 @@ or, in the case of failure, such as the requested video UUID does not exist:
 }
 ```
 
-### -- Request elapsed time
+[Back](#control_commands)
+
+### <a name="elapsed"></a> Request elapsed time
 
 Return currently viewed moment of the video, i.e. the elapsed time (from the start) of the video as milliseconds.
 
@@ -434,7 +453,9 @@ or the following in the UUID does not exist:
 }
 ```
 
-### -- Request Status
+[Back](#control_commands)
+
+### <a name="req_state"></a> Request Status
 
 Return the current playback status of the video (by UUID) and the actual rate that the video is playing. Possible responses include: `shuttling forward`, `shuttling reverse`, `paused`, `playing`, `not found`.
 
@@ -469,7 +490,9 @@ or a failed response if the UUID does not exist:
 }
 ```
 
-### -- Seek Elapsed Time
+[Back](#control_commands)
+
+### <a name="seek"></a> Seek Elapsed Time
 
 Seek to the provided elapsed time (which will be in milliseconds)
 
@@ -499,7 +522,9 @@ or the following in the UUID does not exist or the elapsedTimeMillis is before/a
 }
 ```
 
-### -- Frame advance
+[Back](#control_commands)
+
+### <a name="frame_advance"></a> Frame advance
 
 Advance or regress one frame for the given video. If the `direction` field is positive (i.e. 1) the the video should be advance one frame. If the `direction` is negative (-1), then the video should go back one frame. This is supported using [AVPlayerItem.step](https://developer.apple.com/documentation/avfoundation/avplayeritem/1387968-step) The UDP/JSON command is
 
@@ -629,6 +654,9 @@ Finally, the remote app will respond with an ok:
 ```
 
 ### --- Ping
+[Back](#control_commands)
+
+### <a name="ping"></a> Ping
 
 This command simple checks that the port can be reached and the application responds. It should timeout if no response is received within the timeout specified in the Preferences dialog. Ping is both and incoming and outgoing command (i.e. Sharktopoda should be able to send and receive ping commands)
 

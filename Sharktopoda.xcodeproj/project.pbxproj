@@ -13,6 +13,18 @@
 		E229F4C228D9150A001F220E /* ControlConnect.swift in Sources */ = {isa = PBXBuildFile; fileRef = E229F4C128D9150A001F220E /* ControlConnect.swift */; };
 		E22F0EA428DA57800097A34E /* ControlRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22F0EA328DA57800097A34E /* ControlRequest.swift */; };
 		E22F72FD28DA5D9100253A48 /* ControlResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22F72FC28DA5D9100253A48 /* ControlResponse.swift */; };
+		E237C09228ECA9F5002868D1 /* REQUIREMENTS.md in Resources */ = {isa = PBXBuildFile; fileRef = E237C08528ECA9F5002868D1 /* REQUIREMENTS.md */; };
+		E237C09328ECA9F5002868D1 /* UDP_Remote_Protocol.md in Resources */ = {isa = PBXBuildFile; fileRef = E237C08628ECA9F5002868D1 /* UDP_Remote_Protocol.md */; };
+		E237C09428ECA9F5002868D1 /* UI.md in Resources */ = {isa = PBXBuildFile; fileRef = E237C08728ECA9F5002868D1 /* UI.md */; };
+		E237C09528ECA9F5002868D1 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = E237C08828ECA9F5002868D1 /* README.md */; };
+		E237C09628ECA9F5002868D1 /* Prefs.png in Resources */ = {isa = PBXBuildFile; fileRef = E237C08A28ECA9F5002868D1 /* Prefs.png */; };
+		E237C09728ECA9F5002868D1 /* Prefs_Network.png in Resources */ = {isa = PBXBuildFile; fileRef = E237C08B28ECA9F5002868D1 /* Prefs_Network.png */; };
+		E237C09828ECA9F5002868D1 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = E237C08C28ECA9F5002868D1 /* Default.png */; };
+		E237C09928ECA9F5002868D1 /* ImageCoordinateSystem.png in Resources */ = {isa = PBXBuildFile; fileRef = E237C08D28ECA9F5002868D1 /* ImageCoordinateSystem.png */; };
+		E237C09A28ECA9F5002868D1 /* Prefs_Annotations.png in Resources */ = {isa = PBXBuildFile; fileRef = E237C08E28ECA9F5002868D1 /* Prefs_Annotations.png */; };
+		E237C09B28ECA9F5002868D1 /* Prefs_Annotations.excalidraw in Resources */ = {isa = PBXBuildFile; fileRef = E237C08F28ECA9F5002868D1 /* Prefs_Annotations.excalidraw */; };
+		E237C09C28ECA9F5002868D1 /* Default.excalidraw in Resources */ = {isa = PBXBuildFile; fileRef = E237C09028ECA9F5002868D1 /* Default.excalidraw */; };
+		E237C09D28ECA9F5002868D1 /* Prefs_Network.excalidraw in Resources */ = {isa = PBXBuildFile; fileRef = E237C09128ECA9F5002868D1 /* Prefs_Network.excalidraw */; };
 		E2675E1E28DAB65D00F5F114 /* ControlPing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E1D28DAB65D00F5F114 /* ControlPing.swift */; };
 		E2675E2228DABE4900F5F114 /* ControlClose.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2128DABE4900F5F114 /* ControlClose.swift */; };
 		E2675E2428DABEAC00F5F114 /* ControlShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2328DABEAC00F5F114 /* ControlShow.swift */; };
@@ -102,6 +114,18 @@
 		E229F4C128D9150A001F220E /* ControlConnect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlConnect.swift; sourceTree = "<group>"; };
 		E22F0EA328DA57800097A34E /* ControlRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlRequest.swift; sourceTree = "<group>"; };
 		E22F72FC28DA5D9100253A48 /* ControlResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponse.swift; sourceTree = "<group>"; };
+		E237C08528ECA9F5002868D1 /* REQUIREMENTS.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = REQUIREMENTS.md; sourceTree = "<group>"; };
+		E237C08628ECA9F5002868D1 /* UDP_Remote_Protocol.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = UDP_Remote_Protocol.md; sourceTree = "<group>"; };
+		E237C08728ECA9F5002868D1 /* UI.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = UI.md; sourceTree = "<group>"; };
+		E237C08828ECA9F5002868D1 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		E237C08A28ECA9F5002868D1 /* Prefs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Prefs.png; sourceTree = "<group>"; };
+		E237C08B28ECA9F5002868D1 /* Prefs_Network.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Prefs_Network.png; sourceTree = "<group>"; };
+		E237C08C28ECA9F5002868D1 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		E237C08D28ECA9F5002868D1 /* ImageCoordinateSystem.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ImageCoordinateSystem.png; sourceTree = "<group>"; };
+		E237C08E28ECA9F5002868D1 /* Prefs_Annotations.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Prefs_Annotations.png; sourceTree = "<group>"; };
+		E237C08F28ECA9F5002868D1 /* Prefs_Annotations.excalidraw */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Prefs_Annotations.excalidraw; sourceTree = "<group>"; };
+		E237C09028ECA9F5002868D1 /* Default.excalidraw */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Default.excalidraw; sourceTree = "<group>"; };
+		E237C09128ECA9F5002868D1 /* Prefs_Network.excalidraw */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Prefs_Network.excalidraw; sourceTree = "<group>"; };
 		E2675E1D28DAB65D00F5F114 /* ControlPing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlPing.swift; sourceTree = "<group>"; };
 		E2675E2128DABE4900F5F114 /* ControlClose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlClose.swift; sourceTree = "<group>"; };
 		E2675E2328DABEAC00F5F114 /* ControlShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlShow.swift; sourceTree = "<group>"; };
@@ -196,6 +220,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E237C08428ECA9F5002868D1 /* Requirements */ = {
+			isa = PBXGroup;
+			children = (
+				E237C08528ECA9F5002868D1 /* REQUIREMENTS.md */,
+				E237C08628ECA9F5002868D1 /* UDP_Remote_Protocol.md */,
+				E237C08728ECA9F5002868D1 /* UI.md */,
+				E237C08828ECA9F5002868D1 /* README.md */,
+				E237C08928ECA9F5002868D1 /* assets */,
+			);
+			path = Requirements;
+			sourceTree = "<group>";
+		};
+		E237C08928ECA9F5002868D1 /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				E237C08A28ECA9F5002868D1 /* Prefs.png */,
+				E237C08B28ECA9F5002868D1 /* Prefs_Network.png */,
+				E237C08C28ECA9F5002868D1 /* Default.png */,
+				E237C08D28ECA9F5002868D1 /* ImageCoordinateSystem.png */,
+				E237C08E28ECA9F5002868D1 /* Prefs_Annotations.png */,
+				E237C08F28ECA9F5002868D1 /* Prefs_Annotations.excalidraw */,
+				E237C09028ECA9F5002868D1 /* Default.excalidraw */,
+				E237C09128ECA9F5002868D1 /* Prefs_Network.excalidraw */,
+			);
+			path = assets;
+			sourceTree = "<group>";
+		};
 		E2675E2D28DB707500F5F114 /* ControlRequest */ = {
 			isa = PBXGroup;
 			children = (
@@ -293,6 +344,7 @@
 				E2C22E8328CFDC26003CD976 /* Sharktopoda */,
 				E2C22E9528CFDC28003CD976 /* SharktopodaTests */,
 				E2C22E9F28CFDC28003CD976 /* SharktopodaUITests */,
+				E237C08428ECA9F5002868D1 /* Requirements */,
 				E2C22E8228CFDC26003CD976 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -547,9 +599,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E237C09428ECA9F5002868D1 /* UI.md in Resources */,
 				E2C22E8C28CFDC28003CD976 /* Preview Assets.xcassets in Resources */,
 				E295627E28D632EC00E88ED1 /* Credits.html in Resources */,
+				E237C09C28ECA9F5002868D1 /* Default.excalidraw in Resources */,
+				E237C09528ECA9F5002868D1 /* README.md in Resources */,
+				E237C09D28ECA9F5002868D1 /* Prefs_Network.excalidraw in Resources */,
+				E237C09628ECA9F5002868D1 /* Prefs.png in Resources */,
+				E237C09328ECA9F5002868D1 /* UDP_Remote_Protocol.md in Resources */,
+				E237C09228ECA9F5002868D1 /* REQUIREMENTS.md in Resources */,
+				E237C09B28ECA9F5002868D1 /* Prefs_Annotations.excalidraw in Resources */,
 				E2C22E8928CFDC28003CD976 /* Assets.xcassets in Resources */,
+				E237C09928ECA9F5002868D1 /* ImageCoordinateSystem.png in Resources */,
+				E237C09A28ECA9F5002868D1 /* Prefs_Annotations.png in Resources */,
+				E237C09728ECA9F5002868D1 /* Prefs_Network.png in Resources */,
+				E237C09828ECA9F5002868D1 /* Default.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

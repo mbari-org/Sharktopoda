@@ -10,13 +10,30 @@ import AppKit
 import AVKit
 import SwiftUI
 
-typealias ErrorMessage = String
+enum OpenVideoError: Error {
+  case notPlayable
+  case notReachable
+  
+  var description: String {
+    switch self {
+      case .notPlayable:
+        return "Resource not playable"
+      case .notReachable:
+        return "Video file not reachable"
+    }
+  }
+
+  var localizedDescription: String {
+    self.description
+  }
+
+}
 
 class VideoWindow: NSWindow {
   struct KeyInfo {
     var keyTime: Date
     var isKey: Bool = false
-  
+    
     static func <(lhs: KeyInfo, rhs: KeyInfo) -> Bool {
       lhs.keyTime < rhs.keyTime
     }
@@ -28,7 +45,7 @@ class VideoWindow: NSWindow {
   init(for videoAsset: VideoAsset) {
     videoView = VideoView(videoAsset: videoAsset)
     keyInfo = KeyInfo(keyTime: Date())
-
+    
     let videoSize = videoView.fullSize()
     let windowSize = VideoWindow.scaleSize(size: videoSize)
     
@@ -41,7 +58,7 @@ class VideoWindow: NSWindow {
     self.isReleasedWhenClosed = false
     self.title = videoAsset.id
     self.makeKeyAndOrderFront(nil)
-
+    
     self.contentView = NSHostingView(rootView: self.videoView)
     
     self.delegate = self
@@ -49,14 +66,22 @@ class VideoWindow: NSWindow {
 }
 
 extension VideoWindow {
+  var id: String {
+    videoView.videoAsset.id
+  }
+  
+  var url: URL {
+    videoView.videoAsset.url
+  }
+  
   func canStep(_ steps: Int) -> Bool {
     videoView.canStep(steps)
   }
-
+  
   func elapsedTimeMillis() -> Int {
     videoView.elapsedTimeMillis()
   }
-
+  
   func pause() {
     videoView.pause()
   }
@@ -64,11 +89,11 @@ extension VideoWindow {
   func frameGrab(at captureTime: Int, destination: String) async -> FrameGrabResult {
     await videoView.frameGrab(at: captureTime, destination: destination)
   }
-
+  
   func play(rate: Float) {
     videoView.rate = rate
   }
-
+  
   var rate: Float {
     videoView.rate
   }
@@ -76,7 +101,7 @@ extension VideoWindow {
   func seek(elapsed: Int) {
     videoView.seek(elapsed: elapsed)
   }
-
+  
   func step(_ steps: Int) {
     videoView.step(steps)
   }
@@ -111,17 +136,21 @@ extension VideoWindow {
     return NSMakeSize(size.width * scale, size.height * scale)
   }
   
-  static func open(path: String) -> ErrorMessage? {
-    return nil
+  static func open(path: String) -> Error? {
+    let url = URL(fileURLWithPath: path)
+    if let videoWindow = UDP.sharktopodaData.videoWindows.values.first(where: { $0.url == url } ) {
+      return open(id: videoWindow.id, url: videoWindow.url)
+    }
+    return open(id: path, url: url)
   }
   
-  static func open(id: String, url: URL) -> ErrorMessage? {
+  static func open(id: String, url: URL) -> Error? {
     do {
       if !(try url.checkResourceIsReachable()) {
-        return "Video file not reachable"
+        return OpenVideoError.notReachable
       }
     } catch let error {
-      return error.localizedDescription
+      return error
     }
     
     if let videoWindow = UDP.sharktopodaData.videoWindows[id] {
@@ -131,7 +160,7 @@ extension VideoWindow {
     } else {
       let videoAsset = VideoAsset(id: id, url: url)
       guard videoAsset.avAsset.isPlayable else {
-        return "URL not playable"
+        return OpenVideoError.notPlayable
       }
       DispatchQueue.main.async {
         let videoWindow = VideoWindow(for: videoAsset)
@@ -157,5 +186,4 @@ extension VideoWindow: NSWindowDelegate {
   func windowDidResignKey(_ notification: Notification) {
     self.keyInfo = KeyInfo(keyTime: self.keyInfo.keyTime, isKey: false)
   }
-
 }

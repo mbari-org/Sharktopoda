@@ -21,6 +21,6 @@ final class VideoPlayerView: NSViewRepresentable {
   }
   
   func updateNSView(_ nsView: NSViewType, context: Context) {
-    print("CxInc updateNSView")
+    return
   }
 }

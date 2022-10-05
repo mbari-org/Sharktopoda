@@ -23,8 +23,8 @@ struct ControlOpen: ControlRequest {
       return failed("Malformed URL")
     }
     
-    if let errorMessage = VideoWindow.open(id: uuid, url: url) {
-      return failed(errorMessage)
+    if let error = VideoWindow.open(id: uuid, url: url) {
+      return failed(error.localizedDescription)
     }
     return ok()
   }

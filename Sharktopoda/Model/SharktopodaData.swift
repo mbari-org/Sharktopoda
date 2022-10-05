@@ -13,7 +13,7 @@ final class SharktopodaData: ObservableObject {
   @Published var udpClient: UDPClient = UDP.client
   
   @Published var udpServerError: String? = nil
-  
+
   @Published var videoWindows = [String: VideoWindow]()
 
   init() {

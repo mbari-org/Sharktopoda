@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct OpenFileView: View {
+
   var body: some View {
     Button("Open file...") {
       let dialog = NSOpenPanel()
@@ -21,16 +22,16 @@ struct OpenFileView: View {
 
       guard let result = dialog.url else { return }
       
-      
-      
-      if let errorMessage = VideoWindow.open(path: result.path) {
-        print("CxInc handle error: \(errorMessage)")
+      if let error = VideoWindow.open(path: result.path) as? OpenVideoError {
+        let alert = NSAlert()
+        alert.alertStyle = .warning
+        alert.messageText = error.description
+        alert.informativeText = result.path
+        alert.runModal()
+
         return
       }
       return
-//      let fileUrl = URL(fileURLWithPath: result.path)
-//      let videoFile = VideoOpen(url: fileUrl)
-//      videoFile.file()
     }
     .keyboardShortcut("O", modifiers: [.command])
   }

@@ -15,6 +15,7 @@ struct SharktopodaApp: App {
     WindowGroup {
       MainView()
         .environmentObject(sharktopodaData)
+      
     }
     .commands {
       SharktopodaCommands()

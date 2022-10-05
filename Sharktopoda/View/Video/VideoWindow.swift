@@ -26,7 +26,6 @@ enum OpenVideoError: Error {
   var localizedDescription: String {
     self.description
   }
-
 }
 
 class VideoWindow: NSWindow {
@@ -137,27 +136,23 @@ extension VideoWindow {
   }
   
   static func open(path: String) -> Error? {
-    let url = URL(fileURLWithPath: path)
-    if let videoWindow = UDP.sharktopodaData.videoWindows.values.first(where: { $0.url == url } ) {
-      return open(id: videoWindow.id, url: videoWindow.url)
-    }
-    return open(id: path, url: url)
+    open(id: path, url: URL(fileURLWithPath: path))
   }
   
   static func open(id: String, url: URL) -> Error? {
-    do {
-      if !(try url.checkResourceIsReachable()) {
-        return OpenVideoError.notReachable
-      }
-    } catch let error {
-      return error
-    }
-    
-    if let videoWindow = UDP.sharktopodaData.videoWindows[id] {
+    if let videoWindow = UDP.sharktopodaData.videoWindows.values.first(where: { $0.url == url } ) {
       DispatchQueue.main.async {
         videoWindow.makeKeyAndOrderFront(nil)
       }
     } else {
+      do {
+        if !(try url.checkResourceIsReachable()) {
+          return OpenVideoError.notReachable
+        }
+      } catch let error {
+        return error
+      }
+
       let videoAsset = VideoAsset(id: id, url: url)
       guard videoAsset.avAsset.isPlayable else {
         return OpenVideoError.notPlayable

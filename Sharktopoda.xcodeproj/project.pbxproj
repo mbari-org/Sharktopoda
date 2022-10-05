@@ -25,6 +25,8 @@
 		E237C09B28ECA9F5002868D1 /* Prefs_Annotations.excalidraw in Resources */ = {isa = PBXBuildFile; fileRef = E237C08F28ECA9F5002868D1 /* Prefs_Annotations.excalidraw */; };
 		E237C09C28ECA9F5002868D1 /* Default.excalidraw in Resources */ = {isa = PBXBuildFile; fileRef = E237C09028ECA9F5002868D1 /* Default.excalidraw */; };
 		E237C09D28ECA9F5002868D1 /* Prefs_Network.excalidraw in Resources */ = {isa = PBXBuildFile; fileRef = E237C09128ECA9F5002868D1 /* Prefs_Network.excalidraw */; };
+		E237C09F28ECF9C2002868D1 /* OpenFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E237C09E28ECF9C2002868D1 /* OpenFileView.swift */; };
+		E237C0A228ECFB54002868D1 /* VideoFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E237C0A128ECFB54002868D1 /* VideoFile.swift */; };
 		E2675E1E28DAB65D00F5F114 /* ControlPing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E1D28DAB65D00F5F114 /* ControlPing.swift */; };
 		E2675E2228DABE4900F5F114 /* ControlClose.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2128DABE4900F5F114 /* ControlClose.swift */; };
 		E2675E2428DABEAC00F5F114 /* ControlShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2328DABEAC00F5F114 /* ControlShow.swift */; };
@@ -126,6 +128,8 @@
 		E237C08F28ECA9F5002868D1 /* Prefs_Annotations.excalidraw */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Prefs_Annotations.excalidraw; sourceTree = "<group>"; };
 		E237C09028ECA9F5002868D1 /* Default.excalidraw */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Default.excalidraw; sourceTree = "<group>"; };
 		E237C09128ECA9F5002868D1 /* Prefs_Network.excalidraw */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Prefs_Network.excalidraw; sourceTree = "<group>"; };
+		E237C09E28ECF9C2002868D1 /* OpenFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenFileView.swift; sourceTree = "<group>"; };
+		E237C0A128ECFB54002868D1 /* VideoFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoFile.swift; sourceTree = "<group>"; };
 		E2675E1D28DAB65D00F5F114 /* ControlPing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlPing.swift; sourceTree = "<group>"; };
 		E2675E2128DABE4900F5F114 /* ControlClose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlClose.swift; sourceTree = "<group>"; };
 		E2675E2328DABEAC00F5F114 /* ControlShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlShow.swift; sourceTree = "<group>"; };
@@ -247,6 +251,15 @@
 			path = assets;
 			sourceTree = "<group>";
 		};
+		E237C0A028ECFB2E002868D1 /* OpenVideo */ = {
+			isa = PBXGroup;
+			children = (
+				E237C0A128ECFB54002868D1 /* VideoFile.swift */,
+				E237C09E28ECF9C2002868D1 /* OpenFileView.swift */,
+			);
+			path = OpenVideo;
+			sourceTree = "<group>";
+		};
 		E2675E2D28DB707500F5F114 /* ControlRequest */ = {
 			isa = PBXGroup;
 			children = (
@@ -366,6 +379,7 @@
 				E2C22ECD28D27B81003CD976 /* UDP */,
 				E2C22EC328D14495003CD976 /* Model */,
 				E2C22EC628D2662A003CD976 /* View */,
+				E237C0A028ECFB2E002868D1 /* OpenVideo */,
 				E2BC08EE28EC7925007F4B5D /* Error */,
 				E2BC08E328EB7686007F4B5D /* Extension */,
 				E2C22E8828CFDC28003CD976 /* Assets.xcassets */,
@@ -682,6 +696,7 @@
 				E2FFE1FC28E37B8000425F04 /* ControlResponseFailed.swift in Sources */,
 				E2FAB21B28E24A7C006D2676 /* VideoWindow.swift in Sources */,
 				E2BC08EB28EB781C007F4B5D /* CGImage.swift in Sources */,
+				E237C0A228ECFB54002868D1 /* VideoFile.swift in Sources */,
 				E2FFE21228E7A8CA00425F04 /* ControlResponseElapsed.swift in Sources */,
 				E2C22E8528CFDC26003CD976 /* SharktopodaApp.swift in Sources */,
 				E2C22EC528D144B0003CD976 /* SharktopodaData.swift in Sources */,
@@ -697,6 +712,7 @@
 				E2BC08E228E8EC4F007F4B5D /* ControlResponseCaptureDone.swift in Sources */,
 				E2A6B39628DB8E8500C1A5EA /* ControlInvalid.swift in Sources */,
 				E2FAB21228E2157C006D2676 /* MainShortcutsView.swift in Sources */,
+				E237C09F28ECF9C2002868D1 /* OpenFileView.swift in Sources */,
 				E2989AB928D3B87E009D2D65 /* AnnotationPreferencesView.swift in Sources */,
 				E2C22EC828D2666A003CD976 /* Preferences.swift in Sources */,
 				E295627728D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift in Sources */,

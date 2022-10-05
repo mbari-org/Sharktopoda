@@ -10,7 +10,7 @@ import SwiftUI
 struct MainShortcutsView: View {
   var body: some View {
     HStack {
-      Text("Open ...")
+      Text("Open file ...")
         .font(.title2)
       Spacer()
       Text("⌘ O")

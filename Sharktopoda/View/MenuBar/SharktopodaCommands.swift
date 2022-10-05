@@ -9,6 +9,13 @@ import SwiftUI
 
 struct SharktopodaCommands: Commands {
   var body: some Commands {
-    EmptyCommands()
+    CommandGroup(after: CommandGroupPlacement.newItem) {
+      Divider()
+      OpenFileView()
+      Button("Open URL...") {
+        print("Open URL...")
+      }
+      .keyboardShortcut("O", modifiers: [.shift, .command])
+    }
   }
 }

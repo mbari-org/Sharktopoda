@@ -19,14 +19,13 @@ struct ControlOpen: ControlRequest {
   }
   
   func process() -> ControlResponse {
-    guard let urlRef = URL(string: url) else {
+    guard let url = URL(string: url) else {
       return failed("Malformed URL")
     }
-    UDP.log("ControlOpen \(urlRef.absoluteString)")
 
     do {
-      if !(try urlRef.checkResourceIsReachable()) {
-        return failed("Video file does not reachable")
+      if !(try url.checkResourceIsReachable()) {
+        return failed("Video file not reachable")
       }
     } catch let error {
       return failed(error.localizedDescription)
@@ -37,7 +36,7 @@ struct ControlOpen: ControlRequest {
         videoWindow.makeKeyAndOrderFront(nil)
       }
     } else {
-      let videoAsset = VideoAsset(uuid: uuid, url: urlRef)
+      let videoAsset = VideoAsset(uuid: uuid, url: url)
       guard videoAsset.avAsset.isPlayable else {
         return failed("URL not playable")
       }

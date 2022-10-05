@@ -20,8 +20,8 @@ struct VideoAsset {
   
   static let timescaleMillis: Int32 = 1000
   
-  init(uuid: String, url: URL) {
-    self.id = uuid
+  init(id: String, url: URL) {
+    self.id = id
     self.url = url
     avAsset = AVURLAsset(url: url)
     avAssetTrack = avAsset.tracks(withMediaType: AVMediaType.video).first

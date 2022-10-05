@@ -10,6 +10,8 @@ import AppKit
 import AVKit
 import SwiftUI
 
+typealias ErrorMessage = String
+
 class VideoWindow: NSWindow {
   struct KeyInfo {
     var keyTime: Date
@@ -47,31 +49,6 @@ class VideoWindow: NSWindow {
 }
 
 extension VideoWindow {
-  override func makeKeyAndOrderFront(_ sender: Any?) {
-    super.makeKeyAndOrderFront(sender)
-    self.keyInfo = KeyInfo(keyTime: Date(), isKey: true)
-  }
-
-  static func <(lhs: VideoWindow, rhs: VideoWindow) -> Bool {
-    lhs.keyInfo < rhs.keyInfo
-  }
-  
-  static func scaleSize(size: NSSize) -> NSSize {
-    let screenFrame = NSScreen.main!.frame
-    let maxSize = NSMakeSize(0.9 * screenFrame.width, 0.9 * screenFrame.height)
-
-    if size.width < maxSize.width && size.height < maxSize.height {
-      return size
-    }
-
-    let widthScale: CGFloat = maxSize.width / size.width
-    let heightScale: CGFloat = maxSize.height / size.height
-
-    let scale = widthScale < heightScale ? widthScale : heightScale
-
-    return NSMakeSize(size.width * scale, size.height * scale)
-  }
-  
   func canStep(_ steps: Int) -> Bool {
     videoView.canStep(steps)
   }
@@ -102,6 +79,67 @@ extension VideoWindow {
 
   func step(_ steps: Int) {
     videoView.step(steps)
+  }
+}
+
+extension VideoWindow {
+  override func makeKeyAndOrderFront(_ sender: Any?) {
+    super.makeKeyAndOrderFront(sender)
+    self.keyInfo = KeyInfo(keyTime: Date(), isKey: true)
+  }
+}
+
+
+extension VideoWindow {
+  static func <(lhs: VideoWindow, rhs: VideoWindow) -> Bool {
+    lhs.keyInfo < rhs.keyInfo
+  }
+  
+  static func scaleSize(size: NSSize) -> NSSize {
+    let screenFrame = NSScreen.main!.frame
+    let maxSize = NSMakeSize(0.9 * screenFrame.width, 0.9 * screenFrame.height)
+    
+    if size.width < maxSize.width && size.height < maxSize.height {
+      return size
+    }
+    
+    let widthScale: CGFloat = maxSize.width / size.width
+    let heightScale: CGFloat = maxSize.height / size.height
+    
+    let scale = widthScale < heightScale ? widthScale : heightScale
+    
+    return NSMakeSize(size.width * scale, size.height * scale)
+  }
+  
+  static func open(path: String) -> ErrorMessage? {
+    return nil
+  }
+  
+  static func open(id: String, url: URL) -> ErrorMessage? {
+    do {
+      if !(try url.checkResourceIsReachable()) {
+        return "Video file not reachable"
+      }
+    } catch let error {
+      return error.localizedDescription
+    }
+    
+    if let videoWindow = UDP.sharktopodaData.videoWindows[id] {
+      DispatchQueue.main.async {
+        videoWindow.makeKeyAndOrderFront(nil)
+      }
+    } else {
+      let videoAsset = VideoAsset(id: id, url: url)
+      guard videoAsset.avAsset.isPlayable else {
+        return "URL not playable"
+      }
+      DispatchQueue.main.async {
+        let videoWindow = VideoWindow(for: videoAsset)
+        videoWindow.makeKeyAndOrderFront(nil)
+        UDP.sharktopodaData.videoWindows[id] = videoWindow
+      }
+    }
+    return nil
   }
 }
 

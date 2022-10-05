@@ -21,9 +21,16 @@ struct OpenFileView: View {
 
       guard let result = dialog.url else { return }
       
-      let fileUrl = URL(fileURLWithPath: result.path)
-      let videoFile = VideoFile(url: fileUrl)
-      videoFile.open()
+      
+      
+      if let errorMessage = VideoWindow.open(path: result.path) {
+        print("CxInc handle error: \(errorMessage)")
+        return
+      }
+      return
+//      let fileUrl = URL(fileURLWithPath: result.path)
+//      let videoFile = VideoOpen(url: fileUrl)
+//      videoFile.file()
     }
     .keyboardShortcut("O", modifiers: [.command])
   }

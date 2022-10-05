@@ -10,7 +10,7 @@ import AVFoundation
 // CxNote Assume that a VideoAsset has one and only one track
 
 struct VideoAsset {
-  let uuid: String
+  let id: String
   let url: URL
   
   var avAsset: AVURLAsset
@@ -21,7 +21,7 @@ struct VideoAsset {
   static let timescaleMillis: Int32 = 1000
   
   init(uuid: String, url: URL) {
-    self.uuid = uuid
+    self.id = uuid
     self.url = url
     avAsset = AVURLAsset(url: url)
     avAssetTrack = avAsset.tracks(withMediaType: AVMediaType.video).first

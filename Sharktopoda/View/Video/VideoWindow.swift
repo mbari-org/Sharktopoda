@@ -37,7 +37,7 @@ class VideoWindow: NSWindow {
       defer: false)
     self.center()
     self.isReleasedWhenClosed = false
-    self.title = videoAsset.uuid
+    self.title = videoAsset.id
     self.makeKeyAndOrderFront(nil)
 
     self.contentView = NSHostingView(rootView: self.videoView)
@@ -108,7 +108,7 @@ extension VideoWindow {
 extension VideoWindow: NSWindowDelegate {
   func windowWillClose(_ notification: Notification) {
     DispatchQueue.main.async {
-      UDP.sharktopodaData.videoWindows.removeValue(forKey: self.videoView.videoAsset.uuid)
+      UDP.sharktopodaData.videoWindows.removeValue(forKey: self.videoView.videoAsset.id)
     }
   }
   

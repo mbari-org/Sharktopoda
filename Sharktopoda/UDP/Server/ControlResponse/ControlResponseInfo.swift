@@ -17,7 +17,7 @@ struct ControlResponseInfo: ControlResponse {
     
     init(using videoWindow: VideoWindow) {
       let videoAsset = videoWindow.videoView.videoAsset
-      self.uuid = videoAsset.uuid
+      self.uuid = videoAsset.id
       self.url = videoAsset.url.absoluteString
       self.durationMillis = videoAsset.durationMillis
       self.frameRate = videoAsset.frameRate

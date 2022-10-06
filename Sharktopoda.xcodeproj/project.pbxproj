@@ -26,6 +26,10 @@
 		E237C09C28ECA9F5002868D1 /* Default.excalidraw in Resources */ = {isa = PBXBuildFile; fileRef = E237C09028ECA9F5002868D1 /* Default.excalidraw */; };
 		E237C09D28ECA9F5002868D1 /* Prefs_Network.excalidraw in Resources */ = {isa = PBXBuildFile; fileRef = E237C09128ECA9F5002868D1 /* Prefs_Network.excalidraw */; };
 		E237C09F28ECF9C2002868D1 /* OpenFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E237C09E28ECF9C2002868D1 /* OpenFileView.swift */; };
+		E237C0A428EDFAA3002868D1 /* OpenUrlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E237C0A328EDFAA3002868D1 /* OpenUrlView.swift */; };
+		E237C0A628EE108B002868D1 /* FloatingPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E237C0A528EE108B002868D1 /* FloatingPanel.swift */; };
+		E237C0A828EE14B5002868D1 /* FloatingPanelModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E237C0A728EE14B5002868D1 /* FloatingPanelModifier.swift */; };
+		E237C0AA28EE1AFC002868D1 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = E237C0A928EE1AFC002868D1 /* View.swift */; };
 		E2675E1E28DAB65D00F5F114 /* ControlPing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E1D28DAB65D00F5F114 /* ControlPing.swift */; };
 		E2675E2228DABE4900F5F114 /* ControlClose.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2128DABE4900F5F114 /* ControlClose.swift */; };
 		E2675E2428DABEAC00F5F114 /* ControlShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2328DABEAC00F5F114 /* ControlShow.swift */; };
@@ -128,6 +132,10 @@
 		E237C09028ECA9F5002868D1 /* Default.excalidraw */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Default.excalidraw; sourceTree = "<group>"; };
 		E237C09128ECA9F5002868D1 /* Prefs_Network.excalidraw */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Prefs_Network.excalidraw; sourceTree = "<group>"; };
 		E237C09E28ECF9C2002868D1 /* OpenFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenFileView.swift; sourceTree = "<group>"; };
+		E237C0A328EDFAA3002868D1 /* OpenUrlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenUrlView.swift; sourceTree = "<group>"; };
+		E237C0A528EE108B002868D1 /* FloatingPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPanel.swift; sourceTree = "<group>"; };
+		E237C0A728EE14B5002868D1 /* FloatingPanelModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPanelModifier.swift; sourceTree = "<group>"; };
+		E237C0A928EE1AFC002868D1 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		E2675E1D28DAB65D00F5F114 /* ControlPing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlPing.swift; sourceTree = "<group>"; };
 		E2675E2128DABE4900F5F114 /* ControlClose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlClose.swift; sourceTree = "<group>"; };
 		E2675E2328DABEAC00F5F114 /* ControlShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlShow.swift; sourceTree = "<group>"; };
@@ -253,6 +261,9 @@
 			isa = PBXGroup;
 			children = (
 				E237C09E28ECF9C2002868D1 /* OpenFileView.swift */,
+				E237C0A328EDFAA3002868D1 /* OpenUrlView.swift */,
+				E237C0A528EE108B002868D1 /* FloatingPanel.swift */,
+				E237C0A728EE14B5002868D1 /* FloatingPanelModifier.swift */,
 			);
 			path = OpenVideo;
 			sourceTree = "<group>";
@@ -324,6 +335,7 @@
 				E2675E2B28DB5F9400F5F114 /* DefaultValue.swift */,
 				E2BC08E828EB7795007F4B5D /* NSImage.swift */,
 				E2BC08E428EB76D6007F4B5D /* UserDefaults.swift */,
+				E237C0A928EE1AFC002868D1 /* View.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -649,13 +661,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E237C0A628EE108B002868D1 /* FloatingPanel.swift in Sources */,
 				E2BC08E528EB76D6007F4B5D /* UserDefaults.swift in Sources */,
 				E2675E2828DAC08D00F5F114 /* ControlPause.swift in Sources */,
 				E22F72FD28DA5D9100253A48 /* ControlResponse.swift in Sources */,
+				E237C0AA28EE1AFC002868D1 /* View.swift in Sources */,
 				E2C22EDA28D386AE003CD976 /* MainView.swift in Sources */,
 				E2BC08E928EB7795007F4B5D /* NSImage.swift in Sources */,
 				E295627928D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift in Sources */,
 				E2EE0E4028DB9DD200138A86 /* ControlAllInfo.swift in Sources */,
+				E237C0A828EE14B5002868D1 /* FloatingPanelModifier.swift in Sources */,
 				E2EE0E3C28DB9B3B00138A86 /* ControlSeek.swift in Sources */,
 				E2BC08F028EC797D007F4B5D /* FrameCaptureError.swift in Sources */,
 				E22F0EA428DA57800097A34E /* ControlRequest.swift in Sources */,
@@ -709,6 +724,7 @@
 				E2A6B39628DB8E8500C1A5EA /* ControlInvalid.swift in Sources */,
 				E2FAB21228E2157C006D2676 /* MainShortcutsView.swift in Sources */,
 				E237C09F28ECF9C2002868D1 /* OpenFileView.swift in Sources */,
+				E237C0A428EDFAA3002868D1 /* OpenUrlView.swift in Sources */,
 				E2989AB928D3B87E009D2D65 /* AnnotationPreferencesView.swift in Sources */,
 				E2C22EC828D2666A003CD976 /* Preferences.swift in Sources */,
 				E295627728D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift in Sources */,

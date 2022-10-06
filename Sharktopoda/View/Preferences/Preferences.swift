@@ -14,7 +14,6 @@ struct Preferences: View {
     HStack {
       VStack(alignment: .leading) {
         VStack(alignment: .leading, spacing: 20) {
-          // CxNote ternary selection of buttonStyle did not work
           if (displayAnnotations) {
             Button {
               displayAnnotations = true
@@ -72,7 +71,6 @@ struct Preferences: View {
     }
     .navigationTitle("Preferences")
     .frame(width: 700, height: 550)
-    
   }
 }
 

@@ -17,6 +17,7 @@ struct OpenFileView: View {
       dialog.showsHiddenFiles        = false
       dialog.allowsMultipleSelection = false
       dialog.canChooseDirectories    = false
+      dialog.isFloatingPanel         = true
       
       guard dialog.runModal() == NSApplication.ModalResponse.OK else { return }
 
@@ -33,7 +34,6 @@ struct OpenFileView: View {
       }
       return
     }
-    .keyboardShortcut("O", modifiers: [.command])
   }
 }
 

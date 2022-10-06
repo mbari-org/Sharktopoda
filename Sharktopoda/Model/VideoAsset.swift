@@ -16,7 +16,7 @@ struct VideoAsset {
   var avAsset: AVURLAsset
   var avAssetTrack: AVAssetTrack?
   
-  var localizations: [Localization] = []
+  var localizations: NSMutableOrderedSet = NSMutableOrderedSet()
   
   static let timescaleMillis: Int32 = 1000
   

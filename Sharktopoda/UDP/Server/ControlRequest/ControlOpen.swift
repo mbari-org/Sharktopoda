@@ -13,11 +13,7 @@ struct ControlOpen: ControlRequest {
   var command: ControlCommand
   var uuid: String
   var url: String
-  
-  var description: String {
-    "\(command) \(uuid) from \(url)"
-  }
-  
+
   func process() -> ControlResponse {
     guard let url = URL(string: url) else {
       return failed("Malformed URL")

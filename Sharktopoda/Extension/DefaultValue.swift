@@ -24,6 +24,18 @@ extension Default: Decodable {
   }
 }
 
+extension Float {
+  struct PlaybackRate: DefaultValue {
+    static var defaultValue: Float = 1.0
+  }
+}
+
+extension Int {
+  struct DurationMillis: DefaultValue {
+    static var defaultValue: Int = 0
+  }
+}
+
 extension KeyedDecodingContainer {
   func decode<T>(_ type: Default<T>.Type, forKey key: Key) throws -> Default<T> where T: DefaultValue {
     //Determine the missing key and provide the default value
@@ -31,17 +43,16 @@ extension KeyedDecodingContainer {
   }
 }
 
-extension Float {
-  struct PlaybackRate: DefaultValue {
-    static var defaultValue: Float = 1.0
-  }
-}
-
 extension String {
   struct Localhost: DefaultValue {
     static var defaultValue = "localhost"
   }
+  
   struct Unknown: DefaultValue {
     static var defaultValue = "unknown"
+  }
+  
+  struct LocalizationHexColor: DefaultValue {
+    static var defaultValue = UserDefaults.standard.hexColor(forKey: PrefKeys.displayBorderColor)
   }
 }

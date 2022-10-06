@@ -22,7 +22,7 @@ protocol ControlResponse: Encodable, CustomStringConvertible {
 extension ControlResponse {
   
   var description: String {
-    response.rawValue
+    "\(response.rawValue) \(status.rawValue)"
   }
   
   func data() -> Data {

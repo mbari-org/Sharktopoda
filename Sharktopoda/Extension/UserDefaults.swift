@@ -13,8 +13,13 @@ extension UserDefaults {
   }
   
   func color(forKey key: String) -> Color {
-    guard let hex = object(forKey: key) as? String else { return .black }
+    let hex = hexColor(forKey: key)
     guard let color = Color(hex: hex) else { return .red }
     return color
+  }
+  
+  func hexColor(forKey key: String) -> String {
+    guard let hexColor = object(forKey: key) as? String else { return "#000000" }
+    return hexColor
   }
 }

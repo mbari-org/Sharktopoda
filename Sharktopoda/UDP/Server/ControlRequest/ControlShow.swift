@@ -11,10 +11,6 @@ struct ControlShow: ControlRequest {
   var command: ControlCommand
   var uuid: String
   
-  var description: String {
-    "\(command) \(uuid)"
-  }
-  
   func process() -> ControlResponse {
     if let window = UDP.sharktopodaData.videoWindows[uuid] {
       DispatchQueue.main.async {

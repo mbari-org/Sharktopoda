@@ -21,15 +21,11 @@ struct OpenFileView: View {
       
       guard dialog.runModal() == NSApplication.ModalResponse.OK else { return }
 
-      guard let result = dialog.url else { return }
+      guard let fileUrl = dialog.url else { return }
 
-      if let error = VideoWindow.open(path: result.path) as? OpenVideoError {
-        let alert = NSAlert()
-        alert.alertStyle = .warning
-        alert.messageText = error.description
-        alert.informativeText = result.path
-        alert.runModal()
-
+      if let error = VideoWindow.open(path: fileUrl.path) as? OpenVideoError {
+        let openAlert = OpenAlert(path: fileUrl.path, error: error)
+        openAlert.show()
         return
       }
       return

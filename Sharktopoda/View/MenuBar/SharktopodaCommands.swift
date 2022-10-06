@@ -16,7 +16,7 @@ struct SharktopodaCommands: Commands {
       OpenFileView()
         .keyboardShortcut("O", modifiers: [.command])
 
-      (OpenUrlView.shared)
+      OpenUrlView()
         .keyboardShortcut("O", modifiers: [.shift, .command])
     }
   }

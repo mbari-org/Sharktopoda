@@ -30,6 +30,9 @@
 		E237C0A628EE108B002868D1 /* FloatingPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E237C0A528EE108B002868D1 /* FloatingPanel.swift */; };
 		E237C0A828EE14B5002868D1 /* FloatingPanelModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E237C0A728EE14B5002868D1 /* FloatingPanelModifier.swift */; };
 		E237C0AA28EE1AFC002868D1 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = E237C0A928EE1AFC002868D1 /* View.swift */; };
+		E2505D4F28EF22E10027F280 /* EnvironmentValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2505D4E28EF22E10027F280 /* EnvironmentValues.swift */; };
+		E2505D5128EF2A8F0027F280 /* OpenUrlPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2505D5028EF2A8F0027F280 /* OpenUrlPanel.swift */; };
+		E2505D5328EF38B60027F280 /* OpenAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2505D5228EF38B60027F280 /* OpenAlert.swift */; };
 		E2675E1E28DAB65D00F5F114 /* ControlPing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E1D28DAB65D00F5F114 /* ControlPing.swift */; };
 		E2675E2228DABE4900F5F114 /* ControlClose.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2128DABE4900F5F114 /* ControlClose.swift */; };
 		E2675E2428DABEAC00F5F114 /* ControlShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2328DABEAC00F5F114 /* ControlShow.swift */; };
@@ -136,6 +139,9 @@
 		E237C0A528EE108B002868D1 /* FloatingPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPanel.swift; sourceTree = "<group>"; };
 		E237C0A728EE14B5002868D1 /* FloatingPanelModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPanelModifier.swift; sourceTree = "<group>"; };
 		E237C0A928EE1AFC002868D1 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		E2505D4E28EF22E10027F280 /* EnvironmentValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentValues.swift; sourceTree = "<group>"; };
+		E2505D5028EF2A8F0027F280 /* OpenUrlPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenUrlPanel.swift; sourceTree = "<group>"; };
+		E2505D5228EF38B60027F280 /* OpenAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAlert.swift; sourceTree = "<group>"; };
 		E2675E1D28DAB65D00F5F114 /* ControlPing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlPing.swift; sourceTree = "<group>"; };
 		E2675E2128DABE4900F5F114 /* ControlClose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlClose.swift; sourceTree = "<group>"; };
 		E2675E2328DABEAC00F5F114 /* ControlShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlShow.swift; sourceTree = "<group>"; };
@@ -257,15 +263,24 @@
 			path = assets;
 			sourceTree = "<group>";
 		};
-		E237C0A028ECFB2E002868D1 /* OpenVideo */ = {
+		E237C0A028ECFB2E002868D1 /* Open */ = {
 			isa = PBXGroup;
 			children = (
 				E237C09E28ECF9C2002868D1 /* OpenFileView.swift */,
 				E237C0A328EDFAA3002868D1 /* OpenUrlView.swift */,
+				E2505D5028EF2A8F0027F280 /* OpenUrlPanel.swift */,
+				E2505D5228EF38B60027F280 /* OpenAlert.swift */,
+			);
+			path = Open;
+			sourceTree = "<group>";
+		};
+		E2505D4D28EF22680027F280 /* Panel */ = {
+			isa = PBXGroup;
+			children = (
 				E237C0A528EE108B002868D1 /* FloatingPanel.swift */,
 				E237C0A728EE14B5002868D1 /* FloatingPanelModifier.swift */,
 			);
-			path = OpenVideo;
+			path = Panel;
 			sourceTree = "<group>";
 		};
 		E2675E2D28DB707500F5F114 /* ControlRequest */ = {
@@ -336,6 +351,7 @@
 				E2BC08E828EB7795007F4B5D /* NSImage.swift */,
 				E2BC08E428EB76D6007F4B5D /* UserDefaults.swift */,
 				E237C0A928EE1AFC002868D1 /* View.swift */,
+				E2505D4E28EF22E10027F280 /* EnvironmentValues.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -388,7 +404,6 @@
 				E2C22ECD28D27B81003CD976 /* UDP */,
 				E2C22EC328D14495003CD976 /* Model */,
 				E2C22EC628D2662A003CD976 /* View */,
-				E237C0A028ECFB2E002868D1 /* OpenVideo */,
 				E2BC08EE28EC7925007F4B5D /* Error */,
 				E2BC08E328EB7686007F4B5D /* Extension */,
 				E2C22E8828CFDC28003CD976 /* Assets.xcassets */,
@@ -439,6 +454,7 @@
 			children = (
 				E2FAB20E28E2134F006D2676 /* Main */,
 				E2FAB21528E2168F006D2676 /* Video */,
+				E2505D4D28EF22680027F280 /* Panel */,
 				E2FAB20D28E20D66006D2676 /* MenuBar */,
 				E2989AB528D3B22E009D2D65 /* Preferences */,
 			);
@@ -514,6 +530,7 @@
 				E2FAB21A28E24A7C006D2676 /* VideoWindow.swift */,
 				E2FFE20728E6248600425F04 /* VideoView.swift */,
 				E2FFE20928E64DDC00425F04 /* VideoPlayerView.swift */,
+				E237C0A028ECFB2E002868D1 /* Open */,
 			);
 			path = Video;
 			sourceTree = "<group>";
@@ -666,6 +683,7 @@
 				E2675E2828DAC08D00F5F114 /* ControlPause.swift in Sources */,
 				E22F72FD28DA5D9100253A48 /* ControlResponse.swift in Sources */,
 				E237C0AA28EE1AFC002868D1 /* View.swift in Sources */,
+				E2505D5328EF38B60027F280 /* OpenAlert.swift in Sources */,
 				E2C22EDA28D386AE003CD976 /* MainView.swift in Sources */,
 				E2BC08E928EB7795007F4B5D /* NSImage.swift in Sources */,
 				E295627928D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift in Sources */,
@@ -701,6 +719,7 @@
 				E2989AB728D3B261009D2D65 /* NetworkPreferencesView.swift in Sources */,
 				E2675E1E28DAB65D00F5F114 /* ControlPing.swift in Sources */,
 				E2FAB21028E213A9006D2676 /* MainTitleView.swift in Sources */,
+				E2505D4F28EF22E10027F280 /* EnvironmentValues.swift in Sources */,
 				E295628A28D67A6500E88ED1 /* SharktopodaCommands.swift in Sources */,
 				E2FFE20C28E7619900425F04 /* ControlResponseInfo.swift in Sources */,
 				E2989ABD28D3C7F7009D2D65 /* PrefKeys.swift in Sources */,
@@ -720,6 +739,7 @@
 				E2D47E9A28D8C17D0068B192 /* ClientCommand.swift in Sources */,
 				E2EE0E3828DB9A6600138A86 /* ControlElapsed.swift in Sources */,
 				E295627528D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift in Sources */,
+				E2505D5128EF2A8F0027F280 /* OpenUrlPanel.swift in Sources */,
 				E2BC08E228E8EC4F007F4B5D /* ControlResponseCaptureDone.swift in Sources */,
 				E2A6B39628DB8E8500C1A5EA /* ControlInvalid.swift in Sources */,
 				E2FAB21228E2157C006D2676 /* MainShortcutsView.swift in Sources */,
@@ -884,7 +904,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Sharktopoda/Sharktopoda.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 2;
@@ -913,7 +933,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Sharktopoda/Sharktopoda.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 2;

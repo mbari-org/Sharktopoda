@@ -9,7 +9,7 @@ import SwiftUI
 
 final class FloatingPanel<Content: View>: NSPanel {
   @Binding var isPresented: Bool
-  
+
   private
   let style: NSWindow.StyleMask = [.nonactivatingPanel, .titled, .resizable, .closable, .fullSizeContentView]
   
@@ -55,12 +55,7 @@ final class FloatingPanel<Content: View>: NSPanel {
     /// Set content view with safe area ignored (bc title bar still interferes with the geometry)
     contentView = NSHostingView(rootView: view()
       .ignoresSafeArea()
-      .environment(\.openUrlPanel, self))
-  }
-  
-  
-  var body: some View {
-    Text("CxInc")
+      .environment(\.floatingPanel, self))
   }
   
   /// Close automatically when out of focus, e.g. outside click
@@ -78,15 +73,4 @@ final class FloatingPanel<Content: View>: NSPanel {
   /// Text input inside the panel can receive focus
   override var canBecomeKey: Bool { true }
   override var canBecomeMain: Bool { true }
-}
-
-private struct FloatingPanelKey: EnvironmentKey {
-  static let defaultValue: NSPanel? = nil
-}
-
-extension EnvironmentValues {
-  var openUrlPanel: NSPanel? {
-    get { self[FloatingPanelKey.self] }
-    set { self[FloatingPanelKey.self] = newValue }
-  }
 }

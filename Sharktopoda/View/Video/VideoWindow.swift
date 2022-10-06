@@ -11,15 +11,24 @@ import AVKit
 import SwiftUI
 
 enum OpenVideoError: Error {
+  case invalidUrl
   case notPlayable
   case notReachable
+  case unknown(_ cause: String)
   
   var description: String {
     switch self {
+      case .invalidUrl:
+        return "Invalid URL"
+
       case .notPlayable:
         return "Resource not playable"
+
       case .notReachable:
         return "Video file not reachable"
+        
+      case .unknown(let cause):
+        return cause
     }
   }
 

@@ -24,17 +24,17 @@ struct FloatingPanelModifier<PanelContent: View>: ViewModifier {
   func body(content: Content) -> some View {
     content
       .onAppear {
-        /// Create, center and present
         panel = FloatingPanel(view: view, contentRect: contentRect, isPresented: $isShowing)
         panel?.center()
         if isShowing {
           show()
         }
-      }.onDisappear {
-        /// Close and release
+      }
+      .onDisappear {
         panel?.close()
         panel = nil
-      }.onChange(of: isShowing) { value in
+      }
+      .onChange(of: isShowing) { value in
         value ? show() : panel?.close()
       }
   }

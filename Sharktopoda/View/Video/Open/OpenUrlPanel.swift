@@ -27,7 +27,7 @@ struct OpenUrlPanel: View {
       }
       .padding(EdgeInsets(top: 20, leading: 40, bottom: 10, trailing: 40))
       .onSubmit {
-        submit()
+        path.isEmpty ? showPanel = false : submit()
       }
       
       HStack {

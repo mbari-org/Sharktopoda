@@ -10,6 +10,7 @@ import Foundation
 // CxInc add control localization commands
 
 enum ControlCommand: String, Codable {
+  case addLocalizations = "add localizations"
   case advance = "frame advance"
   case all = "request all information"
   case capture = "frame capture"
@@ -45,13 +46,17 @@ enum ControlCommand: String, Codable {
       }
       controlCommand = maybeControlCommand
     }
-    catch {
-      return ControlInvalid()
+    catch let error {
+      print(error)
+      return ControlInvalid(cause: error.localizedDescription)
     }
     
     do {
       var controlMessageType: ControlRequest.Type
       switch controlCommand {
+        case .addLocalizations:
+          controlMessageType = ControlAddLocalizations.self
+          
         case .advance:
           controlMessageType = ControlAdvance.self
 
@@ -102,8 +107,8 @@ enum ControlCommand: String, Codable {
       }
       
       return try UDPMessageCoder.decode(controlMessageType, from: data)
-    } catch {
-      return ControlInvalid(command: controlCommand)
+    } catch let error {
+      return ControlInvalid(command: controlCommand, cause: error.localizedDescription)
     }
   }
 }

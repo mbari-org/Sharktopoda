@@ -46,15 +46,13 @@ class VideoWindow: NSWindow {
   }
 }
 
+// Convenience functions
 extension VideoWindow {
-  var id: String {
-    videoView.videoAsset.id
-  }
   
-  var url: URL {
-    videoView.videoAsset.url
+  func addLocalizations(_ localizations: [Localization]) {
+    videoView.videoAsset.addLocalizations(localizations)
   }
-  
+
   func canStep(_ steps: Int) -> Bool {
     videoView.canStep(steps)
   }
@@ -62,13 +60,21 @@ extension VideoWindow {
   func elapsedTimeMillis() -> Int {
     videoView.elapsedTimeMillis()
   }
+
+  func frameGrab(at captureTime: Int, destination: String) async -> FrameGrabResult {
+    await videoView.frameGrab(at: captureTime, destination: destination)
+  }
+  
+  var id: String {
+    videoView.videoAsset.id
+  }
+  
+//  var localizations: NSMutableOrderedSet {
+//    videoView.videoAsset.localizations
+//  }
   
   func pause() {
     videoView.pause()
-  }
-  
-  func frameGrab(at captureTime: Int, destination: String) async -> FrameGrabResult {
-    await videoView.frameGrab(at: captureTime, destination: destination)
   }
   
   func play(rate: Float) {
@@ -86,8 +92,15 @@ extension VideoWindow {
   func step(_ steps: Int) {
     videoView.step(steps)
   }
+  
+  var url: URL {
+    videoView.videoAsset.url
+  }
+  
+
 }
 
+// Function overrides
 extension VideoWindow {
   override func makeKeyAndOrderFront(_ sender: Any?) {
     super.makeKeyAndOrderFront(sender)
@@ -95,7 +108,7 @@ extension VideoWindow {
   }
 }
 
-
+// Static functions
 extension VideoWindow {
   static func <(lhs: VideoWindow, rhs: VideoWindow) -> Bool {
     lhs.keyInfo < rhs.keyInfo

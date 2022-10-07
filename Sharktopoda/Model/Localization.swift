@@ -21,7 +21,7 @@ class Localization: Hashable {
     self.elapsedTimeMillis = controlLocalization.elapsedTimeMillis
     self.durationMillis = controlLocalization.durationMillis
     self.rect = CGRect(x: controlLocalization.x, y: controlLocalization.y,
-                       width: controlLocalization.w, height: controlLocalization.h)
+                       width: controlLocalization.width, height: controlLocalization.height)
     self.hexColor = controlLocalization.color
   }
 

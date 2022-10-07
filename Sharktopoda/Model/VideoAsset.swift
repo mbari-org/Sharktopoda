@@ -26,20 +26,13 @@ struct VideoAsset {
     avAsset = AVURLAsset(url: url)
     avAssetTrack = avAsset.tracks(withMediaType: AVMediaType.video).first
   }
-
-  var size: NSSize? {
-    guard let track = avAssetTrack else { return nil }
-    let size = track.naturalSize.applying(track.preferredTransform)
-    return NSMakeSize(abs(size.width), abs(size.height))
+  
+  func addLocalizations(_ localizations: [Localization]) {
+    print("CxInc add localizations")
   }
   
   var durationMillis: Int {
     avAsset.duration.asMillis()
-  }
-  
-  var frameRate: Float {
-    guard let track = avAssetTrack else { return Float(0) }
-    return track.nominalFrameRate
   }
   
   var frameDurataionMillis: Int {
@@ -50,6 +43,18 @@ struct VideoAsset {
   func frameGrab(at captureTime: Int, destination: String) async -> FrameGrabResult {
     avAsset.frameGrab(at: captureTime, destination: destination)
   }
+  
+  var frameRate: Float {
+    guard let track = avAssetTrack else { return Float(0) }
+    return track.nominalFrameRate
+  }
+  
+  var size: NSSize? {
+    guard let track = avAssetTrack else { return nil }
+    let size = track.naturalSize.applying(track.preferredTransform)
+    return NSMakeSize(abs(size.width), abs(size.height))
+  }
+  
 }
 
 

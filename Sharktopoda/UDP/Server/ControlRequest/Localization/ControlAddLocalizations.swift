@@ -16,13 +16,11 @@ struct ControlAddLocalizations: ControlRequest {
     guard let videoWindow = UDP.sharktopodaData.videoWindows[uuid] else {
       return failed("No video for uuid")
     }
-  
     
-//    localizations.
-    
-    
+    videoWindow.addLocalizations(localizations.map{ localization in
+      Localization(from: localization)
+    })
 
     return ok()
-    
   }
 }

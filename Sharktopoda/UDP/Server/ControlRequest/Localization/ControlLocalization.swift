@@ -14,8 +14,8 @@ struct ControlLocalization: Decodable, CustomStringConvertible {
   @Default<Int.DurationMillis> var durationMillis: Int
   var x: Int
   var y: Int
-  var w: Int
-  var h: Int
+  var width: Int
+  var height: Int
   @Default<String.LocalizationHexColor> var color: String
 
   var description: String {

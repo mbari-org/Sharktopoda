@@ -9,8 +9,9 @@ import Foundation
 
 struct ControlInvalid: ControlRequest {
   var command: ControlCommand = .unknown
+  var cause: String
   
   func process() -> ControlResponse {
-    failed("invalid message")
+    failed("invalid message format: \(cause)")
   }
 }

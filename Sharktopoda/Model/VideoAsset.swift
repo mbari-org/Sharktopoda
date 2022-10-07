@@ -16,7 +16,7 @@ struct VideoAsset {
   var avAsset: AVURLAsset
   var avAssetTrack: AVAssetTrack?
   
-  var localizations: NSMutableOrderedSet = NSMutableOrderedSet()
+  var localizations = LocalizationSet<Localization>()
   
   static let timescaleMillis: Int32 = 1000
   
@@ -27,8 +27,10 @@ struct VideoAsset {
     avAssetTrack = avAsset.tracks(withMediaType: AVMediaType.video).first
   }
   
-  func addLocalizations(_ localizations: [Localization]) {
-    print("CxInc add localizations")
+  func addLocalizations(_ newLocalizations: [Localization]) {
+    newLocalizations.forEach { localization in
+      localizations.add(localization)
+    }
   }
   
   var durationMillis: Int {

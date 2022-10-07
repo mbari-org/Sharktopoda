@@ -7,7 +7,7 @@
 
 import Foundation
 
-class LocalizationSet<T: Localization>: Sequence {
+class LocalizationSet<Localization>: Sequence {
   private let set = NSMutableOrderedSet()
   init() {}
   
@@ -15,11 +15,11 @@ class LocalizationSet<T: Localization>: Sequence {
     return set.makeIterator()
   }
   
-  func add(_ element: T) {
-    set.add(element)
+  func add(_ localization: Localization) {
+    set.add(localization)
   }
   
-  func remove(_ element: T) {
-    set.remove(element)
+  func remove(_ localization: Localization) {
+    set.remove(localization)
   }
 }

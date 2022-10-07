@@ -11,7 +11,7 @@ import AVFoundation
 import UniformTypeIdentifiers
 
 struct VideoView: View {
-  let videoAsset: VideoAsset
+  var videoAsset: VideoAsset
   let avPlayer: AVPlayer
   let videoPlayerView: VideoPlayerView
   

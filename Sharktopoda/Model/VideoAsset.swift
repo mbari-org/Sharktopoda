@@ -27,7 +27,7 @@ struct VideoAsset {
     avAssetTrack = avAsset.tracks(withMediaType: AVMediaType.video).first
   }
   
-  func addLocalizations(_ newLocalizations: [Localization]) {
+  mutating func addLocalizations(_ newLocalizations: [Localization]) {
     newLocalizations.forEach { localization in
       localizations.add(localization)
     }

@@ -27,7 +27,7 @@ struct AnnotationSelectionPreferencesView: View {
     SizeColorRow(
       label: "Border",
       size: $selectionBorderSize,
-      colorHex: selectionBorderColorHex,
+      colorHex: $selectionBorderColorHex,
       prefKey: PrefKeys.selectionBorderColor
     )
   }

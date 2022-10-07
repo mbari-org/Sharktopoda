@@ -33,14 +33,14 @@ struct AnnotationCreationPreferencesView: View {
     SizeColorRow(
       label: "Cursor",
       size: $creationCursorSize,
-      colorHex: creationCursorColorHex,
+      colorHex: $creationCursorColorHex,
       prefKey: PrefKeys.creationCursorColor
     )
 
     SizeColorRow(
       label: "Border",
       size: $creationBorderSize,
-      colorHex: creationBorderColorHex,
+      colorHex: $creationBorderColorHex,
       prefKey: PrefKeys.creationBorderColor
     )
 

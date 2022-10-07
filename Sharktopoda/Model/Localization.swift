@@ -11,9 +11,9 @@ class Localization: Hashable {
   var id: String
   var concept: String
   var elapsedTimeMillis: Int
-  var durationMillis: Int = 0
+  var durationMillis: Int
   var rect: CGRect
-  var hexColor: String = UserDefaults.standard.hexColor(forKey: PrefKeys.displayBorderColor)
+  var hexColor: String
   
   init(from controlLocalization: ControlLocalization) {
     self.id = controlLocalization.uuid

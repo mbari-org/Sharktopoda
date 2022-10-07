@@ -30,7 +30,7 @@ struct AnnotationCaptionPreferencesView: View {
     SizeColorRow(
       label: "Font",
       size: $captionFontSize,
-      colorHex: captionFontColorHex,
+      colorHex: $captionFontColorHex,
       prefKey: PrefKeys.captionFontColor
     )
     

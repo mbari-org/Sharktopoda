@@ -33,7 +33,7 @@ struct AnnotationDisplayPreferencesView: View {
     SizeColorRow(
       label: "Border",
       size: $displayBorderSize,
-      colorHex: displayBorderColorHex,
+      colorHex: $displayBorderColorHex,
       prefKey: PrefKeys.displayBorderColor
     )
     

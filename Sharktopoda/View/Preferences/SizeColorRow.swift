@@ -9,8 +9,8 @@ import SwiftUI
 
 struct SizeColorRow: View {
   private var label: String
-  @Binding var size: Int
-  private var colorHex: String
+  @Binding private var size: Int
+  @Binding private var colorHex: String
   private var colorPrefKey: String
   
   private var hexFont = Font.system(size: 12).monospaced()
@@ -47,10 +47,10 @@ struct SizeColorRow: View {
     }
   }
   
-  init(label: String, size: Binding<Int>, colorHex: String, prefKey: String) {
+  init(label: String, size: Binding<Int>, colorHex: Binding<String>, prefKey: String) {
     self.label = label
     self._size = size
-    self.colorHex = colorHex
+    self._colorHex = colorHex
     self.colorPrefKey = prefKey
   }
 }

@@ -36,6 +36,7 @@
 		E2505D5628EF7D600027F280 /* ControlAddLocalizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2505D5528EF7D600027F280 /* ControlAddLocalizations.swift */; };
 		E2505D5828EF7D950027F280 /* ControlLocalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2505D5728EF7D950027F280 /* ControlLocalization.swift */; };
 		E2505D5A28EF91960027F280 /* LocalizationSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2505D5928EF91960027F280 /* LocalizationSet.swift */; };
+		E2505D5C28F0E0DE0027F280 /* RandomAccessCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2505D5B28F0E0DE0027F280 /* RandomAccessCollection.swift */; };
 		E2675E1E28DAB65D00F5F114 /* ControlPing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E1D28DAB65D00F5F114 /* ControlPing.swift */; };
 		E2675E2228DABE4900F5F114 /* ControlClose.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2128DABE4900F5F114 /* ControlClose.swift */; };
 		E2675E2428DABEAC00F5F114 /* ControlShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2328DABEAC00F5F114 /* ControlShow.swift */; };
@@ -148,6 +149,7 @@
 		E2505D5528EF7D600027F280 /* ControlAddLocalizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlAddLocalizations.swift; sourceTree = "<group>"; };
 		E2505D5728EF7D950027F280 /* ControlLocalization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlLocalization.swift; sourceTree = "<group>"; };
 		E2505D5928EF91960027F280 /* LocalizationSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationSet.swift; sourceTree = "<group>"; };
+		E2505D5B28F0E0DE0027F280 /* RandomAccessCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomAccessCollection.swift; sourceTree = "<group>"; };
 		E2675E1D28DAB65D00F5F114 /* ControlPing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlPing.swift; sourceTree = "<group>"; };
 		E2675E2128DABE4900F5F114 /* ControlClose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlClose.swift; sourceTree = "<group>"; };
 		E2675E2328DABEAC00F5F114 /* ControlShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlShow.swift; sourceTree = "<group>"; };
@@ -364,10 +366,11 @@
 				E2BC08E628EB7703007F4B5D /* CMTime.swift */,
 				E2989ABE28D3D083009D2D65 /* Color.swift */,
 				E2675E2B28DB5F9400F5F114 /* DefaultValue.swift */,
+				E2505D4E28EF22E10027F280 /* EnvironmentValues.swift */,
 				E2BC08E828EB7795007F4B5D /* NSImage.swift */,
+				E2505D5B28F0E0DE0027F280 /* RandomAccessCollection.swift */,
 				E2BC08E428EB76D6007F4B5D /* UserDefaults.swift */,
 				E237C0A928EE1AFC002868D1 /* View.swift */,
-				E2505D4E28EF22E10027F280 /* EnvironmentValues.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -737,6 +740,7 @@
 				E2989AB728D3B261009D2D65 /* NetworkPreferencesView.swift in Sources */,
 				E2675E1E28DAB65D00F5F114 /* ControlPing.swift in Sources */,
 				E2FAB21028E213A9006D2676 /* MainTitleView.swift in Sources */,
+				E2505D5C28F0E0DE0027F280 /* RandomAccessCollection.swift in Sources */,
 				E2505D4F28EF22E10027F280 /* EnvironmentValues.swift in Sources */,
 				E295628A28D67A6500E88ED1 /* SharktopodaCommands.swift in Sources */,
 				E2FFE20C28E7619900425F04 /* ControlResponseInfo.swift in Sources */,

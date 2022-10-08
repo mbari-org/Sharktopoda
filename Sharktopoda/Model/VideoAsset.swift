@@ -29,7 +29,7 @@ struct VideoAsset {
   
   mutating func addLocalizations(_ newLocalizations: [Localization]) {
     newLocalizations.forEach { localization in
-      localizations.add(localization)
+      let _ = localizations.add(localization)
     }
   }
   

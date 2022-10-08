@@ -35,14 +35,14 @@ class VideoWindow: NSWindow {
       styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
       backing: .buffered,
       defer: false)
-    self.center()
-    self.isReleasedWhenClosed = false
-    self.title = videoAsset.id
-    self.makeKeyAndOrderFront(nil)
+    center()
+    isReleasedWhenClosed = false
+    title = videoAsset.id
+    makeKeyAndOrderFront(nil)
     
-    self.contentView = NSHostingView(rootView: self.videoView)
+    contentView = NSHostingView(rootView: self.videoView)
     
-    self.delegate = self
+    delegate = self
   }
 }
 

@@ -12,28 +12,49 @@ struct LocalizationSet<T: Localization> {
   private var array = Array<Localization>()
   
   init() {}
-    
-//  public func objectEnumerator() -> NSEnumerator {
-//    array.objectEnumerator()
-//  }
-  
-//  func makeIterator() -> NSFastEnumerationIterator {
-//    objectEnumerator().makeIterator()
-//  }
-  
-  mutating func add(_ localization: T) {
-    if set.contains(localization) { return }
-    
-    set.insert(localization)
-    
-    // CxInc binary search to find index for insertion
-    
-    array.insert(localization, at: 0)
 
+  mutating func add(_ localization: T) -> Bool {
+    let (inserted, _) = set.insert(localization)
+    if inserted {
+      arrayAdd(localization)
+    }
+    return inserted
   }
   
   mutating func remove(_ localization: T) {
-    set.remove(localization)
-    array.remove(at: 0)
+    if set.remove(localization) != nil {
+      arrayRemove(localization)
+    }
+  }
+  
+  private mutating func arrayAdd(_ localization: T) {
+    if array.isEmpty {
+      array.append(localization)
+    } else if array.count == 1 {
+      if localization < array[0] {
+        array.insert(localization, at: 0)
+      } else {
+        array.append(localization)
+      }
+    } else if array.last! < localization {
+      array.append(localization)
+    } else {
+      let index = array.binarySearch(for: localization) ?? array.count
+      array.insert(localization, at: index)
+    }
+  }
+  
+  private mutating func arrayRemove(_ localization: T) {
+    guard !array.isEmpty else { return }
+    if array.count == 1 {
+      guard localization == array[0] else { return }
+      array.remove(at: 0)
+    } else {
+      if let index = array.binarySearch(for: localization) {
+        array.remove(at: index)
+      } else {
+        return
+      }
+    }
   }
 }

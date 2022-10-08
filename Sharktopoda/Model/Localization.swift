@@ -7,7 +7,7 @@
 
 import AVFoundation
 
-class Localization: Hashable {
+class Localization: Comparable, Hashable {
   var id: String
   var concept: String
   var elapsedTimeMillis: Int
@@ -29,6 +29,10 @@ class Localization: Hashable {
     lhs.id == rhs.id
   }
 
+  static func < (lhs: Localization, rhs: Localization) -> Bool {
+    lhs.elapsedTimeMillis < rhs.elapsedTimeMillis
+  }
+  
   func hash(into hasher: inout Hasher) {
     hasher.combine(id)
   }

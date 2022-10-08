@@ -26,6 +26,7 @@ enum ControlCommand: String, Codable {
   case play
   case removeLocalizations = "remove localizations"
   case seek = "seek elapsed time"
+  case selectLocalizations = "select localizations"
   case show
   case state = "request state"
   case unknown
@@ -105,6 +106,9 @@ enum ControlCommand: String, Codable {
         case .seek:
           controlMessageType = ControlSeek.self
 
+        case .selectLocalizations:
+          controlMessageType = ControlSelectLocalizations.self
+          
         case .show:
           controlMessageType = ControlShow.self
 

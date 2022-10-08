@@ -71,6 +71,12 @@ extension VideoAsset {
     }
   }
 
+  mutating func selectLocalizations(_ localizationIds: [String]) -> [Bool] {
+    localizationIds.map { id in
+      localizations.select(id: id)
+    }
+  }
+
   mutating func updateLocalizations(_ updatedLocalizations: [Localization]) -> [Bool] {
     updatedLocalizations.map { localization in
       localizations.update(localization)

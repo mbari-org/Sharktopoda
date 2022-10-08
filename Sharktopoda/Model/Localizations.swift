@@ -38,6 +38,13 @@ struct Localizations {
     removeFromOrder(localization)
     return true
   }
+  
+  mutating func select(id: String) -> Bool {
+    guard let localization = exist[id] else { return false }
+    
+    print("CxInc Localizations.select(\(localization.id))")
+    return true
+  }
 
   mutating func update(_ localization: Localization) -> Bool {
     guard exists(localization) else { return false }

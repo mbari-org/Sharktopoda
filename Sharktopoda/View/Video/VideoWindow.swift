@@ -100,6 +100,9 @@ extension VideoWindow {
     videoView.videoAsset.removeLocalizations(localizationIds)
   }
 
+  func updateLocalizations(_ localizations: [Localization]) -> [Bool] {
+    videoView.videoAsset.updateLocalizations(localizations)
+  }
 
 }
 

@@ -33,7 +33,17 @@ struct Localizations {
     removeFromOrder(localization)
     return true
   }
-  
+
+  mutating func update(_ localization: Localization) -> Bool {
+    guard exists(localization) else { return false }
+    
+    exist[localization.id] = localization
+    removeFromOrder(localization)
+    addToOrder(localization)
+    
+    return true
+  }
+
   private mutating func addToOrder(_ localization: Localization) {
     // Avoid using binarySearch when clearly not necessary
     if order.isEmpty {

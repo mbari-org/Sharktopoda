@@ -28,6 +28,7 @@ enum ControlCommand: String, Codable {
   case show
   case state = "request state"
   case unknown
+  case updateLocalizations = "update localizations"
   
   struct ControlMessageCommand: Decodable {
     var command: String
@@ -108,6 +109,9 @@ enum ControlCommand: String, Codable {
 
         case .unknown:
           controlMessageType = ControlUnknown.self
+          
+        case .updateLocalizations:
+          controlMessageType = ControlUpdateLocalizations.self
       }
       
       return try UDPMessageCoder.decode(controlMessageType, from: data)

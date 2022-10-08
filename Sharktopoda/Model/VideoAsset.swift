@@ -67,6 +67,11 @@ extension VideoAsset {
     }
   }
 
+  mutating func updateLocalizations(_ updatedLocalizations: [Localization]) -> [Bool] {
+    updatedLocalizations.map { localization in
+      localizations.update(localization)
+    }
+  }
 }
 
 

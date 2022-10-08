@@ -15,6 +15,7 @@ enum ControlCommand: String, Codable {
   case all = "request all information"
   case capture = "frame capture"
   case captureDone = "frame capture done"
+  case clearLocalizations = "clear localizations"
   case close
   case connect
   case elapsed = "request elapsed time"
@@ -71,6 +72,9 @@ enum ControlCommand: String, Codable {
         case .captureDone:
           controlMessageType = ControlUnknown.self
 
+        case .clearLocalizations:
+          controlMessageType = ControlClearLocalizations.self
+          
         case .close:
           controlMessageType = ControlClose.self
           

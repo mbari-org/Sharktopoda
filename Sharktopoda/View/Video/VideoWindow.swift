@@ -96,6 +96,10 @@ extension VideoWindow {
     videoView.videoAsset.addLocalizations(localizations)
   }
   
+  func clearLocalizations() {
+    videoView.videoAsset.clearLocalizations()
+  }
+  
   func removeLocalizations(_ localizationIds: [String]) -> [Bool] {
     videoView.videoAsset.removeLocalizations(localizationIds)
   }
@@ -103,7 +107,6 @@ extension VideoWindow {
   func updateLocalizations(_ localizations: [Localization]) -> [Bool] {
     videoView.videoAsset.updateLocalizations(localizations)
   }
-
 }
 
 // Function overrides

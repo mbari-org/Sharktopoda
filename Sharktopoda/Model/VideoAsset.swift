@@ -61,6 +61,10 @@ extension VideoAsset {
     }
   }
   
+  mutating func clearLocalizations() {
+    localizations.clear()
+  }
+  
   mutating func removeLocalizations(_ localizationIds: [String]) -> [Bool] {
     localizationIds.map { id in
       localizations.remove(id: id)

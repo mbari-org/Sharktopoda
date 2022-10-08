@@ -26,6 +26,11 @@ struct Localizations {
     return true
   }
   
+  mutating func clear() {
+    exist.removeAll()
+    order.removeAll()
+  }
+  
   mutating func remove(id: String) -> Bool {
     guard let localization = exist[id] else { return false }
 

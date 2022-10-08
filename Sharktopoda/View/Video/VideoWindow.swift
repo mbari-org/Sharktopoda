@@ -48,11 +48,6 @@ class VideoWindow: NSWindow {
 
 // Convenience functions
 extension VideoWindow {
-  
-  func addLocalizations(_ localizations: [Localization]) {
-    videoView.videoAsset.addLocalizations(localizations)
-  }
-
   func canStep(_ steps: Int) -> Bool {
     videoView.canStep(steps)
   }
@@ -68,10 +63,6 @@ extension VideoWindow {
   var id: String {
     videoView.videoAsset.id
   }
-  
-//  var localizations: NSMutableOrderedSet {
-//    videoView.videoAsset.localizations
-//  }
   
   func pause() {
     videoView.pause()
@@ -96,7 +87,19 @@ extension VideoWindow {
   var url: URL {
     videoView.videoAsset.url
   }
+}
+
+// Localizations
+extension VideoWindow {
   
+  func addLocalizations(_ localizations: [Localization]) -> [Bool] {
+    videoView.videoAsset.addLocalizations(localizations)
+  }
+  
+  func removeLocalizations(_ localizationIds: [String]) -> [Bool] {
+    videoView.videoAsset.removeLocalizations(localizationIds)
+  }
+
 
 }
 

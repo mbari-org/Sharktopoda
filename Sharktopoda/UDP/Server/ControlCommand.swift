@@ -23,6 +23,7 @@ enum ControlCommand: String, Codable {
   case pause
   case ping
   case play
+  case removeLocalizations = "remove localizations"
   case seek = "seek elapsed time"
   case show
   case state = "request state"
@@ -92,6 +93,9 @@ enum ControlCommand: String, Codable {
           
         case .ping:
           controlMessageType = ControlPing.self
+
+        case .removeLocalizations:
+          controlMessageType = ControlRemoveLocalizations.self
 
         case .seek:
           controlMessageType = ControlSeek.self

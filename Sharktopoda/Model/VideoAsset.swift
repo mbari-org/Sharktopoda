@@ -16,7 +16,7 @@ struct VideoAsset {
   var avAsset: AVURLAsset
   var avAssetTrack: AVAssetTrack?
   
-  var localizations = LocalizationSet<Localization>()
+  var localizations = Localizations()
   
   static let timescaleMillis: Int32 = 1000
   
@@ -25,12 +25,6 @@ struct VideoAsset {
     self.url = url
     avAsset = AVURLAsset(url: url)
     avAssetTrack = avAsset.tracks(withMediaType: AVMediaType.video).first
-  }
-  
-  mutating func addLocalizations(_ newLocalizations: [Localization]) {
-    newLocalizations.forEach { localization in
-      let _ = localizations.add(localization)
-    }
   }
   
   var durationMillis: Int {
@@ -56,7 +50,23 @@ struct VideoAsset {
     let size = track.naturalSize.applying(track.preferredTransform)
     return NSMakeSize(abs(size.width), abs(size.height))
   }
+}
+
+// Localizations
+extension VideoAsset {
   
+  mutating func addLocalizations(_ newLocalizations: [Localization]) -> [Bool] {
+    newLocalizations.map { localization in
+      localizations.add(localization)
+    }
+  }
+  
+  mutating func removeLocalizations(_ localizationIds: [String]) -> [Bool] {
+    localizationIds.map { id in
+      localizations.remove(id: id)
+    }
+  }
+
 }
 
 

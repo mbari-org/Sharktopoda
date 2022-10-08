@@ -718,7 +718,7 @@ Incoming messages will be no larger than 4096 bytes. In practice, the remote app
 
 [Back](#localization_commands)
 
-### <a name="add_localizations"></a> Add Localization(s)
+### <a name="add_localizations"></a> Add Localizations
 
 The initiating app (both sharktopoda and the remote app can create localizations) will send a notification of a new localizations to the other app.
 
@@ -762,7 +762,7 @@ or a failure if the video with uuid does not exist:
 
 [Back](#localization_commands)
 
-### <a name="remove_localizations"></a> Localizaton(s) deleted
+### <a name="remove_localizations"></a> Remove Localizatons
 
 The initiating app will send a notification of localizations to be deleted.
 
@@ -797,7 +797,7 @@ or a failure if the video with uuid does not exist:
 
 [Back](#localization_commands)
 
-### <a name="modify_localizations"></a> Localizations(s) modified
+### <a name="modify_localizations"></a> Update Localizationss
 
 Update existing localizations in Sharktopoda. If a matching localization's UUID does not already exist in Sharktopoda, ignore that localization. (i.e. do not add, do not update)
 
@@ -841,7 +841,7 @@ or a failure if the video with uuid does not exist:
 
 [Back](#localization_commands)
 
-### <a name="clear_localizations"></a> Clear all Localizations
+### <a name="clear_localizations"></a> Clear Localizations
 
 This will only be sent from the remote app to Sharktopoda (not vice versa). Sharktopoda should remove all cached information about the localizations for a given video.
 

@@ -46,7 +46,7 @@ class VideoWindow: NSWindow {
   }
 }
 
-// Convenience functions
+/// Convenience functions
 extension VideoWindow {
   func canStep(_ steps: Int) -> Bool {
     videoView.canStep(steps)
@@ -89,7 +89,7 @@ extension VideoWindow {
   }
 }
 
-// Localizations
+/// Localizations
 extension VideoWindow {
   
   func addLocalizations(_ localizations: [Localization]) -> [Bool] {
@@ -113,7 +113,7 @@ extension VideoWindow {
   }
 }
 
-// Function overrides
+/// Function overrides
 extension VideoWindow {
   override func makeKeyAndOrderFront(_ sender: Any?) {
     super.makeKeyAndOrderFront(sender)
@@ -121,7 +121,7 @@ extension VideoWindow {
   }
 }
 
-// Static functions
+/// Static functions
 extension VideoWindow {
   static func <(lhs: VideoWindow, rhs: VideoWindow) -> Bool {
     lhs.keyInfo < rhs.keyInfo

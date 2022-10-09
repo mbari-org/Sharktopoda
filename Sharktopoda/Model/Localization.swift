@@ -7,13 +7,15 @@
 
 import AVFoundation
 
+// CxTBD Investigate Localization struct vs class.
+
 class Localization: Comparable, Hashable {
-  var id: String
-  var concept: String
-  var elapsedTimeMillis: Int
-  var durationMillis: Int
-  var rect: CGRect
-  var hexColor: String
+  let id: String
+  let concept: String
+  let elapsedTimeMillis: Int
+  let durationMillis: Int
+  let rect: CGRect
+  let hexColor: String
   
   init(from controlLocalization: ControlLocalization) {
     self.id = controlLocalization.uuid
@@ -25,15 +27,18 @@ class Localization: Comparable, Hashable {
     self.hexColor = controlLocalization.color
   }
 
+  // Hashable
+  func hash(into hasher: inout Hasher) {
+    hasher.combine(id)
+  }
+
   static func == (lhs: Localization, rhs: Localization) -> Bool {
     lhs.id == rhs.id
   }
 
+  // Comparable
   static func < (lhs: Localization, rhs: Localization) -> Bool {
     lhs.elapsedTimeMillis < rhs.elapsedTimeMillis
   }
   
-  func hash(into hasher: inout Hasher) {
-    hasher.combine(id)
-  }
 }

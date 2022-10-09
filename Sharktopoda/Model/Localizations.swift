@@ -8,84 +8,111 @@
 import Foundation
 
 struct Localizations {
-  private var exist = [String : Localization]()
-  private var order = [Localization]()
-  
-  init() {}
-  
-  func exists(_ localization: Localization) -> Bool {
-    exist[localization.id] != nil
-  }
+  private var _storage = [String : Localization]()
+  private var _order = [Localization]()
+  private var _selected = Set<String>()
 
+  init() {}
+}
+
+/// Storage
+extension Localizations {
   mutating func add(_ localization: Localization) -> Bool {
     guard !exists(localization) else { return false }
-
-    exist[localization.id] = localization
-    addToOrder(localization)
-
+    
+    _storage[localization.id] = localization
+    addOrdered(localization)
+    
     return true
   }
   
   mutating func clear() {
-    exist.removeAll()
-    order.removeAll()
+    _storage.removeAll()
+    _order.removeAll()
+    _selected.removeAll()
   }
   
   mutating func remove(id: String) -> Bool {
-    guard let localization = exist[id] else { return false }
-
-    exist[id] = nil
-    removeFromOrder(localization)
-    return true
-  }
-  
-  mutating func select(id: String) -> Bool {
-    guard let localization = exist[id] else { return false }
+    guard let localization = _storage[id] else { return false }
     
-    print("CxInc Localizations.select(\(localization.id))")
+    _storage[id] = nil
+    removeOrdered(localization)
+    _selected.remove(localization.id)
+
     return true
   }
-
+    
   mutating func update(_ localization: Localization) -> Bool {
     guard exists(localization) else { return false }
     
-    exist[localization.id] = localization
-    removeFromOrder(localization)
-    addToOrder(localization)
+    _storage[localization.id] = localization
+    removeOrdered(localization)
+    addOrdered(localization)
     
     return true
   }
+}
 
-  private mutating func addToOrder(_ localization: Localization) {
+/// Order
+extension Localizations {
+  private mutating func addOrdered(_ localization: Localization) {
     // Avoid using binarySearch when clearly not necessary
-    if order.isEmpty {
-      order.append(localization)
-    } else if order.count == 1 {
-      if localization < order[0] {
-        order.insert(localization, at: 0)
+    if _order.isEmpty {
+      _order.append(localization)
+    } else if _order.count == 1 {
+      if localization < _order[0] {
+        _order.insert(localization, at: 0)
       } else {
-        order.append(localization)
+        _order.append(localization)
       }
-    } else if order.last! < localization {
+    } else if _order.last! < localization {
       // Since localizations will often be added at the end, this optimization seems sensible
-      order.append(localization)
+      _order.append(localization)
     } else {
-      let index = order.binarySearch(for: localization) ?? order.count
-      order.insert(localization, at: index)
+      let index = _order.binarySearch(for: localization) ?? _order.count
+      _order.insert(localization, at: index)
     }
   }
   
-  private mutating func removeFromOrder(_ localization: Localization) {
-    guard !order.isEmpty else { return }
-    if order.count == 1 {
-      guard localization == order[0] else { return }
-      order.remove(at: 0)
+  private mutating func removeOrdered(_ localization: Localization) {
+    guard !_order.isEmpty else { return }
+    if _order.count == 1 {
+      guard localization == _order[0] else { return }
+      _order.remove(at: 0)
     } else {
-      if let index = order.binarySearch(for: localization) {
-        order.remove(at: index)
+      if let index = _order.binarySearch(for: localization) {
+        _order.remove(at: index)
       } else {
         return
       }
     }
+  }
+}
+
+/// Selected
+extension Localizations {
+  mutating func select(_ id: String) -> Bool {
+    guard _storage[id] != nil else { return false }
+    
+    _selected.insert(id)
+    
+    return true
+  }
+  
+  mutating func clearSelected() {
+    _selected.removeAll()
+  }
+  
+  func selected() -> [Localization] {
+    _selected.map { id in
+      _storage[id]!
+    }
+  }
+}
+
+/// Convenience
+extension Localizations {
+  func exists(_ localization: Localization) -> Bool {
+    _storage[localization.id] != nil
   }
 }

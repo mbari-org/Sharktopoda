@@ -16,7 +16,7 @@ struct VideoAsset {
   var avAsset: AVURLAsset
   var avAssetTrack: AVAssetTrack?
   
-  var localizations = Localizations()
+  var orderedLocalizations = OrderedLocalizations()
   
   static let timescaleMillis: Int32 = 1000
   
@@ -57,31 +57,41 @@ extension VideoAsset {
   
   mutating func addLocalizations(_ newLocalizations: [Localization]) -> [Bool] {
     newLocalizations.map { localization in
-      localizations.add(localization)
+      orderedLocalizations.add(localization)
     }
   }
   
   mutating func clearLocalizations() {
-    localizations.clear()
+    orderedLocalizations.clear()
+  }
+  
+  func localizations(at elapsedTime: Int,
+                     for duration: Int,
+                     stepping direction: OrderedLocalizations.Step) -> [Localization] {
+    orderedLocalizations.localizations(at: elapsedTime, for: duration, stepping: direction)
   }
   
   mutating func removeLocalizations(_ localizationIds: [String]) -> [Bool] {
     localizationIds.map { id in
-      localizations.remove(id: id)
+      orderedLocalizations.remove(id: id)
     }
+  }
+  
+  func selectedLocalizations() -> [Localization] {
+    orderedLocalizations.allSelected()
   }
 
   mutating func selectLocalizations(_ localizationIds: [String]) -> [Bool] {
-    localizations.clearSelected()
+    orderedLocalizations.clearSelected()
 
     return localizationIds.map { id in
-      localizations.select(id)
+      orderedLocalizations.select(id)
     }
   }
 
   mutating func updateLocalizations(_ updatedLocalizations: [Localization]) -> [Bool] {
     updatedLocalizations.map { localization in
-      localizations.update(localization)
+      orderedLocalizations.update(localization)
     }
   }
 }

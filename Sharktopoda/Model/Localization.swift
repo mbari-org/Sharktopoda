@@ -7,9 +7,7 @@
 
 import AVFoundation
 
-// CxTBD Investigate Localization struct vs class.
-
-class Localization: Hashable {
+struct Localization: Hashable {
   let id: String
   let concept: String
   let elapsedTime: Int
@@ -50,5 +48,4 @@ struct OrderedLocalization: Comparable {
   static func < (lhs: OrderedLocalization, rhs: OrderedLocalization) -> Bool {
     lhs.elapsedTime < rhs.elapsedTime
   }
-
 }

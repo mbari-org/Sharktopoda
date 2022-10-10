@@ -7,29 +7,41 @@
 
 import Foundation
 
-struct Localizations {
+struct OrderedLocalizations {
   private var storage = [String : Localization]()
   private var ordered = [OrderedLocalization]()
-  private var selectedIds = Set<String>()
+  private var selected = Set<String>()
 
   init() {}
   
-  enum Slide: Int {
+  enum Step: Int {
     case left = -1
     case right =  1
+    
+    func opposite() -> Step {
+      self == .left ? .right : .left
+    }
   }
 }
 
-extension Localizations {
-  func allLocalizations(at elapsedTimeMillis: Int,
-                        for duration: Int,
-                        inDirection direction: Slide) {
+// Retrieval
+extension OrderedLocalizations {
+  func localizations(at elapsedTime: Int,
+                     for duration: Int,
+                     stepping direction: Step) -> [Localization] {
+    let clusterIndex = insertionIndex(for: elapsedTime)
+    let startIndex = slide(clusterIndex, direction)
+    let endIndex = slide(clusterIndex, direction.opposite(), until: elapsedTime + duration)
     
+    let range = startIndex < endIndex ? startIndex..<endIndex : endIndex..<startIndex
+    let localizations = localizations(in: range)
+    
+    return startIndex < endIndex ? localizations : localizations.reversed()
   }
 }
 
 /// Storage
-extension Localizations {
+extension OrderedLocalizations {
   mutating func add(_ localization: Localization) -> Bool {
     guard !exists(localization) else { return false }
     
@@ -42,7 +54,7 @@ extension Localizations {
   mutating func clear() {
     storage.removeAll()
     ordered.removeAll()
-    selectedIds.removeAll()
+    selected.removeAll()
   }
   
   mutating func remove(id: String) -> Bool {
@@ -50,7 +62,7 @@ extension Localizations {
     
     storage[id] = nil
     removeOrdered(localization)
-    selectedIds.remove(localization.id)
+    selected.remove(localization.id)
 
     return true
   }
@@ -67,7 +79,7 @@ extension Localizations {
 }
 
 /// Order
-extension Localizations {
+extension OrderedLocalizations {
   // CxNote Avoid using binarySearch when clearly not necessary
   
   private mutating func addOrdered(_ localization: Localization) {
@@ -113,43 +125,41 @@ extension Localizations {
 }
 
 /// Selected
-extension Localizations {
+extension OrderedLocalizations {
+  func allSelected() -> [Localization] {
+    selected.map { id in
+      storage[id]!
+    }
+  }
+
+  mutating func clearSelected() {
+    selected.removeAll()
+  }
+  
   mutating func select(_ id: String) -> Bool {
     guard storage[id] != nil else { return false }
     
-    selectedIds.insert(id)
+    selected.insert(id)
     
     return true
-  }
-  
-  mutating func clearSelected() {
-    selectedIds.removeAll()
-  }
-  
-  func selected() -> [Localization] {
-    selectedIds.map { id in
-      storage[id]!
-    }
   }
 }
 
 /// Convenience
-extension Localizations {
+extension OrderedLocalizations {
   func exists(_ localization: Localization) -> Bool {
     storage[localization.id] != nil
   }
   
-  
-//  private func allLocalizations(atIndex index: Int, matching elapsedTime: Int) -> [Localization] {
-//    var localizations = [Localization]()
-//    localizations.append(ordered[index])
-//
-//    return localizations
-//  }
+  private func localizations(in range: Range<Int>) -> [Localization] {
+    ordered[range]
+      .map { $0.id }
+      .map { storage[$0]! }
+  }
 }
 
 /// Localization index processing
-extension Localizations {
+extension OrderedLocalizations {
   
   private func findIndex(matching localization: OrderedLocalization, clusteredAt index: Int) -> Int? {
     if let localizationIndex = findIndex(matching: localization,
@@ -167,7 +177,7 @@ extension Localizations {
   
   private func findIndex(matching localization: OrderedLocalization,
                          startingAt index: Int,
-                         direction: Slide) -> Int? {
+                         direction: Step) -> Int? {
     var foundLocalization = ordered[index]
     
     var foundIndex = index
@@ -209,8 +219,8 @@ extension Localizations {
     return value < left ? left : right + 1
   }
   
-  private func slide(_ index: Int, _ direction: Slide) -> Int {
-    let elapsedTime = ordered[index].elapsedTime
+  private func slide(_ index: Int, _ direction: Step, until time: Int? = nil) -> Int {
+    let elapsedTime = time ?? ordered[index].elapsedTime
     
     var slideIndex = index
     while ordered[slideIndex + direction.rawValue].elapsedTime == elapsedTime {

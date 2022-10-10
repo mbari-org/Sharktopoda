@@ -8,9 +8,9 @@
 import Foundation
 
 struct Localizations {
-  private var _storage = [String : Localization]()
-  private var _order = [Localization]()
-  private var _selected = Set<String>()
+  private var storage = [String : Localization]()
+  private var ordered = [Localization]()
+  private var selected = Set<String>()
 
   init() {}
   
@@ -33,24 +33,24 @@ extension Localizations {
   mutating func add(_ localization: Localization) -> Bool {
     guard !exists(localization) else { return false }
     
-    _storage[localization.id] = localization
+    storage[localization.id] = localization
     addOrdered(localization)
     
     return true
   }
   
   mutating func clear() {
-    _storage.removeAll()
-    _order.removeAll()
-    _selected.removeAll()
+    storage.removeAll()
+    ordered.removeAll()
+    selected.removeAll()
   }
   
   mutating func remove(id: String) -> Bool {
-    guard let localization = _storage[id] else { return false }
+    guard let localization = storage[id] else { return false }
     
-    _storage[id] = nil
+    storage[id] = nil
     removeOrdered(localization)
-    _selected.remove(localization.id)
+    selected.remove(localization.id)
 
     return true
   }
@@ -58,7 +58,7 @@ extension Localizations {
   mutating func update(_ localization: Localization) -> Bool {
     guard exists(localization) else { return false }
     
-    _storage[localization.id] = localization
+    storage[localization.id] = localization
     removeOrdered(localization)
     addOrdered(localization)
     
@@ -71,36 +71,36 @@ extension Localizations {
   // CxNote Avoid using binarySearch when clearly not necessary
   
   private mutating func addOrdered(_ localization: Localization) {
-    if _order.isEmpty {
-      _order.append(localization)
-    } else if _order.count == 1 {
-      if localization < _order[0] {
-        _order.insert(localization, at: 0)
+    if ordered.isEmpty {
+      ordered.append(localization)
+    } else if ordered.count == 1 {
+      if localization < ordered[0] {
+        ordered.insert(localization, at: 0)
       } else {
-        _order.append(localization)
+        ordered.append(localization)
       }
-    } else if _order.last! < localization {
+    } else if ordered.last! < localization {
       // Since localizations will often be added at the end, this optimization seems sensible
-      _order.append(localization)
+      ordered.append(localization)
     } else {
       let index = insertionIndex(for: localization)
-      _order.insert(localization, at: index)
+      ordered.insert(localization, at: index)
     }
   }
   
   private mutating func removeOrdered(_ localization: Localization) {
-    guard !_order.isEmpty else { return }
+    guard !ordered.isEmpty else { return }
     
-    if _order.count == 1 {
-      guard localization == _order[0] else { return }
-      _order.remove(at: 0)
+    if ordered.count == 1 {
+      guard localization == ordered[0] else { return }
+      ordered.remove(at: 0)
     } else {
       let index = insertionIndex(for: localization)
       // Since there can be multiple Localizations at a specified time and the insertion index
       // any one of the Localizations at that time, we need to find the specfic Localization
       // we really want.
       if let localizationIndex = findIndex(matching: localization, clusteredAt: index) {
-        _order.remove(at: localizationIndex)
+        ordered.remove(at: localizationIndex)
       } else {
         return
       }
@@ -111,20 +111,20 @@ extension Localizations {
 /// Selected
 extension Localizations {
   mutating func select(_ id: String) -> Bool {
-    guard _storage[id] != nil else { return false }
+    guard storage[id] != nil else { return false }
     
-    _selected.insert(id)
+    selected.insert(id)
     
     return true
   }
   
   mutating func clearSelected() {
-    _selected.removeAll()
+    selected.removeAll()
   }
   
   func selected() -> [Localization] {
-    _selected.map { id in
-      _storage[id]!
+    selected.map { id in
+      storage[id]!
     }
   }
 }
@@ -132,13 +132,13 @@ extension Localizations {
 /// Convenience
 extension Localizations {
   func exists(_ localization: Localization) -> Bool {
-    _storage[localization.id] != nil
+    storage[localization.id] != nil
   }
   
   
   private func allLocalizations(atIndex index: Int, matching elapsedTime: Int) -> [Localization] {
     var localizations = [Localization]()
-    localizations.append(_order[index])
+    localizations.append(ordered[index])
 
     return localizations
   }
@@ -164,7 +164,7 @@ extension Localizations {
   private func findIndex(matching localization: Localization,
                          startingAt index: Int,
                          direction: Slide) -> Int? {
-    var foundLocalization = _order[index]
+    var foundLocalization = ordered[index]
     
     var foundIndex = index
     while foundLocalization.elapsedTimeMillis == localization.elapsedTimeMillis {
@@ -172,7 +172,7 @@ extension Localizations {
         return foundIndex
       }
       foundIndex += direction.rawValue
-      foundLocalization = _order[foundIndex]
+      foundLocalization = ordered[foundIndex]
     }
     return nil
   }
@@ -183,14 +183,14 @@ extension Localizations {
   
   private func insertionIndex(for elapsedTime: Int) -> Int {
     var left = 0
-    var right = _order.count - 1
+    var right = ordered.count - 1
 
     var index = 0
     var value: Int = .min
     
     while left < right {
       index = (left + right) / 2
-      value = _order[index].elapsedTimeMillis
+      value = ordered[index].elapsedTimeMillis
       
       if value == elapsedTime {
         return index
@@ -206,10 +206,10 @@ extension Localizations {
   }
   
   private func slide(_ index: Int, _ direction: Slide) -> Int {
-    let elapsedTime = _order[index].elapsedTimeMillis
+    let elapsedTime = ordered[index].elapsedTimeMillis
     
     var slideIndex = index
-    while _order[slideIndex + direction.rawValue].elapsedTimeMillis == elapsedTime {
+    while ordered[slideIndex + direction.rawValue].elapsedTimeMillis == elapsedTime {
       slideIndex += direction.rawValue
     }
     return slideIndex

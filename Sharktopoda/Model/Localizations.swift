@@ -13,6 +13,19 @@ struct Localizations {
   private var _selected = Set<String>()
 
   init() {}
+  
+  enum Slide: Int {
+    case left = -1
+    case right =  1
+  }
+}
+
+extension Localizations {
+  func allLocalizations(at elapsedTimeMillis: Int,
+                        for duration: Int,
+                        inDirection direction: Slide) {
+    
+  }
 }
 
 /// Storage
@@ -55,8 +68,9 @@ extension Localizations {
 
 /// Order
 extension Localizations {
+  // CxNote Avoid using binarySearch when clearly not necessary
+  
   private mutating func addOrdered(_ localization: Localization) {
-    // Avoid using binarySearch when clearly not necessary
     if _order.isEmpty {
       _order.append(localization)
     } else if _order.count == 1 {
@@ -69,19 +83,24 @@ extension Localizations {
       // Since localizations will often be added at the end, this optimization seems sensible
       _order.append(localization)
     } else {
-      let index = _order.binarySearch(for: localization) ?? _order.count
+      let index = insertionIndex(for: localization)
       _order.insert(localization, at: index)
     }
   }
   
   private mutating func removeOrdered(_ localization: Localization) {
     guard !_order.isEmpty else { return }
+    
     if _order.count == 1 {
       guard localization == _order[0] else { return }
       _order.remove(at: 0)
     } else {
-      if let index = _order.binarySearch(for: localization) {
-        _order.remove(at: index)
+      let index = insertionIndex(for: localization)
+      // Since there can be multiple Localizations at a specified time and the insertion index
+      // any one of the Localizations at that time, we need to find the specfic Localization
+      // we really want.
+      if let localizationIndex = findIndex(matching: localization, clusteredAt: index) {
+        _order.remove(at: localizationIndex)
       } else {
         return
       }
@@ -114,5 +133,85 @@ extension Localizations {
 extension Localizations {
   func exists(_ localization: Localization) -> Bool {
     _storage[localization.id] != nil
+  }
+  
+  
+  private func allLocalizations(atIndex index: Int, matching elapsedTime: Int) -> [Localization] {
+    var localizations = [Localization]()
+    localizations.append(_order[index])
+
+    return localizations
+  }
+}
+
+/// Localization index processing
+extension Localizations {
+  
+  private func findIndex(matching localization: Localization, clusteredAt index: Int) -> Int? {
+    if let localizationIndex = findIndex(matching: localization,
+                                         startingAt: index,
+                                         direction: .right) {
+      return localizationIndex
+    } else
+    if let localizationIndex = findIndex(matching: localization,
+                                         startingAt: index - 1,
+                                         direction: .left) {
+      return localizationIndex
+    }
+    return nil
+  }
+  
+  private func findIndex(matching localization: Localization,
+                         startingAt index: Int,
+                         direction: Slide) -> Int? {
+    var foundLocalization = _order[index]
+    
+    var foundIndex = index
+    while foundLocalization.elapsedTimeMillis == localization.elapsedTimeMillis {
+      if foundLocalization.id == localization.id {
+        return foundIndex
+      }
+      foundIndex += direction.rawValue
+      foundLocalization = _order[foundIndex]
+    }
+    return nil
+  }
+  
+  private func insertionIndex(for localization: Localization) -> Int {
+    insertionIndex(for: localization.elapsedTimeMillis)
+  }
+  
+  private func insertionIndex(for elapsedTime: Int) -> Int {
+    var left = 0
+    var right = _order.count - 1
+
+    var index = 0
+    var value: Int = .min
+    
+    while left < right {
+      index = (left + right) / 2
+      value = _order[index].elapsedTimeMillis
+      
+      if value == elapsedTime {
+        return index
+      } else
+      if value < elapsedTime {
+        left = slide(index, .right) + 1
+      } else {
+        right = slide(index, .left) - 1
+      }
+    }
+    
+    return value < left ? left : right + 1
+  }
+  
+  private func slide(_ index: Int, _ direction: Slide) -> Int {
+    let elapsedTime = _order[index].elapsedTimeMillis
+    
+    var slideIndex = index
+    while _order[slideIndex + direction.rawValue].elapsedTimeMillis == elapsedTime {
+      slideIndex += direction.rawValue
+    }
+    return slideIndex
   }
 }

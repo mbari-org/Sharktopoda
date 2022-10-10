@@ -14,7 +14,6 @@
 		E223C30E28F2191500274C3E /* ControlUpdateLocalizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E223C30D28F2191500274C3E /* ControlUpdateLocalizations.swift */; };
 		E223C31028F21D8500274C3E /* ControlClearLocalizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E223C30F28F21D8500274C3E /* ControlClearLocalizations.swift */; };
 		E223C31228F2207300274C3E /* ControlSelectLocalizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E223C31128F2207300274C3E /* ControlSelectLocalizations.swift */; };
-		E223C31428F4753D00274C3E /* Futz.swift in Sources */ = {isa = PBXBuildFile; fileRef = E223C31328F4753D00274C3E /* Futz.swift */; };
 		E229F4C228D9150A001F220E /* ControlConnect.swift in Sources */ = {isa = PBXBuildFile; fileRef = E229F4C128D9150A001F220E /* ControlConnect.swift */; };
 		E22F0EA428DA57800097A34E /* ControlRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22F0EA328DA57800097A34E /* ControlRequest.swift */; };
 		E22F72FD28DA5D9100253A48 /* ControlResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22F72FC28DA5D9100253A48 /* ControlResponse.swift */; };
@@ -131,7 +130,6 @@
 		E223C30D28F2191500274C3E /* ControlUpdateLocalizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlUpdateLocalizations.swift; sourceTree = "<group>"; };
 		E223C30F28F21D8500274C3E /* ControlClearLocalizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlClearLocalizations.swift; sourceTree = "<group>"; };
 		E223C31128F2207300274C3E /* ControlSelectLocalizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlSelectLocalizations.swift; sourceTree = "<group>"; };
-		E223C31328F4753D00274C3E /* Futz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Futz.swift; sourceTree = "<group>"; };
 		E229F4C128D9150A001F220E /* ControlConnect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlConnect.swift; sourceTree = "<group>"; };
 		E22F0EA328DA57800097A34E /* ControlRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlRequest.swift; sourceTree = "<group>"; };
 		E22F72FC28DA5D9100253A48 /* ControlResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponse.swift; sourceTree = "<group>"; };
@@ -430,7 +428,6 @@
 		E2C22E8328CFDC26003CD976 /* Sharktopoda */ = {
 			isa = PBXGroup;
 			children = (
-				E223C31328F4753D00274C3E /* Futz.swift */,
 				E2C22E8428CFDC26003CD976 /* SharktopodaApp.swift */,
 				E2C22ECD28D27B81003CD976 /* UDP */,
 				E2C22EC328D14495003CD976 /* Model */,
@@ -724,7 +721,6 @@
 				E237C0A828EE14B5002868D1 /* FloatingPanelModifier.swift in Sources */,
 				E2EE0E3C28DB9B3B00138A86 /* ControlSeek.swift in Sources */,
 				E2BC08F028EC797D007F4B5D /* FrameCaptureError.swift in Sources */,
-				E223C31428F4753D00274C3E /* Futz.swift in Sources */,
 				E22F0EA428DA57800097A34E /* ControlRequest.swift in Sources */,
 				E2EE0E3E28DB9B9F00138A86 /* ControlCapture.swift in Sources */,
 				E223C31228F2207300274C3E /* ControlSelectLocalizations.swift in Sources */,

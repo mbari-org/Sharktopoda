@@ -15,6 +15,9 @@ struct VideoAsset {
   
   var avAsset: AVURLAsset
   var avAssetTrack: AVAssetTrack?
+
+  let frameDurataionMillis: Int
+  let durationMillis: Int
   
   var orderedLocalizations = OrderedLocalizations()
   
@@ -25,15 +28,9 @@ struct VideoAsset {
     self.url = url
     avAsset = AVURLAsset(url: url)
     avAssetTrack = avAsset.tracks(withMediaType: AVMediaType.video).first
-  }
-  
-  var durationMillis: Int {
-    avAsset.duration.asMillis()
-  }
-  
-  var frameDurataionMillis: Int {
-    guard let track = avAssetTrack else { return 0 }
-    return track.minFrameDuration.asMillis()
+    
+    frameDurataionMillis = avAssetTrack?.minFrameDuration.asMillis() ?? 0
+    durationMillis = avAsset.duration.asMillis()
   }
   
   func frameGrab(at captureTime: Int, destination: String) async -> FrameGrabResult {
@@ -41,9 +38,12 @@ struct VideoAsset {
   }
   
   var frameRate: Float {
-    guard let track = avAssetTrack else { return Float(0) }
-    return track.nominalFrameRate
+    avAssetTrack?.nominalFrameRate ?? 0
   }
+  
+//  func frameNumber(for elapsedTime: Int) -> Int {
+//    (elapsedTime - 1) / frameDurataionMillis + 1
+//  }
   
   var size: NSSize? {
     guard let track = avAssetTrack else { return nil }

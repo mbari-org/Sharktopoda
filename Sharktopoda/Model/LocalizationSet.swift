@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct OrderedLocalizations {
+struct LocalizationSet {
   private var storage = [String : Localization]()
   private var ordered = [OrderedLocalization]()
   private var selected = Set<String>()
@@ -25,7 +25,7 @@ struct OrderedLocalizations {
 }
 
 // Retrieval
-extension OrderedLocalizations {
+extension LocalizationSet {
   func localizations(at elapsedTime: Int,
                      for duration: Int,
                      stepping direction: Step) -> [Localization] {
@@ -41,7 +41,7 @@ extension OrderedLocalizations {
 }
 
 /// Storage
-extension OrderedLocalizations {
+extension LocalizationSet {
   mutating func add(_ localization: Localization) -> Bool {
     guard !exists(localization) else { return false }
     
@@ -79,7 +79,7 @@ extension OrderedLocalizations {
 }
 
 /// Order
-extension OrderedLocalizations {
+extension LocalizationSet {
   // CxNote Avoid using binarySearch when clearly not necessary
   
   private mutating func addOrdered(_ localization: Localization) {
@@ -125,7 +125,7 @@ extension OrderedLocalizations {
 }
 
 /// Selected
-extension OrderedLocalizations {
+extension LocalizationSet {
   func allSelected() -> [Localization] {
     selected.map { id in
       storage[id]!
@@ -146,7 +146,7 @@ extension OrderedLocalizations {
 }
 
 /// Convenience
-extension OrderedLocalizations {
+extension LocalizationSet {
   func exists(_ localization: Localization) -> Bool {
     storage[localization.id] != nil
   }
@@ -159,7 +159,7 @@ extension OrderedLocalizations {
 }
 
 /// Localization index processing
-extension OrderedLocalizations {
+extension LocalizationSet {
   
   private func findIndex(matching localization: OrderedLocalization, clusteredAt index: Int) -> Int? {
     if let localizationIndex = findIndex(matching: localization,

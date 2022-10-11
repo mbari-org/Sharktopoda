@@ -19,7 +19,7 @@ struct VideoAsset {
   let frameDurataionMillis: Int
   let durationMillis: Int
   
-  var orderedLocalizations = OrderedLocalizations()
+  var localizations = LocalizationSet()
   
   static let timescaleMillis: Int32 = 1000
   
@@ -57,41 +57,41 @@ extension VideoAsset {
   
   mutating func addLocalizations(_ newLocalizations: [Localization]) -> [Bool] {
     newLocalizations.map { localization in
-      orderedLocalizations.add(localization)
+      localizations.add(localization)
     }
   }
   
   mutating func clearLocalizations() {
-    orderedLocalizations.clear()
+    localizations.clear()
   }
   
   func localizations(at elapsedTime: Int,
                      for duration: Int,
-                     stepping direction: OrderedLocalizations.Step) -> [Localization] {
-    orderedLocalizations.localizations(at: elapsedTime, for: duration, stepping: direction)
+                     stepping direction: LocalizationSet.Step) -> [Localization] {
+    localizations.localizations(at: elapsedTime, for: duration, stepping: direction)
   }
   
   mutating func removeLocalizations(_ localizationIds: [String]) -> [Bool] {
     localizationIds.map { id in
-      orderedLocalizations.remove(id: id)
+      localizations.remove(id: id)
     }
   }
   
   func selectedLocalizations() -> [Localization] {
-    orderedLocalizations.allSelected()
+    localizations.allSelected()
   }
 
   mutating func selectLocalizations(_ localizationIds: [String]) -> [Bool] {
-    orderedLocalizations.clearSelected()
+    localizations.clearSelected()
 
     return localizationIds.map { id in
-      orderedLocalizations.select(id)
+      localizations.select(id)
     }
   }
 
   mutating func updateLocalizations(_ updatedLocalizations: [Localization]) -> [Bool] {
     updatedLocalizations.map { localization in
-      orderedLocalizations.update(localization)
+      localizations.update(localization)
     }
   }
 }

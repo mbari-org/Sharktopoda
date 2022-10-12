@@ -13,7 +13,7 @@ import UniformTypeIdentifiers
 struct VideoView: View {
   var videoAsset: VideoAsset
   let avPlayer: AVPlayer
-  let videoPlayerView: VideoPlayerView
+  let videoPlayerView: Video_Player_View
   
   var localizations = LocalizationSet()
   
@@ -21,7 +21,7 @@ struct VideoView: View {
     self.videoAsset = videoAsset
     
     avPlayer = AVPlayer(url: videoAsset.url)
-    videoPlayerView = VideoPlayerView(for: avPlayer)
+    videoPlayerView = Video_Player_View(for: avPlayer)
     videoPlayerView.avPlayerView.controlsStyle = .inline
   }
   
@@ -81,15 +81,15 @@ extension VideoView {
       localizations.add(localization)
     }
     
-    let width = UserDefaults.standard.integer(forKey: PrefKeys.displayBorderSize)
-    let color = UserDefaults.standard.color(forKey: PrefKeys.displayBorderColor)
-    
-    for (index, localization) in localizationsToAdd.enumerated() {
-      if added[index] {
-        let layer = localizationLayer(localization, width: width, color: color)
-        avPlayerLayer.addSublayer(layer)
-      }
-    }
+//    let width = UserDefaults.standard.integer(forKey: PrefKeys.displayBorderSize)
+//    let color = UserDefaults.standard.color(forKey: PrefKeys.displayBorderColor)
+//    
+//    for (index, localization) in localizationsToAdd.enumerated() {
+//      if added[index] {
+//        let layer = localizationLayer(localization, width: width, color: color)
+//        avPlayerLayer.addSublayer(layer)
+//      }
+//    }
     
     return added
   }

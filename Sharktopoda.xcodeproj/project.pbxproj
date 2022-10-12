@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E213252128F722F900D6BFF6 /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E213252028F722F900D6BFF6 /* VideoPlayerView.swift */; };
 		E21DEEDF28DA13CB00A2AC01 /* ClientPing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21DEEDD28DA13CB00A2AC01 /* ClientPing.swift */; };
 		E21DEEE228DA1F3D00A2AC01 /* UDP.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21DEEE128DA1F3D00A2AC01 /* UDP.swift */; };
 		E21DEEE428DA533100A2AC01 /* ClientMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21DEEE328DA533100A2AC01 /* ClientMessage.swift */; };
@@ -98,7 +99,7 @@
 		E2FFE1FC28E37B8000425F04 /* ControlResponseFailed.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFE1FB28E37B8000425F04 /* ControlResponseFailed.swift */; };
 		E2FFE1FE28E37C5000425F04 /* ControlResponseOk.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFE1FD28E37C5000425F04 /* ControlResponseOk.swift */; };
 		E2FFE20828E6248600425F04 /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFE20728E6248600425F04 /* VideoView.swift */; };
-		E2FFE20A28E64DDC00425F04 /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFE20928E64DDC00425F04 /* VideoPlayerView.swift */; };
+		E2FFE20A28E64DDC00425F04 /* Video_Player_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFE20928E64DDC00425F04 /* Video_Player_View.swift */; };
 		E2FFE20C28E7619900425F04 /* ControlResponseInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFE20B28E7619900425F04 /* ControlResponseInfo.swift */; };
 		E2FFE21028E79AE000425F04 /* ControlResponseAllInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFE20F28E79AE000425F04 /* ControlResponseAllInfo.swift */; };
 		E2FFE21228E7A8CA00425F04 /* ControlResponseElapsed.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFE21128E7A8CA00425F04 /* ControlResponseElapsed.swift */; };
@@ -123,6 +124,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E213252028F722F900D6BFF6 /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
 		E21DEEDD28DA13CB00A2AC01 /* ClientPing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientPing.swift; sourceTree = "<group>"; };
 		E21DEEE128DA1F3D00A2AC01 /* UDP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDP.swift; sourceTree = "<group>"; };
 		E21DEEE328DA533100A2AC01 /* ClientMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientMessage.swift; sourceTree = "<group>"; };
@@ -218,7 +220,7 @@
 		E2FFE1FB28E37B8000425F04 /* ControlResponseFailed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseFailed.swift; sourceTree = "<group>"; };
 		E2FFE1FD28E37C5000425F04 /* ControlResponseOk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseOk.swift; sourceTree = "<group>"; };
 		E2FFE20728E6248600425F04 /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
-		E2FFE20928E64DDC00425F04 /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
+		E2FFE20928E64DDC00425F04 /* Video_Player_View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Video_Player_View.swift; sourceTree = "<group>"; };
 		E2FFE20B28E7619900425F04 /* ControlResponseInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseInfo.swift; sourceTree = "<group>"; };
 		E2FFE20F28E79AE000425F04 /* ControlResponseAllInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseAllInfo.swift; sourceTree = "<group>"; };
 		E2FFE21128E7A8CA00425F04 /* ControlResponseElapsed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseElapsed.swift; sourceTree = "<group>"; };
@@ -558,8 +560,9 @@
 			children = (
 				E2FAB21A28E24A7C006D2676 /* VideoWindow.swift */,
 				E2FFE20728E6248600425F04 /* VideoView.swift */,
-				E2FFE20928E64DDC00425F04 /* VideoPlayerView.swift */,
+				E2FFE20928E64DDC00425F04 /* Video_Player_View.swift */,
 				E237C0A028ECFB2E002868D1 /* Open */,
+				E213252028F722F900D6BFF6 /* VideoPlayerView.swift */,
 			);
 			path = Video;
 			sourceTree = "<group>";
@@ -725,10 +728,11 @@
 				E2EE0E3E28DB9B9F00138A86 /* ControlCapture.swift in Sources */,
 				E223C31228F2207300274C3E /* ControlSelectLocalizations.swift in Sources */,
 				E2FFE1FE28E37C5000425F04 /* ControlResponseOk.swift in Sources */,
+				E213252128F722F900D6BFF6 /* VideoPlayerView.swift in Sources */,
 				E2E5962D28DA63700058D054 /* ControlOpen.swift in Sources */,
 				E2FFE21428E8824100425F04 /* ControlResponseState.swift in Sources */,
 				E21DEEE228DA1F3D00A2AC01 /* UDP.swift in Sources */,
-				E2FFE20A28E64DDC00425F04 /* VideoPlayerView.swift in Sources */,
+				E2FFE20A28E64DDC00425F04 /* Video_Player_View.swift in Sources */,
 				E2989ABF28D3D083009D2D65 /* Color.swift in Sources */,
 				E2C22ECF28D27C2D003CD976 /* UDPServer.swift in Sources */,
 				E295627C28D5325A00E88ED1 /* NetworkControlPreferencesView.swift in Sources */,

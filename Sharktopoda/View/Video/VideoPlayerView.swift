@@ -1,26 +1,32 @@
 //
 //  VideoPlayerView.swift
-//  Created for Sharktopoda on 9/29/22.
+//  Created for Sharktopoda on 10/12/22.
 //
 //  Apache License 2.0 — See project LICENSE file
 //
 
-import AVKit
-import SwiftUI
+import AppKit
+import AVFoundation
 
-final class VideoPlayerView: NSViewRepresentable {
-  let avPlayerView: AVPlayerView
-
-  init(for avPlayer: AVPlayer) {
-    avPlayerView = AVPlayerView()
-    avPlayerView.player = avPlayer
+final class VideoPlayerView: NSView {
+  
+  private let rootLayer = CALayer()
+  private let playerLayer = AVPlayerLayer()
+  
+  override public init(frame frameRect: NSRect) {
+    super.init(frame: frameRect)
+    setupLayers()
   }
   
-  func makeNSView(context: Context) -> some NSView {
-    return avPlayerView
+  required public init?(coder decoder: NSCoder) {
+    super.init(coder: decoder)
+    setupLayers()
   }
   
-  func updateNSView(_ nsView: NSViewType, context: Context) {
-    return
+  private func setupLayers() {
+    wantsLayer = true
+    layer = rootLayer
+    rootLayer.addSublayer(playerLayer)
+//    setupPlayerLayer()
   }
 }

@@ -48,9 +48,11 @@ extension VideoView {
     await videoAsset.frameGrab(at: captureTime, destination: destination)
   }
 
-  func fullSize() -> NSSize {
-    let videoSize = self.videoAsset.size ?? NSMakeSize(600, 600)
-    return NSMakeSize(videoSize.width, videoSize.height + 110)
+  func videoSize() -> NSSize {
+    if let videoSize = self.videoAsset.size {
+      return NSMakeSize(videoSize.width, videoSize.height)
+    }
+    return NSMakeSize(600, 600)
   }
   
   func pause() {

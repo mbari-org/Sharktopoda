@@ -27,7 +27,7 @@ class VideoWindow: NSWindow {
     videoView = VideoView(videoAsset: videoAsset)
     keyInfo = KeyInfo(keyTime: Date())
     
-    let videoSize = videoView.fullSize()
+    let videoSize = videoView.videoSize()
     let windowSize = VideoWindow.scaleSize(size: videoSize)
     
     super.init(

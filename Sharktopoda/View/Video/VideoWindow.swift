@@ -104,13 +104,15 @@ extension VideoWindow {
       localizations.add(localization)
     }
     
-    //
-    //    for (index, localization) in localizationsToAdd.enumerated() {
-    //      if added[index] {
-    //        let layer = localizationLayer(localization, width: width, color: color)
-    //        avPlayerLayer.addSublayer(layer)
-    //      }
-    //    }
+//    let width = CGFloat(UserDefaults.standard.integer(forKey: PrefKeys.displayBorderSize))
+    let width = CGFloat(6)
+    let color = UserDefaults.standard.color(forKey: PrefKeys.displayBorderColor).cgColor!
+    
+    for (index, localization) in localizationsToAdd.enumerated() {
+      if added[index] {
+        videoPlayerView.addLocalization(localization, color: color, width: width)
+      }
+    }
     
     return added
   }
@@ -203,6 +205,22 @@ extension VideoWindow {
       }
     }
     return nil
+  }
+}
+
+/// Localiztion layer
+extension VideoWindow {
+  func localizationLayer(_ localization: Localization, color: CGColor, width: CGFloat) -> CAShapeLayer {
+    let layer = CAShapeLayer()
+    
+    layer.path = CGPath(rect: localization.location, transform: nil)
+    
+    //    let path = NSBezierPath(rect: localization.location)
+    //    path.lineWidth = CGFloat(width)
+    
+    //    layer.path = path
+    
+    return layer
   }
 }
 

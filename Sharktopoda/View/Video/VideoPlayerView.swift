@@ -51,7 +51,21 @@ final class VideoPlayerView: NSView {
   private var player: AVPlayer? {
     get { playerLayer.player }
   }
-  
+}
+
+extension VideoPlayerView {
+  func addLocalization(_ localization: Localization, color: CGColor, width: CGFloat) {
+    let layer = CAShapeLayer()
+    layer.frame = localization.location
+    layer.lineWidth = width
+    layer.strokeColor = color
+    layer.fillColor = .clear
+    layer.path = CGPath(rect: localization.location, transform: nil)
+    
+    DispatchQueue.main.async { [weak self] in
+      self?.playerLayer.addSublayer(layer)
+    }
+  }
 }
 
 extension VideoPlayerView {

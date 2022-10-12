@@ -68,11 +68,14 @@ extension LocalizationSet {
   }
     
   mutating func update(_ localization: Localization) -> Bool {
-    guard exists(localization) else { return false }
+    let existing = storage[localization.id]
     
     storage[localization.id] = localization
-    removeOrdered(localization)
-    addOrdered(localization)
+    
+    if (localization.elapsedTime != existing?.elapsedTime) {
+      removeOrdered(localization)
+      addOrdered(localization)
+    }
     
     return true
   }

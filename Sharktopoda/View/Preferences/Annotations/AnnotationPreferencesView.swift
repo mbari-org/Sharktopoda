@@ -7,13 +7,12 @@
 
 import SwiftUI
 
+
+
 struct AnnotationPreferencesView: View {
-  static var defaultSize = 6
-  static var defaultColorHex = "#00ffff"
-  
   @AppStorage(PrefKeys.showAnnotations)
-  private var showAnnotations: Bool = true
-  
+  private var showAnnotations: Bool = UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations)
+    
   var body: some View {
     VStack {
       HStack {

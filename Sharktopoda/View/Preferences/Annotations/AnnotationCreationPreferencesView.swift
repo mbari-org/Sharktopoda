@@ -8,17 +8,17 @@
 import SwiftUI
 
 struct AnnotationCreationPreferencesView: View {
-  @AppStorage(PrefKeys.creationCursorSize)
-  private var creationCursorSize: Int = AnnotationPreferencesView.defaultSize
-  
   @AppStorage(PrefKeys.creationCursorColor)
-  private var creationCursorColorHex: String = AnnotationPreferencesView.defaultColorHex
+  private var creationCursorColorHex: String = UserDefaults.standard.hexColor(forKey: PrefKeys.creationCursorColor)
   
-  @AppStorage(PrefKeys.creationBorderSize)
-  private var creationBorderSize: Int = AnnotationPreferencesView.defaultSize
+  @AppStorage(PrefKeys.creationCursorSize)
+  private var creationCursorSize: Int = UserDefaults.standard.integer(forKey: PrefKeys.creationCursorSize)
   
   @AppStorage(PrefKeys.creationBorderColor)
-  private var creationBorderColorHex: String = AnnotationPreferencesView.defaultColorHex
+  private var creationBorderColorHex: String = UserDefaults.standard.hexColor(forKey: PrefKeys.creationBorderColor)
+  
+  @AppStorage(PrefKeys.creationBorderSize)
+  private var creationBorderSize: Int = UserDefaults.standard.integer(forKey: PrefKeys.creationBorderSize)
   
   var body: some View {
     Divider()

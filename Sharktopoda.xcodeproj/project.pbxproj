@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E213252128F722F900D6BFF6 /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E213252028F722F900D6BFF6 /* VideoPlayerView.swift */; };
+		E213252528F7651F00D6BFF6 /* DefaultPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = E213252428F7651F00D6BFF6 /* DefaultPreferences.swift */; };
 		E21DEEDF28DA13CB00A2AC01 /* ClientPing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21DEEDD28DA13CB00A2AC01 /* ClientPing.swift */; };
 		E21DEEE228DA1F3D00A2AC01 /* UDP.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21DEEE128DA1F3D00A2AC01 /* UDP.swift */; };
 		E21DEEE428DA533100A2AC01 /* ClientMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21DEEE328DA533100A2AC01 /* ClientMessage.swift */; };
@@ -125,6 +126,7 @@
 
 /* Begin PBXFileReference section */
 		E213252028F722F900D6BFF6 /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
+		E213252428F7651F00D6BFF6 /* DefaultPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultPreferences.swift; sourceTree = "<group>"; };
 		E21DEEDD28DA13CB00A2AC01 /* ClientPing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientPing.swift; sourceTree = "<group>"; };
 		E21DEEE128DA1F3D00A2AC01 /* UDP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDP.swift; sourceTree = "<group>"; };
 		E21DEEE328DA533100A2AC01 /* ClientMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientMessage.swift; sourceTree = "<group>"; };
@@ -366,6 +368,7 @@
 				E2989AC028D4BAD0009D2D65 /* SizeColorRow.swift */,
 				E295627328D4FAC800E88ED1 /* Annotations */,
 				E295627A28D5322D00E88ED1 /* Network */,
+				E213252428F7651F00D6BFF6 /* DefaultPreferences.swift */,
 			);
 			path = Preferences;
 			sourceTree = "<group>";
@@ -720,6 +723,7 @@
 				E2505D5A28EF91960027F280 /* LocalizationSet.swift in Sources */,
 				E2BC08E928EB7795007F4B5D /* NSImage.swift in Sources */,
 				E295627928D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift in Sources */,
+				E213252528F7651F00D6BFF6 /* DefaultPreferences.swift in Sources */,
 				E2EE0E4028DB9DD200138A86 /* ControlAllInfo.swift in Sources */,
 				E237C0A828EE14B5002868D1 /* FloatingPanelModifier.swift in Sources */,
 				E2EE0E3C28DB9B3B00138A86 /* ControlSeek.swift in Sources */,

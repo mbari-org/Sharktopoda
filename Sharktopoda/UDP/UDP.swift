@@ -8,7 +8,7 @@
 import Foundation
 import Network
 
-class UDP {
+struct UDP {
   private static var defaultServerPort = 8800
   
   static var server: UDPServer = UDPServer(port: UDP.startupServerPort())

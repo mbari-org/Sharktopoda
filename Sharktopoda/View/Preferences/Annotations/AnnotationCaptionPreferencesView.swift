@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct AnnotationCaptionPreferencesView: View {
-  @AppStorage(PrefKeys.captionFontSize)
-  private var captionFontSize: Int = 12
-  
-  @AppStorage(PrefKeys.captionFontColor)
-  private var captionFontColorHex: String = "#000000"
-  
   @AppStorage(PrefKeys.captionDefault)
-  private var captionDefault: String = "Object"
+  private var captionDefault: String = UserDefaults.standard.string(forKey: PrefKeys.captionDefault)!
+
+  @AppStorage(PrefKeys.captionFontColor)
+  private var captionFontColorHex: String = UserDefaults.standard.hexColor(forKey: PrefKeys.captionFontColor)
+
+  @AppStorage(PrefKeys.captionFontSize)
+  private var captionFontSize: Int = UserDefaults.standard.integer(forKey: PrefKeys.captionFontSize)
   
   var body: some View {
     Divider()

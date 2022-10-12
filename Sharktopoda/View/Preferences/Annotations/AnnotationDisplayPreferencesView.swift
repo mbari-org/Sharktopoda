@@ -9,17 +9,17 @@ import SwiftUI
 
 struct AnnotationDisplayPreferencesView: View {
   @AppStorage(PrefKeys.displayBorderSize)
-  private var displayBorderSize: Int = AnnotationPreferencesView.defaultSize
+  private var displayBorderSize: Int = UserDefaults.standard.integer(forKey: PrefKeys.displayBorderSize)
   
   @AppStorage(PrefKeys.displayBorderColor)
-  private var displayBorderColorHex: String = AnnotationPreferencesView.defaultColorHex
+  private var displayBorderColorHex: String = UserDefaults.standard.hexColor(forKey: PrefKeys.displayBorderColor)
   
   @AppStorage(PrefKeys.displayTimeWindow)
-  private var displayTimeWindow: Int = 30
+  private var displayTimeWindow: Int = UserDefaults.standard.integer(forKey: PrefKeys.displayTimeWindow)
   
   @AppStorage(PrefKeys.displayUseDuration)
   private var displayUseDuration: Bool = false
-  
+
   var body: some View {
     Divider()
     

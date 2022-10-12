@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct AnnotationSelectionPreferencesView: View {
-  @AppStorage(PrefKeys.selectionBorderSize)
-  private var selectionBorderSize: Int = AnnotationPreferencesView.defaultSize
-  
   @AppStorage(PrefKeys.selectionBorderColor)
-  private var selectionBorderColorHex: String = AnnotationPreferencesView.defaultColorHex
+  private var selectionBorderColorHex: String = UserDefaults.standard.hexColor(forKey: PrefKeys.selectionBorderColor)
   
+  @AppStorage(PrefKeys.selectionBorderSize)
+  private var selectionBorderSize: Int = UserDefaults.standard.integer(forKey: PrefKeys.selectionBorderSize)
+
   var body: some View {
     Divider()
     

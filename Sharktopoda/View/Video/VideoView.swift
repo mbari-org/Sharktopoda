@@ -15,8 +15,6 @@ struct VideoView: View {
   let avPlayer: AVPlayer
   let videoPlayerView: Video_Player_View
   
-  var localizations = LocalizationSet()
-  
   init(videoAsset: VideoAsset) {
     self.videoAsset = videoAsset
     
@@ -70,62 +68,6 @@ extension VideoView {
   
   func step(_ steps: Int) {
     avPlayer.currentItem?.step(byCount: steps)
-  }
-}
-
-// Localizations
-extension VideoView {
-  
-  mutating func addLocalizations(_ localizationsToAdd: [Localization]) -> [Bool] {
-    let added = localizationsToAdd.map { localization in
-      localizations.add(localization)
-    }
-    
-//    let width = UserDefaults.standard.integer(forKey: PrefKeys.displayBorderSize)
-//    let color = UserDefaults.standard.color(forKey: PrefKeys.displayBorderColor)
-//    
-//    for (index, localization) in localizationsToAdd.enumerated() {
-//      if added[index] {
-//        let layer = localizationLayer(localization, width: width, color: color)
-//        avPlayerLayer.addSublayer(layer)
-//      }
-//    }
-    
-    return added
-  }
-  
-  mutating func clearLocalizations() {
-    localizations.clear()
-  }
-  
-  func localizations(at elapsedTime: Int,
-                     for duration: Int,
-                     stepping direction: LocalizationSet.Step) -> [Localization] {
-    localizations.localizations(at: elapsedTime, for: duration, stepping: direction)
-  }
-  
-  mutating func removeLocalizations(_ localizationIds: [String]) -> [Bool] {
-    localizationIds.map { id in
-      localizations.remove(id: id)
-    }
-  }
-  
-  func selectedLocalizations() -> [Localization] {
-    localizations.allSelected()
-  }
-  
-  mutating func selectLocalizations(_ localizationIds: [String]) -> [Bool] {
-    localizations.clearSelected()
-    
-    return localizationIds.map { id in
-      localizations.select(id)
-    }
-  }
-  
-  mutating func updateLocalizations(_ updatedLocalizations: [Localization]) -> [Bool] {
-    updatedLocalizations.map { localization in
-      localizations.update(localization)
-    }
   }
 }
 

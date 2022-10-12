@@ -19,13 +19,20 @@ class VideoWindow: NSWindow {
       lhs.keyTime < rhs.keyTime
     }
   }
+
+  var videoPlayerView = VideoPlayerView()
   
   var videoView: VideoView
   var keyInfo: KeyInfo
   
+  var localizations = LocalizationSet()
+
   init(for videoAsset: VideoAsset) {
-    videoView = VideoView(videoAsset: videoAsset)
     keyInfo = KeyInfo(keyTime: Date())
+
+    videoPlayerView.asset = videoAsset
+
+    videoView = VideoView(videoAsset: videoAsset)
     
     let videoSize = videoView.videoSize()
     let windowSize = VideoWindow.scaleSize(size: videoSize)
@@ -40,7 +47,8 @@ class VideoWindow: NSWindow {
     title = videoAsset.id
     makeKeyAndOrderFront(nil)
     
-    contentView = NSHostingView(rootView: self.videoView)
+//    contentView = NSHostingView(rootView: self.videoView)
+    contentView = videoPlayerView
     
     delegate = self
   }
@@ -92,24 +100,48 @@ extension VideoWindow {
 /// Localizations
 extension VideoWindow {
   
-  func addLocalizations(_ localizations: [Localization]) -> [Bool] {
-    videoView.addLocalizations(localizations)
+  func addLocalizations(_ localizationsToAdd: [Localization]) -> [Bool] {
+    let added = localizationsToAdd.map { localization in
+      localizations.add(localization)
+    }
+    
+    //
+    //    for (index, localization) in localizationsToAdd.enumerated() {
+    //      if added[index] {
+    //        let layer = localizationLayer(localization, width: width, color: color)
+    //        avPlayerLayer.addSublayer(layer)
+    //      }
+    //    }
+    
+    return added
   }
   
   func clearLocalizations() {
-    videoView.clearLocalizations()
+    localizations.clear()
   }
   
   func removeLocalizations(_ localizationIds: [String]) -> [Bool] {
-    videoView.removeLocalizations(localizationIds)
+    localizationIds.map { id in
+      localizations.remove(id: id)
+    }
+  }
+
+  func selectedLocalizations() -> [Localization] {
+    localizations.allSelected()
   }
 
   func selectLocalizations(_ localizationIds: [String]) -> [Bool] {
-    videoView.selectLocalizations(localizationIds)
+    localizations.clearSelected()
+    
+    return localizationIds.map { id in
+      localizations.select(id)
+    }
   }
-
-  func updateLocalizations(_ localizations: [Localization]) -> [Bool] {
-    videoView.updateLocalizations(localizations)
+  
+  func updateLocalizations(_ updatedLocalizations: [Localization]) -> [Bool] {
+    updatedLocalizations.map { localization in
+      localizations.update(localization)
+    }
   }
 }
 

@@ -19,8 +19,6 @@ struct VideoAsset {
   let frameDurataionMillis: Int
   let durationMillis: Int
   
-  var localizations = LocalizationSet()
-  
   static let timescaleMillis: Int32 = 1000
   
   init(id: String, url: URL) {
@@ -52,48 +50,5 @@ struct VideoAsset {
   }
 }
 
-// Localizations
-extension VideoAsset {
-  
-  mutating func addLocalizations(_ newLocalizations: [Localization]) -> [Bool] {
-    newLocalizations.map { localization in
-      localizations.add(localization)
-    }
-  }
-  
-  mutating func clearLocalizations() {
-    localizations.clear()
-  }
-  
-  func localizations(at elapsedTime: Int,
-                     for duration: Int,
-                     stepping direction: LocalizationSet.Step) -> [Localization] {
-    localizations.localizations(at: elapsedTime, for: duration, stepping: direction)
-  }
-  
-  mutating func removeLocalizations(_ localizationIds: [String]) -> [Bool] {
-    localizationIds.map { id in
-      localizations.remove(id: id)
-    }
-  }
-  
-  func selectedLocalizations() -> [Localization] {
-    localizations.allSelected()
-  }
-
-  mutating func selectLocalizations(_ localizationIds: [String]) -> [Bool] {
-    localizations.clearSelected()
-
-    return localizationIds.map { id in
-      localizations.select(id)
-    }
-  }
-
-  mutating func updateLocalizations(_ updatedLocalizations: [Localization]) -> [Bool] {
-    updatedLocalizations.map { localization in
-      localizations.update(localization)
-    }
-  }
-}
 
 

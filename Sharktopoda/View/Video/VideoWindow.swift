@@ -93,23 +93,23 @@ extension VideoWindow {
 extension VideoWindow {
   
   func addLocalizations(_ localizations: [Localization]) -> [Bool] {
-    videoView.videoAsset.addLocalizations(localizations)
+    videoView.addLocalizations(localizations)
   }
   
   func clearLocalizations() {
-    videoView.videoAsset.clearLocalizations()
+    videoView.clearLocalizations()
   }
   
   func removeLocalizations(_ localizationIds: [String]) -> [Bool] {
-    videoView.videoAsset.removeLocalizations(localizationIds)
+    videoView.removeLocalizations(localizationIds)
   }
 
   func selectLocalizations(_ localizationIds: [String]) -> [Bool] {
-    videoView.videoAsset.selectLocalizations(localizationIds)
+    videoView.selectLocalizations(localizationIds)
   }
 
   func updateLocalizations(_ localizations: [Localization]) -> [Bool] {
-    videoView.videoAsset.updateLocalizations(localizations)
+    videoView.updateLocalizations(localizations)
   }
 }
 

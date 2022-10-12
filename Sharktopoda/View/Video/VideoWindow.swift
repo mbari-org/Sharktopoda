@@ -23,7 +23,6 @@ class VideoWindow: NSWindow {
   var keyInfo: KeyInfo
 
   var videoPlayerView = VideoPlayerView()
-  var videoView: VideoView
 
   var localizations = LocalizationSet()
   
@@ -36,13 +35,10 @@ class VideoWindow: NSWindow {
 
     videoPlayerView.videoAsset = videoAsset
 
-    videoView = VideoView(videoAsset: videoAsset)
-    
-    let videoSize = videoView.videoSize()
-    let windowSize = VideoWindow.scaleSize(size: videoSize)
+    let videoSize = videoAsset.size!
     
     super.init(
-      contentRect: NSMakeRect(0, 0, windowSize.width, windowSize.height),
+      contentRect: NSMakeRect(0, 0, videoSize.width, videoSize.height),
       styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
       backing: .buffered,
       defer: false)
@@ -51,7 +47,6 @@ class VideoWindow: NSWindow {
     title = videoAsset.id
     makeKeyAndOrderFront(nil)
     
-//    contentView = NSHostingView(rootView: self.videoView)
     contentView = videoPlayerView
     
     delegate = self
@@ -61,15 +56,15 @@ class VideoWindow: NSWindow {
 /// Convenience functions
 extension VideoWindow {
   func canStep(_ steps: Int) -> Bool {
-    videoView.canStep(steps)
+    videoPlayerView.canStep(steps)
   }
   
   func elapsedTimeMillis() -> Int {
-    videoView.elapsedTimeMillis()
+    videoPlayerView.elapsedTimeMillis()
   }
 
   func frameGrab(at captureTime: Int, destination: String) async -> FrameGrabResult {
-    await videoView.frameGrab(at: captureTime, destination: destination)
+    await videoPlayerView.frameGrab(at: captureTime, destination: destination)
   }
   
   var id: String {
@@ -77,23 +72,23 @@ extension VideoWindow {
   }
   
   func pause() {
-    videoView.pause()
+    videoPlayerView.pause()
   }
   
   func play(rate: Float) {
-    videoView.rate = rate
+    videoPlayerView.rate = rate
   }
   
   var rate: Float {
-    videoView.rate
+    videoPlayerView.rate
   }
   
   func seek(elapsed: Int) {
-    videoView.seek(elapsed: elapsed)
+    videoPlayerView.seek(elapsed: elapsed)
   }
   
   func step(_ steps: Int) {
-    videoView.step(steps)
+    videoPlayerView.step(steps)
   }
   
   var url: URL {

@@ -16,7 +16,7 @@ struct ControlResponseInfo: ControlResponse {
     var isKey: Bool
     
     init(using videoWindow: VideoWindow) {
-      let videoAsset = videoWindow.videoView.videoAsset
+      let videoAsset = videoWindow.videoAsset
       self.uuid = videoAsset.id
       self.url = videoAsset.url.absoluteString
       self.durationMillis = videoAsset.durationMillis

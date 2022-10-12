@@ -47,4 +47,61 @@ final class VideoPlayerView: NSView {
       }
     }
   }
+  
+  private var player: AVPlayer? {
+    get { playerLayer.player }
+  }
+  
+}
+
+extension VideoPlayerView {
+  func canStep(_ steps: Int) -> Bool {
+    guard let item = player?.currentItem else {
+      return false
+    }
+    return steps < 0 ? item.canStepBackward : item.canStepForward
+  }
+
+  func elapsedTimeMillis() -> Int {
+    guard let currentTime = player?.currentItem?.currentTime() else { return 0 }
+    return currentTime.asMillis()
+  }
+
+  func frameGrab(at captureTime: Int, destination: String) async -> FrameGrabResult {
+    guard videoAsset != nil else { return FrameGrabResult.failure(VideoPlayerError.noAsset)}
+
+    return await videoAsset!.frameGrab(at: captureTime, destination: destination)
+  }
+
+  func pause() {
+    player?.pause()
+  }
+
+  var rate: Float {
+    get { player?.rate ?? Float(0) }
+    set { player?.rate = newValue }
+  }
+
+  func seek(elapsed: Int) {
+    player?.seek(to: CMTime.fromMillis(elapsed))
+  }
+
+  func step(_ steps: Int) {
+    player?.currentItem?.step(byCount: steps)
+  }
+}
+
+enum VideoPlayerError: Error {
+  case noAsset
+  
+  var description: String {
+    switch self {
+      case .noAsset:
+        return "Video Player asset not set"
+    }
+  }
+  
+  var localizedDescription: String {
+    self.description
+  }
 }

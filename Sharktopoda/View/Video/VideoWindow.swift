@@ -19,18 +19,22 @@ class VideoWindow: NSWindow {
       lhs.keyTime < rhs.keyTime
     }
   }
+  
+  var keyInfo: KeyInfo
 
   var videoPlayerView = VideoPlayerView()
-  
   var videoView: VideoView
-  var keyInfo: KeyInfo
-  
+
   var localizations = LocalizationSet()
+  
+  var videoAsset: VideoAsset {
+    get { videoPlayerView.videoAsset! }
+  }
 
   init(for videoAsset: VideoAsset) {
     keyInfo = KeyInfo(keyTime: Date())
 
-    videoPlayerView.asset = videoAsset
+    videoPlayerView.videoAsset = videoAsset
 
     videoView = VideoView(videoAsset: videoAsset)
     
@@ -69,7 +73,7 @@ extension VideoWindow {
   }
   
   var id: String {
-    videoView.videoAsset.id
+    videoAsset.id
   }
   
   func pause() {
@@ -93,7 +97,7 @@ extension VideoWindow {
   }
   
   var url: URL {
-    videoView.videoAsset.url
+    videoAsset.url
   }
 }
 
@@ -210,7 +214,7 @@ extension VideoWindow {
 extension VideoWindow: NSWindowDelegate {
   func windowWillClose(_ notification: Notification) {
     DispatchQueue.main.async {
-      UDP.sharktopodaData.videoWindows.removeValue(forKey: self.videoView.videoAsset.id)
+      UDP.sharktopodaData.videoWindows.removeValue(forKey: self.videoAsset.id)
     }
   }
   

@@ -13,7 +13,7 @@ final class VideoPlayerView: NSView {
   private let rootLayer = CALayer()
   private let playerLayer = AVPlayerLayer()
   
-  private var videoAsset: VideoAsset?
+  private var asset: VideoAsset?
 
   override public init(frame frameRect: NSRect) {
     super.init(frame: frameRect)
@@ -35,10 +35,10 @@ final class VideoPlayerView: NSView {
     rootLayer.addSublayer(playerLayer)
   }
   
-  var asset: VideoAsset? {
-    get { return videoAsset }
+  var videoAsset: VideoAsset? {
+    get { return asset }
     set {
-      videoAsset = newValue
+      asset = newValue
       
       if let newAsset = newValue {
         playerLayer.player = AVPlayer(url: newAsset.url)

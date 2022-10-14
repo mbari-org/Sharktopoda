@@ -16,7 +16,7 @@ struct VideoAsset {
   var avAsset: AVURLAsset
   var avAssetTrack: AVAssetTrack?
 
-  let frameDurataionMillis: Int
+  let frameDuration: Int
   let durationMillis: Int
   
   static let timescaleMillis: Int32 = 1000
@@ -27,7 +27,7 @@ struct VideoAsset {
     avAsset = AVURLAsset(url: url)
     avAssetTrack = avAsset.tracks(withMediaType: AVMediaType.video).first
     
-    frameDurataionMillis = avAssetTrack?.minFrameDuration.asMillis() ?? 0
+    frameDuration = avAssetTrack?.minFrameDuration.asMillis() ?? 0
     durationMillis = avAsset.duration.asMillis()
   }
   

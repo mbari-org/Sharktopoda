@@ -64,6 +64,8 @@
 		E2989AC128D4BAD0009D2D65 /* SizeColorRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2989AC028D4BAD0009D2D65 /* SizeColorRow.swift */; };
 		E2989AC328D4F6EE009D2D65 /* AnnotationCreationPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2989AC228D4F6EE009D2D65 /* AnnotationCreationPreferencesView.swift */; };
 		E2A6B39628DB8E8500C1A5EA /* ControlInvalid.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A6B39528DB8E8500C1A5EA /* ControlInvalid.swift */; };
+		E2AAFC2D28F8EFEA00BBC703 /* LocalizationFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AAFC2C28F8EFEA00BBC703 /* LocalizationFrame.swift */; };
+		E2AAFC2F28F8F01A00BBC703 /* FrameLocalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AAFC2E28F8F01A00BBC703 /* FrameLocalization.swift */; };
 		E2BC08E228E8EC4F007F4B5D /* ControlResponseCaptureDone.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC08E128E8EC4F007F4B5D /* ControlResponseCaptureDone.swift */; };
 		E2BC08E528EB76D6007F4B5D /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC08E428EB76D6007F4B5D /* UserDefaults.swift */; };
 		E2BC08E728EB7703007F4B5D /* CMTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC08E628EB7703007F4B5D /* CMTime.swift */; };
@@ -180,6 +182,8 @@
 		E2989AC028D4BAD0009D2D65 /* SizeColorRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeColorRow.swift; sourceTree = "<group>"; };
 		E2989AC228D4F6EE009D2D65 /* AnnotationCreationPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationCreationPreferencesView.swift; sourceTree = "<group>"; };
 		E2A6B39528DB8E8500C1A5EA /* ControlInvalid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlInvalid.swift; sourceTree = "<group>"; };
+		E2AAFC2C28F8EFEA00BBC703 /* LocalizationFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationFrame.swift; sourceTree = "<group>"; };
+		E2AAFC2E28F8F01A00BBC703 /* FrameLocalization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameLocalization.swift; sourceTree = "<group>"; };
 		E2BC08E128E8EC4F007F4B5D /* ControlResponseCaptureDone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseCaptureDone.swift; sourceTree = "<group>"; };
 		E2BC08E428EB76D6007F4B5D /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		E2BC08E628EB7703007F4B5D /* CMTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMTime.swift; sourceTree = "<group>"; };
@@ -473,8 +477,7 @@
 			children = (
 				E2C22EC428D144B0003CD976 /* SharktopodaData.swift */,
 				E2C22ED628D36888003CD976 /* VideoAsset.swift */,
-				E2C22ED428D36832003CD976 /* Localization.swift */,
-				E2505D5928EF91960027F280 /* LocalizationSet.swift */,
+				E2DAF8BC28F8EE460010ECB8 /* Localization */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -533,6 +536,17 @@
 				E2FFE21328E8824100425F04 /* ControlResponseState.swift */,
 			);
 			path = ControlResponse;
+			sourceTree = "<group>";
+		};
+		E2DAF8BC28F8EE460010ECB8 /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				E2C22ED428D36832003CD976 /* Localization.swift */,
+				E2505D5928EF91960027F280 /* LocalizationSet.swift */,
+				E2AAFC2C28F8EFEA00BBC703 /* LocalizationFrame.swift */,
+				E2AAFC2E28F8F01A00BBC703 /* FrameLocalization.swift */,
+			);
+			path = Localization;
 			sourceTree = "<group>";
 		};
 		E2FAB20D28E20D66006D2676 /* MenuBar */ = {
@@ -708,6 +722,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E237C0A628EE108B002868D1 /* FloatingPanel.swift in Sources */,
+				E2AAFC2D28F8EFEA00BBC703 /* LocalizationFrame.swift in Sources */,
 				E2BC08E528EB76D6007F4B5D /* UserDefaults.swift in Sources */,
 				E2675E2828DAC08D00F5F114 /* ControlPause.swift in Sources */,
 				E22F72FD28DA5D9100253A48 /* ControlResponse.swift in Sources */,
@@ -760,6 +775,7 @@
 				E2675E2228DABE4900F5F114 /* ControlClose.swift in Sources */,
 				E2FFE1FC28E37B8000425F04 /* ControlResponseFailed.swift in Sources */,
 				E2FAB21B28E24A7C006D2676 /* VideoWindow.swift in Sources */,
+				E2AAFC2F28F8F01A00BBC703 /* FrameLocalization.swift in Sources */,
 				E2BC08EB28EB781C007F4B5D /* CGImage.swift in Sources */,
 				E2FFE21228E7A8CA00425F04 /* ControlResponseElapsed.swift in Sources */,
 				E2C22E8528CFDC26003CD976 /* SharktopodaApp.swift in Sources */,

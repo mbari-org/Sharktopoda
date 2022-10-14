@@ -12,7 +12,13 @@ struct LocalizationSet {
   private var ordered = [OrderedLocalization]()
   private var selected = Set<String>()
 
-  init() {}
+  private var frames = [LocalizationFrame]()
+  
+  let frameDuration: Int
+  
+  init(frameDuration: Int) {
+    self.frameDuration = frameDuration
+  }
   
   enum Step: Int {
     case left = -1
@@ -48,6 +54,8 @@ extension LocalizationSet {
     storage[localization.id] = localization
     addOrdered(localization)
     
+    framesInsert(localization)
+    
     return true
   }
   
@@ -81,10 +89,71 @@ extension LocalizationSet {
   }
 }
 
+/// Localization frames
+extension LocalizationSet {
+  static func frameNumber(elapsedTime: Int, frameDuration: Int) -> Int {
+    (elapsedTime - 1) / frameDuration + 1
+  }
+  
+  func frameNumber(for localization: Localization) -> Int {
+    (localization.elapsedTime - 1) / frameDuration + 1
+  }
+  
+  private mutating func framesInsert(_ localization: Localization) {
+    if frames.isEmpty {
+      frames.insert(LocalizationFrame(using: localization, frameDuration: frameDuration),
+                    at: 0)
+    } else {
+      let index = frameIndex(for: localization)
+      var localizationFrame = frames[index]
+      
+      if localizationFrame.frameNumber == frameNumber(for: localization) {
+        localizationFrame.add(localization)
+        frames[index] = localizationFrame
+      } else {
+        frames.insert(LocalizationFrame(using: localization, frameDuration: frameDuration),
+                      at: index)
+      }
+    }
+  }
+  
+  private mutating func frameRemove(_ localization: Localization) {
+    let index = frameIndex(for: localization)
+    var localizationFrame = frames[index]
+    
+    if localizationFrame.frameNumber == frameNumber(for: localization) {
+      localizationFrame.remove(localization)
+    }
+  }
+  
+  private func frameIndex(for localization: Localization) -> Int {
+    var left = 0
+    var right = frames.count - 1
+    
+    var index = 0
+    var found = 0
+    
+    let frameNumber = frameNumber(for: localization)
+    
+    while left <= right {
+      index = (left + right) / 2
+      found = frames[index].frameNumber
+      
+      if found == frameNumber {
+        return index
+      } else if found < frameNumber {
+        left = index + 1
+      } else {
+        right = index - 1
+      }
+    }
+    
+    return found < frameNumber ? left : right + 1
+  }
+}
+
 /// Order
 extension LocalizationSet {
-  // CxNote Avoid using binarySearch when clearly not necessary
-  
   private mutating func addOrdered(_ localization: Localization) {
     let orderedLocalization = OrderedLocalization(for: localization)
     

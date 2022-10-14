@@ -24,7 +24,7 @@ class VideoWindow: NSWindow {
 
   var videoPlayerView = VideoPlayerView()
 
-  var localizations = LocalizationSet()
+  var localizations: LocalizationSet
   
   var videoAsset: VideoAsset {
     get { videoPlayerView.videoAsset! }
@@ -34,6 +34,7 @@ class VideoWindow: NSWindow {
     keyInfo = KeyInfo(keyTime: Date())
 
     videoPlayerView.videoAsset = videoAsset
+    localizations = LocalizationSet(frameDuration: videoAsset.frameDuration)
 
     let videoSize = videoAsset.size!
     

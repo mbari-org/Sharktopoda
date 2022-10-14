@@ -105,14 +105,19 @@ extension LocalizationSet {
                     at: 0)
     } else {
       let index = frameIndex(for: localization)
-      var localizationFrame = frames[index]
-      
-      if localizationFrame.frameNumber == frameNumber(for: localization) {
-        localizationFrame.add(localization)
-        frames[index] = localizationFrame
-      } else {
+      if index == frames.count {
         frames.insert(LocalizationFrame(using: localization, frameDuration: frameDuration),
                       at: index)
+      } else {
+        var localizationFrame = frames[index]
+      
+        if localizationFrame.frameNumber == frameNumber(for: localization) {
+          localizationFrame.add(localization)
+          frames[index] = localizationFrame
+        } else {
+          frames.insert(LocalizationFrame(using: localization, frameDuration: frameDuration),
+                        at: index)
+        }
       }
     }
   }

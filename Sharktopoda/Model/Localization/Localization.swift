@@ -15,14 +15,21 @@ struct Localization: Hashable {
   let region: CGRect
   let hexColor: String
   
-  init(from controlLocalization: ControlLocalization) {
-    self.id = controlLocalization.uuid
-    self.concept = controlLocalization.concept
-    self.elapsedTime = controlLocalization.elapsedTimeMillis
-    self.duration = controlLocalization.durationMillis
-    self.region = CGRect(x: controlLocalization.x, y: controlLocalization.y,
-                         width: controlLocalization.width, height: controlLocalization.height)
-    self.hexColor = controlLocalization.color
+  init(from controlLocalization: ControlLocalization, for asset: VideoAsset) {
+    id = controlLocalization.uuid
+    concept = controlLocalization.concept
+    elapsedTime = controlLocalization.elapsedTimeMillis
+    duration = controlLocalization.durationMillis
+    hexColor = controlLocalization.color
+    
+    if let assetSize = asset.size {
+      region = CGRect(x: CGFloat(controlLocalization.x) / assetSize.width,
+                      y: 1.0 - (CGFloat(controlLocalization.y) / assetSize.height),
+                      width: CGFloat(controlLocalization.width) / assetSize.width,
+                      height: CGFloat(controlLocalization.height) / assetSize.height)
+    } else {
+      region = .zero
+    }
   }
 
   // Hashable

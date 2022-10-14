@@ -17,9 +17,7 @@ struct ControlUpdateLocalizations: ControlRequest {
       return failed("No video for uuid")
     }
 
-    let _ = videoWindow.updateLocalizations(localizations.map{ controlLocalization in
-      Localization(from: controlLocalization)
-    })
+    let _ = videoWindow.updateLocalizations(localizations)
     
     return ok()
   }

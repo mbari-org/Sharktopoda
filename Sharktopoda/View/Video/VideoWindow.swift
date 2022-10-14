@@ -100,16 +100,17 @@ extension VideoWindow {
 /// Localizations
 extension VideoWindow {
   
-  func addLocalizations(_ localizationsToAdd: [Localization]) -> [Bool] {
-    let added = localizationsToAdd.map { localization in
+  func addLocalizations(_ controlLocalizations: [ControlLocalization]) -> [Bool] {
+    let newLocalizations = controlLocalizations.map { Localization(from: $0, for: videoAsset)  }
+    
+    let added = newLocalizations.map { localization in
       localizations.add(localization)
     }
-    
-//    let width = CGFloat(UserDefaults.standard.integer(forKey: PrefKeys.displayBorderSize))
+
     let width = CGFloat(6)
     let color = UserDefaults.standard.color(forKey: PrefKeys.displayBorderColor).cgColor!
     
-    for (index, localization) in localizationsToAdd.enumerated() {
+    for (index, localization) in newLocalizations.enumerated() {
       if added[index] {
         videoPlayerView.addLocalization(localization, color: color, width: width)
       }
@@ -140,10 +141,10 @@ extension VideoWindow {
     }
   }
   
-  func updateLocalizations(_ updatedLocalizations: [Localization]) -> [Bool] {
-    updatedLocalizations.map { localization in
-      localizations.update(localization)
-    }
+  func updateLocalizations(_ controlLocalizations: [ControlLocalization]) -> [Bool] {
+    controlLocalizations
+      .map { Localization(from: $0, for: videoAsset) }
+      .map { localizations.update($0) }
   }
 }
 
@@ -222,5 +223,9 @@ extension VideoWindow: NSWindowDelegate {
   
   func windowDidResignKey(_ notification: Notification) {
     self.keyInfo = KeyInfo(keyTime: self.keyInfo.keyTime, isKey: false)
+  }
+  
+  func windowDidResize(_ notification: Notification) {
+    videoPlayerView.resized()
   }
 }

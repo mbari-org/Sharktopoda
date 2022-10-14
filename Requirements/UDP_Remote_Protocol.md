@@ -28,6 +28,8 @@
 
 In addition to the control commands, the remote protocol will also support commands for managing information about localizations, aka rectangular regions of interest, displayed over video during playback.
 
+[Localizations](#localizations)
+
 - [Add localizations](#add_localizations)
 - [Remove localizations](#remove_localizations)
 - [Update localizations](#modify_localizations)
@@ -694,7 +696,7 @@ This command simple checks that the port can be reached and the application resp
 }
 ```
 
-## Localizations
+## <a name="localizations"></a> Localizations
 
 A localization defines a rectangular region of interest on the video. Users should be able to draw these regions directly on a video window in sharktopoda. Sharktopoda will, in turn, notify the remote app that a new localization has been created. Sharktopoda needs to be able to handle 10,000s of localizations in a video and have them drawn on the correct frames as the video is playing, shuttling, etc. A Localization is also called an `Annotation` and has the following properties:
 

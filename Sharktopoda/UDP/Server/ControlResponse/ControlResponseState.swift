@@ -34,6 +34,6 @@ struct ControlResponseState: ControlResponse {
     status = .ok
     rate = videoWindow.rate
     state = PlayState(rate: rate)
-    elapsedTimeMillis = videoWindow.elapsedTimeMillis()
+    elapsedTimeMillis = videoWindow.playbackTime()
   }
 }

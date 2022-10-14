@@ -16,7 +16,9 @@ struct ControlSeek: ControlRequest {
     guard let videoWindow = UDP.sharktopodaData.videoWindows[uuid] else {
       return failed("No video for uuid")
     }
+
     videoWindow.seek(elapsed: elapsedTimeMillis)
+
     return ok()
   }
 }

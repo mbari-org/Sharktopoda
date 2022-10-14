@@ -455,7 +455,7 @@ or the following in the UUID does not exist:
 
 [Back](#control_commands)
 
-### <a name="req_state"></a> Request Status
+### <a name="request_state"></a> Request Status
 
 Return the current playback status of the video (by UUID) and the actual rate that the video is playing. Possible responses include: `shuttling forward`, `shuttling reverse`, `paused`, `playing`, `not found`.
 

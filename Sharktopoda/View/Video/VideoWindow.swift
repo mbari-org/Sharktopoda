@@ -59,8 +59,8 @@ extension VideoWindow {
     videoPlayerView.canStep(steps)
   }
   
-  func elapsedTimeMillis() -> Int {
-    videoPlayerView.elapsedTimeMillis()
+  func playbackTime() -> Int {
+    videoPlayerView.playbackTime()
   }
 
   func frameGrab(at captureTime: Int, destination: String) async -> FrameGrabResult {
@@ -205,22 +205,6 @@ extension VideoWindow {
       }
     }
     return nil
-  }
-}
-
-/// Localiztion layer
-extension VideoWindow {
-  func localizationLayer(_ localization: Localization, color: CGColor, width: CGFloat) -> CAShapeLayer {
-    let layer = CAShapeLayer()
-    
-    layer.path = CGPath(rect: localization.location, transform: nil)
-    
-    //    let path = NSBezierPath(rect: localization.location)
-    //    path.lineWidth = CGFloat(width)
-    
-    //    layer.path = path
-    
-    return layer
   }
 }
 

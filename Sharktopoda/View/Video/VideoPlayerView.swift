@@ -14,18 +14,20 @@ final class VideoPlayerView: NSView {
   private let playerLayer = AVPlayerLayer()
   
   private var asset: VideoAsset?
-
+  
+  var firstStepTime: Int?
+  
   override public init(frame frameRect: NSRect) {
     super.init(frame: frameRect)
-    setupLayers()
+    setup()
   }
   
   required public init?(coder decoder: NSCoder) {
     super.init(coder: decoder)
-    setupLayers()
+    setup()
   }
   
-  private func setupLayers() {
+  private func setup() {
     wantsLayer = true
     layer = rootLayer
     
@@ -41,7 +43,9 @@ final class VideoPlayerView: NSView {
       asset = newValue
       
       if let newAsset = newValue {
-        playerLayer.player = AVPlayer(url: newAsset.url)
+        let player = AVPlayer(url: newAsset.url)
+        playerLayer.player = player
+        
       } else {
         playerLayer.player = nil
       }
@@ -56,11 +60,11 @@ final class VideoPlayerView: NSView {
 extension VideoPlayerView {
   func addLocalization(_ localization: Localization, color: CGColor, width: CGFloat) {
     let layer = CAShapeLayer()
-    layer.frame = localization.location
+    layer.frame = localization.region
     layer.lineWidth = width
     layer.strokeColor = color
     layer.fillColor = .clear
-    layer.path = CGPath(rect: localization.location, transform: nil)
+    layer.path = CGPath(rect: localization.region, transform: nil)
     
     DispatchQueue.main.async { [weak self] in
       self?.playerLayer.addSublayer(layer)
@@ -76,9 +80,9 @@ extension VideoPlayerView {
     return steps < 0 ? item.canStepBackward : item.canStepForward
   }
 
-  func elapsedTimeMillis() -> Int {
-    guard let currentTime = player?.currentItem?.currentTime() else { return 0 }
-    return currentTime.asMillis()
+  func playbackTime() -> Int {
+    guard let playerTime = player?.currentItem?.currentTime() else { return 0 }
+    return playerTime.asMillis()
   }
 
   func frameGrab(at captureTime: Int, destination: String) async -> FrameGrabResult {
@@ -97,7 +101,7 @@ extension VideoPlayerView {
   }
 
   func seek(elapsed: Int) {
-    player?.seek(to: CMTime.fromMillis(elapsed))
+    player?.seek(to: CMTime.fromMillis(elapsed), toleranceBefore: .zero, toleranceAfter: .zero)
   }
 
   func step(_ steps: Int) {

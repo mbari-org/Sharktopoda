@@ -99,8 +99,6 @@
 		E2FAB21B28E24A7C006D2676 /* VideoWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB21A28E24A7C006D2676 /* VideoWindow.swift */; };
 		E2FFE1FC28E37B8000425F04 /* ControlResponseFailed.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFE1FB28E37B8000425F04 /* ControlResponseFailed.swift */; };
 		E2FFE1FE28E37C5000425F04 /* ControlResponseOk.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFE1FD28E37C5000425F04 /* ControlResponseOk.swift */; };
-		E2FFE20828E6248600425F04 /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFE20728E6248600425F04 /* VideoView.swift */; };
-		E2FFE20A28E64DDC00425F04 /* Video_Player_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFE20928E64DDC00425F04 /* Video_Player_View.swift */; };
 		E2FFE20C28E7619900425F04 /* ControlResponseInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFE20B28E7619900425F04 /* ControlResponseInfo.swift */; };
 		E2FFE21028E79AE000425F04 /* ControlResponseAllInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFE20F28E79AE000425F04 /* ControlResponseAllInfo.swift */; };
 		E2FFE21228E7A8CA00425F04 /* ControlResponseElapsed.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFE21128E7A8CA00425F04 /* ControlResponseElapsed.swift */; };
@@ -221,8 +219,6 @@
 		E2FAB21A28E24A7C006D2676 /* VideoWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoWindow.swift; sourceTree = "<group>"; };
 		E2FFE1FB28E37B8000425F04 /* ControlResponseFailed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseFailed.swift; sourceTree = "<group>"; };
 		E2FFE1FD28E37C5000425F04 /* ControlResponseOk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseOk.swift; sourceTree = "<group>"; };
-		E2FFE20728E6248600425F04 /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
-		E2FFE20928E64DDC00425F04 /* Video_Player_View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Video_Player_View.swift; sourceTree = "<group>"; };
 		E2FFE20B28E7619900425F04 /* ControlResponseInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseInfo.swift; sourceTree = "<group>"; };
 		E2FFE20F28E79AE000425F04 /* ControlResponseAllInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseAllInfo.swift; sourceTree = "<group>"; };
 		E2FFE21128E7A8CA00425F04 /* ControlResponseElapsed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseElapsed.swift; sourceTree = "<group>"; };
@@ -562,10 +558,8 @@
 			isa = PBXGroup;
 			children = (
 				E2FAB21A28E24A7C006D2676 /* VideoWindow.swift */,
-				E2FFE20728E6248600425F04 /* VideoView.swift */,
-				E2FFE20928E64DDC00425F04 /* Video_Player_View.swift */,
-				E237C0A028ECFB2E002868D1 /* Open */,
 				E213252028F722F900D6BFF6 /* VideoPlayerView.swift */,
+				E237C0A028ECFB2E002868D1 /* Open */,
 			);
 			path = Video;
 			sourceTree = "<group>";
@@ -736,7 +730,6 @@
 				E2E5962D28DA63700058D054 /* ControlOpen.swift in Sources */,
 				E2FFE21428E8824100425F04 /* ControlResponseState.swift in Sources */,
 				E21DEEE228DA1F3D00A2AC01 /* UDP.swift in Sources */,
-				E2FFE20A28E64DDC00425F04 /* Video_Player_View.swift in Sources */,
 				E2989ABF28D3D083009D2D65 /* Color.swift in Sources */,
 				E2C22ECF28D27C2D003CD976 /* UDPServer.swift in Sources */,
 				E295627C28D5325A00E88ED1 /* NetworkControlPreferencesView.swift in Sources */,
@@ -775,7 +768,6 @@
 				E2BC08ED28EB7914007F4B5D /* AVAsset.swift in Sources */,
 				E2505D5628EF7D600027F280 /* ControlAddLocalizations.swift in Sources */,
 				E2D47E9E28D8DF0F0068B192 /* UDPMessage.swift in Sources */,
-				E2FFE20828E6248600425F04 /* VideoView.swift in Sources */,
 				E2EE0E3A28DB9AAD00138A86 /* ControlState.swift in Sources */,
 				E2989AC128D4BAD0009D2D65 /* SizeColorRow.swift in Sources */,
 				E2D47E9A28D8C17D0068B192 /* ClientCommand.swift in Sources */,

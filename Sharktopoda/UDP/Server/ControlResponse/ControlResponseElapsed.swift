@@ -15,6 +15,6 @@ struct ControlResponseElapsed: ControlResponse {
   init(using videoWindow: VideoWindow) {
     response = .info
     status = .ok
-    elapsedTimeMillis = videoWindow.elapsedTimeMillis()
+    elapsedTimeMillis = videoWindow.playbackTime()
   }
 }

@@ -39,10 +39,6 @@ struct VideoAsset {
     avAssetTrack?.nominalFrameRate ?? 0
   }
   
-//  func frameNumber(for elapsedTime: Int) -> Int {
-//    (elapsedTime - 1) / frameDurataionMillis + 1
-//  }
-  
   var size: NSSize? {
     guard let track = avAssetTrack else { return nil }
     let size = track.naturalSize.applying(track.preferredTransform)

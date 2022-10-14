@@ -12,7 +12,7 @@ struct Localization: Hashable {
   let concept: String
   let elapsedTime: Int
   let duration: Int
-  let location: CGRect
+  let region: CGRect
   let hexColor: String
   
   init(from controlLocalization: ControlLocalization) {
@@ -20,8 +20,8 @@ struct Localization: Hashable {
     self.concept = controlLocalization.concept
     self.elapsedTime = controlLocalization.elapsedTimeMillis
     self.duration = controlLocalization.durationMillis
-    self.location = CGRect(x: controlLocalization.x, y: controlLocalization.y,
-                       width: controlLocalization.width, height: controlLocalization.height)
+    self.region = CGRect(x: controlLocalization.x, y: controlLocalization.y,
+                         width: controlLocalization.width, height: controlLocalization.height)
     self.hexColor = controlLocalization.color
   }
 

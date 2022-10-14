@@ -16,10 +16,13 @@ struct ControlAdvance: ControlRequest {
     guard let videoWindow = UDP.sharktopodaData.videoWindows[uuid] else {
       return failed("No video for uuid")
     }
+    
     guard videoWindow.canStep(direction) else {
       return failed("Video cannot step in that direction")
     }
+    
     videoWindow.step(direction)
+    
     return ok()
   }
 }

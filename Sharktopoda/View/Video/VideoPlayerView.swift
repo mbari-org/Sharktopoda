@@ -68,6 +68,7 @@ extension VideoPlayerView {
     
     DispatchQueue.main.async { [weak self] in
       self?.playerLayer.addSublayer(layer)
+//      self?.rootLayer.addSublayer(layer)
     }
   }
 }

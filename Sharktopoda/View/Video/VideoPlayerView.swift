@@ -16,8 +16,6 @@ final class VideoPlayerView: NSView {
   private var asset: VideoAsset?
   private var assetSize: CGSize?
   
-  var firstStepTime: Int?
-  
   override public init(frame frameRect: NSRect) {
     super.init(frame: frameRect)
     setup()
@@ -60,22 +58,14 @@ final class VideoPlayerView: NSView {
 
 extension VideoPlayerView {
   func addLocalization(_ localization: Localization, color: CGColor, width: CGFloat) {
-    let layer = LocalizationLayer(for: localization)
-    
-    layer.fillColor = .clear
-    layer.frame = layerFrame(layer)
-    layer.lineJoin = .round
-    layer.lineWidth = width
-    layer.strokeColor = color
-    layer.path = CGPath(rect: localization.region, transform: nil)
-    
-    print("\nregion: \(localization.region)")
-    print("frame: \(layer.frame)")
-    
-    print("CxDebug")
-    layer.frame = CGRect(x: 505, y: 355, width: 50, height: 75)
+
+    let layer = LocalizationLayer(for: localization, color: color, width: width)
+    let layerRect = layer.rect(relativeTo: playerLayer.videoRect)
+    layer.frame = layerRect
+    layer.path = CGPath(rect: CGRect(origin: .zero, size: layerRect.size), transform: nil)
     
     DispatchQueue.main.async { [weak self] in
+//      self?.rootLayer.addSublayer(layer)
       self?.playerLayer.addSublayer(layer)
     }
   }
@@ -110,7 +100,9 @@ extension VideoPlayerView {
   }
 
   func seek(elapsed: Int) {
-    player?.seek(to: CMTime.fromMillis(elapsed), toleranceBefore: .zero, toleranceAfter: .zero)
+    let quarterFrame = CMTime.fromMillis(videoAsset!.frameDuration / 4)
+    player?.seek(to: CMTime.fromMillis(elapsed), toleranceBefore: quarterFrame, toleranceAfter: quarterFrame)
+//        player?.seek(to: CMTime.fromMillis(elapsed), toleranceBefore: .zero, toleranceAfter: .zero)
   }
 
   func step(_ steps: Int) {
@@ -120,26 +112,20 @@ extension VideoPlayerView {
 
 extension VideoPlayerView {
   func resized() {
-    for layer in playerLayer.sublayers ?? [] {
+//    rootLayer.sublayers?.forEach { layer in
+    playerLayer.sublayers?.forEach { layer in
       guard let layer = layer as? LocalizationLayer else { return }
-      layer.frame = layerFrame(layer)
+      
+      let layerRect = layer.rect(relativeTo: playerLayer.videoRect)
+      layer.frame = layerRect
+      layer.path = CGPath(rect: CGRect(origin: .zero, size: layerRect.size), transform: nil)
+
+//      layer.transform = CATransform3DMakeTranslation(layerRect.origin.x, layerRect.origin.y, 0)
+      
+//      let rect = layer.rect(relativeTo: playerLayer.videoRect)
+//      layer.path = CGPath(rect: CGRect(origin: .zero, size: rect.size), transform: nil)
+//      layer.position(relativeTo: playerLayer.videoRect)
     }
-  }
-  
-  func layerFrame(_ layer: LocalizationLayer) -> CGRect {
-    let regionOrigin = layer.localization.region.origin
-    let regionSize = layer.localization.region.size
-
-    let videoOrigin = playerLayer.videoRect.origin
-    let videoSize = playerLayer.videoRect.size
-
-    let origin = CGPoint(x: videoOrigin.x + regionOrigin.x * videoSize.width,
-                         y: videoOrigin.y + regionOrigin.y * videoSize.height)
-    
-    let size = CGSize(width: regionSize.width * videoSize.width,
-                      height: regionSize.height * videoSize.height)
-    
-    return CGRect(origin: origin, size: size)
   }
   
 }

@@ -40,16 +40,16 @@ class VideoWindow: NSWindow {
     
     super.init(
       contentRect: NSMakeRect(0, 0, videoSize.width, videoSize.height),
-      styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
+      styleMask: [.titled, .closable, .miniaturizable, .resizable],
       backing: .buffered,
       defer: false)
     center()
     isReleasedWhenClosed = false
     title = videoAsset.id
     makeKeyAndOrderFront(nil)
-    
+
     contentView = videoPlayerView
-    
+
     delegate = self
   }
 }
@@ -107,7 +107,7 @@ extension VideoWindow {
       localizations.add(localization)
     }
 
-    let width = CGFloat(6)
+    let width = CGFloat(UserDefaults.standard.integer(forKey: PrefKeys.displayBorderSize))
     let color = UserDefaults.standard.color(forKey: PrefKeys.displayBorderColor).cgColor!
     
     for (index, localization) in newLocalizations.enumerated() {
@@ -226,6 +226,9 @@ extension VideoWindow: NSWindowDelegate {
   }
   
   func windowDidResize(_ notification: Notification) {
-    videoPlayerView.resized()
+    DispatchQueue.main.async { [weak self] in
+      self?.videoPlayerView.resized()
+//      self?.layoutIfNeeded()
+    }
   }
 }

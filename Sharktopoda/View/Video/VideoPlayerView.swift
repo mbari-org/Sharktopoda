@@ -121,9 +121,9 @@ extension VideoPlayerView {
 
 //      if let region = layer.localization?.region {
 //        let regionSize = region.size
-//        let videoSize = playerLayer.videoRect.size
-//        let x = regionSize.width * videoSize.width
-//        let y = regionSize.height * videoSize.height
+//        let playerSize = playerLayer.videoRect.size
+//        let x = regionSize.width * playerSize.width
+//        let y = regionSize.height * playerSize.height
 //        layer.transform = CATransform3DMakeScale(x, y, 1.0)
 //      }
       

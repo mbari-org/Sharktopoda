@@ -56,15 +56,15 @@ final class LocalizationLayer: CAShapeLayer {
     let region = localization!.region
     
     let regionSize = region.size
-    let videoSize = videoRect.size
+    let playerSize = videoRect.size
     
-    let size = CGSize(width: regionSize.width * videoSize.width,
-                      height: regionSize.height * videoSize.height)
+    let size = CGSize(width: regionSize.width * playerSize.width,
+                      height: regionSize.height * playerSize.height)
     
     let regionOrigin = region.origin
     let videoOrigin = videoRect.origin
-    let origin = CGPoint(x: videoOrigin.x + regionOrigin.x * videoSize.width,
-                         y: videoOrigin.y + regionOrigin.y * videoSize.height - size.height)
+    let origin = CGPoint(x: videoOrigin.x + regionOrigin.x * playerSize.width,
+                         y: videoOrigin.y + regionOrigin.y * playerSize.height - size.height)
     
     return CGRect(origin: origin, size: size)
   }

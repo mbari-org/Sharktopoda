@@ -17,7 +17,7 @@
 - [Play](#play)
 - [Pause](#pause)
 - [Request elapsed time](#elapsed)
-- [Request status](#request_state)
+- [Request player state](#player_state)
 - [Seek elapsed time](#seek)
 - [Frame advance](#frame_advance)
 - [Frame capture](#frame_capture)
@@ -226,7 +226,8 @@ Either open command should respond with a success or failure message:
 ```json
 {
   "response": "open",
-  "status": "failed"
+  "status": "failed",
+  "cause": <cause>
 }
 ```
 
@@ -279,7 +280,8 @@ If the window with UUID does not exist it should respond with
 ```json
 {
   "response": "show",
-  "status": "failed"
+  "status": "failed",
+  "cause": <cause>
 }
 ```
 
@@ -388,7 +390,8 @@ or
 ```json
 {
   "response": "play",
-  "status": "failed"
+  "status": "failed",
+  "cause": <cause>
 }
 ```
 
@@ -419,7 +422,8 @@ or, in the case of failure, such as the requested video UUID does not exist:
 ```json
 {
   "response": "pause",
-  "status": "failed"
+  "status": "failed",
+  "cause": <cause>
 }
 ```
 
@@ -451,15 +455,16 @@ or the following in the UUID does not exist:
 ```json
 {
   "response": "request elapsed time",
-  "status": "failed"
+  "status": "failed",
+  "cause": <cause>
 }
 ```
 
 [Back](#control_commands)
 
-### <a name="request_state"></a> Request Status
+### <a name="player_state"></a> Request Player State
 
-Return the current playback status of the video (by UUID) and the actual rate that the video is playing. Possible responses include: `shuttling forward`, `shuttling reverse`, `paused`, `playing`, `not found`.
+Return the current playback state of the video (by UUID) and the actual rate that the video is playing. Possible states are: `shuttling forward`, `shuttling reverse`, `paused`, `playing`.
 
 - _playing_ is when the video is playing at a rate of 1.0
 - _shuttling forward_ is when the video is playing with a positive rate that is not equal to 1.0
@@ -468,7 +473,7 @@ Return the current playback status of the video (by UUID) and the actual rate th
 
 ```json
 {
-  "command": "request status", 
+  "command": "request player state", 
   "uuid": "b52cf7f1-e19c-40ba-b176-a7e479a3b170"
 }
 ```
@@ -477,7 +482,7 @@ An example response is:
 
 ```json
 {
-  "response": "request status", 
+  "response": "request player state", 
   "status": "playing",
   "rate": 1.0
 }
@@ -487,8 +492,9 @@ or a failed response if the UUID does not exist:
 
 ```json
 {
-  "response": "request status", 
-  "status": "failed"
+  "response": "request player state", 
+  "status": "failed",
+  "cause": <cause>
 }
 ```
 
@@ -520,7 +526,8 @@ or the following in the UUID does not exist or the elapsedTimeMillis is before/a
 ```json
 {
   "response": "seek elapsed time",
-  "status": "failed"
+  "status": "failed",
+  "cause": <cause>
 }
 ```
 
@@ -552,7 +559,8 @@ or the following in the UUID does not exist:
 ```json
 {
   "response": "frame advance",
-  "status": "failed"
+  "status": "failed",
+  "cause": <cause>
 }
 ```
 
@@ -589,7 +597,7 @@ A frame capture request shall report errors as:
 {
   "response": "frame capture",
   "status": "failed",
-  "cause": <error message>
+  "cause": <cause>
 }
 ```
 
@@ -758,7 +766,8 @@ or a failure if the video with uuid does not exist:
 ```json
 {
   "response": "add localizations",
-  "status": "failed"
+  "status": "failed",
+  "cause": <cause>
 }
 ```
 
@@ -793,7 +802,8 @@ or a failure if the video with uuid does not exist:
 ```json
 {
   "response": "remove localizations",
-  "status": "failed"
+  "status": "failed",
+  "cause": <cause>
 }
 ```
 
@@ -837,7 +847,8 @@ or a failure if the video with uuid does not exist:
 ```json
 {
   "response": "update localizations",
-  "status": "failed"
+  "status": "failed",
+  "cause": <cause>
 }
 ```
 
@@ -868,7 +879,8 @@ or a failure if the video with uuid does not exist:
 ```json
 {
   "response": "clear localizations",
-  "status": "failed"
+  "status": "failed",
+  "cause": <cause>
 }
 ```
 

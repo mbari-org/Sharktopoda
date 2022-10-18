@@ -60,11 +60,12 @@ extension LocalizationSet {
 
 /// Storage
 extension LocalizationSet {
-  mutating func add(_ localization: Localization) -> Bool {
+  mutating func add(_ layer: LocalizationLayer) -> Bool {
+    guard let localization = layer.localization else { return false }
+    
     guard layers[localization.id] == nil else { return false }
     
-    layers[localization.id] = LocalizationLayer(for: localization)
-
+    layers[localization.id] = layer
     framesInsert(localization)
 
     return true
@@ -86,13 +87,15 @@ extension LocalizationSet {
     return true
   }
     
-  mutating func update(_ localization: Localization) -> Bool {
+  mutating func update(_ layer: LocalizationLayer) -> Bool {
+    guard let localization = layer.localization else { return false }
+    
     if let existing = layers[localization.id],
        localization.elapsedTime != existing.localization!.elapsedTime {
       frameRemove(existing.localization!)
       framesInsert(localization)
     }
-    layers[localization.id] = LocalizationLayer(for: localization)
+    layers[localization.id] = layer
     
     return true
   }

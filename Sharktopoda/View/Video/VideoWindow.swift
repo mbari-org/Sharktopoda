@@ -22,35 +22,34 @@ class VideoWindow: NSWindow {
   
   var keyInfo: KeyInfo
 
-  var videoPlayerView = VideoPlayerView()
-
-  var localizations: LocalizationSet
+  var videoPlayerView: VideoPlayerView
   
   var videoAsset: VideoAsset {
-    get { videoPlayerView.videoAsset! }
+    get {
+      videoPlayerView.videoAsset
+    }
   }
 
   init(for videoAsset: VideoAsset) {
     keyInfo = KeyInfo(keyTime: Date())
 
-    videoPlayerView.videoAsset = videoAsset
-    localizations = LocalizationSet(frameDuration: videoAsset.frameDuration)
+    videoPlayerView = VideoPlayerView(videoAsset: videoAsset)
 
     let videoSize = videoAsset.size!
-    
     super.init(
       contentRect: NSMakeRect(0, 0, videoSize.width, videoSize.height),
       styleMask: [.titled, .closable, .miniaturizable, .resizable],
       backing: .buffered,
       defer: false)
+
     center()
     isReleasedWhenClosed = false
     title = videoAsset.id
-    makeKeyAndOrderFront(nil)
 
     contentView = videoPlayerView
-
     delegate = self
+    
+    makeKeyAndOrderFront(nil)
   }
 }
 
@@ -99,52 +98,28 @@ extension VideoWindow {
 
 /// Localizations
 extension VideoWindow {
-  
   func addLocalizations(_ controlLocalizations: [ControlLocalization]) -> [Bool] {
-    let newLocalizations = controlLocalizations.map { Localization(from: $0, for: videoAsset)  }
-    
-    let added = newLocalizations.map { localization in
-      localizations.add(localization)
-    }
-
-    let width = CGFloat(UserDefaults.standard.integer(forKey: PrefKeys.displayBorderSize))
-    let color = UserDefaults.standard.color(forKey: PrefKeys.displayBorderColor).cgColor!
-    
-    for (index, localization) in newLocalizations.enumerated() {
-      if added[index] {
-        videoPlayerView.addLocalization(localization, color: color, width: width)
-      }
-    }
-    
-    return added
+    controlLocalizations
+      .map { Localization(from: $0) }
+      .map { videoPlayerView.addLocalization($0) }
   }
   
   func clearLocalizations() {
-    localizations.clear()
+    videoPlayerView.clearLocalizations()
   }
   
-  func removeLocalizations(_ localizationIds: [String]) -> [Bool] {
-    localizationIds.map { id in
-      localizations.remove(id: id)
-    }
+  func removeLocalizations(_ ids: [String]) -> [Bool] {
+    videoPlayerView.removeLocalizations(ids)
   }
 
-  func selectedLocalizations() -> [LocalizationLayer] {
-    localizations.allSelected()
-  }
-
-  func selectLocalizations(_ localizationIds: [String]) -> [Bool] {
-    localizations.clearSelected()
-    
-    return localizationIds.map { id in
-      localizations.select(id)
-    }
+  func selectLocalizations(_ ids: [String]) -> [Bool] {
+    videoPlayerView.selectLocalizations(ids)
   }
   
   func updateLocalizations(_ controlLocalizations: [ControlLocalization]) -> [Bool] {
     controlLocalizations
-      .map { Localization(from: $0, for: videoAsset) }
-      .map { localizations.update($0) }
+      .map { Localization(from: $0) }
+      .map { videoPlayerView.updateLocalization($0) }
   }
 }
 

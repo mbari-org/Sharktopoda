@@ -6,6 +6,7 @@
 //
 
 import AppKit
+import SwiftUI
 
 final class LocalizationLayer: CAShapeLayer {
   var localization: Localization?
@@ -21,24 +22,21 @@ final class LocalizationLayer: CAShapeLayer {
     super.init(layer: layer)
   }
   
-  convenience init(for localization: Localization) {
-    let width = CGFloat(UserDefaults.standard.integer(forKey: PrefKeys.displayBorderSize))
-    let color = UserDefaults.standard.color(forKey: PrefKeys.displayBorderColor).cgColor!
-    
-    self.init(for: localization, color: color, width: width)
-  }
-  
-  init(for localization: Localization, color: CGColor, width: CGFloat) {
+  init(for localization: Localization, videoRect: CGRect, scale: CGFloat) {
     self.localization = localization
     super.init()
+
+    let layerRect = rect(videoRect: videoRect, scale: scale)
     
     anchorPoint = .zero
     fillColor = .clear
+    frame = layerRect
     lineJoin = .round
-    lineWidth = width
-    strokeColor = color
+    lineWidth = CGFloat(UserDefaults.standard.integer(forKey: PrefKeys.displayBorderSize))
+    path = CGPath(rect: CGRect(origin: .zero, size: layerRect.size), transform: nil)
+    strokeColor = Color(hex: localization.hexColor)?.cgColor
   }
-
+  
   /// Hashable
   public override func isEqual(_ other: Any?) -> Bool {
     guard let other = other as? LocalizationLayer else { return false }
@@ -51,21 +49,18 @@ final class LocalizationLayer: CAShapeLayer {
     return hasher.finalize()
   }
   
-  /// Positioning
-  func rect(relativeTo videoRect: CGRect) -> CGRect {
+  func rect(videoRect: CGRect, scale: CGFloat) -> CGRect {
     let region = localization!.region
     
-    let regionSize = region.size
-    let playerSize = videoRect.size
+    let fullHeight = videoRect.height / scale
+
+    let size = CGSize(width: scale * region.size.width,
+                      height: scale * region.size.height)
     
-    let size = CGSize(width: regionSize.width * playerSize.width,
-                      height: regionSize.height * playerSize.height)
-    
-    let regionOrigin = region.origin
-    let videoOrigin = videoRect.origin
-    let origin = CGPoint(x: videoOrigin.x + regionOrigin.x * playerSize.width,
-                         y: videoOrigin.y + regionOrigin.y * playerSize.height - size.height)
-    
+    let x = videoRect.origin.x + scale * region.origin.x
+    let y = videoRect.origin.y + scale * (fullHeight - region.origin.y - region.size.height)
+    let origin = CGPoint(x: x, y: y)
+
     return CGRect(origin: origin, size: size)
   }
 }

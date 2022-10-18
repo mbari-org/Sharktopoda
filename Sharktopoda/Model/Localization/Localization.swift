@@ -41,18 +41,3 @@ struct Localization: Hashable {
     lhs.id == rhs.id
   }
 }
-
-struct OrderedLocalization: Comparable {
-  let id: String
-  let elapsedTime: Int
-  
-  init(for localization: Localization) {
-    id = localization.id
-    elapsedTime = localization.elapsedTime
-  }
-  
-  // Comparable
-  static func < (lhs: OrderedLocalization, rhs: OrderedLocalization) -> Bool {
-    lhs.elapsedTime < rhs.elapsedTime
-  }
-}

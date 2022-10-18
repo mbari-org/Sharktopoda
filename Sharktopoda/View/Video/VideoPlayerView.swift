@@ -65,7 +65,6 @@ extension VideoPlayerView {
     layer.path = CGPath(rect: CGRect(origin: .zero, size: layerRect.size), transform: nil)
     
     DispatchQueue.main.async { [weak self] in
-//      self?.rootLayer.addSublayer(layer)
       self?.playerLayer.addSublayer(layer)
     }
   }
@@ -102,7 +101,6 @@ extension VideoPlayerView {
   func seek(elapsed: Int) {
     let quarterFrame = CMTime.fromMillis(videoAsset!.frameDuration / 4)
     player?.seek(to: CMTime.fromMillis(elapsed), toleranceBefore: quarterFrame, toleranceAfter: quarterFrame)
-//        player?.seek(to: CMTime.fromMillis(elapsed), toleranceBefore: .zero, toleranceAfter: .zero)
   }
 
   func step(_ steps: Int) {
@@ -112,15 +110,24 @@ extension VideoPlayerView {
 
 extension VideoPlayerView {
   func resized() {
-//    rootLayer.sublayers?.forEach { layer in
     playerLayer.sublayers?.forEach { layer in
       guard let layer = layer as? LocalizationLayer else { return }
-      
+//
       let layerRect = layer.rect(relativeTo: playerLayer.videoRect)
       layer.frame = layerRect
       layer.path = CGPath(rect: CGRect(origin: .zero, size: layerRect.size), transform: nil)
 
 //      layer.transform = CATransform3DMakeTranslation(layerRect.origin.x, layerRect.origin.y, 0)
+
+//      if let region = layer.localization?.region {
+//        let regionSize = region.size
+//        let videoSize = playerLayer.videoRect.size
+//        let x = regionSize.width * videoSize.width
+//        let y = regionSize.height * videoSize.height
+//        layer.transform = CATransform3DMakeScale(x, y, 1.0)
+//      }
+      
+
       
 //      let rect = layer.rect(relativeTo: playerLayer.videoRect)
 //      layer.path = CGPath(rect: CGRect(origin: .zero, size: rect.size), transform: nil)

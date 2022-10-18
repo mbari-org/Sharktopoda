@@ -129,7 +129,7 @@ extension VideoWindow {
     }
   }
 
-  func selectedLocalizations() -> [Localization] {
+  func selectedLocalizations() -> [LocalizationLayer] {
     localizations.allSelected()
   }
 

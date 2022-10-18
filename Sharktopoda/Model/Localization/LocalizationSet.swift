@@ -8,7 +8,7 @@
 import Foundation
 
 struct LocalizationSet {
-  private var storage = [String : Localization]()
+  private var layers = [String: LocalizationLayer]()
   private var frames = [LocalizationFrame]()
   private var selected = Set<String>()
   
@@ -42,56 +42,57 @@ extension LocalizationSet {
     return Array(frames[range])
   }
   
-  func localizations(at elapsedTime: Int,
-                     for duration: Int,
-                     stepping direction: Step) -> [Localization] {
-    localizationFrames(at: elapsedTime,
-                       for: duration,
-                       stepping: direction)
-    .reduce(into: [Localization]()) { acc, frame in
-      acc.append(contentsOf: frame.ids.map { storage[$0]! })
-    }
-  }
-  
-  func localizations(at elapsedTime: Int) -> [Localization] {
-    localizations(at: elapsedTime, for: 0, stepping: .right)
-  }
+//  func localizations(at elapsedTime: Int,
+//                     for duration: Int,
+//                     stepping direction: Step) -> [Localization] {
+//    localizationFrames(at: elapsedTime,
+//                       for: duration,
+//                       stepping: direction)
+//    .reduce(into: [Localization]()) { acc, frame in
+//      acc.append(contentsOf: frame.ids.map { layers[$0]! })
+//    }
+//  }
+//  
+//  func localizations(at elapsedTime: Int) -> [Localization] {
+//    localizations(at: elapsedTime, for: 0, stepping: .right)
+//  }
 }
 
 /// Storage
 extension LocalizationSet {
   mutating func add(_ localization: Localization) -> Bool {
-    guard !exists(localization) else { return false }
+    guard layers[localization.id] == nil else { return false }
     
-    storage[localization.id] = localization
+    layers[localization.id] = LocalizationLayer(for: localization)
+
     framesInsert(localization)
-    
+
     return true
   }
   
   mutating func clear() {
-    storage.removeAll()
+    layers.removeAll()
     frames.removeAll()
     selected.removeAll()
   }
   
   mutating func remove(id: String) -> Bool {
-    guard let localization = storage[id] else { return false }
+    guard let localizationLayer = layers[id] else { return false }
     
-    storage[id] = nil
-    frameRemove(localization)
-    selected.remove(localization.id)
+    layers[id] = nil
+    frameRemove(localizationLayer.localization!)
+    selected.remove(id)
 
     return true
   }
     
   mutating func update(_ localization: Localization) -> Bool {
-    if let existing = storage[localization.id],
-       localization.elapsedTime != existing.elapsedTime {
-      frameRemove(existing)
+    if let existing = layers[localization.id],
+       localization.elapsedTime != existing.localization!.elapsedTime {
+      frameRemove(existing.localization!)
       framesInsert(localization)
     }
-    storage[localization.id] = localization
+    layers[localization.id] = LocalizationLayer(for: localization)
     
     return true
   }
@@ -172,9 +173,9 @@ extension LocalizationSet {
 
 /// Selected
 extension LocalizationSet {
-  func allSelected() -> [Localization] {
+  func allSelected() -> [LocalizationLayer] {
     selected.map { id in
-      storage[id]!
+      layers[id]!
     }
   }
 
@@ -183,17 +184,10 @@ extension LocalizationSet {
   }
   
   mutating func select(_ id: String) -> Bool {
-    guard storage[id] != nil else { return false }
+    guard layers[id] != nil else { return false }
     
     selected.insert(id)
     
     return true
-  }
-}
-
-/// Convenience
-extension LocalizationSet {
-  func exists(_ localization: Localization) -> Bool {
-    storage[localization.id] != nil
   }
 }

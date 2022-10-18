@@ -20,7 +20,14 @@ final class LocalizationLayer: CAShapeLayer {
     }
     super.init(layer: layer)
   }
-
+  
+  convenience init(for localization: Localization) {
+    let width = CGFloat(UserDefaults.standard.integer(forKey: PrefKeys.displayBorderSize))
+    let color = UserDefaults.standard.color(forKey: PrefKeys.displayBorderColor).cgColor!
+    
+    self.init(for: localization, color: color, width: width)
+  }
+  
   init(for localization: Localization, color: CGColor, width: CGFloat) {
     self.localization = localization
     super.init()
@@ -31,7 +38,20 @@ final class LocalizationLayer: CAShapeLayer {
     lineWidth = width
     strokeColor = color
   }
+
+  /// Hashable
+  public override func isEqual(_ other: Any?) -> Bool {
+    guard let other = other as? LocalizationLayer else { return false }
+    return localization == other.localization
+  }
   
+  public override var hash: Int {
+    var hasher = Hasher()
+    localization?.hash(into: &hasher)
+    return hasher.finalize()
+  }
+  
+  /// Positioning
   func rect(relativeTo videoRect: CGRect) -> CGRect {
     let region = localization!.region
     

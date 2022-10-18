@@ -31,6 +31,4 @@ struct LocalizationFrame: Comparable {
   static func < (lhs: LocalizationFrame, rhs: LocalizationFrame) -> Bool {
     lhs.frameNumber < rhs.frameNumber
   }
-  
-  
 }

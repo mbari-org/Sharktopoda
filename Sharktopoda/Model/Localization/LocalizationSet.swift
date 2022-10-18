@@ -45,13 +45,16 @@ extension LocalizationSet {
   func localizations(at elapsedTime: Int,
                      for duration: Int,
                      stepping direction: Step) -> [Localization] {
-    let localizationFrames = localizationFrames(at: elapsedTime, for: duration, stepping: direction)
-
-    let localizations = localizationFrames.reduce(into: [Localization]()) { acc, frame in
+    localizationFrames(at: elapsedTime,
+                       for: duration,
+                       stepping: direction)
+    .reduce(into: [Localization]()) { acc, frame in
       acc.append(contentsOf: frame.ids.map { storage[$0]! })
     }
-    
-    return direction == .right ? localizations : localizations.reversed()
+  }
+  
+  func localizations(at elapsedTime: Int) -> [Localization] {
+    localizations(at: elapsedTime, for: 0, stepping: .right)
   }
 }
 

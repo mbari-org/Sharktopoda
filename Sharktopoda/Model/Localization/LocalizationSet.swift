@@ -30,10 +30,23 @@ struct LocalizationSet {
 
 // Retrieval
 extension LocalizationSet {
-  func localizationFrames(at elapsedTime: Int,
-                          stepping direction: Step,
-                          for duration: Int = 0
-                          ) -> [LocalizationFrame] {
+  func frame(at elapsedTime: Int) -> LocalizationFrame? {
+    guard !frames.isEmpty else { return nil }
+    
+    let index = frameIndex(elapsedTime: elapsedTime)
+    
+    guard index != frames.count else { return nil }
+    
+    let frame = frames[index]
+    
+    guard frame.frameNumber == frameNumber(elapsedTime: elapsedTime) else { return nil }
+    
+    return frame
+  }
+  
+  func frames(at elapsedTime: Int,
+              stepping direction: Step,
+              for duration: Int) -> [LocalizationFrame] {
     let startIndex = frameIndex(elapsedTime: elapsedTime)
     let endTime = elapsedTime + (direction == .right ? 1 : -1) * duration
     let endIndex = frameIndex(elapsedTime: endTime)
@@ -113,22 +126,24 @@ extension LocalizationSet {
   }
   
   private mutating func framesInsert(_ localization: Localization) {
+    let frameNumber = frameNumber(for: localization)
+    
     if frames.isEmpty {
-      frames.insert(LocalizationFrame(localization, frameDuration),
+      frames.insert(LocalizationFrame(localization, frameNumber: frameNumber),
                     at: 0)
     } else {
       let index = frameIndex(for: localization)
       if index == frames.count {
-        frames.insert(LocalizationFrame(localization, frameDuration),
+        frames.insert(LocalizationFrame(localization, frameNumber: frameNumber),
                       at: index)
       } else {
         var localizationFrame = frames[index]
       
-        if localizationFrame.frameNumber == frameNumber(for: localization) {
+        if localizationFrame.frameNumber == frameNumber {
           localizationFrame.add(localization)
           frames[index] = localizationFrame
         } else {
-          frames.insert(LocalizationFrame(localization, frameDuration),
+          frames.insert(LocalizationFrame(localization, frameNumber: frameNumber),
                         at: index)
         }
       }

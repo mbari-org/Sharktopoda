@@ -16,7 +16,7 @@ final class VideoPlayerView: NSView {
   private var localizations: LocalizationSet?
 
   private var _videoAsset: VideoAsset?
-  
+
   var scale: CGFloat {
     /// Player always maintains original aspect so either width or height would do here
     get {
@@ -74,6 +74,8 @@ final class VideoPlayerView: NSView {
     playerLayer.autoresizingMask = [.layerWidthSizable, .layerHeightSizable]
         
     rootLayer.addSublayer(playerLayer)
+    
+    setTimeObserver()
   }
 
   private var player: AVPlayer? {
@@ -83,13 +85,10 @@ final class VideoPlayerView: NSView {
 
 extension VideoPlayerView {
   func addLocalization(_ localization: Localization) -> Bool {
-
-    guard var localizations = localizations else { return false }
-    
     let layer = LocalizationLayer(for: localization,
                                   videoRect: videoRect,
                                   scale: scale)
-    let result = localizations.add(layer)
+    let result = localizations!.add(layer)
     
     DispatchQueue.main.async { [weak self] in
       self?.playerLayer.addSublayer(layer)
@@ -159,7 +158,7 @@ extension VideoPlayerView {
   }
 
   func seek(elapsed: Int) {
-    let quarterFrame = CMTimeMultiplyByFloat64(videoAsset.frameDuration, multiplier: 0.25) 
+    let quarterFrame = CMTimeMultiplyByFloat64(videoAsset.frameDuration, multiplier: 0.25)
     player?.seek(to: CMTime.fromMillis(elapsed), toleranceBefore: quarterFrame, toleranceAfter: quarterFrame)
   }
 
@@ -169,8 +168,21 @@ extension VideoPlayerView {
 }
 
 extension VideoPlayerView {
-
   
+  func setTimeObserver() {
+    let queue = DispatchQueue(label: "Sharktopoda Video Queue: \(videoAsset.id)")
+    player?.addPeriodicTimeObserver(forInterval: videoAsset.frameDuration, queue: queue) { [weak self] time in
+      print(time.asMillis())
+      guard let localizationFrame = self?.localizations?.frame(at: time.asMillis()) else { return }
+
+      print(localizationFrame)
+    }
+  }
+  
+  
+}
+
+extension VideoPlayerView {
   func resized() {
     playerLayer.sublayers?.forEach { layer in
       guard let layer = layer as? LocalizationLayer else { return }

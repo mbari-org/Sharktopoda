@@ -12,7 +12,7 @@ struct LocalizationFrame: Comparable {
   
   private(set) var ids: [String]
   
-  init(_ localization: Localization, _ frameNumber: Int) {
+  init(_ localization: Localization, frameNumber: Int) {
     self.frameNumber = frameNumber
     ids = [String]()
     ids.append(localization.id)

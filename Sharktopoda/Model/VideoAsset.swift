@@ -16,7 +16,6 @@ struct VideoAsset {
   var avAsset: AVURLAsset
   var avAssetTrack: AVAssetTrack?
 
-  let frameDuration: Int
   let durationMillis: Int
   
   static let timescaleMillis: Int32 = 1000
@@ -27,8 +26,13 @@ struct VideoAsset {
     avAsset = AVURLAsset(url: url)
     avAssetTrack = avAsset.tracks(withMediaType: AVMediaType.video).first
     
-    frameDuration = avAssetTrack?.minFrameDuration.asMillis() ?? 0
     durationMillis = avAsset.duration.asMillis()
+  }
+  
+  var frameDuration: CMTime {
+    get {
+      avAssetTrack?.minFrameDuration ?? .zero
+    }
   }
   
   func frameGrab(at captureTime: Int, destination: String) async -> FrameGrabResult {

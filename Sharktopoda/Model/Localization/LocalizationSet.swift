@@ -5,7 +5,7 @@
 //  Apache License 2.0 — See project LICENSE file
 //
 
-import Foundation
+import AVFoundation
 
 struct LocalizationSet {
   private var layers = [String: LocalizationLayer]()
@@ -14,8 +14,8 @@ struct LocalizationSet {
   
   let frameDuration: Int
   
-  init(frameDuration: Int) {
-    self.frameDuration = frameDuration
+  init(frameDuration: CMTime) {
+    self.frameDuration = frameDuration.asMillis()
   }
   
   enum Step: Int {
@@ -31,8 +31,9 @@ struct LocalizationSet {
 // Retrieval
 extension LocalizationSet {
   func localizationFrames(at elapsedTime: Int,
-                          for duration: Int,
-                          stepping direction: Step) -> [LocalizationFrame] {
+                          stepping direction: Step,
+                          for duration: Int = 0
+                          ) -> [LocalizationFrame] {
     let startIndex = frameIndex(elapsedTime: elapsedTime)
     let endTime = elapsedTime + (direction == .right ? 1 : -1) * duration
     let endIndex = frameIndex(elapsedTime: endTime)
@@ -108,7 +109,7 @@ extension LocalizationSet {
   }
 
   func frameNumber(elapsedTime: Int) -> Int {
-    (elapsedTime - 1) / frameDuration + 1
+    (elapsedTime + frameDuration / 2) / frameDuration
   }
   
   private mutating func framesInsert(_ localization: Localization) {

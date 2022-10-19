@@ -159,7 +159,7 @@ extension VideoPlayerView {
   }
 
   func seek(elapsed: Int) {
-    let quarterFrame = CMTime.fromMillis(videoAsset.frameDuration / 4)
+    let quarterFrame = CMTimeMultiplyByFloat64(videoAsset.frameDuration, multiplier: 0.25) 
     player?.seek(to: CMTime.fromMillis(elapsed), toleranceBefore: quarterFrame, toleranceAfter: quarterFrame)
   }
 

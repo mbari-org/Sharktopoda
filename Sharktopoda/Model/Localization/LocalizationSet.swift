@@ -56,6 +56,12 @@ extension LocalizationSet {
     return Array(frames[range])
   }
   
+  func layers(at elapsedTime: Int) -> [LocalizationLayer]? {
+    guard let frame = frame(at: elapsedTime) else { return nil }
+    
+    return frame.ids.map { layers[$0]! }
+  }
+  
 //  func localizations(at elapsedTime: Int,
 //                     for duration: Int,
 //                     stepping direction: Step) -> [Localization] {

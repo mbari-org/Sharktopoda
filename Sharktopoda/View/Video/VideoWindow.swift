@@ -60,7 +60,7 @@ extension VideoWindow {
   }
   
   func playbackTime() -> Int {
-    videoPlayerView.playbackTime()
+    videoPlayerView.playbackTime
   }
 
   func frameGrab(at captureTime: Int, destination: String) async -> FrameGrabResult {

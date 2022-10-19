@@ -16,31 +16,6 @@ final class VideoPlayerView: NSView {
   private var localizations: LocalizationSet?
 
   private var _videoAsset: VideoAsset?
-
-  var scale: CGFloat {
-    /// Player always maintains original aspect so either width or height would do here
-    get {
-      videoRect.size.width / videoSize.width
-    }
-  }
-  
-  var videoAsset: VideoAsset {
-    get {
-      _videoAsset!
-    }
-  }
-  
-  var videoRect: CGRect {
-    get {
-      playerLayer.videoRect
-    }
-  }
-  
-  var videoSize: CGSize {
-    get {
-      videoAsset.size ?? .zero
-    }
-  }
   
   init(videoAsset: VideoAsset) {
     _videoAsset = videoAsset
@@ -83,6 +58,42 @@ final class VideoPlayerView: NSView {
   }
 }
 
+/// Computed variables
+extension VideoPlayerView {
+  var playbackTime: Int {
+    get {
+      guard let playerTime = player?.currentItem?.currentTime() else { return 0 }
+      return playerTime.asMillis()
+    }
+  }
+  
+  var scale: CGFloat {
+    /// Player always maintains original aspect so either width or height would do here
+    get {
+      videoRect.size.width / videoSize.width
+    }
+  }
+  
+  var videoAsset: VideoAsset {
+    get {
+      _videoAsset!
+    }
+  }
+  
+  var videoRect: CGRect {
+    get {
+      playerLayer.videoRect
+    }
+  }
+  
+  var videoSize: CGSize {
+    get {
+      videoAsset.size ?? .zero
+    }
+  }
+}
+
+/// Localizations
 extension VideoPlayerView {
   func addLocalization(_ localization: Localization) -> Bool {
     let layer = LocalizationLayer(for: localization,
@@ -90,10 +101,13 @@ extension VideoPlayerView {
                                   scale: scale)
     let result = localizations!.add(layer)
     
-    DispatchQueue.main.async { [weak self] in
-      self?.playerLayer.addSublayer(layer)
+    if player!.rate == 0,
+       localizations?.frameNumber(elapsedTime: playbackTime) == localizations?.frameNumber(for: localization) {
+      DispatchQueue.main.async { [weak self] in
+        self?.playerLayer.addSublayer(layer)
+      }
     }
-    
+
     return result
   }
 
@@ -139,11 +153,6 @@ extension VideoPlayerView {
     return steps < 0 ? item.canStepBackward : item.canStepForward
   }
 
-  func playbackTime() -> Int {
-    guard let playerTime = player?.currentItem?.currentTime() else { return 0 }
-    return playerTime.asMillis()
-  }
-
   func frameGrab(at captureTime: Int, destination: String) async -> FrameGrabResult {
     return await videoAsset.frameGrab(at: captureTime, destination: destination)
   }
@@ -173,13 +182,16 @@ extension VideoPlayerView {
     let queue = DispatchQueue(label: "Sharktopoda Video Queue: \(videoAsset.id)")
     player?.addPeriodicTimeObserver(forInterval: videoAsset.frameDuration, queue: queue) { [weak self] time in
       print(time.asMillis())
-      guard let localizationFrame = self?.localizations?.frame(at: time.asMillis()) else { return }
 
-      print(localizationFrame)
+      guard let layers = self?.localizations?.layers(at: time.asMillis()) else { return }
+      
+      DispatchQueue.main.async { [weak self] in
+        for layer in layers {
+          self?.playerLayer.addSublayer(layer)
+        }
+      }
     }
   }
-  
-  
 }
 
 extension VideoPlayerView {

@@ -19,11 +19,8 @@ final class VideoPlayerView: NSView {
   
   init(videoAsset: VideoAsset) {
     _videoAsset = videoAsset
-
     localizations = LocalizationSet(frameDuration: videoAsset.frameDuration)
-
     let videoSize = videoAsset.size!
-
     super.init(frame: NSMakeRect(0, 0, videoSize.width, videoSize.height))
     setup()
   }
@@ -60,10 +57,10 @@ final class VideoPlayerView: NSView {
 
 /// Computed variables
 extension VideoPlayerView {
-  var playbackTime: Int {
+  var playerTime: Int {
     get {
-      guard let playerTime = player?.currentItem?.currentTime() else { return 0 }
-      return playerTime.asMillis()
+      guard let currentTime = player?.currentItem?.currentTime() else { return 0 }
+      return currentTime.asMillis()
     }
   }
   
@@ -102,7 +99,7 @@ extension VideoPlayerView {
     let result = localizations!.add(layer)
     
     if player!.rate == 0,
-       localizations?.frameNumber(elapsedTime: playbackTime) == localizations?.frameNumber(for: localization) {
+       localizations?.frameNumber(elapsedTime: playerTime) == localizations?.frameNumber(for: localization) {
       DispatchQueue.main.async { [weak self] in
         self?.playerLayer.addSublayer(layer)
       }
@@ -167,8 +164,25 @@ extension VideoPlayerView {
   }
 
   func seek(elapsed: Int) {
+    pause()
+    
     let quarterFrame = CMTimeMultiplyByFloat64(videoAsset.frameDuration, multiplier: 0.25)
     player?.seek(to: CMTime.fromMillis(elapsed), toleranceBefore: quarterFrame, toleranceAfter: quarterFrame)
+    
+    let sublayers = localizationLayers()
+    if !sublayers.isEmpty {
+      sublayers.forEach { $0.removeFromSuperlayer() }
+    }
+    
+    if let layers = localizations?.layers(at: playerTime) {
+      for layer in layers {
+        playerLayer.addSublayer(layer)
+      }
+    }
+
+    DispatchQueue.main.async { [weak self] in
+      self?.playerLayer.needsLayout()
+    }
   }
 
   func step(_ steps: Int) {
@@ -195,14 +209,21 @@ extension VideoPlayerView {
 }
 
 extension VideoPlayerView {
+  func localizationLayers() -> [LocalizationLayer] {
+    return playerLayer.sublayers?.reduce(into: [LocalizationLayer]()) { acc, layer in
+      if let layer = layer as? LocalizationLayer {
+        acc.append(layer)
+      }
+    } ?? []
+  }
+  
   func resized() {
-    playerLayer.sublayers?.forEach { layer in
-      guard let layer = layer as? LocalizationLayer else { return }
-//
+    for layer in localizationLayers() {
       let layerRect = layer.rect(videoRect: videoRect, scale: scale)
       layer.frame = layerRect
       layer.path = CGPath(rect: CGRect(origin: .zero, size: layerRect.size), transform: nil)
-
+    }
+    
 //      layer.transform = CATransform3DMakeTranslation(layerRect.origin.x, layerRect.origin.y, 0)
 
 //      if let region = layer.localization?.region {
@@ -218,7 +239,7 @@ extension VideoPlayerView {
 //      let rect = layer.rect(relativeTo: playerLayer.videoRect)
 //      layer.path = CGPath(rect: CGRect(origin: .zero, size: rect.size), transform: nil)
 //      layer.position(relativeTo: playerLayer.videoRect)
-    }
+
   }
 }
 

@@ -57,7 +57,7 @@ final class VideoPlayerView: NSView {
 
 /// Computed variables
 extension VideoPlayerView {
-  var playerTime: Int {
+  var currentTime: Int {
     get {
       guard let currentTime = player?.currentItem?.currentTime() else { return 0 }
       return currentTime.asMillis()
@@ -99,7 +99,7 @@ extension VideoPlayerView {
     let result = localizations!.add(layer)
     
     if player!.rate == 0,
-       localizations?.frameNumber(elapsedTime: playerTime) == localizations?.frameNumber(for: localization) {
+       localizations?.frameNumber(elapsedTime: currentTime) == localizations?.frameNumber(for: localization) {
       DispatchQueue.main.async { [weak self] in
         self?.playerLayer.addSublayer(layer)
       }
@@ -111,14 +111,21 @@ extension VideoPlayerView {
   func clearLocalizations() {
     guard var localizations = localizations else { return }
     
+    clearDisplayedLocations()
+    
     localizations.clear()
   }
   
   func removeLocalizations(_ ids: [String]) -> [Bool] {
-    guard var localizations = localizations else {
+    guard localizations != nil else {
       return ids.map { _ in false }
     }
-    return ids.map { localizations.remove(id: $0) }
+    
+    let result = ids.map { localizations!.remove(id: $0) }
+    
+    displayCurrentLocations()
+    
+    return result
   }
   
   func selectLocalizations(_ ids: [String]) -> [Bool] {
@@ -132,12 +139,17 @@ extension VideoPlayerView {
   }
   
   func updateLocalization(_ localization: Localization) -> Bool {
-    guard var localizations = localizations else { return false }
+    guard localizations != nil else { return false }
 
     let layer = LocalizationLayer(for: localization,
                                   videoRect: videoRect,
                                   scale: scale)
-    return localizations.update(layer)
+    
+    let result = localizations!.update(layer)
+
+    displayCurrentLocations()
+
+    return result
   }
   
 }
@@ -164,29 +176,22 @@ extension VideoPlayerView {
   }
 
   func seek(elapsed: Int) {
+    /// CxTBD Should we pause here?
     pause()
-    
-    let quarterFrame = CMTimeMultiplyByFloat64(videoAsset.frameDuration, multiplier: 0.25)
-    player?.seek(to: CMTime.fromMillis(elapsed), toleranceBefore: quarterFrame, toleranceAfter: quarterFrame)
-    
-    let sublayers = localizationLayers()
-    if !sublayers.isEmpty {
-      sublayers.forEach { $0.removeFromSuperlayer() }
-    }
-    
-    if let layers = localizations?.layers(at: playerTime) {
-      for layer in layers {
-        playerLayer.addSublayer(layer)
-      }
-    }
 
-    DispatchQueue.main.async { [weak self] in
-      self?.playerLayer.needsLayout()
+    /// Within a half frame span of the target seek we'll see all the frames for the seek time
+    let quarterFrame = CMTimeMultiplyByFloat64(videoAsset.frameDuration, multiplier: 0.25)
+    player?.seek(to: CMTime.fromMillis(elapsed), toleranceBefore: quarterFrame, toleranceAfter: quarterFrame) { [weak self] done in
+      if done {
+        self?.displayCurrentLocations()
+      }
     }
   }
 
   func step(_ steps: Int) {
     player?.currentItem?.step(byCount: steps)
+    
+    displayCurrentLocations()
   }
 }
 
@@ -195,26 +200,45 @@ extension VideoPlayerView {
   func setTimeObserver() {
     let queue = DispatchQueue(label: "Sharktopoda Video Queue: \(videoAsset.id)")
     player?.addPeriodicTimeObserver(forInterval: videoAsset.frameDuration, queue: queue) { [weak self] time in
-      print(time.asMillis())
-
-      guard let layers = self?.localizations?.layers(at: time.asMillis()) else { return }
-      
-      DispatchQueue.main.async { [weak self] in
-        for layer in layers {
-          self?.playerLayer.addSublayer(layer)
-        }
-      }
+      self?.displayCurrentLocations()
     }
   }
 }
 
 extension VideoPlayerView {
+  
   func localizationLayers() -> [LocalizationLayer] {
     return playerLayer.sublayers?.reduce(into: [LocalizationLayer]()) { acc, layer in
       if let layer = layer as? LocalizationLayer {
         acc.append(layer)
       }
     } ?? []
+  }
+  
+  func displayCurrentLocations() {
+    clearDisplayedLocations()
+
+    /// Add current localizations
+    if let layers = localizations?.layers(at: currentTime) {
+      for layer in layers {
+        DispatchQueue.main.async { [weak self] in
+          self?.playerLayer.addSublayer(layer)
+        }
+      }
+    }
+
+    DispatchQueue.main.async { [weak self] in
+      self?.playerLayer.setNeedsLayout()
+    }
+  }
+  
+  func clearDisplayedLocations() {
+    let sublayers = localizationLayers()
+    if !sublayers.isEmpty {
+      DispatchQueue.main.async {
+        sublayers.forEach { $0.removeFromSuperlayer() }
+      }
+    }
   }
   
   func resized() {

@@ -7,7 +7,7 @@
 
 import AVFoundation
 
-struct Localization: Hashable {
+class Localization: Hashable {
   let id: String
   let concept: String
   let elapsedTime: Int
@@ -28,12 +28,17 @@ struct Localization: Hashable {
                     height: CGFloat(controlLocalization.height))
   }
 
-  // Hashable
+  /// Hashable
   func hash(into hasher: inout Hasher) {
     hasher.combine(id)
   }
 
   static func == (lhs: Localization, rhs: Localization) -> Bool {
     lhs.id == rhs.id
+  }
+  
+  ///
+  var description: String {
+    "id: \(id), concept: \(concept), time: \(elapsedTime), duration: \(duration), color: \(hexColor)"
   }
 }

@@ -7,165 +7,222 @@
 
 import AVFoundation
 
-struct LocalizationSet {
-  private var layers = [String: LocalizationLayer]()
-  private var frames = [LocalizationFrame]()
+class LocalizationSet {
+  private(set) var localizationLayer = [String: LocalizationLayer]()
+  
+  private var pauseFrames = [LocalizationFrame]()
+  private var forwardFrames = [LocalizationFrame]()
+  private var reverseFrames = [LocalizationFrame]()
+  
   private var selected = Set<String>()
   
+  let playerItem: AVPlayerItem
   let frameDuration: Int
   
-  init(frameDuration: CMTime) {
-    self.frameDuration = frameDuration.asMillis()
-  }
-  
-  enum Step: Int {
-    case left = -1
-    case right =  1
-    
-    func opposite() -> Step {
-      self == .left ? .right : .left
-    }
+  init(playerItem: AVPlayerItem, frameDuration: Int) {
+    self.playerItem = playerItem
+    self.frameDuration = frameDuration
   }
 }
 
-// Retrieval
+/// Enums
 extension LocalizationSet {
-  func frame(at elapsedTime: Int) -> LocalizationFrame? {
-    guard !frames.isEmpty else { return nil }
-    
-    let index = frameIndex(elapsedTime: elapsedTime)
-    
-    guard index != frames.count else { return nil }
-    
-    let frame = frames[index]
-    
-    guard frame.frameNumber == frameNumber(elapsedTime: elapsedTime) else { return nil }
-    
-    return frame
+  private enum PutAction {
+    case add
+    case insert
   }
   
-  func frames(at elapsedTime: Int,
-              stepping direction: Step,
-              for duration: Int) -> [LocalizationFrame] {
-    let startIndex = frameIndex(elapsedTime: elapsedTime)
-    let endTime = elapsedTime + (direction == .right ? 1 : -1) * duration
-    let endIndex = frameIndex(elapsedTime: endTime)
-    
-    let range = direction == .right ? startIndex..<endIndex : endIndex..<startIndex
-
-    return Array(frames[range])
-  }
-  
-  func layers(at elapsedTime: Int) -> [LocalizationLayer]? {
-    guard let frame = frame(at: elapsedTime) else { return nil }
-    
-    return frame.ids.map { layers[$0]! }
-  }
-  
-//  func localizations(at elapsedTime: Int,
-//                     for duration: Int,
-//                     stepping direction: Step) -> [Localization] {
-//    localizationFrames(at: elapsedTime,
-//                       for: duration,
-//                       stepping: direction)
-//    .reduce(into: [Localization]()) { acc, frame in
-//      acc.append(contentsOf: frame.ids.map { layers[$0]! })
-//    }
-//  }
-//  
-//  func localizations(at elapsedTime: Int) -> [Localization] {
-//    localizations(at: elapsedTime, for: 0, stepping: .right)
-//  }
+  private typealias PutInfo = (frame: LocalizationFrame,
+                               action: PutAction,
+                               index: Int)
 }
 
 /// Storage
 extension LocalizationSet {
-  mutating func add(_ layer: LocalizationLayer) -> Bool {
+  func add(_ layer: LocalizationLayer) -> Bool {
     guard let localization = layer.localization else { return false }
     
-    guard layers[localization.id] == nil else { return false }
+    guard localizationLayer[localization.id] == nil else { return false }
     
-    layers[localization.id] = layer
-    framesInsert(localization)
-
+    localizationLayer[localization.id] = layer
+    
+    pauseFrameInsert(localization)
+    forwardFrameInsert(localization)
+    reverseFrameInsert(localization)
+    
     return true
   }
   
-  mutating func clear() {
-    layers.removeAll()
-    frames.removeAll()
+  func clear() {
+    localizationLayer.removeAll()
+    
+    pauseFrames.removeAll()
+    forwardFrames.removeAll()
+    reverseFrames.removeAll()
+    
     selected.removeAll()
   }
   
-  mutating func remove(id: String) -> Bool {
-    guard let localizationLayer = layers[id] else { return false }
+  func remove(id: String) -> Bool {
+    guard let layer = localizationLayer[id],
+          let localization = layer.localization else { return false }
     
-    layers[id] = nil
-    frameRemove(localizationLayer.localization!)
+    localizationLayer[id] = nil
+    
+    pauseFrameRemove(localization)
+    forwardFrameRemove(localization)
+    reverseFrameRemove(localization)
+    
     selected.remove(id)
-
+    
     return true
   }
-    
-  mutating func update(_ layer: LocalizationLayer) -> Bool {
+  
+  func update(_ layer: LocalizationLayer) -> Bool {
     guard let localization = layer.localization else { return false }
     
-    if let existing = layers[localization.id],
-       localization.elapsedTime != existing.localization!.elapsedTime {
-      frameRemove(existing.localization!)
-      framesInsert(localization)
+    if let existingStaticLayer = localizationLayer[localization.id],
+       let existingLocalization = existingStaticLayer.localization,
+       localization.elapsedTime != existingLocalization.elapsedTime {
+      
+      pauseFrameRemove(existingLocalization)
+      pauseFrameInsert(localization)
+      
+      forwardFrameRemove(existingLocalization)
+      forwardFrameInsert(localization)
+      
+      reverseFrameRemove(existingLocalization)
+      reverseFrameInsert(localization)
     }
-    layers[localization.id] = layer
+    localizationLayer[localization.id] = layer
     
     return true
   }
 }
 
-/// Localization frames
+// Retrieve Layers
+extension LocalizationSet {
+  private func frames(_ playDirection: VideoPlayerView.PlayDirection) -> [LocalizationFrame]? {
+    switch playDirection {
+      case .forward:
+        return forwardFrames
+      case .paused:
+        return pauseFrames
+      case .reverse:
+        return reverseFrames
+    }
+  }
+  
+  func layerIds(_ playDirection: VideoPlayerView.PlayDirection, at elapsedTime: Int) -> [String]? {
+    guard let frames = frames(playDirection) else { return nil }
+    
+    guard !frames.isEmpty else { return nil }
+    
+    let index = frameIndex(for: frames, at: elapsedTime)
+    guard index != frames.count else { return nil }
+    
+    let frame = frames[index]
+    guard frame.frameNumber == frameNumber(elapsedTime: elapsedTime) else { return nil }
+    
+    return frame.ids
+  }
+  
+  func layers(_ playDirection: VideoPlayerView.PlayDirection, at elapsedTime: Int) -> [LocalizationLayer]? {
+    guard let ids = layerIds(playDirection, at: elapsedTime) else { return nil }
+    
+    return ids.map { localizationLayer[$0]! }
+  }
+}
+
+/// Frame number
 extension LocalizationSet {
   func frameNumber(for localization: Localization) -> Int {
     frameNumber(elapsedTime: localization.elapsedTime)
   }
-
-  func frameNumber(elapsedTime: Int) -> Int {
-    (elapsedTime + frameDuration / 2) / frameDuration
-  }
   
-  private mutating func framesInsert(_ localization: Localization) {
-    let frameNumber = frameNumber(for: localization)
+  func frameNumber(elapsedTime: Int) -> Int {
+    guard 0 < elapsedTime else { return 0 }
     
-    if frames.isEmpty {
-      frames.insert(LocalizationFrame(localization, frameNumber: frameNumber),
-                    at: 0)
-    } else {
-      let index = frameIndex(for: localization)
-      if index == frames.count {
-        frames.insert(LocalizationFrame(localization, frameNumber: frameNumber),
-                      at: index)
-      } else {
-        var localizationFrame = frames[index]
-      
-        if localizationFrame.frameNumber == frameNumber {
-          localizationFrame.add(localization)
-          frames[index] = localizationFrame
-        } else {
-          frames.insert(LocalizationFrame(localization, frameNumber: frameNumber),
-                        at: index)
-        }
-      }
+    return (elapsedTime + frameDuration / 2) / frameDuration
+  }
+}
+
+/// Pause frames
+extension LocalizationSet {
+  private func pauseFrameInsert(_ localization: Localization) {
+    let insertTime = localization.elapsedTime
+    let (frame, action, index) = frame(for: localization,
+                                       into: pauseFrames,
+                                       at: insertTime)
+    switch action {
+      case .add:
+        pauseFrames[index] = frame
+      case .insert:
+        pauseFrames.insert(frame, at: index)
     }
   }
   
-  private mutating func frameRemove(_ localization: Localization) {
-    let index = frameIndex(for: localization)
-    var localizationFrame = frames[index]
+  private func pauseFrameRemove(_ localization: Localization) {
+    let index = frameIndex(for: pauseFrames, at: localization.elapsedTime)
+    var localizationFrame = pauseFrames[index]
     
     if localizationFrame.frameNumber == frameNumber(for: localization) {
       localizationFrame.remove(localization)
     }
   }
+}
+
+/// Forward frames
+extension LocalizationSet {
+  private func forwardFrameInsert(_ localization: Localization) {
+    let useDuration = UserDefaults.standard.bool(forKey: PrefKeys.displayUseDuration)
+    let timeWindow = UserDefaults.standard.integer(forKey: PrefKeys.displayTimeWindow)
+    
+    let elapsed = localization.elapsedTime
+    let insertTime = useDuration ? elapsed : elapsed - (timeWindow / 2)
+    
+    let (frame, action, index) = frame(for: localization, into: forwardFrames, at: insertTime)
+                                      
+    switch action {
+      case .add:
+        forwardFrames[index] = frame
+      case .insert:
+        forwardFrames.insert(frame, at: index)
+    }
+  }
   
-  private func frameIndex(elapsedTime: Int) -> Int {
+  private func forwardFrameRemove(_ localization: Localization) {
+    fatalError("CxInc: LocalizationSet.forwardFrameRemove")
+  }
+}
+
+/// Reverse frames
+extension LocalizationSet {
+  private func reverseFrameInsert(_ localization: Localization) {
+    let useDuration = UserDefaults.standard.bool(forKey: PrefKeys.displayUseDuration)
+    let timeWindow = UserDefaults.standard.integer(forKey: PrefKeys.displayTimeWindow)
+    
+    let elapsed = localization.elapsedTime
+    let duration = localization.duration
+    
+    let insertTime = useDuration ? elapsed + duration : elapsed + (timeWindow / 2)
+    let (frame, action, index) = frame(for: localization, into: reverseFrames, at: insertTime)
+    switch action {
+      case .add:
+        reverseFrames[index] = frame
+      case .insert:
+        reverseFrames.insert(frame, at: index)
+    }
+  }
+  
+  private func reverseFrameRemove(_ localization: Localization) {
+    fatalError("CxInc: LocalizationSet.reverseFrameRemove")
+  }
+}
+
+/// Abstract frame processing
+extension LocalizationSet {
+  private func frameIndex(for frames: [LocalizationFrame], at elapsedTime: Int) -> Int {
     var left = 0
     var right = frames.count - 1
     
@@ -189,10 +246,45 @@ extension LocalizationSet {
     
     return found < frameNumber ? left : right + 1
   }
-
   
-  private func frameIndex(for localization: Localization) -> Int {
-    frameIndex(elapsedTime: localization.elapsedTime)
+  private func frame(for localization: Localization,
+                     into frames: [LocalizationFrame],
+                     at insertTime: Int) -> PutInfo {
+    
+    let frameNumber = frameNumber(elapsedTime: insertTime)
+
+    var frame: LocalizationFrame
+    var action: PutAction
+    var index: Int
+    
+    /// If no frames yet, insert at 0
+    if frames.isEmpty {
+      frame = LocalizationFrame(localization, frameNumber: frameNumber)
+      action = .insert
+      index = 0
+    } else {
+      /// Find insertion index
+      index = frameIndex(for: frames, at: insertTime)
+      /// If after end, insert there
+      if index == frames.count {
+        frame = LocalizationFrame(localization, frameNumber: frameNumber)
+        action = .insert
+      } else {
+        /// Fetch the frame at the insert index
+        frame = frames[index]
+        /// If frameNumber matches, add
+        if frame.frameNumber == frameNumber {
+          action = .add
+        } else {
+          /// else insert at index
+          frame = LocalizationFrame(localization, frameNumber: frameNumber)
+          action = .insert
+        }
+      }
+    }
+    frame.add(localization)
+    
+    return(frame, action, index)
   }
 }
 
@@ -200,16 +292,16 @@ extension LocalizationSet {
 extension LocalizationSet {
   func allSelected() -> [LocalizationLayer] {
     selected.map { id in
-      layers[id]!
+      localizationLayer[id]!
     }
   }
-
-  mutating func clearSelected() {
+  
+  func clearSelected() {
     selected.removeAll()
   }
   
-  mutating func select(_ id: String) -> Bool {
-    guard layers[id] != nil else { return false }
+  func select(_ id: String) -> Bool {
+    guard localizationLayer[id] != nil else { return false }
     
     selected.insert(id)
     

@@ -18,20 +18,22 @@ final class VideoPlayerView: NSView {
   private var _videoAsset: VideoAsset?
   
   init(videoAsset: VideoAsset) {
-    _videoAsset = videoAsset
-    localizations = LocalizationSet(frameDuration: videoAsset.frameDuration)
     let videoSize = videoAsset.size!
     super.init(frame: NSMakeRect(0, 0, videoSize.width, videoSize.height))
+
+    _videoAsset = videoAsset
     setup()
   }
   
   override public init(frame frameRect: NSRect) {
     super.init(frame: frameRect)
+
     setup()
   }
   
   required public init?(coder decoder: NSCoder) {
     super.init(coder: decoder)
+
     setup()
   }
   
@@ -46,7 +48,10 @@ final class VideoPlayerView: NSView {
     playerLayer.autoresizingMask = [.layerWidthSizable, .layerHeightSizable]
         
     rootLayer.addSublayer(playerLayer)
-    
+
+    localizations = LocalizationSet(playerItem: currentItem!,
+                                    frameDuration: videoAsset.frameDuration.asMillis())
+
     setTimeObserver()
   }
 
@@ -55,11 +60,32 @@ final class VideoPlayerView: NSView {
   }
 }
 
-/// Computed variables
+/// Enums
 extension VideoPlayerView {
+  enum PlayDirection: Int {
+    case reverse = -1
+    case paused = 0
+    case forward =  1
+    
+    func opposite() -> PlayDirection {
+      if self == .paused {
+        return .paused
+      } else {
+        return self == .reverse ? .forward : .reverse
+      }
+    }
+  }
+}
+
+/// Computed properties
+extension VideoPlayerView {
+  var currentItem: AVPlayerItem? {
+    player?.currentItem
+  }
+  
   var currentTime: Int {
     get {
-      guard let currentTime = player?.currentItem?.currentTime() else { return 0 }
+      guard let currentTime = currentItem?.currentTime() else { return 0 }
       return currentTime.asMillis()
     }
   }
@@ -96,22 +122,28 @@ extension VideoPlayerView {
     let layer = LocalizationLayer(for: localization,
                                   videoRect: videoRect,
                                   scale: scale)
-    let result = localizations!.add(layer)
     
-    if player!.rate == 0,
-       localizations?.frameNumber(elapsedTime: currentTime) == localizations?.frameNumber(for: localization) {
+    guard let localizations = localizations,
+          localizations.add(layer) else { return false }
+    
+    guard paused else { return true }
+    
+    let currentFrameNumber = localizations.frameNumber(elapsedTime: currentTime)
+    let localizationFrameNumber = localizations.frameNumber(for: localization)
+    
+    if currentFrameNumber == localizationFrameNumber {
       DispatchQueue.main.async { [weak self] in
         self?.playerLayer.addSublayer(layer)
       }
     }
 
-    return result
+    return true
   }
 
   func clearLocalizations() {
-    guard var localizations = localizations else { return }
+    guard let localizations = localizations else { return }
     
-    clearDisplayedLocations()
+    clearPause()
     
     localizations.clear()
   }
@@ -123,13 +155,13 @@ extension VideoPlayerView {
     
     let result = ids.map { localizations!.remove(id: $0) }
     
-    displayCurrentLocations()
+    displayPause()
     
     return result
   }
   
   func selectLocalizations(_ ids: [String]) -> [Bool] {
-    guard var localizations = localizations else {
+    guard let localizations = localizations else {
       return ids.map { _ in false }
     }
 
@@ -146,20 +178,26 @@ extension VideoPlayerView {
                                   scale: scale)
     
     let result = localizations!.update(layer)
-
-    displayCurrentLocations()
-
+    displayPause()
     return result
   }
-  
 }
 
+/// Video
 extension VideoPlayerView {
   func canStep(_ steps: Int) -> Bool {
-    guard let item = player?.currentItem else {
-      return false
-    }
+    guard let item = currentItem else { return false }
     return steps < 0 ? item.canStepBackward : item.canStepForward
+  }
+
+  var playDirection: PlayDirection {
+    if paused {
+      return .paused
+    } else if 0 < rate {
+      return .forward
+    } else {
+      return .reverse
+    }
   }
 
   func frameGrab(at captureTime: Int, destination: String) async -> FrameGrabResult {
@@ -167,46 +205,55 @@ extension VideoPlayerView {
   }
 
   func pause() {
+    guard !paused else { return }
+    
     player?.pause()
+    clearAllLayers()
+    displayPause()
+  }
+  
+  var paused: Bool {
+    rate == 0.0
   }
 
   var rate: Float {
     get { player?.rate ?? Float(0) }
-    set { player?.rate = newValue }
+    set {
+      if paused {
+        clearPause()
+      }
+      if newValue == 0.0 {
+        pause()
+      }
+      player?.rate = newValue
+    }
   }
 
   func seek(elapsed: Int) {
-    /// CxTBD Should we pause here?
-    pause()
+    guard paused else { return }
 
-    /// Within a half frame span of the target seek we'll see all the frames for the seek time
+    clearAllLayers()
+    
+    /// Within a half frame span of the target seek we'll see all the frames for the specified seek time
     let quarterFrame = CMTimeMultiplyByFloat64(videoAsset.frameDuration, multiplier: 0.25)
     player?.seek(to: CMTime.fromMillis(elapsed), toleranceBefore: quarterFrame, toleranceAfter: quarterFrame) { [weak self] done in
       if done {
-        self?.displayCurrentLocations()
+        self?.displayPause()
       }
     }
   }
 
   func step(_ steps: Int) {
-    player?.currentItem?.step(byCount: steps)
+    guard paused else { return }
     
-    displayCurrentLocations()
+    clearAllLayers()
+    currentItem?.step(byCount: steps)
+    displayPause()
   }
 }
 
+/// Abstract layers
 extension VideoPlayerView {
-  
-  func setTimeObserver() {
-    let queue = DispatchQueue(label: "Sharktopoda Video Queue: \(videoAsset.id)")
-    player?.addPeriodicTimeObserver(forInterval: videoAsset.frameDuration, queue: queue) { [weak self] time in
-      self?.displayCurrentLocations()
-    }
-  }
-}
-
-extension VideoPlayerView {
-  
   func localizationLayers() -> [LocalizationLayer] {
     return playerLayer.sublayers?.reduce(into: [LocalizationLayer]()) { acc, layer in
       if let layer = layer as? LocalizationLayer {
@@ -214,13 +261,22 @@ extension VideoPlayerView {
       }
     } ?? []
   }
-  
-  func displayCurrentLocations() {
-    clearDisplayedLocations()
 
-    /// Add current localizations
-    if let layers = localizations?.layers(at: currentTime) {
-      for layer in layers {
+}
+
+/// Pause layers
+extension VideoPlayerView {
+  func pauseLayers() -> [LocalizationLayer] {
+    guard paused else { return [] }
+    
+    return localizationLayers()
+  }
+  
+  func displayPause() {
+    guard paused else { return }
+
+    if let pauseLayers = localizations?.layers(.paused, at: currentTime) {
+      for layer in pauseLayers {
         DispatchQueue.main.async { [weak self] in
           self?.playerLayer.addSublayer(layer)
         }
@@ -232,38 +288,84 @@ extension VideoPlayerView {
     }
   }
   
-  func clearDisplayedLocations() {
-    let sublayers = localizationLayers()
-    if !sublayers.isEmpty {
+  func clearPause() {
+    let layers = pauseLayers()
+    
+    if !layers.isEmpty {
       DispatchQueue.main.async {
-        sublayers.forEach { $0.removeFromSuperlayer() }
+        layers.forEach { $0.removeFromSuperlayer() }
       }
     }
   }
   
   func resized() {
-    for layer in localizationLayers() {
+    guard paused else { return }
+      
+    for layer in pauseLayers() {
       let layerRect = layer.rect(videoRect: videoRect, scale: scale)
       layer.frame = layerRect
       layer.path = CGPath(rect: CGRect(origin: .zero, size: layerRect.size), transform: nil)
     }
-    
-//      layer.transform = CATransform3DMakeTranslation(layerRect.origin.x, layerRect.origin.y, 0)
-
-//      if let region = layer.localization?.region {
-//        let regionSize = region.size
-//        let playerSize = playerLayer.videoRect.size
-//        let x = regionSize.width * playerSize.width
-//        let y = regionSize.height * playerSize.height
-//        layer.transform = CATransform3DMakeScale(x, y, 1.0)
-//      }
-      
-
-      
-//      let rect = layer.rect(relativeTo: playerLayer.videoRect)
-//      layer.path = CGPath(rect: CGRect(origin: .zero, size: rect.size), transform: nil)
-//      layer.position(relativeTo: playerLayer.videoRect)
-
   }
 }
+
+/// forward / reverse layers
+extension VideoPlayerView {
+  private func displayLayers(_ direction: PlayDirection, at elapsedTime: Int) {
+    guard !paused else { return }
+    
+    guard let layerIds = localizations?.layerIds(direction, at: elapsedTime) else { return }
+    
+    layerIds
+      .forEach { id in
+        guard let layer = localizations?.localizationLayer[id] else { return }
+        DispatchQueue.main.async { [weak self] in
+          self?.playerLayer.addSublayer(layer)
+        }
+      }
+  }
+  
+  private func clearLayers(_ direction: PlayDirection, at elapsedTime: Int) {
+    guard !paused else { return }
+    
+    guard let layerIds = localizations?.layerIds(direction, at: elapsedTime) else { return }
+    
+    layerIds
+      .forEach { id in
+        guard let layer = localizations?.localizationLayer[id] else { return }
+        DispatchQueue.main.async {
+          layer.removeFromSuperlayer()
+        }
+      }
+  }
+
+  private func clearAllLayers() {
+    localizationLayers()
+      .forEach { layer in
+        DispatchQueue.main.async {
+          layer.removeFromSuperlayer()
+        }
+      }
+  }
+}
+
+extension VideoPlayerView {
+  func setTimeObserver() {
+    let queue = DispatchQueue(label: "Sharktopoda Video Queue: \(videoAsset.id)")
+    let interval = CMTimeMultiplyByFloat64(videoAsset.frameDuration, multiplier: 0.9)
+    
+    player?.addPeriodicTimeObserver(forInterval: interval, queue: queue) { [weak self] time in
+      let direction = self?.playDirection ?? .paused
+      
+      guard direction != .paused else { return }
+      
+      let elapsedTime = time.asMillis()
+      let opposite = direction.opposite()
+      
+      self?.displayLayers(direction, at: elapsedTime)
+      self?.clearLayers(opposite, at: elapsedTime)
+    }
+  }
+}
+
 

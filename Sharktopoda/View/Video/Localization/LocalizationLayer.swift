@@ -6,6 +6,7 @@
 //
 
 import AppKit
+import AVFoundation
 import SwiftUI
 
 final class LocalizationLayer: CAShapeLayer {
@@ -28,6 +29,7 @@ final class LocalizationLayer: CAShapeLayer {
 
     let layerRect = rect(videoRect: videoRect, scale: scale)
     
+    // Appearance
     anchorPoint = .zero
     fillColor = .clear
     frame = layerRect
@@ -35,6 +37,10 @@ final class LocalizationLayer: CAShapeLayer {
     lineWidth = CGFloat(UserDefaults.standard.integer(forKey: PrefKeys.displayBorderSize))
     path = CGPath(rect: CGRect(origin: .zero, size: layerRect.size), transform: nil)
     strokeColor = Color(hex: localization.hexColor)?.cgColor
+
+    // CxTBD Experiment to see if this layer can be opaque (which improves performance)
+    isOpaque = true
+
   }
   
   /// Hashable

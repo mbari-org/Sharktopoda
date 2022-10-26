@@ -15,7 +15,7 @@ struct LocalizationFrame: Comparable {
   init(_ localization: Localization, frameNumber: Int) {
     self.frameNumber = frameNumber
     ids = [String]()
-    ids.append(localization.id)
+//    ids.append(localization.id)
   }
   
   mutating func add(_ localization: Localization) {

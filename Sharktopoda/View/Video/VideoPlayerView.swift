@@ -53,10 +53,6 @@ final class VideoPlayerView: NSView {
 
     setTimeObserver()
   }
-
-  private var player: AVPlayer? {
-    get { playerLayer.player }
-  }
 }
 
 /// Enums
@@ -89,15 +85,19 @@ extension VideoPlayerView {
     }
   }
   
+  var displayLocalizations: Bool {
+    UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations)
+  }
+
+  private var player: AVPlayer? {
+    get { playerLayer.player }
+  }
+  
   var scale: CGFloat {
     /// Player always maintains original aspect so either width or height would do here
     get {
       videoRect.size.width / videoSize.width
     }
-  }
-  
-  var displayLocalizations: Bool {
-    UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations)
   }
   
   var videoAsset: VideoAsset {
@@ -228,6 +228,10 @@ extension VideoPlayerView {
       }
       if newValue == 0.0 {
         pause()
+      } else if 0 < newValue {
+        displayLayers(.forward, at: currentTime)
+      } else {
+        displayLayers(.reverse, at: currentTime)
       }
       player?.rate = newValue
     }

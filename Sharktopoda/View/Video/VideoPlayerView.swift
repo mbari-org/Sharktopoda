@@ -43,7 +43,6 @@ final class VideoPlayerView: NSView {
     
     let player = AVPlayer(url: videoAsset.url)
     playerLayer.player = player
-
     playerLayer.frame = bounds
     playerLayer.autoresizingMask = [.layerWidthSizable, .layerHeightSizable]
         
@@ -97,6 +96,10 @@ extension VideoPlayerView {
     }
   }
   
+  var displayLocalizations: Bool {
+    UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations)
+  }
+  
   var videoAsset: VideoAsset {
     get {
       _videoAsset!
@@ -131,7 +134,8 @@ extension VideoPlayerView {
     let currentFrameNumber = localizations.frameNumber(elapsedTime: currentTime)
     let localizationFrameNumber = localizations.frameNumber(for: localization)
     
-    if currentFrameNumber == localizationFrameNumber {
+    if displayLocalizations,
+      currentFrameNumber == localizationFrameNumber {
       DispatchQueue.main.async { [weak self] in
         self?.playerLayer.addSublayer(layer)
       }
@@ -234,10 +238,13 @@ extension VideoPlayerView {
 
     clearAllLayers()
     
+
+    
     /// Within a half frame span of the target seek we'll see all the frames for the specified seek time
     let quarterFrame = CMTimeMultiplyByFloat64(videoAsset.frameDuration, multiplier: 0.25)
     player?.seek(to: CMTime.fromMillis(elapsed), toleranceBefore: quarterFrame, toleranceAfter: quarterFrame) { [weak self] done in
-      if done {
+      if done,
+         UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations) {
         self?.displayPause()
       }
     }
@@ -247,6 +254,9 @@ extension VideoPlayerView {
     guard paused else { return }
     
     clearAllLayers()
+    
+    guard displayLocalizations else { return }
+    
     currentItem?.step(byCount: steps)
     displayPause()
   }
@@ -266,42 +276,18 @@ extension VideoPlayerView {
 
 /// Pause layers
 extension VideoPlayerView {
-  func pauseLayers() -> [LocalizationLayer] {
-    guard paused else { return [] }
-    
-    return localizationLayers()
-  }
-  
   func displayPause() {
-    guard paused else { return }
-
-    if let pauseLayers = localizations?.layers(.paused, at: currentTime) {
-      for layer in pauseLayers {
-        DispatchQueue.main.async { [weak self] in
-          self?.playerLayer.addSublayer(layer)
-        }
-      }
-    }
-
-    DispatchQueue.main.async { [weak self] in
-      self?.playerLayer.setNeedsLayout()
-    }
+    displayLayers(.paused, at: currentTime)
   }
   
   func clearPause() {
-    let layers = pauseLayers()
-    
-    if !layers.isEmpty {
-      DispatchQueue.main.async {
-        layers.forEach { $0.removeFromSuperlayer() }
-      }
-    }
+    clearAllLayers()
   }
   
   func resized() {
     guard paused else { return }
       
-    for layer in pauseLayers() {
+    for layer in localizationLayers() {
       let layerRect = layer.rect(videoRect: videoRect, scale: scale)
       layer.frame = layerRect
       layer.path = CGPath(rect: CGRect(origin: .zero, size: layerRect.size), transform: nil)
@@ -309,10 +295,10 @@ extension VideoPlayerView {
   }
 }
 
-/// forward / reverse layers
+/// Display/clear layers
 extension VideoPlayerView {
   private func displayLayers(_ direction: PlayDirection, at elapsedTime: Int) {
-    guard !paused else { return }
+    guard displayLocalizations else { return }
     
     guard let layerIds = localizations?.layerIds(direction, at: elapsedTime) else { return }
     
@@ -326,8 +312,6 @@ extension VideoPlayerView {
   }
   
   private func clearLayers(_ direction: PlayDirection, at elapsedTime: Int) {
-    guard !paused else { return }
-    
     guard let layerIds = localizations?.layerIds(direction, at: elapsedTime) else { return }
     
     layerIds
@@ -355,9 +339,9 @@ extension VideoPlayerView {
     let interval = CMTimeMultiplyByFloat64(videoAsset.frameDuration, multiplier: 0.9)
     
     player?.addPeriodicTimeObserver(forInterval: interval, queue: queue) { [weak self] time in
-      let direction = self?.playDirection ?? .paused
-      
-      guard direction != .paused else { return }
+      guard UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations) else { return }
+
+      guard let direction = self?.playDirection else { return }
       
       let elapsedTime = time.asMillis()
       let opposite = direction.opposite()
@@ -367,5 +351,3 @@ extension VideoPlayerView {
     }
   }
 }
-
-

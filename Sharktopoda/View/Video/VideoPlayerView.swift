@@ -17,7 +17,7 @@ final class VideoPlayerView: NSView {
 
   private var _videoAsset: VideoAsset?
   
-  private var mousedLayer: LocalizationLayer?
+  private var selectedLayer: LocalizationLayer?
   
   init(videoAsset: VideoAsset) {
     let videoSize = videoAsset.size!
@@ -358,18 +358,39 @@ extension VideoPlayerView {
   }
 }
 
+/// Mouse selection
 extension VideoPlayerView {
+  private typealias LayerPoint = (layer: LocalizationLayer, point: CGPoint)
+  
   override func mouseDown(with event: NSEvent) {
-    guard let mousedLayer = mouseLayer(point: event.locationInWindow) else { return }
+    guard let (mouseLayer, layerPoint) = mouseLayer(point: event.locationInWindow) else { return }
 
-    self.mousedLayer = mousedLayer
+    self.selectedLayer = mouseLayer
+    
+    print("layer point: \(layerPoint)")
   }
   
+  override func mouseDragged(with event: NSEvent) {
+    guard selectedLayer != nil else { return }
+    
+    print("CxInc mouse dragged")
+  }
+
+  override func mouseExited(with event: NSEvent) {
+    guard selectedLayer != nil else { return }
+    
+    print("CxInc mouse exit cancel current changes?")
+    
+    selectedLayer = nil
+  }
+
   override func mouseUp(with event: NSEvent) {
-    guard mousedLayer != nil else { return }
+    guard selectedLayer != nil else { return }
+    
+    print("CxInc mouse up")
   }
   
-  private func mouseLayer(point: NSPoint) -> LocalizationLayer? {
+  private func mouseLayer(point: NSPoint) -> LayerPoint? {
     guard paused else { return nil }
     guard displayLocalizations else { return nil }
     guard let layers = localizations?.layers(.paused, at: currentTime) else { return nil }
@@ -377,10 +398,44 @@ extension VideoPlayerView {
     
     let superLayer = layers[0].superlayer
 
-    return layers.first(where: { layer in
-      let layerPoint = layer.convert(point, from: superLayer)
-      return layer.contains(layerPoint)
-    })
+    let mousedLayers = layers.filter {
+      $0.contains($0.convert(point, from: superLayer))
+    }
+    
+    guard !mousedLayers.isEmpty else { return nil }
+    let layer = mousedLayers.min { l, r in
+      minSideDist(point: point, rect: l.contentsRect) < minSideDist(point: point, rect: r.contentsRect)
+    }!
+    
+    return (layer, layer.convert(point, from: superLayer))
   }
+  
+  private func editAction(point: CGPoint) {
+    
+  }
+  
+  private func isCorner(point: CGPoint) -> Bool {
+    
+    
+    return false
+  }
+  
+  private func minSideDist(point: NSPoint, rect: CGRect) -> CGFloat {
+    let x = point.x
+    let y = point.y
+
+    let x0 = rect.origin.x
+    let y0 = rect.origin.y
+    let x1 = x0 + rect.size.width
+    let y1 = y0 + rect.size.height
+    
+    guard x0 <= x, x <= x1, y0 <= y, y <= y1 else { return CGFloat.infinity }
+    
+    let xMin = min(x-x0, x1-x)
+    let yMin = min(y-y0, y1-y)
+
+    return min(xMin, yMin)
+  }
+
 }
 

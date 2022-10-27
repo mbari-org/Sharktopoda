@@ -163,14 +163,6 @@ extension VideoWindow {
         videoWindow.makeKeyAndOrderFront(nil)
       }
     } else {
-      do {
-        if !(try url.checkResourceIsReachable()) {
-          return OpenVideoError.notReachable
-        }
-      } catch let error {
-        return error
-      }
-
       let videoAsset = VideoAsset(id: id, url: url)
       guard videoAsset.avAsset.isPlayable else {
         return OpenVideoError.notPlayable

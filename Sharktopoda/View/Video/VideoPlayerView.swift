@@ -17,6 +17,8 @@ final class VideoPlayerView: NSView {
 
   private var _videoAsset: VideoAsset?
   
+  private var mousedLayer: LocalizationLayer?
+  
   init(videoAsset: VideoAsset) {
     let videoSize = videoAsset.size!
     super.init(frame: NSMakeRect(0, 0, videoSize.width, videoSize.height))
@@ -355,3 +357,30 @@ extension VideoPlayerView {
     }
   }
 }
+
+extension VideoPlayerView {
+  override func mouseDown(with event: NSEvent) {
+    guard let mousedLayer = mouseLayer(point: event.locationInWindow) else { return }
+
+    self.mousedLayer = mousedLayer
+  }
+  
+  override func mouseUp(with event: NSEvent) {
+    guard mousedLayer != nil else { return }
+  }
+  
+  private func mouseLayer(point: NSPoint) -> LocalizationLayer? {
+    guard paused else { return nil }
+    guard displayLocalizations else { return nil }
+    guard let layers = localizations?.layers(.paused, at: currentTime) else { return nil }
+    guard !layers.isEmpty else { return nil }
+    
+    let superLayer = layers[0].superlayer
+
+    return layers.first(where: { layer in
+      let layerPoint = layer.convert(point, from: superLayer)
+      return layer.contains(layerPoint)
+    })
+  }
+}
+

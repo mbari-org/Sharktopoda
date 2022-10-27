@@ -32,6 +32,7 @@ struct SharktopodaApp: App {
   }
 }
 
+/// User Defaults
 private extension SharktopodaApp {
   func setAppDefaults() {
     let appDefault = DefaultPreferences()

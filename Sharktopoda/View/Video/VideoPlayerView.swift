@@ -387,13 +387,13 @@ extension VideoPlayerView {
   }
   
   override func mouseDragged(with event: NSEvent) {
-    guard selectedLayer != nil else { return }
+    guard selectedLocation != nil else { return }
     
     print("CxInc mouse dragged")
   }
 
   override func mouseExited(with event: NSEvent) {
-    guard selectedLayer != nil else { return }
+    guard selectedLocation != nil else { return }
     
     print("CxInc mouse exit cancel current changes?")
     
@@ -401,7 +401,7 @@ extension VideoPlayerView {
   }
 
   override func mouseUp(with event: NSEvent) {
-    guard selectedLayer != nil else { return }
+    guard selectedLocation != nil else { return }
     
     print("CxInc mouse up")
   }

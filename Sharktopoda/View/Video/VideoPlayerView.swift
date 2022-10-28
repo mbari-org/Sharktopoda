@@ -13,7 +13,7 @@ final class VideoPlayerView: NSView {
   private let rootLayer = CALayer()
   private let playerLayer = AVPlayerLayer()
 
-  private var localizations: LocalizationSet?
+  private var localizations: Localizations?
 
   private var _videoAsset: VideoAsset?
   
@@ -51,7 +51,7 @@ final class VideoPlayerView: NSView {
         
     rootLayer.addSublayer(playerLayer)
 
-    localizations = LocalizationSet(playerItem: currentItem!,
+    localizations = Localizations(playerItem: currentItem!,
                                     frameDuration: videoAsset.frameDuration.asMillis())
 
     setTimeObserver()
@@ -382,14 +382,14 @@ extension VideoPlayerView {
     selectedLayer = mouseLayer
     let selectedPoint = selectedLayer!.convertSuperPoint(superPoint)
     selectedLocation = mouseLayer.location(of: selectedPoint)
-    
+
     print("selected: \(String(describing: selectedLocation))")
   }
   
   override func mouseDragged(with event: NSEvent) {
     guard selectedLocation != nil else { return }
     
-    print("CxInc mouse dragged")
+//    print("CxInc mouse dragged")
   }
 
   override func mouseExited(with event: NSEvent) {

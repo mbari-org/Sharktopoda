@@ -7,7 +7,7 @@
 
 import AVFoundation
 
-class LocalizationSet {
+class Localizations {
   private(set) var localizationLayer = [String: LocalizationLayer]()
   
   private var pauseFrames = [LocalizationFrame]()
@@ -26,7 +26,7 @@ class LocalizationSet {
 }
 
 /// Enums
-extension LocalizationSet {
+extension Localizations {
   private enum PutAction {
     case add
     case insert
@@ -38,7 +38,7 @@ extension LocalizationSet {
 }
 
 /// Storage
-extension LocalizationSet {
+extension Localizations {
   func add(_ layer: LocalizationLayer) -> Bool {
     guard let localization = layer.localization else { return false }
     
@@ -101,7 +101,7 @@ extension LocalizationSet {
 }
 
 // Retrieve Layers
-extension LocalizationSet {
+extension Localizations {
   private func frames(_ playDirection: VideoPlayerView.PlayDirection) -> [LocalizationFrame]? {
     switch playDirection {
       case .forward:
@@ -135,7 +135,7 @@ extension LocalizationSet {
 }
 
 /// Frame number
-extension LocalizationSet {
+extension Localizations {
   func frameNumber(for localization: Localization) -> Int {
     frameNumber(elapsedTime: localization.elapsedTime)
   }
@@ -148,7 +148,7 @@ extension LocalizationSet {
 }
 
 /// Pause frames
-extension LocalizationSet {
+extension Localizations {
   private func pauseFrameInsert(_ localization: Localization) {
     let insertTime = localization.elapsedTime
     let (frame, action, index) = frame(for: localization,
@@ -173,7 +173,7 @@ extension LocalizationSet {
 }
 
 /// Forward frames
-extension LocalizationSet {
+extension Localizations {
   private func forwardFrameInsert(_ localization: Localization) {
     let useDuration = UserDefaults.standard.bool(forKey: PrefKeys.displayUseDuration)
     let timeWindow = UserDefaults.standard.integer(forKey: PrefKeys.displayTimeWindow)
@@ -197,7 +197,7 @@ extension LocalizationSet {
 }
 
 /// Reverse frames
-extension LocalizationSet {
+extension Localizations {
   private func reverseFrameInsert(_ localization: Localization) {
     let useDuration = UserDefaults.standard.bool(forKey: PrefKeys.displayUseDuration)
     let timeWindow = UserDefaults.standard.integer(forKey: PrefKeys.displayTimeWindow)
@@ -221,7 +221,7 @@ extension LocalizationSet {
 }
 
 /// Abstract frame processing
-extension LocalizationSet {
+extension Localizations {
   private func frameIndex(for frames: [LocalizationFrame], at elapsedTime: Int) -> Int {
     var left = 0
     var right = frames.count - 1
@@ -289,7 +289,7 @@ extension LocalizationSet {
 }
 
 /// Selected
-extension LocalizationSet {
+extension Localizations {
   func allSelected() -> [LocalizationLayer] {
     selected.map { id in
       localizationLayer[id]!

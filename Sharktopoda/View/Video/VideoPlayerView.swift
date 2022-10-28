@@ -404,13 +404,13 @@ extension VideoPlayerView {
     
     guard !mousedLayers.isEmpty else { return nil }
     let layer = mousedLayers.min { l, r in
-      minSideDist(point: point, rect: l.contentsRect) < minSideDist(point: point, rect: r.contentsRect)
+      minSideDist(point, inside: l.contentsRect) < minSideDist(point, inside: r.contentsRect)
     }!
     
     return (layer, layer.convert(point, from: superLayer))
   }
   
-  private func editAction(point: CGPoint) {
+  private func selectedPart(point: CGPoint) {
     
   }
   
@@ -420,7 +420,9 @@ extension VideoPlayerView {
     return false
   }
   
-  private func minSideDist(point: NSPoint, rect: CGRect) -> CGFloat {
+  private func minSideDist(_ point: NSPoint, inside rect: CGRect) -> CGFloat {
+    guard rect.contains(point) else { return CGFloat.infinity }
+    
     let x = point.x
     let y = point.y
 
@@ -429,12 +431,7 @@ extension VideoPlayerView {
     let x1 = x0 + rect.size.width
     let y1 = y0 + rect.size.height
     
-    guard x0 <= x, x <= x1, y0 <= y, y <= y1 else { return CGFloat.infinity }
-    
-    let xMin = min(x-x0, x1-x)
-    let yMin = min(y-y0, y1-y)
-
-    return min(xMin, yMin)
+    return min(min(x-x0, x1-x), min(y-y0, y1-y))
   }
 
 }

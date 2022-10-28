@@ -6,6 +6,7 @@
 //
 
 import AVFoundation
+import SwiftUI
 
 class Localizations {
   private(set) var localizationLayer = [String: LocalizationLayer]()
@@ -297,14 +298,30 @@ extension Localizations {
   }
   
   func clearSelected() {
+    selected.forEach { id in
+      localizationLayer[id]!.select(false)
+    }
     selected.removeAll()
   }
   
-  func select(_ id: String) -> Bool {
-    guard localizationLayer[id] != nil else { return false }
-    
+  func select(id: String) -> Bool {
+    guard let layer = localizationLayer[id] else { return false }
+
+    clearSelected()
+
     selected.insert(id)
+    layer.select(true)
     
     return true
+  }
+  
+  func select(ids: [String]) -> [Bool] {
+    clearSelected()
+
+    return ids.map { id in
+      guard localizationLayer[id] != nil else { return false }
+      selected.insert(id)
+      return true
+    }
   }
 }

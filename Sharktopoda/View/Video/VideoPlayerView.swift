@@ -9,17 +9,18 @@ import AppKit
 import AVFoundation
 
 final class VideoPlayerView: NSView {
-  
+  // MARK: properties
   private let rootLayer = CALayer()
   private let playerLayer = AVPlayerLayer()
 
   private var localizations: Localizations?
-
-  private var _videoAsset: VideoAsset?
   
-  private var selectedLayer: LocalizationLayer?
   private var selectedLocation: CGRect.Location?
   
+  private var _selectedLayer: LocalizationLayer?
+  private var _videoAsset: VideoAsset?
+
+  // MARK: ctors
   init(videoAsset: VideoAsset) {
     let videoSize = videoAsset.size!
     super.init(frame: NSMakeRect(0, 0, videoSize.width, videoSize.height))
@@ -40,6 +41,7 @@ final class VideoPlayerView: NSView {
     setup()
   }
   
+  // MARK: setup
   private func setup() {
     wantsLayer = true
     layer = rootLayer
@@ -58,7 +60,7 @@ final class VideoPlayerView: NSView {
   }
 }
 
-/// Enums
+// MARK: Enums
 extension VideoPlayerView {
   enum PlayDirection: Int {
     case reverse = -1
@@ -75,7 +77,7 @@ extension VideoPlayerView {
   }
 }
 
-/// Computed properties
+// MARK: Computed properties
 extension VideoPlayerView {
   var currentItem: AVPlayerItem? {
     player?.currentItem
@@ -103,6 +105,18 @@ extension VideoPlayerView {
     }
   }
   
+  var selectedLayer: LocalizationLayer? {
+    get { _selectedLayer }
+    set {
+      selectedLocation = nil
+      
+      if _selectedLayer != nil {
+        localizations!.clearSelected()
+      }
+      _selectedLayer = newValue
+    }
+  }
+  
   var videoAsset: VideoAsset {
     get {
       _videoAsset!
@@ -122,7 +136,7 @@ extension VideoPlayerView {
   }
 }
 
-/// Localizations
+// MARK: Localizations
 extension VideoPlayerView {
   func addLocalization(_ localization: Localization) -> Bool {
     let layer = LocalizationLayer(for: localization,
@@ -169,12 +183,10 @@ extension VideoPlayerView {
   
   func selectLocalizations(_ ids: [String]) -> [Bool] {
     guard let localizations = localizations else {
-      return ids.map { _ in false }
+      return Array(repeating: false, count: ids.count)
     }
-
-    localizations.clearSelected()
     
-    return ids.map { localizations.select($0) }
+    return localizations.select(ids: ids)
   }
   
   func updateLocalization(_ localization: Localization) -> Bool {
@@ -190,7 +202,7 @@ extension VideoPlayerView {
   }
 }
 
-/// Video
+// MARK: Video
 extension VideoPlayerView {
   func canStep(_ steps: Int) -> Bool {
     guard let item = currentItem else { return false }
@@ -269,7 +281,7 @@ extension VideoPlayerView {
   }
 }
 
-/// Abstract layers
+// MARK: Abstract layers
 extension VideoPlayerView {
   func localizationLayers() -> [LocalizationLayer] {
     return playerLayer.sublayers?.reduce(into: [LocalizationLayer]()) { acc, layer in
@@ -281,7 +293,7 @@ extension VideoPlayerView {
 
 }
 
-/// Pause layers
+// MARK: Pause layers
 extension VideoPlayerView {
   func displayPause() {
     displayLayers(.paused, at: currentTime)
@@ -302,7 +314,7 @@ extension VideoPlayerView {
   }
 }
 
-/// Display and clear layers
+// MARK: Display and Clear
 extension VideoPlayerView {
   private func displayLayers(_ direction: PlayDirection, at elapsedTime: Int) {
     guard displayLocalizations else { return }
@@ -340,7 +352,12 @@ extension VideoPlayerView {
   }
 }
 
-/// Player time callback
+// MARK: Selected localization
+extension VideoPlayerView {
+  
+}
+
+// MARK: Player time callback
 extension VideoPlayerView {
   func setTimeObserver() {
     let queue = DispatchQueue(label: "Sharktopoda Video Queue: \(videoAsset.id)")
@@ -360,10 +377,8 @@ extension VideoPlayerView {
   }
 }
 
-/// Mouse selection
+// MARK: Mouse selection
 extension VideoPlayerView {
-  private typealias LayerPoint = (layer: LocalizationLayer, point: CGPoint)
-  
   override func mouseDown(with event: NSEvent) {
     let superPoint = event.locationInWindow
     
@@ -375,7 +390,6 @@ extension VideoPlayerView {
 
     guard let mouseLayer = mouseLayer(point: event.locationInWindow) else {
       selectedLayer = nil
-      selectedLocation = nil
       return
     }
 
@@ -383,7 +397,7 @@ extension VideoPlayerView {
     let selectedPoint = selectedLayer!.convertSuperPoint(superPoint)
     selectedLocation = mouseLayer.location(of: selectedPoint)
 
-    print("selected: \(String(describing: selectedLocation))")
+    let _ = localizations!.select(id: selectedLayer!.localization!.id)
   }
   
   override func mouseDragged(with event: NSEvent) {

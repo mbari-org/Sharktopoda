@@ -33,14 +33,11 @@ final class LocalizationLayer: CAShapeLayer {
     anchorPoint = .zero
     fillColor = .clear
     frame = layerRect
+    isOpaque = true
     lineJoin = .round
     lineWidth = CGFloat(UserDefaults.standard.integer(forKey: PrefKeys.displayBorderSize))
     path = CGPath(rect: CGRect(origin: .zero, size: layerRect.size), transform: nil)
     strokeColor = Color(hex: localization.hexColor)?.cgColor
-
-    // CxTBD Experiment to see if this layer can be opaque (which improves performance)
-    isOpaque = true
-
   }
   
   /// Hashable
@@ -68,5 +65,11 @@ final class LocalizationLayer: CAShapeLayer {
     let origin = CGPoint(x: x, y: y)
 
     return CGRect(origin: origin, size: size)
+  }
+  
+  func select(_ isSelected: Bool) {
+    strokeColor = isSelected
+    ? UserDefaults.standard.color(forKey: PrefKeys.selectionBorderColor).cgColor
+    : Color(hex: localization!.hexColor)?.cgColor
   }
 }

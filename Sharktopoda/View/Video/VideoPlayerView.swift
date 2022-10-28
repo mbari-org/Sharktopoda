@@ -18,6 +18,7 @@ final class VideoPlayerView: NSView {
   private var _videoAsset: VideoAsset?
   
   private var selectedLayer: LocalizationLayer?
+  private var selectedLocation: CGRect.Location?
   
   init(videoAsset: VideoAsset) {
     let videoSize = videoAsset.size!
@@ -301,7 +302,7 @@ extension VideoPlayerView {
   }
 }
 
-/// Display/clear layers
+/// Display and clear layers
 extension VideoPlayerView {
   private func displayLayers(_ direction: PlayDirection, at elapsedTime: Int) {
     guard displayLocalizations else { return }
@@ -339,6 +340,7 @@ extension VideoPlayerView {
   }
 }
 
+/// Player time callback
 extension VideoPlayerView {
   func setTimeObserver() {
     let queue = DispatchQueue(label: "Sharktopoda Video Queue: \(videoAsset.id)")
@@ -363,11 +365,25 @@ extension VideoPlayerView {
   private typealias LayerPoint = (layer: LocalizationLayer, point: CGPoint)
   
   override func mouseDown(with event: NSEvent) {
-    guard let (mouseLayer, layerPoint) = mouseLayer(point: event.locationInWindow) else { return }
-
-    self.selectedLayer = mouseLayer
+    let superPoint = event.locationInWindow
     
-    print("layer point: \(layerPoint)")
+    if let selectedLayer = selectedLayer,
+       selectedLayer.contains(superPoint) {
+      selectedLocation = selectedLayer.location(of: superPoint)
+      return
+    }
+
+    guard let mouseLayer = mouseLayer(point: event.locationInWindow) else {
+      selectedLayer = nil
+      selectedLocation = nil
+      return
+    }
+
+    selectedLayer = mouseLayer
+    let selectedPoint = selectedLayer!.convertSuperPoint(superPoint)
+    selectedLocation = mouseLayer.location(of: selectedPoint)
+    
+    print("selected: \(String(describing: selectedLocation))")
   }
   
   override func mouseDragged(with event: NSEvent) {
@@ -390,48 +406,24 @@ extension VideoPlayerView {
     print("CxInc mouse up")
   }
   
-  private func mouseLayer(point: NSPoint) -> LayerPoint? {
+  private func mouseLayer(point: NSPoint) -> LocalizationLayer? {
     guard paused else { return nil }
     guard displayLocalizations else { return nil }
     guard let layers = localizations?.layers(.paused, at: currentTime) else { return nil }
     guard !layers.isEmpty else { return nil }
     
-    let superLayer = layers[0].superlayer
-
     let mousedLayers = layers.filter {
-      $0.contains($0.convert(point, from: superLayer))
+      $0.containsSuperPoint(point)
     }
-    
     guard !mousedLayers.isEmpty else { return nil }
-    let layer = mousedLayers.min { l, r in
-      minSideDist(point, inside: l.contentsRect) < minSideDist(point, inside: r.contentsRect)
+    
+    let layer = mousedLayers.min { a, b in
+      let aDistance = a.bounds.minSideDistance(point: point)
+      let bDistance = b.bounds.minSideDistance(point: point)
+      return aDistance < bDistance
     }!
     
-    return (layer, layer.convert(point, from: superLayer))
-  }
-  
-  private func selectedPart(point: CGPoint) {
-    
-  }
-  
-  private func isCorner(point: CGPoint) -> Bool {
-    
-    
-    return false
-  }
-  
-  private func minSideDist(_ point: NSPoint, inside rect: CGRect) -> CGFloat {
-    guard rect.contains(point) else { return CGFloat.infinity }
-    
-    let x = point.x
-    let y = point.y
-
-    let x0 = rect.origin.x
-    let y0 = rect.origin.y
-    let x1 = x0 + rect.size.width
-    let y1 = y0 + rect.size.height
-    
-    return min(min(x-x0, x1-x), min(y-y0, y1-y))
+    return layer
   }
 
 }

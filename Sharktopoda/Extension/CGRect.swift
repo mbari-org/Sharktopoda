@@ -116,8 +116,17 @@ extension CGRect {
     
     return min(min(x-x0, x1-x), min(y-y0, y1-y))
   }
-  
-  func move(by delta: CGPoint) -> CGRect {
-    CGRect(origin: origin.moveBy(delta), size: size)
+
+  func adjust(by delta: CGDelta) -> CGRect {
+    CGRect(origin: origin.move(by: delta), size: size.adjust(by: delta))
   }
+
+  func move(by delta: CGDelta) -> CGRect {
+    CGRect(origin: origin.move(by: delta), size: size)
+  }
+  
+  func resize(by delta: CGDelta) -> CGRect {
+    CGRect(origin: origin, size: size.adjust(by: delta))
+  }
+
 }

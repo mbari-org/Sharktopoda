@@ -27,9 +27,17 @@ class Localization: Hashable {
                     width: CGFloat(controlLocalization.width),
                     height: CGFloat(controlLocalization.height))
   }
-  
-  func move(by delta: CGPoint) {
+
+  func adjust(by delta: CGDelta) {
+    region = region.adjust(by: delta)
+  }
+
+  func move(by delta: CGDelta) {
     region = region.move(by: delta)
+  }
+  
+  func resize(by delta: CGDelta) {
+    region = region.resize(by: delta)
   }
 
   /// Hashable

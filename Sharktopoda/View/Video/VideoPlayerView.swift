@@ -377,10 +377,13 @@ extension VideoPlayerView {
   override func mouseDown(with event: NSEvent) {
     let mousePoint = event.locationInWindow
     
-    if let selectedLayer = editLayer,
-       selectedLayer.contains(mousePoint) {
-      editLocation = selectedLayer.location(of: mousePoint)
-      return
+    if let mouseLayer = editLayer {
+      let layerPoint = mouseLayer.convertSuperPoint(mousePoint)
+      if mouseLayer.contains(layerPoint) {
+        editLocation = mouseLayer.location(of: layerPoint)
+        print("mouse down edit location: \(String(describing: editLocation))")
+        return
+      }
     }
 
     guard let mouseLayer = mouseLayer(point: mousePoint) else {
@@ -389,42 +392,48 @@ extension VideoPlayerView {
     }
 
     editLayer = mouseLayer
-    let selectedPoint = editLayer!.convertSuperPoint(mousePoint)
-    editLocation = mouseLayer.location(of: selectedPoint)
-
+    let layerPoint = editLayer!.convertSuperPoint(mousePoint)
+    editLocation = mouseLayer.location(of: layerPoint)
+    print("mouse down edit location: \(String(describing: editLocation))")
+    
     let _ = localizations!.select(id: editLayer!.localization!.id)
   }
   
   override func mouseDragged(with event: NSEvent) {
     guard let layer = editLayer else { return }
 
-    let mouseDelta = CGPoint(x: event.deltaX, y: -event.deltaY)
+    let mouseDelta = CGDelta(x: event.deltaX, y: -event.deltaY)
+    
+    print("delta: \(mouseDelta)")
+    
+    print("mouse dragged edit location: \(String(describing: editLocation))")
 
     switch editLocation {
       case .middle:
         layer.move(by: mouseDelta)
         return
-    case .top:
-
-      return
-    case .right:
-      return
-    case .bottom:
-      return
-    case .left:
-      return
-    case .topLeft:
-      return
-    case .topRight:
-      return
-    case .bottomRight:
-      return
-    case .bottomLeft:
-      return
-    case .outside:
-      return
-    case .none:
-      return
+      case .top:
+        let delta = CGDelta(x: 0, y: mouseDelta.y)
+        layer.resize(by: delta)
+        return
+      case .right:
+        return
+      case .bottom:
+        return
+      case .left:
+        return
+      case .topLeft:
+        return
+      case .topRight:
+        return
+      case .bottomRight:
+        return
+      case .bottomLeft:
+        return
+      case .outside:
+        return
+      case .none:
+        return
     }
   }
 

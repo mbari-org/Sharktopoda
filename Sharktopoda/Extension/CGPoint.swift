@@ -7,8 +7,10 @@
 
 import CoreGraphics
 
+typealias CGDelta = CGPoint
+
 extension CGPoint {
-  func moveBy(_ delta: CGPoint) -> CGPoint {
+  func move(by delta: CGDelta) -> CGPoint {
     CGPoint(x: x + delta.x, y: y + delta.y)
   }
 }

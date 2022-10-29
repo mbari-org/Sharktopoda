@@ -27,16 +27,17 @@ final class LocalizationLayer: CAShapeLayer {
     self.localization = localization
     super.init()
 
-    let layerRect = rect(videoRect: videoRect, scale: scale)
+//    let layerRect = rect(videoRect: videoRect, scale: scale)
     
     // Appearance
     anchorPoint = .zero
     fillColor = .clear
-    frame = layerRect
+    frame = rect(videoRect: videoRect, scale: scale)
     isOpaque = true
     lineJoin = .round
     lineWidth = CGFloat(UserDefaults.standard.integer(forKey: PrefKeys.displayBorderSize))
-    path = CGPath(rect: CGRect(origin: .zero, size: layerRect.size), transform: nil)
+//    needsDisplayOnBoundsChange = true
+    path = boundsPath()
     strokeColor = Color(hex: localization.hexColor)?.cgColor
   }
   
@@ -50,6 +51,10 @@ final class LocalizationLayer: CAShapeLayer {
     var hasher = Hasher()
     localization?.hash(into: &hasher)
     return hasher.finalize()
+  }
+  
+  func boundsPath() -> CGPath {
+    CGPath(rect: CGRect(origin: .zero, size: bounds.size), transform: nil)
   }
   
   func rect(videoRect: CGRect, scale: CGFloat) -> CGRect {
@@ -72,9 +77,24 @@ final class LocalizationLayer: CAShapeLayer {
     ? UserDefaults.standard.color(forKey: PrefKeys.selectionBorderColor).cgColor
     : Color(hex: localization!.hexColor)?.cgColor
   }
+
+  func adjust(by delta: CGDelta) {
+    bounds = bounds.adjust(by: delta)
+    position = position.move(by: delta)
+    localization?.adjust(by: delta)
+  }
   
-  func move(by delta: CGPoint) {
-    position = position.moveBy(delta)
+  func move(by delta: CGDelta) {
+    position = position.move(by: delta)
     localization?.move(by: delta)
   }
+
+  func resize(by delta: CGDelta) {
+    bounds = bounds.resize(by: delta)
+    path = boundsPath()
+    setNeedsLayout()
+    localization?.resize(by: delta)
+  }
+
+
 }

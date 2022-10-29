@@ -72,4 +72,9 @@ final class LocalizationLayer: CAShapeLayer {
     ? UserDefaults.standard.color(forKey: PrefKeys.selectionBorderColor).cgColor
     : Color(hex: localization!.hexColor)?.cgColor
   }
+  
+  func move(by delta: CGPoint) {
+    position = position.moveBy(delta)
+    localization?.move(by: delta)
+  }
 }

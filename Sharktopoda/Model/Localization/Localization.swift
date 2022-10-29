@@ -9,10 +9,10 @@ import AVFoundation
 
 class Localization: Hashable {
   let id: String
-  let concept: String
+  var concept: String
   let elapsedTime: Int
   let duration: Int
-  let region: CGRect
+  var region: CGRect
   let hexColor: String
   
   init(from controlLocalization: ControlLocalization) {
@@ -26,6 +26,10 @@ class Localization: Hashable {
                     y: CGFloat(controlLocalization.y),
                     width: CGFloat(controlLocalization.width),
                     height: CGFloat(controlLocalization.height))
+  }
+  
+  func move(by delta: CGPoint) {
+    region = region.move(by: delta)
   }
 
   /// Hashable

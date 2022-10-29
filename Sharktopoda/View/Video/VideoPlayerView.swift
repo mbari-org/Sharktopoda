@@ -15,9 +15,9 @@ final class VideoPlayerView: NSView {
 
   private var localizations: Localizations?
   
-  private var selectedLocation: CGRect.Location?
+  private var editLocation: CGRect.Location?
   
-  private var _selectedLayer: LocalizationLayer?
+  private var _editLayer: LocalizationLayer?
   private var _videoAsset: VideoAsset?
 
   // MARK: ctors
@@ -105,15 +105,15 @@ extension VideoPlayerView {
     }
   }
   
-  var selectedLayer: LocalizationLayer? {
-    get { _selectedLayer }
+  var editLayer: LocalizationLayer? {
+    get { _editLayer }
     set {
-      selectedLocation = nil
+      editLocation = nil
       
-      if _selectedLayer != nil {
+      if _editLayer != nil {
         localizations!.clearSelected()
       }
-      _selectedLayer = newValue
+      _editLayer = newValue
     }
   }
   
@@ -352,11 +352,6 @@ extension VideoPlayerView {
   }
 }
 
-// MARK: Selected localization
-extension VideoPlayerView {
-  
-}
-
 // MARK: Player time callback
 extension VideoPlayerView {
   func setTimeObserver() {
@@ -380,42 +375,69 @@ extension VideoPlayerView {
 // MARK: Mouse selection
 extension VideoPlayerView {
   override func mouseDown(with event: NSEvent) {
-    let superPoint = event.locationInWindow
+    let mousePoint = event.locationInWindow
     
-    if let selectedLayer = selectedLayer,
-       selectedLayer.contains(superPoint) {
-      selectedLocation = selectedLayer.location(of: superPoint)
+    if let selectedLayer = editLayer,
+       selectedLayer.contains(mousePoint) {
+      editLocation = selectedLayer.location(of: mousePoint)
       return
     }
 
-    guard let mouseLayer = mouseLayer(point: event.locationInWindow) else {
-      selectedLayer = nil
+    guard let mouseLayer = mouseLayer(point: mousePoint) else {
+      editLayer = nil
       return
     }
 
-    selectedLayer = mouseLayer
-    let selectedPoint = selectedLayer!.convertSuperPoint(superPoint)
-    selectedLocation = mouseLayer.location(of: selectedPoint)
+    editLayer = mouseLayer
+    let selectedPoint = editLayer!.convertSuperPoint(mousePoint)
+    editLocation = mouseLayer.location(of: selectedPoint)
 
-    let _ = localizations!.select(id: selectedLayer!.localization!.id)
+    let _ = localizations!.select(id: editLayer!.localization!.id)
   }
   
   override func mouseDragged(with event: NSEvent) {
-    guard selectedLocation != nil else { return }
-    
-//    print("CxInc mouse dragged")
+    guard let layer = editLayer else { return }
+
+    let mouseDelta = CGPoint(x: event.deltaX, y: -event.deltaY)
+
+    switch editLocation {
+      case .middle:
+        layer.move(by: mouseDelta)
+        return
+    case .top:
+
+      return
+    case .right:
+      return
+    case .bottom:
+      return
+    case .left:
+      return
+    case .topLeft:
+      return
+    case .topRight:
+      return
+    case .bottomRight:
+      return
+    case .bottomLeft:
+      return
+    case .outside:
+      return
+    case .none:
+      return
+    }
   }
 
   override func mouseExited(with event: NSEvent) {
-    guard selectedLocation != nil else { return }
+    guard editLocation != nil else { return }
     
     print("CxInc mouse exit cancel current changes?")
     
-    selectedLayer = nil
+    editLayer = nil
   }
 
   override func mouseUp(with event: NSEvent) {
-    guard selectedLocation != nil else { return }
+    guard editLocation != nil else { return }
     
     print("CxInc mouse up")
   }
@@ -439,6 +461,4 @@ extension VideoPlayerView {
     
     return layer
   }
-
 }
-

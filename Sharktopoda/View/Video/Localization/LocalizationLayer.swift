@@ -77,19 +77,22 @@ final class LocalizationLayer: CAShapeLayer {
     ? UserDefaults.standard.color(forKey: PrefKeys.selectionBorderColor).cgColor
     : Color(hex: localization!.hexColor)?.cgColor
   }
-
-  func adjust(by delta: CGDelta) {
-    bounds = bounds.adjust(by: delta)
-    position = position.move(by: delta)
-    localization?.adjust(by: delta)
+  
+  func delta(by delta: DeltaRect) {
+    move(by: delta.origin)
+    resize(by: delta.size)
   }
   
-  func move(by delta: CGDelta) {
+  func move(by delta: DeltaPoint) {
+    guard delta != .zero else { return }
+
     position = position.move(by: delta)
     localization?.move(by: delta)
   }
 
-  func resize(by delta: CGDelta) {
+  func resize(by delta: DeltaSize) {
+    guard delta != .zero else { return }
+    
     bounds = bounds.resize(by: delta)
     path = boundsPath()
     setNeedsLayout()

@@ -7,8 +7,10 @@
 
 import CoreGraphics
 
+typealias DeltaSize = CGSize
+
 extension CGSize {
-  func adjust(by delta: CGDelta) -> CGSize {
-    CGSize(width: width + delta.x, height: height + delta.y)
+  func resize(by delta: DeltaSize) -> CGSize {
+    CGSize(width: width + delta.width, height: height + delta.height)
   }
 }

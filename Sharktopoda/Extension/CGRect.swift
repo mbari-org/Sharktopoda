@@ -7,21 +7,14 @@
 
 import CoreGraphics
 
+typealias DeltaRect = CGRect
+
 extension CGRect {
   
   enum Location {
     case middle
-    
-    case left
-    case top
-    case right
-    case bottom
-    
-    case topLeft
-    case topRight
-    case bottomRight
-    case bottomLeft
-    
+    case left, top, right, bottom
+    case topLeft, topRight, bottomRight, bottomLeft
     case outside
   }
   
@@ -117,16 +110,12 @@ extension CGRect {
     return min(min(x-x0, x1-x), min(y-y0, y1-y))
   }
 
-  func adjust(by delta: CGDelta) -> CGRect {
-    CGRect(origin: origin.move(by: delta), size: size.adjust(by: delta))
-  }
-
-  func move(by delta: CGDelta) -> CGRect {
+  func move(by delta: DeltaPoint) -> CGRect {
     CGRect(origin: origin.move(by: delta), size: size)
   }
   
-  func resize(by delta: CGDelta) -> CGRect {
-    CGRect(origin: origin, size: size.adjust(by: delta))
+  func resize(by delta: DeltaSize) -> CGRect {
+    CGRect(origin: origin, size: size.resize(by: delta))
   }
 
 }

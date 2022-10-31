@@ -7,7 +7,7 @@
 
 import AppKit
 
-extension VideoPlayerView {
+extension NSPlayerView {
   override func keyDown(with event: NSEvent) {
     
   }

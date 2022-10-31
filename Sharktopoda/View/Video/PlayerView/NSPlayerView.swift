@@ -8,7 +8,7 @@
 import AppKit
 import AVFoundation
 
-final class VideoPlayerView: NSView {
+final class NSPlayerView: NSView {
   // MARK: properties
   private let rootLayer = CALayer()
   private let playerLayer = AVPlayerLayer()
@@ -61,7 +61,7 @@ final class VideoPlayerView: NSView {
 }
 
 // MARK: Enums
-extension VideoPlayerView {
+extension NSPlayerView {
   enum PlayDirection: Int {
     case reverse = -1
     case paused = 0
@@ -78,7 +78,7 @@ extension VideoPlayerView {
 }
 
 // MARK: Computed properties
-extension VideoPlayerView {
+extension NSPlayerView {
   var currentItem: AVPlayerItem? {
     player?.currentItem
   }
@@ -137,7 +137,7 @@ extension VideoPlayerView {
 }
 
 // MARK: Localizations
-extension VideoPlayerView {
+extension NSPlayerView {
   func addLocalization(_ localization: Localization) -> Bool {
     let layer = LocalizationLayer(for: localization,
                                   videoRect: videoRect,
@@ -203,7 +203,7 @@ extension VideoPlayerView {
 }
 
 // MARK: Abstract layers
-extension VideoPlayerView {
+extension NSPlayerView {
   func localizationLayers() -> [LocalizationLayer] {
     return playerLayer.sublayers?.reduce(into: [LocalizationLayer]()) { acc, layer in
       if let layer = layer as? LocalizationLayer {
@@ -215,7 +215,7 @@ extension VideoPlayerView {
 }
 
 // MARK: Pause layers
-extension VideoPlayerView {
+extension NSPlayerView {
   func displayPause() {
     displayLayers(.paused, at: currentTime)
   }
@@ -236,7 +236,7 @@ extension VideoPlayerView {
 }
 
 // MARK: Display and Clear
-extension VideoPlayerView {
+extension NSPlayerView {
   func displayLayers(_ direction: PlayDirection, at elapsedTime: Int) {
     guard displayLocalizations else { return }
     
@@ -274,7 +274,7 @@ extension VideoPlayerView {
 }
 
 // MARK: Player time callback
-extension VideoPlayerView {
+extension NSPlayerView {
   func setTimeObserver() {
     let queue = DispatchQueue(label: "Sharktopoda Video Queue: \(videoAsset.id)")
     let interval = CMTimeMultiplyByFloat64(videoAsset.frameDuration, multiplier: 0.9)

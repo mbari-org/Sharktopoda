@@ -22,7 +22,7 @@ class VideoWindow: NSWindow {
   
   var keyInfo: KeyInfo
 
-  var videoPlayerView: VideoPlayerView
+  var videoPlayerView: NSPlayerView
   
   var videoAsset: VideoAsset {
     get {
@@ -33,7 +33,7 @@ class VideoWindow: NSWindow {
   init(for videoAsset: VideoAsset) {
     keyInfo = KeyInfo(keyTime: Date())
 
-    videoPlayerView = VideoPlayerView(videoAsset: videoAsset)
+    videoPlayerView = NSPlayerView(videoAsset: videoAsset)
 
     let videoSize = videoAsset.size!
     super.init(

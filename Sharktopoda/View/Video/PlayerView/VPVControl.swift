@@ -8,7 +8,7 @@
 import AppKit
 import AVFoundation
 
-extension VideoPlayerView {
+extension NSPlayerView {
   func canStep(_ steps: Int) -> Bool {
     guard let item = currentItem else { return false }
     return steps < 0 ? item.canStepBackward : item.canStepForward

@@ -7,7 +7,7 @@
 
 import AppKit
 
-extension VideoPlayerView {
+extension NSPlayerView {
   override func mouseDown(with event: NSEvent) {
     let mousePoint = event.locationInWindow
     

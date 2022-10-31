@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E213252128F722F900D6BFF6 /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E213252028F722F900D6BFF6 /* VideoPlayerView.swift */; };
+		E213252128F722F900D6BFF6 /* NSPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E213252028F722F900D6BFF6 /* NSPlayerView.swift */; };
 		E213252528F7651F00D6BFF6 /* DefaultPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = E213252428F7651F00D6BFF6 /* DefaultPreferences.swift */; };
 		E21DEEDF28DA13CB00A2AC01 /* ClientPing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21DEEDD28DA13CB00A2AC01 /* ClientPing.swift */; };
 		E21DEEE228DA1F3D00A2AC01 /* UDP.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21DEEE128DA1F3D00A2AC01 /* UDP.swift */; };
@@ -136,7 +136,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		E213252028F722F900D6BFF6 /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
+		E213252028F722F900D6BFF6 /* NSPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSPlayerView.swift; sourceTree = "<group>"; };
 		E213252428F7651F00D6BFF6 /* DefaultPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultPreferences.swift; sourceTree = "<group>"; };
 		E21DEEDD28DA13CB00A2AC01 /* ClientPing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientPing.swift; sourceTree = "<group>"; };
 		E21DEEE128DA1F3D00A2AC01 /* UDP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDP.swift; sourceTree = "<group>"; };
@@ -279,7 +279,7 @@
 		E21DF790291038FE00038B41 /* PlayerView */ = {
 			isa = PBXGroup;
 			children = (
-				E213252028F722F900D6BFF6 /* VideoPlayerView.swift */,
+				E213252028F722F900D6BFF6 /* NSPlayerView.swift */,
 				E21DF7912910391A00038B41 /* VPVMouse.swift */,
 				E21DF793291039CA00038B41 /* VPVKeyboard.swift */,
 				E2837B3B29103DBD00FC4CC2 /* VPVControl.swift */,
@@ -792,7 +792,7 @@
 				E2EE0E3E28DB9B9F00138A86 /* ControlCapture.swift in Sources */,
 				E223C31228F2207300274C3E /* ControlSelectLocalizations.swift in Sources */,
 				E2FFE1FE28E37C5000425F04 /* ControlResponseOk.swift in Sources */,
-				E213252128F722F900D6BFF6 /* VideoPlayerView.swift in Sources */,
+				E213252128F722F900D6BFF6 /* NSPlayerView.swift in Sources */,
 				E2E5962D28DA63700058D054 /* ControlOpen.swift in Sources */,
 				E2837B3C29103DBD00FC4CC2 /* VPVControl.swift in Sources */,
 				E2FFE21428E8824100425F04 /* ControlResponseState.swift in Sources */,

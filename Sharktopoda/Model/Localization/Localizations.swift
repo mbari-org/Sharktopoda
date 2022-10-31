@@ -103,7 +103,7 @@ extension Localizations {
 
 // Retrieve Layers
 extension Localizations {
-  private func frames(_ playDirection: VideoPlayerView.PlayDirection) -> [LocalizationFrame]? {
+  private func frames(_ playDirection: NSPlayerView.PlayDirection) -> [LocalizationFrame]? {
     switch playDirection {
       case .forward:
         return forwardFrames
@@ -114,7 +114,7 @@ extension Localizations {
     }
   }
   
-  func layerIds(_ playDirection: VideoPlayerView.PlayDirection, at elapsedTime: Int) -> [String]? {
+  func layerIds(_ playDirection: NSPlayerView.PlayDirection, at elapsedTime: Int) -> [String]? {
     guard let frames = frames(playDirection) else { return nil }
     
     guard !frames.isEmpty else { return nil }
@@ -128,7 +128,7 @@ extension Localizations {
     return frame.ids
   }
   
-  func layers(_ playDirection: VideoPlayerView.PlayDirection, at elapsedTime: Int) -> [LocalizationLayer]? {
+  func layers(_ playDirection: NSPlayerView.PlayDirection, at elapsedTime: Int) -> [LocalizationLayer]? {
     guard let ids = layerIds(playDirection, at: elapsedTime) else { return nil }
     
     return ids.map { localizationLayer[$0]! }

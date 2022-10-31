@@ -179,6 +179,11 @@ extension NSPlayerView {
     return result
   }
   
+  func deleteSelected() -> Bool {
+    guard let localizations = localizations else { return false }
+    return localizations.deleteSelected()
+  }
+  
   func selectLocalizations(_ ids: [String]) -> [Bool] {
     guard let localizations = localizations else {
       return Array(repeating: false, count: ids.count)

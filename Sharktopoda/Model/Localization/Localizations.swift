@@ -67,14 +67,15 @@ extension Localizations {
   func remove(id: String) -> Bool {
     guard let layer = localizationLayer[id],
           let localization = layer.localization else { return false }
-    
-    localizationLayer[id] = nil
-    
+
+    selected.remove(id)
+
     pauseFrameRemove(localization)
     forwardFrameRemove(localization)
     reverseFrameRemove(localization)
     
-    selected.remove(id)
+    layer.removeFromSuperlayer()
+    localizationLayer[id] = nil
     
     return true
   }
@@ -165,10 +166,16 @@ extension Localizations {
   
   private func pauseFrameRemove(_ localization: Localization) {
     let index = frameIndex(for: pauseFrames, at: localization.elapsedTime)
-    var localizationFrame = pauseFrames[index]
+    var frame = pauseFrames[index]
     
-    if localizationFrame.frameNumber == frameNumber(for: localization) {
-      localizationFrame.remove(localization)
+    guard frame.frameNumber == frameNumber(for: localization) else { return }
+    
+    frame.remove(localization)
+    
+    if frame.ids.isEmpty {
+      pauseFrames.remove(at: index)
+    } else {
+      pauseFrames[index] = frame
     }
   }
 }
@@ -180,9 +187,9 @@ extension Localizations {
     let timeWindow = UserDefaults.standard.integer(forKey: PrefKeys.displayTimeWindow)
     
     let elapsed = localization.elapsedTime
-    let insertTime = useDuration ? elapsed : elapsed - (timeWindow / 2)
+    let frameTime = useDuration ? elapsed : elapsed - (timeWindow / 2)
     
-    let (frame, action, index) = frame(for: localization, into: forwardFrames, at: insertTime)
+    let (frame, action, index) = frame(for: localization, into: forwardFrames, at: frameTime)
                                       
     switch action {
       case .add:
@@ -193,7 +200,24 @@ extension Localizations {
   }
   
   private func forwardFrameRemove(_ localization: Localization) {
-    fatalError("CxInc: LocalizationSet.forwardFrameRemove")
+    let useDuration = UserDefaults.standard.bool(forKey: PrefKeys.displayUseDuration)
+    let timeWindow = UserDefaults.standard.integer(forKey: PrefKeys.displayTimeWindow)
+
+    let elapsed = localization.elapsedTime
+    let frameTime = useDuration ? elapsed : elapsed - (timeWindow / 2)
+    let index = frameIndex(for: forwardFrames, at: frameTime)
+    guard index != forwardFrames.count else { return }
+    
+    var frame = forwardFrames[index]
+    guard frame.frameNumber == frameNumber(for: localization) else { return }
+
+    frame.remove(localization)
+
+    if frame.ids.isEmpty {
+      forwardFrames.remove(at: index)
+    } else {
+      forwardFrames[index] = frame
+    }
   }
 }
 
@@ -217,7 +241,26 @@ extension Localizations {
   }
   
   private func reverseFrameRemove(_ localization: Localization) {
-    fatalError("CxInc: LocalizationSet.reverseFrameRemove")
+    let useDuration = UserDefaults.standard.bool(forKey: PrefKeys.displayUseDuration)
+    let timeWindow = UserDefaults.standard.integer(forKey: PrefKeys.displayTimeWindow)
+    
+    let elapsed = localization.elapsedTime
+    let duration = localization.duration
+    
+    let frameTime = useDuration ? elapsed + duration : elapsed + (timeWindow / 2)
+    let index = frameIndex(for: reverseFrames, at: frameTime)
+    guard index != reverseFrames.count else { return }
+
+    var frame = reverseFrames[index]
+    guard frame.frameNumber == frameNumber(for: localization) else { return }
+
+    frame.remove(localization)
+    
+    if frame.ids.isEmpty {
+      reverseFrames.remove(at: index)
+    } else {
+      reverseFrames[index] = frame
+    }
   }
 }
 
@@ -302,6 +345,12 @@ extension Localizations {
       localizationLayer[id]!.select(false)
     }
     selected.removeAll()
+  }
+  
+  func deleteSelected() -> Bool {
+    guard !selected.isEmpty else { return false }
+    selected.forEach { let _ = remove(id: $0) }
+    return true
   }
   
   func select(id: String) -> Bool {

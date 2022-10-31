@@ -54,6 +54,17 @@ class VideoWindow: NSWindow {
 
 /// Convenience functions
 extension VideoWindow {
+  override func keyDown(with event: NSEvent) {
+
+    if event.modifierFlags.intersection(.deviceIndependentFlagsMask) == .command,
+       event.keyCode == 51,
+       playerView.deleteSelected() {
+      return
+    }
+
+    super.keyDown(with: event)
+  }
+  
   var playerView: NSPlayerView {
     get {
       videoPlayerView.playerView.nsPlayerView

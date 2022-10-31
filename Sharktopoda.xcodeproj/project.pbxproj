@@ -12,6 +12,8 @@
 		E21DEEDF28DA13CB00A2AC01 /* ClientPing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21DEEDD28DA13CB00A2AC01 /* ClientPing.swift */; };
 		E21DEEE228DA1F3D00A2AC01 /* UDP.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21DEEE128DA1F3D00A2AC01 /* UDP.swift */; };
 		E21DEEE428DA533100A2AC01 /* ClientMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21DEEE328DA533100A2AC01 /* ClientMessage.swift */; };
+		E21DF7922910391A00038B41 /* VPVMouse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21DF7912910391A00038B41 /* VPVMouse.swift */; };
+		E21DF794291039CA00038B41 /* VPVKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21DF793291039CA00038B41 /* VPVKeyboard.swift */; };
 		E223C30C28F20D5D00274C3E /* ControlRemoveLocalizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E223C30B28F20D5D00274C3E /* ControlRemoveLocalizations.swift */; };
 		E223C30E28F2191500274C3E /* ControlUpdateLocalizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E223C30D28F2191500274C3E /* ControlUpdateLocalizations.swift */; };
 		E223C31028F21D8500274C3E /* ControlClearLocalizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E223C30F28F21D8500274C3E /* ControlClearLocalizations.swift */; };
@@ -52,6 +54,7 @@
 		E2675E2C28DB5F9400F5F114 /* DefaultValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2B28DB5F9400F5F114 /* DefaultValue.swift */; };
 		E2675E2F28DB729900F5F114 /* ControlInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2E28DB729900F5F114 /* ControlInfo.swift */; };
 		E2675E3428DB7A4000F5F114 /* ControlAdvance.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E3328DB7A4000F5F114 /* ControlAdvance.swift */; };
+		E2837B3C29103DBD00FC4CC2 /* VPVControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2837B3B29103DBD00FC4CC2 /* VPVControl.swift */; };
 		E28C681F290C6D5D00987828 /* CGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28C681E290C6D5D00987828 /* CGRect.swift */; };
 		E28C6821290C714D00987828 /* CAShapeLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28C6820290C714D00987828 /* CAShapeLayer.swift */; };
 		E295627528D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295627428D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift */; };
@@ -138,6 +141,8 @@
 		E21DEEDD28DA13CB00A2AC01 /* ClientPing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientPing.swift; sourceTree = "<group>"; };
 		E21DEEE128DA1F3D00A2AC01 /* UDP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDP.swift; sourceTree = "<group>"; };
 		E21DEEE328DA533100A2AC01 /* ClientMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientMessage.swift; sourceTree = "<group>"; };
+		E21DF7912910391A00038B41 /* VPVMouse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPVMouse.swift; sourceTree = "<group>"; };
+		E21DF793291039CA00038B41 /* VPVKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPVKeyboard.swift; sourceTree = "<group>"; };
 		E223C30B28F20D5D00274C3E /* ControlRemoveLocalizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlRemoveLocalizations.swift; sourceTree = "<group>"; };
 		E223C30D28F2191500274C3E /* ControlUpdateLocalizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlUpdateLocalizations.swift; sourceTree = "<group>"; };
 		E223C30F28F21D8500274C3E /* ControlClearLocalizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlClearLocalizations.swift; sourceTree = "<group>"; };
@@ -178,6 +183,7 @@
 		E2675E2B28DB5F9400F5F114 /* DefaultValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultValue.swift; sourceTree = "<group>"; };
 		E2675E2E28DB729900F5F114 /* ControlInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlInfo.swift; sourceTree = "<group>"; };
 		E2675E3328DB7A4000F5F114 /* ControlAdvance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlAdvance.swift; sourceTree = "<group>"; };
+		E2837B3B29103DBD00FC4CC2 /* VPVControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPVControl.swift; sourceTree = "<group>"; };
 		E28C681E290C6D5D00987828 /* CGRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRect.swift; sourceTree = "<group>"; };
 		E28C6820290C714D00987828 /* CAShapeLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAShapeLayer.swift; sourceTree = "<group>"; };
 		E295627428D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationDisplayPreferencesView.swift; sourceTree = "<group>"; };
@@ -270,6 +276,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E21DF790291038FE00038B41 /* PlayerView */ = {
+			isa = PBXGroup;
+			children = (
+				E213252028F722F900D6BFF6 /* VideoPlayerView.swift */,
+				E21DF7912910391A00038B41 /* VPVMouse.swift */,
+				E21DF793291039CA00038B41 /* VPVKeyboard.swift */,
+				E2837B3B29103DBD00FC4CC2 /* VPVControl.swift */,
+			);
+			path = PlayerView;
+			sourceTree = "<group>";
+		};
 		E22BF8C32907125F003D2B4A /* Localization */ = {
 			isa = PBXGroup;
 			children = (
@@ -603,7 +620,7 @@
 			children = (
 				E22BF8C32907125F003D2B4A /* Localization */,
 				E2FAB21A28E24A7C006D2676 /* VideoWindow.swift */,
-				E213252028F722F900D6BFF6 /* VideoPlayerView.swift */,
+				E21DF790291038FE00038B41 /* PlayerView */,
 				E2AAFC3228F8F35000BBC703 /* VideoPlayerError.swift */,
 				E237C0A028ECFB2E002868D1 /* Open */,
 			);
@@ -777,12 +794,14 @@
 				E2FFE1FE28E37C5000425F04 /* ControlResponseOk.swift in Sources */,
 				E213252128F722F900D6BFF6 /* VideoPlayerView.swift in Sources */,
 				E2E5962D28DA63700058D054 /* ControlOpen.swift in Sources */,
+				E2837B3C29103DBD00FC4CC2 /* VPVControl.swift in Sources */,
 				E2FFE21428E8824100425F04 /* ControlResponseState.swift in Sources */,
 				E21DEEE228DA1F3D00A2AC01 /* UDP.swift in Sources */,
 				E2989ABF28D3D083009D2D65 /* Color.swift in Sources */,
 				E2C22ECF28D27C2D003CD976 /* UDPServer.swift in Sources */,
 				E295627C28D5325A00E88ED1 /* NetworkControlPreferencesView.swift in Sources */,
 				E2675E2628DABF5600F5F114 /* ControlPlay.swift in Sources */,
+				E21DF7922910391A00038B41 /* VPVMouse.swift in Sources */,
 				E28C6821290C714D00987828 /* CAShapeLayer.swift in Sources */,
 				E229F4C228D9150A001F220E /* ControlConnect.swift in Sources */,
 				E2989AC328D4F6EE009D2D65 /* AnnotationCreationPreferencesView.swift in Sources */,
@@ -811,6 +830,7 @@
 				E295628A28D67A6500E88ED1 /* SharktopodaCommands.swift in Sources */,
 				E2FFE20C28E7619900425F04 /* ControlResponseInfo.swift in Sources */,
 				E2989ABD28D3C7F7009D2D65 /* PrefKeys.swift in Sources */,
+				E21DF794291039CA00038B41 /* VPVKeyboard.swift in Sources */,
 				E2675E2228DABE4900F5F114 /* ControlClose.swift in Sources */,
 				E2FFE1FC28E37B8000425F04 /* ControlResponseFailed.swift in Sources */,
 				E2FAB21B28E24A7C006D2676 /* VideoWindow.swift in Sources */,

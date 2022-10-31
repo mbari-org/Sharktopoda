@@ -13,9 +13,9 @@ final class VideoPlayerView: NSView {
   private let rootLayer = CALayer()
   private let playerLayer = AVPlayerLayer()
 
-  private var localizations: Localizations?
-  
-  private var editLocation: CGRect.Location?
+  var localizations: Localizations?
+  var undoLocalizations: [Localization]?
+  var editLocation: CGRect.Location?
   
   private var _editLayer: LocalizationLayer?
   private var _videoAsset: VideoAsset?
@@ -94,7 +94,7 @@ extension VideoPlayerView {
     UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations)
   }
 
-  private var player: AVPlayer? {
+  var player: AVPlayer? {
     get { playerLayer.player }
   }
   
@@ -202,85 +202,6 @@ extension VideoPlayerView {
   }
 }
 
-// MARK: Video
-extension VideoPlayerView {
-  func canStep(_ steps: Int) -> Bool {
-    guard let item = currentItem else { return false }
-    return steps < 0 ? item.canStepBackward : item.canStepForward
-  }
-
-  var playDirection: PlayDirection {
-    if paused {
-      return .paused
-    } else if 0 < rate {
-      return .forward
-    } else {
-      return .reverse
-    }
-  }
-
-  func frameGrab(at captureTime: Int, destination: String) async -> FrameGrabResult {
-    return await videoAsset.frameGrab(at: captureTime, destination: destination)
-  }
-
-  func pause() {
-    guard !paused else { return }
-    
-    player?.pause()
-    clearAllLayers()
-    displayPause()
-  }
-  
-  var paused: Bool {
-    rate == 0.0
-  }
-
-  var rate: Float {
-    get { player?.rate ?? Float(0) }
-    set {
-      if paused {
-        clearPause()
-      }
-      if newValue == 0.0 {
-        pause()
-      } else if 0 < newValue {
-        displayLayers(.forward, at: currentTime)
-      } else {
-        displayLayers(.reverse, at: currentTime)
-      }
-      player?.rate = newValue
-    }
-  }
-
-  func seek(elapsed: Int) {
-    guard paused else { return }
-
-    clearAllLayers()
-    
-
-    
-    /// Within a half frame span of the target seek we'll see all the frames for the specified seek time
-    let quarterFrame = CMTimeMultiplyByFloat64(videoAsset.frameDuration, multiplier: 0.25)
-    player?.seek(to: CMTime.fromMillis(elapsed), toleranceBefore: quarterFrame, toleranceAfter: quarterFrame) { [weak self] done in
-      if done,
-         UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations) {
-        self?.displayPause()
-      }
-    }
-  }
-
-  func step(_ steps: Int) {
-    guard paused else { return }
-    
-    clearAllLayers()
-    
-    guard displayLocalizations else { return }
-    
-    currentItem?.step(byCount: steps)
-    displayPause()
-  }
-}
-
 // MARK: Abstract layers
 extension VideoPlayerView {
   func localizationLayers() -> [LocalizationLayer] {
@@ -316,7 +237,7 @@ extension VideoPlayerView {
 
 // MARK: Display and Clear
 extension VideoPlayerView {
-  private func displayLayers(_ direction: PlayDirection, at elapsedTime: Int) {
+  func displayLayers(_ direction: PlayDirection, at elapsedTime: Int) {
     guard displayLocalizations else { return }
     
     guard let layerIds = localizations?.layerIds(direction, at: elapsedTime) else { return }
@@ -330,7 +251,7 @@ extension VideoPlayerView {
       }
   }
   
-  private func clearLayers(_ direction: PlayDirection, at elapsedTime: Int) {
+  func clearLayers(_ direction: PlayDirection, at elapsedTime: Int) {
     guard let layerIds = localizations?.layerIds(direction, at: elapsedTime) else { return }
     
     layerIds
@@ -342,7 +263,7 @@ extension VideoPlayerView {
       }
   }
 
-  private func clearAllLayers() {
+  func clearAllLayers() {
     localizationLayers()
       .forEach { layer in
         DispatchQueue.main.async {
@@ -372,125 +293,3 @@ extension VideoPlayerView {
   }
 }
 
-// MARK: Mouse selection
-extension VideoPlayerView {
-  override func mouseDown(with event: NSEvent) {
-    let mousePoint = event.locationInWindow
-    
-    if let mouseLayer = editLayer {
-      let layerPoint = mouseLayer.convertSuperPoint(mousePoint)
-      if mouseLayer.contains(layerPoint) {
-        editLocation = mouseLayer.location(of: layerPoint)
-        print("mouse down edit location: \(String(describing: editLocation))")
-        return
-      }
-    }
-
-    guard let mouseLayer = mouseLayer(point: mousePoint) else {
-      editLayer = nil
-      return
-    }
-
-    editLayer = mouseLayer
-    let layerPoint = editLayer!.convertSuperPoint(mousePoint)
-    editLocation = mouseLayer.location(of: layerPoint)
-    print("mouse down edit location: \(String(describing: editLocation))")
-    
-    let _ = localizations!.select(id: editLayer!.localization!.id)
-  }
-  
-  override func mouseDragged(with event: NSEvent) {
-    guard let layer = editLayer else { return }
-
-    /// Mouse delta is in ocean coords, flip to atmos
-    let delta = DeltaPoint(x: event.deltaX, y: event.deltaY)
-
-    print("mouse dragged edit location: \(editLocation ?? .outside)")
-    print("delta: \(delta)")
-
-    switch editLocation {
-      /// deltaRect arguments should all be -1, 0, or 1
-      case .middle:
-        /// Move
-        layer.delta(by: deltaRect(1, -1, 0, 0, delta: delta))
-      case .top:
-        /// Resize
-        layer.delta(by: deltaRect(0, 0, 0, -1, delta: delta))
-      case .topRight:
-        /// Resize
-        layer.delta(by: deltaRect(0, 0, 1, -1, delta: delta))
-      case .right:
-        /// Resize
-        layer.delta(by: deltaRect(0, 0, 1, 0, delta: delta))
-      case .bottomRight:
-        /// Move and resize
-        layer.delta(by: deltaRect(0, -1, 1, 1, delta: delta))
-      case .bottom:
-        /// Move and resize
-        layer.delta(by: deltaRect(0, -1, 0, 1, delta: delta))
-      case .bottomLeft:
-        /// Move and resize
-        layer.delta(by: deltaRect(1, -1, -1, 1, delta: delta))
-      case .left:
-        /// Move and resize
-        layer.delta(by: deltaRect(1, 0, -1, 0, delta: delta))
-      case .topLeft:
-        /// Move and resize
-        layer.delta(by: deltaRect(1, 0, -1, -1, delta: delta))
-      case .outside:
-        return
-      case .none:
-        return
-    }
-  }
-
-  override func mouseExited(with event: NSEvent) {
-    guard editLocation != nil else { return }
-    
-    print("CxInc mouse exit cancel current changes?")
-    
-    editLayer = nil
-  }
-
-  override func mouseUp(with event: NSEvent) {
-    guard editLocation != nil else { return }
-    
-    print("CxInc mouse up")
-  }
-  
-  private func mouseLayer(point: NSPoint) -> LocalizationLayer? {
-    guard paused else { return nil }
-    guard displayLocalizations else { return nil }
-    guard let layers = localizations?.layers(.paused, at: currentTime) else { return nil }
-    guard !layers.isEmpty else { return nil }
-    
-    let mousedLayers = layers.filter {
-      $0.containsSuperPoint(point)
-    }
-    guard !mousedLayers.isEmpty else { return nil }
-    
-    let layer = mousedLayers.min { a, b in
-      let aDistance = a.bounds.minSideDistance(point: point)
-      let bDistance = b.bounds.minSideDistance(point: point)
-      return aDistance < bDistance
-    }!
-    
-    return layer
-  }
-  
-  /// CxNote x, y, w, h should all be -1, 0, or 1
-  private func deltaPoint(_ x: CGFloat, _ y: CGFloat, delta: CGPoint) -> DeltaPoint {
-    DeltaPoint(x: x * delta.x, y: y * delta.y)
-  }
-
-  private func deltaSize(_ w: CGFloat, _ h: CGFloat, delta: CGPoint) -> DeltaSize {
-    DeltaSize(width: w * delta.x, height: h * delta.y)
-  }
-
-  private func deltaRect(_ x: CGFloat, _ y: CGFloat,
-                         _ w: CGFloat, _ h: CGFloat,
-                         delta: CGPoint) -> DeltaRect {
-    DeltaRect(origin: deltaPoint(x, y, delta: delta),
-              size: deltaSize(w, h, delta: delta))
-  }
-}

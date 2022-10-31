@@ -31,13 +31,11 @@ final class NSPlayerView: NSView {
   
   override public init(frame frameRect: NSRect) {
     super.init(frame: frameRect)
-
     setup()
   }
   
   required public init?(coder decoder: NSCoder) {
     super.init(coder: decoder)
-
     setup()
   }
   
@@ -54,7 +52,7 @@ final class NSPlayerView: NSView {
     rootLayer.addSublayer(playerLayer)
 
     localizations = Localizations(playerItem: currentItem!,
-                                    frameDuration: videoAsset.frameDuration.asMillis())
+                                  frameDuration: videoAsset.frameDuration.asMillis())
 
     setTimeObserver()
   }
@@ -94,17 +92,6 @@ extension NSPlayerView {
     UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations)
   }
 
-  var player: AVPlayer? {
-    get { playerLayer.player }
-  }
-  
-  var scale: CGFloat {
-    /// Player always maintains original aspect so either width or height would do here
-    get {
-      videoRect.size.width / videoSize.width
-    }
-  }
-  
   var editLayer: LocalizationLayer? {
     get { _editLayer }
     set {
@@ -114,6 +101,17 @@ extension NSPlayerView {
         localizations!.clearSelected()
       }
       _editLayer = newValue
+    }
+  }
+  
+  var player: AVPlayer? {
+    get { playerLayer.player }
+  }
+  
+  var scale: CGFloat {
+    /// Player always maintains original aspect so either width or height would do here
+    get {
+      videoRect.size.width / videoSize.width
     }
   }
   
@@ -292,4 +290,3 @@ extension NSPlayerView {
     }
   }
 }
-

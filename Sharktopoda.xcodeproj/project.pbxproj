@@ -55,6 +55,8 @@
 		E2675E2F28DB729900F5F114 /* ControlInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2E28DB729900F5F114 /* ControlInfo.swift */; };
 		E2675E3428DB7A4000F5F114 /* ControlAdvance.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E3328DB7A4000F5F114 /* ControlAdvance.swift */; };
 		E2837B3C29103DBD00FC4CC2 /* VPVControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2837B3B29103DBD00FC4CC2 /* VPVControl.swift */; };
+		E2837B4629104BF700FC4CC2 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2837B4529104BF700FC4CC2 /* PlayerView.swift */; };
+		E2837B4829104C6B00FC4CC2 /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2837B4729104C6B00FC4CC2 /* VideoPlayerView.swift */; };
 		E28C681F290C6D5D00987828 /* CGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28C681E290C6D5D00987828 /* CGRect.swift */; };
 		E28C6821290C714D00987828 /* CAShapeLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28C6820290C714D00987828 /* CAShapeLayer.swift */; };
 		E295627528D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295627428D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift */; };
@@ -184,6 +186,8 @@
 		E2675E2E28DB729900F5F114 /* ControlInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlInfo.swift; sourceTree = "<group>"; };
 		E2675E3328DB7A4000F5F114 /* ControlAdvance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlAdvance.swift; sourceTree = "<group>"; };
 		E2837B3B29103DBD00FC4CC2 /* VPVControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPVControl.swift; sourceTree = "<group>"; };
+		E2837B4529104BF700FC4CC2 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
+		E2837B4729104C6B00FC4CC2 /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
 		E28C681E290C6D5D00987828 /* CGRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRect.swift; sourceTree = "<group>"; };
 		E28C6820290C714D00987828 /* CAShapeLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAShapeLayer.swift; sourceTree = "<group>"; };
 		E295627428D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationDisplayPreferencesView.swift; sourceTree = "<group>"; };
@@ -283,6 +287,7 @@
 				E21DF7912910391A00038B41 /* VPVMouse.swift */,
 				E21DF793291039CA00038B41 /* VPVKeyboard.swift */,
 				E2837B3B29103DBD00FC4CC2 /* VPVControl.swift */,
+				E2837B4529104BF700FC4CC2 /* PlayerView.swift */,
 			);
 			path = PlayerView;
 			sourceTree = "<group>";
@@ -618,10 +623,11 @@
 		E2FAB21528E2168F006D2676 /* Video */ = {
 			isa = PBXGroup;
 			children = (
-				E22BF8C32907125F003D2B4A /* Localization */,
 				E2FAB21A28E24A7C006D2676 /* VideoWindow.swift */,
-				E21DF790291038FE00038B41 /* PlayerView */,
+				E2837B4729104C6B00FC4CC2 /* VideoPlayerView.swift */,
 				E2AAFC3228F8F35000BBC703 /* VideoPlayerError.swift */,
+				E21DF790291038FE00038B41 /* PlayerView */,
+				E22BF8C32907125F003D2B4A /* Localization */,
 				E237C0A028ECFB2E002868D1 /* Open */,
 			);
 			path = Video;
@@ -789,6 +795,7 @@
 				E2EE0E3C28DB9B3B00138A86 /* ControlSeek.swift in Sources */,
 				E2BC08F028EC797D007F4B5D /* FrameCaptureError.swift in Sources */,
 				E22F0EA428DA57800097A34E /* ControlRequest.swift in Sources */,
+				E2837B4629104BF700FC4CC2 /* PlayerView.swift in Sources */,
 				E2EE0E3E28DB9B9F00138A86 /* ControlCapture.swift in Sources */,
 				E223C31228F2207300274C3E /* ControlSelectLocalizations.swift in Sources */,
 				E2FFE1FE28E37C5000425F04 /* ControlResponseOk.swift in Sources */,
@@ -809,6 +816,7 @@
 				E28C681F290C6D5D00987828 /* CGRect.swift in Sources */,
 				E2675E2A28DB52C600F5F114 /* ControlUnknown.swift in Sources */,
 				E2BC08E728EB7703007F4B5D /* CMTime.swift in Sources */,
+				E2837B4829104C6B00FC4CC2 /* VideoPlayerView.swift in Sources */,
 				E2C22ED528D36832003CD976 /* Localization.swift in Sources */,
 				E21DEEDF28DA13CB00A2AC01 /* ClientPing.swift in Sources */,
 				E2675E2F28DB729900F5F114 /* ControlInfo.swift in Sources */,

@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct SharktopodaCommands: Commands {
-  
   var body: some Commands {
     CommandGroup(after: CommandGroupPlacement.newItem) {
       Divider()
@@ -18,6 +17,33 @@ struct SharktopodaCommands: Commands {
 
       OpenUrlView()
         .keyboardShortcut("O", modifiers: [.shift, .command])
+    }
+    
+    CommandMenu("Video") {
+      Button("Play") {
+        videoWindow?.play()
+      }
+      .disabled(videoWindow == nil)
+//      .disabled(videoWindow == nil && playerView?.playDirection == .paused)
+
+      Button("Pause") {
+        videoWindow?.pause()
+      }
+      .disabled(videoWindow == nil)
+//      .disabled(videoWindow == nil && playerView?.playDirection != .paused)
+
+    }
+  }
+  
+  var videoWindow: VideoWindow? {
+    get {
+      UDP.sharktopodaData.latestVideoWindow()
+    }
+  }
+
+  var playerView: NSPlayerView? {
+    get {
+      videoWindow?.playerView
     }
   }
 }

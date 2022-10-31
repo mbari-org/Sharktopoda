@@ -11,7 +11,7 @@ struct ControlInfo: ControlRequest {
   var command: ControlCommand
   
   func process() -> ControlResponse {
-    if let latestWindow = UDP.sharktopodaData.latedVideoWindow() {
+    if let latestWindow = UDP.sharktopodaData.latestVideoWindow() {
       return ControlResponseInfo(using: latestWindow)
     }
 

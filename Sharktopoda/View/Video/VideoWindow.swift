@@ -21,19 +21,18 @@ class VideoWindow: NSWindow {
   }
   
   var keyInfo: KeyInfo
-
-  var videoPlayerView: NSPlayerView
-  
   var videoAsset: VideoAsset {
     get {
       videoPlayerView.videoAsset
     }
   }
+  
+  var videoPlayerView: VideoPlayerView
 
   init(for videoAsset: VideoAsset) {
     keyInfo = KeyInfo(keyTime: Date())
 
-    videoPlayerView = NSPlayerView(videoAsset: videoAsset)
+    videoPlayerView = VideoPlayerView(videoAsset: videoAsset)
 
     let videoSize = videoAsset.size!
     super.init(
@@ -46,25 +45,31 @@ class VideoWindow: NSWindow {
     isReleasedWhenClosed = false
     title = videoAsset.id
 
-    contentView = videoPlayerView
+    contentView = NSHostingView(rootView: videoPlayerView)
+
     delegate = self
-    
     makeKeyAndOrderFront(nil)
   }
 }
 
 /// Convenience functions
 extension VideoWindow {
+  var playerView: NSPlayerView {
+    get {
+      videoPlayerView.playerView.nsPlayerView
+    }
+  }
+  
   func canStep(_ steps: Int) -> Bool {
-    videoPlayerView.canStep(steps)
+    playerView.canStep(steps)
   }
   
   func playbackTime() -> Int {
-    videoPlayerView.currentTime
+    playerView.currentTime
   }
 
   func frameGrab(at captureTime: Int, destination: String) async -> FrameGrabResult {
-    await videoPlayerView.frameGrab(at: captureTime, destination: destination)
+    await playerView.frameGrab(at: captureTime, destination: destination)
   }
   
   var id: String {
@@ -72,23 +77,23 @@ extension VideoWindow {
   }
   
   func pause() {
-    videoPlayerView.pause()
+    playerView.pause()
   }
   
-  func play(rate: Float) {
-    videoPlayerView.rate = rate
+  func play(rate: Float = 1.0) {
+    playerView.rate = rate
   }
   
   var rate: Float {
-    videoPlayerView.rate
+    playerView.rate
   }
   
   func seek(elapsed: Int) {
-    videoPlayerView.seek(elapsed: elapsed)
+    playerView.seek(elapsed: elapsed)
   }
   
   func step(_ steps: Int) {
-    videoPlayerView.step(steps)
+    playerView.step(steps)
   }
   
   var url: URL {
@@ -101,25 +106,25 @@ extension VideoWindow {
   func addLocalizations(_ controlLocalizations: [ControlLocalization]) -> [Bool] {
     controlLocalizations
       .map { Localization(from: $0) }
-      .map { videoPlayerView.addLocalization($0) }
+      .map { playerView.addLocalization($0) }
   }
   
   func clearLocalizations() {
-    videoPlayerView.clearLocalizations()
+    playerView.clearLocalizations()
   }
   
   func removeLocalizations(_ ids: [String]) -> [Bool] {
-    videoPlayerView.removeLocalizations(ids)
+    playerView.removeLocalizations(ids)
   }
 
   func selectLocalizations(_ ids: [String]) -> [Bool] {
-    videoPlayerView.selectLocalizations(ids)
+    playerView.selectLocalizations(ids)
   }
   
   func updateLocalizations(_ controlLocalizations: [ControlLocalization]) -> [Bool] {
     controlLocalizations
       .map { Localization(from: $0) }
-      .map { videoPlayerView.updateLocalization($0) }
+      .map { playerView.updateLocalization($0) }
   }
 }
 
@@ -194,7 +199,7 @@ extension VideoWindow: NSWindowDelegate {
   
   func windowDidResize(_ notification: Notification) {
     DispatchQueue.main.async { [weak self] in
-      self?.videoPlayerView.resized()
+      self?.playerView.resized()
 //      self?.layoutIfNeeded()
     }
   }

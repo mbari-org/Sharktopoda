@@ -591,8 +591,8 @@
 		E2DAF8BC28F8EE460010ECB8 /* Localization */ = {
 			isa = PBXGroup;
 			children = (
-				E2505D5928EF91960027F280 /* Localizations.swift */,
 				E2C22ED428D36832003CD976 /* Localization.swift */,
+				E2505D5928EF91960027F280 /* Localizations.swift */,
 				E2AAFC2E28F8F01A00BBC703 /* FrameLocalization.swift */,
 			);
 			path = Localization;

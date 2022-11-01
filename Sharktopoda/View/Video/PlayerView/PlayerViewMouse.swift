@@ -11,30 +11,30 @@ extension NSPlayerView {
   override func mouseDown(with event: NSEvent) {
     let mousePoint = event.locationInWindow
     
-    if let mouseLayer = editLayer {
+    if let mouseLayer = editLocalization?.layer {
       let layerPoint = mouseLayer.convertSuperPoint(mousePoint)
       if mouseLayer.contains(layerPoint) {
         editLocation = mouseLayer.location(of: layerPoint)
-        print("mouse down edit location: \(String(describing: editLocation))")
         return
       }
     }
     
-    guard let mouseLayer = mouseLayer(point: mousePoint) else {
-      editLayer = nil
+    guard let mouseLocalization = mouseLocalization(at: mousePoint) else {
+      editLocalization = nil
       return
     }
+
+    mouseLocalization.select(true)
     
-    editLayer = mouseLayer
-    let layerPoint = editLayer!.convertSuperPoint(mousePoint)
-    editLocation = mouseLayer.location(of: layerPoint)
-    print("mouse down edit location: \(String(describing: editLocation))")
+    let layer = mouseLocalization.layer
+    let layerPoint = layer.convertSuperPoint(mousePoint)
+    editLocation = layer.location(of: layerPoint)
     
-    let _ = localizations!.select(id: editLayer!.localization!.id)
+    editLocalization = mouseLocalization
   }
   
   override func mouseDragged(with event: NSEvent) {
-    guard let layer = editLayer else { return }
+    guard let localization = editLocalization else { return }
     
     /// Mouse delta is in ocean coords, flip to atmos
     let delta = DeltaPoint(x: event.deltaX, y: event.deltaY)
@@ -46,31 +46,31 @@ extension NSPlayerView {
         /// deltaRect arguments should all be -1, 0, or 1
       case .middle:
         /// Move
-        layer.delta(by: deltaRect(1, -1, 0, 0, delta: delta))
+        localization.delta(by: deltaRect(1, -1, 0, 0, delta: delta))
       case .top:
         /// Resize
-        layer.delta(by: deltaRect(0, 0, 0, -1, delta: delta))
+        localization.delta(by: deltaRect(0, 0, 0, -1, delta: delta))
       case .topRight:
         /// Resize
-        layer.delta(by: deltaRect(0, 0, 1, -1, delta: delta))
+        localization.delta(by: deltaRect(0, 0, 1, -1, delta: delta))
       case .right:
         /// Resize
-        layer.delta(by: deltaRect(0, 0, 1, 0, delta: delta))
+        localization.delta(by: deltaRect(0, 0, 1, 0, delta: delta))
       case .bottomRight:
         /// Move and resize
-        layer.delta(by: deltaRect(0, -1, 1, 1, delta: delta))
+        localization.delta(by: deltaRect(0, -1, 1, 1, delta: delta))
       case .bottom:
         /// Move and resize
-        layer.delta(by: deltaRect(0, -1, 0, 1, delta: delta))
+        localization.delta(by: deltaRect(0, -1, 0, 1, delta: delta))
       case .bottomLeft:
         /// Move and resize
-        layer.delta(by: deltaRect(1, -1, -1, 1, delta: delta))
+        localization.delta(by: deltaRect(1, -1, -1, 1, delta: delta))
       case .left:
         /// Move and resize
-        layer.delta(by: deltaRect(1, 0, -1, 0, delta: delta))
+        localization.delta(by: deltaRect(1, 0, -1, 0, delta: delta))
       case .topLeft:
         /// Move and resize
-        layer.delta(by: deltaRect(1, 0, -1, -1, delta: delta))
+        localization.delta(by: deltaRect(1, 0, -1, -1, delta: delta))
       case .outside:
         return
       case .none:
@@ -83,7 +83,7 @@ extension NSPlayerView {
     
     print("CxInc mouse exit cancel current changes?")
     
-    editLayer = nil
+    editLocation = nil
   }
   
   override func mouseUp(with event: NSEvent) {
@@ -92,24 +92,22 @@ extension NSPlayerView {
     print("CxInc mouse up")
   }
   
-  private func mouseLayer(point: NSPoint) -> LocalizationLayer? {
+  private func mouseLocalization(at point: NSPoint) -> Localization? {
     guard paused else { return nil }
-    guard displayLocalizations else { return nil }
-    guard let layers = localizations?.layers(.paused, at: currentTime) else { return nil }
-    guard !layers.isEmpty else { return nil }
+    guard showLocalizations else { return nil }
+    guard let pausedLocalizations = localizations?.fetch(.paused, at: currentTime) else { return nil }
+    guard !pausedLocalizations.isEmpty else { return nil }
     
-    let mousedLayers = layers.filter {
-      $0.containsSuperPoint(point)
+    let mousedLocalizations = pausedLocalizations.filter {
+      $0.layer.containsSuperPoint(point)
     }
-    guard !mousedLayers.isEmpty else { return nil }
+    guard !mousedLocalizations.isEmpty else { return nil }
     
-    let layer = mousedLayers.min { a, b in
-      let aDistance = a.bounds.minSideDistance(point: point)
-      let bDistance = b.bounds.minSideDistance(point: point)
+    return mousedLocalizations.min { a, b in
+      let aDistance = a.layer.bounds.minSideDistance(point: point)
+      let bDistance = b.layer.bounds.minSideDistance(point: point)
       return aDistance < bDistance
     }!
-    
-    return layer
   }
   
   /// CxNote x, y, w, h should all be -1, 0, or 1

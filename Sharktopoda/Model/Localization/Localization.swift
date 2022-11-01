@@ -11,10 +11,10 @@ import SwiftUI
 class Localization {
   let id: String
   var concept: String
-  let elapsedTime: Int
-  let duration: Int
+  var elapsedTime: Int
+  var duration: Int
   var region: CGRect
-  let hexColor: String
+  var hexColor: String
   
   var layer: CAShapeLayer
   
@@ -64,6 +64,31 @@ extension Localization {
   }
 }
 
+// MARK: Update
+extension Localization {
+  typealias TimelessUpdate = Bool
+  
+  func sameTime(as control: ControlLocalization) -> Bool {
+    control.elapsedTimeMillis == elapsedTime && control.durationMillis == duration
+  }
+  
+  func update(using control: ControlLocalization) {
+    guard id == control.uuid else { return }
+
+    concept = control.concept
+    duration = control.durationMillis
+    elapsedTime = control.elapsedTimeMillis
+    hexColor = control.color
+    region = CGRect(x: CGFloat(control.x),
+                    y: CGFloat(control.y),
+                    width: CGFloat(control.width),
+                    height: CGFloat(control.height))
+    
+    layer.strokeColor = Color(hex: hexColor)?.cgColor
+    layer.path = layerPath()
+  }
+}
+
 // MARK: Select
 extension Localization {
   func select(_ isSelected: Bool) {
@@ -89,7 +114,7 @@ extension Localization {
   func setup(for videoRect: CGRect, at scale: CGFloat)  {
     layer.anchorPoint = .zero
     layer.fillColor = .clear
-    layer.frame = rect(videoRect: videoRect, scale: scale)
+    layer.frame = frame(for: videoRect, at: scale)
     layer.isOpaque = true
     layer.lineJoin = .round
     layer.lineWidth = CGFloat(UserDefaults.standard.integer(forKey: PrefKeys.displayBorderSize))
@@ -101,7 +126,7 @@ extension Localization {
     CGPath(rect: CGRect(origin: .zero, size: layer.bounds.size), transform: nil)
   }
   
-  func rect(videoRect: CGRect, scale: CGFloat) -> CGRect {
+  private func frame(for videoRect: CGRect, at scale: CGFloat) -> CGRect {
     let fullHeight = videoRect.height / scale
     
     let size = CGSize(width: scale * region.size.width,
@@ -113,7 +138,5 @@ extension Localization {
     
     return CGRect(origin: origin, size: size)
   }
-
-
 }
 

@@ -17,7 +17,7 @@ final class NSPlayerView: NSView {
   var undoLocalizations: [Localization]?
   var editLocation: CGRect.Location?
   
-  private var _editLayer: LocalizationLayer?
+  private var _editLocalization: Localization?
   private var _videoAsset: VideoAsset?
 
   // MARK: ctors
@@ -88,19 +88,19 @@ extension NSPlayerView {
     }
   }
   
-  var displayLocalizations: Bool {
+  var showLocalizations: Bool {
     UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations)
   }
 
-  var editLayer: LocalizationLayer? {
-    get { _editLayer }
+  var editLocalization: Localization? {
+    get { _editLocalization }
     set {
       editLocation = nil
       
-      if _editLayer != nil {
+      if _editLocalization != nil {
         localizations!.clearSelected()
       }
-      _editLayer = newValue
+      _editLocalization = newValue
     }
   }
   
@@ -137,22 +137,20 @@ extension NSPlayerView {
 // MARK: Localizations
 extension NSPlayerView {
   func addLocalization(_ localization: Localization) -> Bool {
-    let layer = LocalizationLayer(for: localization,
-                                  videoRect: videoRect,
-                                  scale: scale)
+    localization.setup(for: videoRect, at: scale)
     
     guard let localizations = localizations,
-          localizations.add(layer) else { return false }
-    
+          localizations.add(localization) else { return false }
+
     guard paused else { return true }
     
     let currentFrameNumber = localizations.frameNumber(elapsedTime: currentTime)
     let localizationFrameNumber = localizations.frameNumber(for: localization)
     
-    if displayLocalizations,
+    if showLocalizations,
       currentFrameNumber == localizationFrameNumber {
       DispatchQueue.main.async { [weak self] in
-        self?.playerLayer.addSublayer(layer)
+        self?.playerLayer.addSublayer(localization.layer)
       }
     }
 
@@ -174,7 +172,7 @@ extension NSPlayerView {
     
     let result = ids.map { localizations!.remove(id: $0) }
     
-    displayPause()
+    displayPaused()
     
     return result
   }
@@ -192,24 +190,22 @@ extension NSPlayerView {
     return localizations.select(ids: ids)
   }
   
-  func updateLocalization(_ localization: Localization) -> Bool {
+  func updateLocalization(_ control: ControlLocalization) -> Bool {
     guard localizations != nil else { return false }
+    let result = localizations!.update(using: control)
+//    localization.setup(for: videoRect, at: scale)
 
-    let layer = LocalizationLayer(for: localization,
-                                  videoRect: videoRect,
-                                  scale: scale)
+    displayPaused()
     
-    let result = localizations!.update(layer)
-    displayPause()
     return result
   }
 }
 
 // MARK: Abstract layers
 extension NSPlayerView {
-  func localizationLayers() -> [LocalizationLayer] {
-    return playerLayer.sublayers?.reduce(into: [LocalizationLayer]()) { acc, layer in
-      if let layer = layer as? LocalizationLayer {
+  func localizationLayers() -> [CAShapeLayer] {
+    return playerLayer.sublayers?.reduce(into: [CAShapeLayer]()) { acc, layer in
+      if let layer = layer as? CAShapeLayer {
         acc.append(layer)
       }
     } ?? []
@@ -219,60 +215,50 @@ extension NSPlayerView {
 
 // MARK: Pause layers
 extension NSPlayerView {
-  func displayPause() {
-    displayLayers(.paused, at: currentTime)
+  func displayPaused() {
+    displayLocalizations(.paused, at: currentTime)
   }
   
   func clearPause() {
-    clearAllLayers()
+    clearAllLocalizations()
   }
   
   func resized() {
     guard paused else { return }
-      
-    for layer in localizationLayers() {
-      let layerRect = layer.rect(videoRect: videoRect, scale: scale)
-      layer.frame = layerRect
-      layer.path = CGPath(rect: CGRect(origin: .zero, size: layerRect.size), transform: nil)
-    }
+    
+//    for layer in localizationLayers() {
+//      let layerRect = layer.rect(videoRect: videoRect, scale: scale)
+//      layer.frame = layerRect
+//      layer.path = CGPath(rect: CGRect(origin: .zero, size: layerRect.size), transform: nil)
+//    }
   }
 }
 
 // MARK: Display and Clear
 extension NSPlayerView {
-  func displayLayers(_ direction: PlayDirection, at elapsedTime: Int) {
-    guard displayLocalizations else { return }
+  func displayLocalizations(_ direction: PlayDirection, at elapsedTime: Int) {
+    guard showLocalizations else { return }
+    guard let localizations = localizations?.fetch(direction, at: elapsedTime) else { return }
     
-    guard let layerIds = localizations?.layerIds(direction, at: elapsedTime) else { return }
-    
-    layerIds
-      .forEach { id in
-        guard let layer = localizations?.localizationLayer[id] else { return }
-        DispatchQueue.main.async { [weak self] in
-          self?.playerLayer.addSublayer(layer)
-        }
-      }
+    DispatchQueue.main.async { [weak self] in
+      localizations.forEach { self?.playerLayer.addSublayer($0.layer) }
+    }
   }
   
-  func clearLayers(_ direction: PlayDirection, at elapsedTime: Int) {
-    guard let layerIds = localizations?.layerIds(direction, at: elapsedTime) else { return }
-    
-    layerIds
-      .forEach { id in
-        guard let layer = localizations?.localizationLayer[id] else { return }
-        DispatchQueue.main.async {
-          layer.removeFromSuperlayer()
-        }
-      }
+  func clearLocalizations(_ direction: PlayDirection, at elapsedTime: Int) {
+    guard let fetched = localizations?.fetch(direction, at: elapsedTime) else { return }
+    let layers = fetched.map { $0.layer }
+
+    DispatchQueue.main.async {
+      layers.forEach { $0.removeFromSuperlayer() }
+    }
   }
 
-  func clearAllLayers() {
-    localizationLayers()
-      .forEach { layer in
-        DispatchQueue.main.async {
-          layer.removeFromSuperlayer()
-        }
-      }
+  func clearAllLocalizations() {
+    let layers = localizationLayers()
+    DispatchQueue.main.async {
+      layers.forEach { $0.removeFromSuperlayer() }
+    }
   }
 }
 
@@ -290,8 +276,8 @@ extension NSPlayerView {
       let elapsedTime = time.asMillis()
       let opposite = direction.opposite()
       
-      self?.displayLayers(direction, at: elapsedTime)
-      self?.clearLayers(opposite, at: elapsedTime)
+      self?.displayLocalizations(direction, at: elapsedTime)
+      self?.clearLocalizations(opposite, at: elapsedTime)
     }
   }
 }

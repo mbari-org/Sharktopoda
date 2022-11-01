@@ -134,7 +134,6 @@ extension VideoWindow {
   
   func updateLocalizations(_ controlLocalizations: [ControlLocalization]) -> [Bool] {
     controlLocalizations
-      .map { Localization(from: $0) }
       .map { playerView.updateLocalization($0) }
   }
 }

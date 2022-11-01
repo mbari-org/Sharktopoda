@@ -18,7 +18,6 @@
 		E223C31028F21D8500274C3E /* ControlClearLocalizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E223C30F28F21D8500274C3E /* ControlClearLocalizations.swift */; };
 		E223C31228F2207300274C3E /* ControlSelectLocalizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E223C31128F2207300274C3E /* ControlSelectLocalizations.swift */; };
 		E229F4C228D9150A001F220E /* ControlConnect.swift in Sources */ = {isa = PBXBuildFile; fileRef = E229F4C128D9150A001F220E /* ControlConnect.swift */; };
-		E22BF8C5290712E4003D2B4A /* SyncLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22BF8C4290712E4003D2B4A /* SyncLayer.swift */; };
 		E22F0EA428DA57800097A34E /* ControlRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22F0EA328DA57800097A34E /* ControlRequest.swift */; };
 		E22F72FD28DA5D9100253A48 /* ControlResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22F72FC28DA5D9100253A48 /* ControlResponse.swift */; };
 		E237C09228ECA9F5002868D1 /* REQUIREMENTS.md in Resources */ = {isa = PBXBuildFile; fileRef = E237C08528ECA9F5002868D1 /* REQUIREMENTS.md */; };
@@ -71,11 +70,9 @@
 		E2989AC128D4BAD0009D2D65 /* SizeColorRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2989AC028D4BAD0009D2D65 /* SizeColorRow.swift */; };
 		E2989AC328D4F6EE009D2D65 /* AnnotationCreationPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2989AC228D4F6EE009D2D65 /* AnnotationCreationPreferencesView.swift */; };
 		E2A6B39628DB8E8500C1A5EA /* ControlInvalid.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A6B39528DB8E8500C1A5EA /* ControlInvalid.swift */; };
-		E2AAFC2D28F8EFEA00BBC703 /* LocalizationFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AAFC2C28F8EFEA00BBC703 /* LocalizationFrame.swift */; };
 		E2AAFC2F28F8F01A00BBC703 /* FrameLocalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AAFC2E28F8F01A00BBC703 /* FrameLocalization.swift */; };
 		E2AAFC3128F8F28B00BBC703 /* OpenVideoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AAFC3028F8F28B00BBC703 /* OpenVideoError.swift */; };
 		E2AAFC3328F8F35000BBC703 /* VideoPlayerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AAFC3228F8F35000BBC703 /* VideoPlayerError.swift */; };
-		E2AAFC3528F99A3600BBC703 /* LocalizationLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AAFC3428F99A3600BBC703 /* LocalizationLayer.swift */; };
 		E2BC08E228E8EC4F007F4B5D /* ControlResponseCaptureDone.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC08E128E8EC4F007F4B5D /* ControlResponseCaptureDone.swift */; };
 		E2BC08E528EB76D6007F4B5D /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC08E428EB76D6007F4B5D /* UserDefaults.swift */; };
 		E2BC08E728EB7703007F4B5D /* CMTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC08E628EB7703007F4B5D /* CMTime.swift */; };
@@ -148,7 +145,6 @@
 		E223C30F28F21D8500274C3E /* ControlClearLocalizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlClearLocalizations.swift; sourceTree = "<group>"; };
 		E223C31128F2207300274C3E /* ControlSelectLocalizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlSelectLocalizations.swift; sourceTree = "<group>"; };
 		E229F4C128D9150A001F220E /* ControlConnect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlConnect.swift; sourceTree = "<group>"; };
-		E22BF8C4290712E4003D2B4A /* SyncLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncLayer.swift; sourceTree = "<group>"; };
 		E22F0EA328DA57800097A34E /* ControlRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlRequest.swift; sourceTree = "<group>"; };
 		E22F72FC28DA5D9100253A48 /* ControlResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponse.swift; sourceTree = "<group>"; };
 		E237C08528ECA9F5002868D1 /* REQUIREMENTS.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = REQUIREMENTS.md; sourceTree = "<group>"; };
@@ -201,11 +197,9 @@
 		E2989AC028D4BAD0009D2D65 /* SizeColorRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeColorRow.swift; sourceTree = "<group>"; };
 		E2989AC228D4F6EE009D2D65 /* AnnotationCreationPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationCreationPreferencesView.swift; sourceTree = "<group>"; };
 		E2A6B39528DB8E8500C1A5EA /* ControlInvalid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlInvalid.swift; sourceTree = "<group>"; };
-		E2AAFC2C28F8EFEA00BBC703 /* LocalizationFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationFrame.swift; sourceTree = "<group>"; };
 		E2AAFC2E28F8F01A00BBC703 /* FrameLocalization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameLocalization.swift; sourceTree = "<group>"; };
 		E2AAFC3028F8F28B00BBC703 /* OpenVideoError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenVideoError.swift; sourceTree = "<group>"; };
 		E2AAFC3228F8F35000BBC703 /* VideoPlayerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerError.swift; sourceTree = "<group>"; };
-		E2AAFC3428F99A3600BBC703 /* LocalizationLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationLayer.swift; sourceTree = "<group>"; };
 		E2BC08E128E8EC4F007F4B5D /* ControlResponseCaptureDone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseCaptureDone.swift; sourceTree = "<group>"; };
 		E2BC08E428EB76D6007F4B5D /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		E2BC08E628EB7703007F4B5D /* CMTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMTime.swift; sourceTree = "<group>"; };
@@ -287,16 +281,6 @@
 				E2837B3B29103DBD00FC4CC2 /* PlayerViewControl.swift */,
 			);
 			path = PlayerView;
-			sourceTree = "<group>";
-		};
-		E22BF8C32907125F003D2B4A /* Localization */ = {
-			isa = PBXGroup;
-			children = (
-				E2AAFC2C28F8EFEA00BBC703 /* LocalizationFrame.swift */,
-				E2AAFC3428F99A3600BBC703 /* LocalizationLayer.swift */,
-				E22BF8C4290712E4003D2B4A /* SyncLayer.swift */,
-			);
-			path = Localization;
 			sourceTree = "<group>";
 		};
 		E237C08428ECA9F5002868D1 /* Requirements */ = {
@@ -624,7 +608,6 @@
 				E2837B4729104C6B00FC4CC2 /* VideoPlayerView.swift */,
 				E2AAFC3228F8F35000BBC703 /* VideoPlayerError.swift */,
 				E21DF790291038FE00038B41 /* PlayerView */,
-				E22BF8C32907125F003D2B4A /* Localization */,
 				E237C0A028ECFB2E002868D1 /* Open */,
 			);
 			path = Video;
@@ -774,11 +757,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				E237C0A628EE108B002868D1 /* FloatingPanel.swift in Sources */,
-				E2AAFC2D28F8EFEA00BBC703 /* LocalizationFrame.swift in Sources */,
 				E2BC08E528EB76D6007F4B5D /* UserDefaults.swift in Sources */,
 				E2675E2828DAC08D00F5F114 /* ControlPause.swift in Sources */,
 				E22F72FD28DA5D9100253A48 /* ControlResponse.swift in Sources */,
-				E2AAFC3528F99A3600BBC703 /* LocalizationLayer.swift in Sources */,
 				E237C0AA28EE1AFC002868D1 /* View.swift in Sources */,
 				E2505D5328EF38B60027F280 /* OpenAlert.swift in Sources */,
 				E2C22EDA28D386AE003CD976 /* MainView.swift in Sources */,
@@ -849,7 +830,6 @@
 				E2D47E9E28D8DF0F0068B192 /* UDPMessage.swift in Sources */,
 				E2EE0E3A28DB9AAD00138A86 /* ControlState.swift in Sources */,
 				E2989AC128D4BAD0009D2D65 /* SizeColorRow.swift in Sources */,
-				E22BF8C5290712E4003D2B4A /* SyncLayer.swift in Sources */,
 				E2D47E9A28D8C17D0068B192 /* ClientCommand.swift in Sources */,
 				E2EE0E3828DB9A6600138A86 /* ControlElapsed.swift in Sources */,
 				E295627528D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift in Sources */,

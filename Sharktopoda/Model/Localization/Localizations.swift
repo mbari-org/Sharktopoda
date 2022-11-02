@@ -333,6 +333,10 @@ extension Localizations {
     selected.map { storage[$0]! }
   }
   
+  func areSelected() -> Bool {
+    !selected.isEmpty
+  }
+  
   func clearSelected() {
     selected.forEach { storage[$0]?.select(false) }
     selected.removeAll()
@@ -344,10 +348,12 @@ extension Localizations {
     return true
   }
   
-  func select(id: String) -> Bool {
+  func select(id: String, clear: Bool = true) -> Bool {
     guard let localization = storage[id] else { return false }
 
-    clearSelected()
+    if clear {
+      clearSelected()
+    }
 
     selected.insert(id)
     localization.select(true)
@@ -364,6 +370,13 @@ extension Localizations {
       localization.select(true)
       return true
     }
+  }
+  
+  func unselect(id: String) {
+    guard let localization = storage[id] else { return }
+    
+    selected.remove(localization.id)
+    localization.select(false)
   }
 }
 

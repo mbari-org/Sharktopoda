@@ -15,9 +15,9 @@ final class NSPlayerView: NSView {
 
   var localizations: Localizations?
   var undoLocalizations: [Localization]?
-  var editLocation: CGRect.Location?
+  var dragLocation: CGRect.Location?
   
-  private var _editLocalization: Localization?
+  private var _currentLocalization: Localization?
   private var _videoAsset: VideoAsset?
 
   // MARK: ctors
@@ -92,14 +92,14 @@ extension NSPlayerView {
     UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations)
   }
 
-  var editLocalization: Localization? {
-    get { _editLocalization }
+  var currentLocalization: Localization? {
+    get { _currentLocalization }
     set {
-      editLocation = nil
-      if _editLocalization != nil {
+      dragLocation = nil
+      if _currentLocalization != nil {
         localizations!.clearSelected()
       }
-      _editLocalization = newValue
+      _currentLocalization = newValue
     }
   }
   

@@ -116,7 +116,7 @@ extension VideoWindow {
 extension VideoWindow {
   func addLocalizations(_ controlLocalizations: [ControlLocalization]) -> [Bool] {
     controlLocalizations
-      .map { Localization(from: $0) }
+      .map { Localization(from: $0, with: videoAsset.size!) }
       .map { playerView.addLocalization($0) }
   }
   
@@ -210,7 +210,6 @@ extension VideoWindow: NSWindowDelegate {
   func windowDidResize(_ notification: Notification) {
     DispatchQueue.main.async { [weak self] in
       self?.playerView.resized()
-//      self?.layoutIfNeeded()
     }
   }
 }

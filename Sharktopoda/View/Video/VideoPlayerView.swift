@@ -22,11 +22,9 @@ struct VideoPlayerView: View {
   var body: some View {
     VStack {
       playerView
-      Divider()
-      Text("Hidable Video Control")
-    }
-    .toolbar {
-      Text("??")
+        .padding(0)
+//      Divider()
+//      Text("Hidable Video Control")
     }
   }
 }

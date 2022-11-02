@@ -11,6 +11,8 @@ extension NSPlayerView {
   override func mouseDown(with event: NSEvent) {
     let mousePoint = event.locationInWindow
     
+//    if event.modifierFlags.intersection(.deviceIndependentFlagsMask) == .command,
+    
     if let mouseLayer = editLocalization?.layer {
       let layerPoint = mouseLayer.convertSuperPoint(mousePoint)
       if mouseLayer.contains(layerPoint) {
@@ -24,24 +26,27 @@ extension NSPlayerView {
       return
     }
 
-    mouseLocalization.select(true)
+    let _ = localizations?.select(id: mouseLocalization.id)
     
     let layer = mouseLocalization.layer
     let layerPoint = layer.convertSuperPoint(mousePoint)
+    editLocalization = mouseLocalization
     editLocation = layer.location(of: layerPoint)
     
-    editLocalization = mouseLocalization
+    print("location: \(String(describing: editLocation))")
+    print("localization: \(String(describing: editLocalization))")
+    
   }
   
   override func mouseDragged(with event: NSEvent) {
     guard let localization = editLocalization else { return }
-    
+
     /// Mouse delta is in ocean coords, flip to atmos
     let delta = DeltaPoint(x: event.deltaX, y: event.deltaY)
-    
-    print("mouse dragged edit location: \(editLocation ?? .outside)")
-    print("delta: \(delta)")
-    
+
+//    print("mouse dragged edit location: \(editLocation ?? .outside)")
+//    print("delta: \(delta)")
+
     switch editLocation {
         /// deltaRect arguments should all be -1, 0, or 1
       case .middle:
@@ -87,9 +92,9 @@ extension NSPlayerView {
   }
   
   override func mouseUp(with event: NSEvent) {
-    guard editLocation != nil else { return }
-    
-    print("CxInc mouse up")
+    guard let editLocalization = editLocalization else { return }
+
+    print("CxInc mouse up for \(editLocalization)")
   }
   
   private func mouseLocalization(at point: NSPoint) -> Localization? {

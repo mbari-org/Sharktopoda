@@ -96,7 +96,6 @@ extension NSPlayerView {
     get { _editLocalization }
     set {
       editLocation = nil
-      
       if _editLocalization != nil {
         localizations!.clearSelected()
       }
@@ -109,7 +108,7 @@ extension NSPlayerView {
   }
   
   var scale: CGFloat {
-    /// Player always maintains original aspect so either width or height would do here
+    /// Player always maintains original aspect so either width or height work here
     get {
       videoRect.size.width / videoSize.width
     }
@@ -137,7 +136,7 @@ extension NSPlayerView {
 // MARK: Localizations
 extension NSPlayerView {
   func addLocalization(_ localization: Localization) -> Bool {
-    localization.setup(for: videoRect, at: scale)
+    localization.resized(for: videoRect)
     
     guard let localizations = localizations,
           localizations.add(localization) else { return false }
@@ -225,12 +224,12 @@ extension NSPlayerView {
   
   func resized() {
     guard paused else { return }
-    
-//    for layer in localizationLayers() {
-//      let layerRect = layer.rect(videoRect: videoRect, scale: scale)
-//      layer.frame = layerRect
-//      layer.path = CGPath(rect: CGRect(origin: .zero, size: layerRect.size), transform: nil)
-//    }
+
+    if let pausedLocalizations = localizations?.fetch(.paused, at: currentTime) {
+      for localization in pausedLocalizations {
+        localization.resized(for: videoRect)
+      }
+    }
   }
 }
 

@@ -10,27 +10,44 @@ import SwiftUI
 
 class Localization {
   let id: String
+
   var concept: String
-  var elapsedTime: Int
   var duration: Int
-  var region: CGRect
+  var elapsedTime: Int
   var hexColor: String
+  var region: CGRect
   
+  var videoSize: CGSize
+
   var layer: CAShapeLayer
   
-  init(from controlLocalization: ControlLocalization) {
+  init(from controlLocalization: ControlLocalization, with videoSize: CGSize) {
     id = controlLocalization.uuid
     concept = controlLocalization.concept
-    elapsedTime = controlLocalization.elapsedTimeMillis
     duration = controlLocalization.durationMillis
+    elapsedTime = controlLocalization.elapsedTimeMillis
     hexColor = controlLocalization.color
-    
     region = CGRect(x: CGFloat(controlLocalization.x),
                     y: CGFloat(controlLocalization.y),
                     width: CGFloat(controlLocalization.width),
                     height: CGFloat(controlLocalization.height))
-    
+
+    self.videoSize = videoSize
+    let origin = CGPoint(x: region.origin.x,
+                         y: videoSize.height - region.origin.y - region.size.height)
+
     layer = CAShapeLayer()
+    layer.anchorPoint = .zero
+    layer.fillColor = .clear
+    layer.frame = CGRect(origin: origin, size: region.size)
+    layer.isOpaque = true
+    layer.lineJoin = .round
+    layer.lineWidth = CGFloat(UserDefaults.standard.integer(forKey: PrefKeys.displayBorderSize))
+    layer.path = layerPath()
+    layer.strokeColor = Color(hex: hexColor)?.cgColor
+
+    // CxTBD Investigate
+    layer.shouldRasterize = true
   }
 
   var debugDescription: String {
@@ -49,8 +66,10 @@ extension Localization {
     guard delta != .zero else { return }
 
     region = region.move(by: delta)
-
-    layer.position = layer.position.move(by: delta)
+    
+    noAnimation {
+      layer.position = layer.position.move(by: delta)
+    }
   }
   
   func resize(by delta: DeltaSize) {
@@ -58,9 +77,25 @@ extension Localization {
     
     region = region.resize(by: delta)
     
-    layer.bounds = layer.bounds.resize(by: delta)
-    layer.path = layerPath()
-    layer.setNeedsLayout()
+    noAnimation {
+      layer.bounds = layer.bounds.resize(by: delta)
+      layer.path = layerPath()
+      layer.setNeedsLayout()
+    }
+  }
+  
+  func resized(for videoRect: CGRect) {
+    noAnimation {
+      layer.frame = frame(for: videoRect)
+      layer.path = layerPath()
+    }
+  }
+  
+  func noAnimation(_ modify: () -> Void) {
+    CATransaction.begin()
+    CATransaction.setValue(true, forKey: kCATransactionDisableActions)
+    modify()
+    CATransaction.commit()
   }
 }
 
@@ -85,7 +120,13 @@ extension Localization {
                     height: CGFloat(control.height))
     
     layer.strokeColor = Color(hex: hexColor)?.cgColor
-    layer.path = layerPath()
+
+    let origin = CGPoint(x: region.origin.x,
+                         y: videoSize.height - region.origin.y - region.size.height)
+    noAnimation {
+      layer.frame = CGRect(origin: origin, size: region.size)
+      layer.path = layerPath()
+    }
   }
 }
 
@@ -111,22 +152,12 @@ extension Localization: Hashable {
 
 // MARK: Shape Layer
 extension Localization {
-  func setup(for videoRect: CGRect, at scale: CGFloat)  {
-    layer.anchorPoint = .zero
-    layer.fillColor = .clear
-    layer.frame = frame(for: videoRect, at: scale)
-    layer.isOpaque = true
-    layer.lineJoin = .round
-    layer.lineWidth = CGFloat(UserDefaults.standard.integer(forKey: PrefKeys.displayBorderSize))
-    layer.path = layerPath()
-    layer.strokeColor = Color(hex: hexColor)?.cgColor
-  }
-  
-  func layerPath() -> CGPath {
+  private func layerPath() -> CGPath {
     CGPath(rect: CGRect(origin: .zero, size: layer.bounds.size), transform: nil)
   }
-  
-  private func frame(for videoRect: CGRect, at scale: CGFloat) -> CGRect {
+
+  private func frame(for videoRect: CGRect) -> CGRect {
+    let scale = videoRect.size.width / videoSize.width
     let fullHeight = videoRect.height / scale
     
     let size = CGSize(width: scale * region.size.width,

@@ -55,10 +55,31 @@ class VideoWindow: NSWindow {
 /// Convenience functions
 extension VideoWindow {
   override func keyDown(with event: NSEvent) {
+    enum KeyCode: UInt16 {
+      case space = 49
+      case delete = 51
+    }
+    
+    func isCommand(_ event: NSEvent) -> Bool {
+      event.modifierFlags.intersection(.deviceIndependentFlagsMask) == .command
+    }
+    
+    func isControl(_ event: NSEvent) -> Bool {
+      event.modifierFlags.intersection(.deviceIndependentFlagsMask) == .control
+    }
 
-    if event.modifierFlags.intersection(.deviceIndependentFlagsMask) == .command,
-       event.keyCode == 51,
-       playerView.deleteSelected() {
+    /// Cmd-Delete:  Delete selected localizations
+    if event.keyCode == KeyCode.delete.rawValue,
+       isCommand(event) {
+      let _ = playerView.deleteSelected()
+      return
+    }
+    
+    /// Space:  Toggle play/pause forward
+    /// Ctrl-Space:  Toggle play/pause reverse
+    if event.keyCode == KeyCode.space.rawValue {
+      let rate: Float = isControl(event) ? -1 : 1
+      playerView.paused ? play(rate: rate) : pause()
       return
     }
 

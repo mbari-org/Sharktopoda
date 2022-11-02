@@ -1,11 +1,9 @@
 //
 //  LocalizationFrame.swift
-//  Created for Sharktopoda on 10/13/22.
+//  Created for Sharktopoda on 11/2/22.
 //
 //  Apache License 2.0 — See project LICENSE file
 //
-
-import Foundation
 
 struct LocalizationFrame: Comparable {
   let frameNumber: Int
@@ -15,7 +13,7 @@ struct LocalizationFrame: Comparable {
   init(_ localization: Localization, frameNumber: Int) {
     self.frameNumber = frameNumber
     ids = [String]()
-    ids.append(localization.id)
+    //    ids.append(localization.id)
   }
   
   mutating func add(_ localization: Localization) {
@@ -26,7 +24,7 @@ struct LocalizationFrame: Comparable {
     guard let index = ids.firstIndex(of: localization.id) else { return }
     ids.remove(at: index)
   }
-    
+  
   // Comparable
   static func < (lhs: LocalizationFrame, rhs: LocalizationFrame) -> Bool {
     lhs.frameNumber < rhs.frameNumber

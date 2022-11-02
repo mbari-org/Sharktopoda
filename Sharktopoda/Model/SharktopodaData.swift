@@ -21,7 +21,7 @@ final class SharktopodaData: ObservableObject {
     UDP.sharktopodaData = self
   }
   
-  func latedVideoWindow() -> VideoWindow? {
+  func latestVideoWindow() -> VideoWindow? {
     guard !videoWindows.isEmpty else { return nil }
      
     let windows: [VideoWindow] = Array(videoWindows.values)

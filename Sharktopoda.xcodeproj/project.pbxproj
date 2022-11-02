@@ -7,11 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E213252128F722F900D6BFF6 /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E213252028F722F900D6BFF6 /* VideoPlayerView.swift */; };
+		E213252128F722F900D6BFF6 /* NSPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E213252028F722F900D6BFF6 /* NSPlayerView.swift */; };
 		E213252528F7651F00D6BFF6 /* DefaultPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = E213252428F7651F00D6BFF6 /* DefaultPreferences.swift */; };
 		E21DEEDF28DA13CB00A2AC01 /* ClientPing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21DEEDD28DA13CB00A2AC01 /* ClientPing.swift */; };
 		E21DEEE228DA1F3D00A2AC01 /* UDP.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21DEEE128DA1F3D00A2AC01 /* UDP.swift */; };
 		E21DEEE428DA533100A2AC01 /* ClientMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21DEEE328DA533100A2AC01 /* ClientMessage.swift */; };
+		E21DF7922910391A00038B41 /* PlayerMouse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21DF7912910391A00038B41 /* PlayerMouse.swift */; };
 		E223C30C28F20D5D00274C3E /* ControlRemoveLocalizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E223C30B28F20D5D00274C3E /* ControlRemoveLocalizations.swift */; };
 		E223C30E28F2191500274C3E /* ControlUpdateLocalizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E223C30D28F2191500274C3E /* ControlUpdateLocalizations.swift */; };
 		E223C31028F21D8500274C3E /* ControlClearLocalizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E223C30F28F21D8500274C3E /* ControlClearLocalizations.swift */; };
@@ -41,7 +42,7 @@
 		E2505D5328EF38B60027F280 /* OpenAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2505D5228EF38B60027F280 /* OpenAlert.swift */; };
 		E2505D5628EF7D600027F280 /* ControlAddLocalizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2505D5528EF7D600027F280 /* ControlAddLocalizations.swift */; };
 		E2505D5828EF7D950027F280 /* ControlLocalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2505D5728EF7D950027F280 /* ControlLocalization.swift */; };
-		E2505D5A28EF91960027F280 /* LocalizationSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2505D5928EF91960027F280 /* LocalizationSet.swift */; };
+		E2505D5A28EF91960027F280 /* Localizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2505D5928EF91960027F280 /* Localizations.swift */; };
 		E2675E1E28DAB65D00F5F114 /* ControlPing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E1D28DAB65D00F5F114 /* ControlPing.swift */; };
 		E2675E2228DABE4900F5F114 /* ControlClose.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2128DABE4900F5F114 /* ControlClose.swift */; };
 		E2675E2428DABEAC00F5F114 /* ControlShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2328DABEAC00F5F114 /* ControlShow.swift */; };
@@ -51,6 +52,11 @@
 		E2675E2C28DB5F9400F5F114 /* DefaultValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2B28DB5F9400F5F114 /* DefaultValue.swift */; };
 		E2675E2F28DB729900F5F114 /* ControlInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2E28DB729900F5F114 /* ControlInfo.swift */; };
 		E2675E3428DB7A4000F5F114 /* ControlAdvance.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E3328DB7A4000F5F114 /* ControlAdvance.swift */; };
+		E2837B3C29103DBD00FC4CC2 /* PlayerVideoControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2837B3B29103DBD00FC4CC2 /* PlayerVideoControl.swift */; };
+		E2837B4629104BF700FC4CC2 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2837B4529104BF700FC4CC2 /* PlayerView.swift */; };
+		E2837B4829104C6B00FC4CC2 /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2837B4729104C6B00FC4CC2 /* VideoPlayerView.swift */; };
+		E28C681F290C6D5D00987828 /* CGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28C681E290C6D5D00987828 /* CGRect.swift */; };
+		E28C6821290C714D00987828 /* CAShapeLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28C6820290C714D00987828 /* CAShapeLayer.swift */; };
 		E295627528D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295627428D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift */; };
 		E295627728D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295627628D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift */; };
 		E295627928D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295627828D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift */; };
@@ -64,11 +70,8 @@
 		E2989AC128D4BAD0009D2D65 /* SizeColorRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2989AC028D4BAD0009D2D65 /* SizeColorRow.swift */; };
 		E2989AC328D4F6EE009D2D65 /* AnnotationCreationPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2989AC228D4F6EE009D2D65 /* AnnotationCreationPreferencesView.swift */; };
 		E2A6B39628DB8E8500C1A5EA /* ControlInvalid.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A6B39528DB8E8500C1A5EA /* ControlInvalid.swift */; };
-		E2AAFC2D28F8EFEA00BBC703 /* LocalizationFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AAFC2C28F8EFEA00BBC703 /* LocalizationFrame.swift */; };
-		E2AAFC2F28F8F01A00BBC703 /* FrameLocalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AAFC2E28F8F01A00BBC703 /* FrameLocalization.swift */; };
 		E2AAFC3128F8F28B00BBC703 /* OpenVideoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AAFC3028F8F28B00BBC703 /* OpenVideoError.swift */; };
 		E2AAFC3328F8F35000BBC703 /* VideoPlayerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AAFC3228F8F35000BBC703 /* VideoPlayerError.swift */; };
-		E2AAFC3528F99A3600BBC703 /* LocalizationLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AAFC3428F99A3600BBC703 /* LocalizationLayer.swift */; };
 		E2BC08E228E8EC4F007F4B5D /* ControlResponseCaptureDone.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC08E128E8EC4F007F4B5D /* ControlResponseCaptureDone.swift */; };
 		E2BC08E528EB76D6007F4B5D /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC08E428EB76D6007F4B5D /* UserDefaults.swift */; };
 		E2BC08E728EB7703007F4B5D /* CMTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC08E628EB7703007F4B5D /* CMTime.swift */; };
@@ -76,6 +79,8 @@
 		E2BC08EB28EB781C007F4B5D /* CGImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC08EA28EB781C007F4B5D /* CGImage.swift */; };
 		E2BC08ED28EB7914007F4B5D /* AVAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC08EC28EB7914007F4B5D /* AVAsset.swift */; };
 		E2BC08F028EC797D007F4B5D /* FrameCaptureError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC08EF28EC797D007F4B5D /* FrameCaptureError.swift */; };
+		E2BDE212290CABC3001CC439 /* CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BDE211290CABC3001CC439 /* CGPoint.swift */; };
+		E2BDE214290D7FF5001CC439 /* CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BDE213290D7FF5001CC439 /* CGSize.swift */; };
 		E2C078CD28D7CF0E00C55EEC /* UDPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C078CC28D7CF0E00C55EEC /* UDPClient.swift */; };
 		E2C22E8528CFDC26003CD976 /* SharktopodaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22E8428CFDC26003CD976 /* SharktopodaApp.swift */; };
 		E2C22E8928CFDC28003CD976 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2C22E8828CFDC28003CD976 /* Assets.xcassets */; };
@@ -89,6 +94,7 @@
 		E2C22ED528D36832003CD976 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22ED428D36832003CD976 /* Localization.swift */; };
 		E2C22ED728D36888003CD976 /* VideoAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22ED628D36888003CD976 /* VideoAsset.swift */; };
 		E2C22EDA28D386AE003CD976 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22ED928D386AE003CD976 /* MainView.swift */; };
+		E2D1C84E291302EF00961A0A /* LocalizationFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1C84D291302EF00961A0A /* LocalizationFrame.swift */; };
 		E2D47E9628D8C01F0068B192 /* ControlCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D47E9528D8C01F0068B192 /* ControlCommand.swift */; };
 		E2D47E9A28D8C17D0068B192 /* ClientCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D47E9928D8C17D0068B192 /* ClientCommand.swift */; };
 		E2D47E9E28D8DF0F0068B192 /* UDPMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D47E9D28D8DF0F0068B192 /* UDPMessage.swift */; };
@@ -128,11 +134,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		E213252028F722F900D6BFF6 /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
+		E213252028F722F900D6BFF6 /* NSPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSPlayerView.swift; sourceTree = "<group>"; };
 		E213252428F7651F00D6BFF6 /* DefaultPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultPreferences.swift; sourceTree = "<group>"; };
 		E21DEEDD28DA13CB00A2AC01 /* ClientPing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientPing.swift; sourceTree = "<group>"; };
 		E21DEEE128DA1F3D00A2AC01 /* UDP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDP.swift; sourceTree = "<group>"; };
 		E21DEEE328DA533100A2AC01 /* ClientMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientMessage.swift; sourceTree = "<group>"; };
+		E21DF7912910391A00038B41 /* PlayerMouse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerMouse.swift; sourceTree = "<group>"; };
 		E223C30B28F20D5D00274C3E /* ControlRemoveLocalizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlRemoveLocalizations.swift; sourceTree = "<group>"; };
 		E223C30D28F2191500274C3E /* ControlUpdateLocalizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlUpdateLocalizations.swift; sourceTree = "<group>"; };
 		E223C30F28F21D8500274C3E /* ControlClearLocalizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlClearLocalizations.swift; sourceTree = "<group>"; };
@@ -162,7 +169,7 @@
 		E2505D5228EF38B60027F280 /* OpenAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAlert.swift; sourceTree = "<group>"; };
 		E2505D5528EF7D600027F280 /* ControlAddLocalizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlAddLocalizations.swift; sourceTree = "<group>"; };
 		E2505D5728EF7D950027F280 /* ControlLocalization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlLocalization.swift; sourceTree = "<group>"; };
-		E2505D5928EF91960027F280 /* LocalizationSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationSet.swift; sourceTree = "<group>"; };
+		E2505D5928EF91960027F280 /* Localizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizations.swift; sourceTree = "<group>"; };
 		E2675E1D28DAB65D00F5F114 /* ControlPing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlPing.swift; sourceTree = "<group>"; };
 		E2675E2128DABE4900F5F114 /* ControlClose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlClose.swift; sourceTree = "<group>"; };
 		E2675E2328DABEAC00F5F114 /* ControlShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlShow.swift; sourceTree = "<group>"; };
@@ -172,6 +179,11 @@
 		E2675E2B28DB5F9400F5F114 /* DefaultValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultValue.swift; sourceTree = "<group>"; };
 		E2675E2E28DB729900F5F114 /* ControlInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlInfo.swift; sourceTree = "<group>"; };
 		E2675E3328DB7A4000F5F114 /* ControlAdvance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlAdvance.swift; sourceTree = "<group>"; };
+		E2837B3B29103DBD00FC4CC2 /* PlayerVideoControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerVideoControl.swift; sourceTree = "<group>"; };
+		E2837B4529104BF700FC4CC2 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
+		E2837B4729104C6B00FC4CC2 /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
+		E28C681E290C6D5D00987828 /* CGRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRect.swift; sourceTree = "<group>"; };
+		E28C6820290C714D00987828 /* CAShapeLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAShapeLayer.swift; sourceTree = "<group>"; };
 		E295627428D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationDisplayPreferencesView.swift; sourceTree = "<group>"; };
 		E295627628D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationSelectionPreferencesView.swift; sourceTree = "<group>"; };
 		E295627828D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationCaptionPreferencesView.swift; sourceTree = "<group>"; };
@@ -185,11 +197,8 @@
 		E2989AC028D4BAD0009D2D65 /* SizeColorRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeColorRow.swift; sourceTree = "<group>"; };
 		E2989AC228D4F6EE009D2D65 /* AnnotationCreationPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationCreationPreferencesView.swift; sourceTree = "<group>"; };
 		E2A6B39528DB8E8500C1A5EA /* ControlInvalid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlInvalid.swift; sourceTree = "<group>"; };
-		E2AAFC2C28F8EFEA00BBC703 /* LocalizationFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationFrame.swift; sourceTree = "<group>"; };
-		E2AAFC2E28F8F01A00BBC703 /* FrameLocalization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameLocalization.swift; sourceTree = "<group>"; };
 		E2AAFC3028F8F28B00BBC703 /* OpenVideoError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenVideoError.swift; sourceTree = "<group>"; };
 		E2AAFC3228F8F35000BBC703 /* VideoPlayerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerError.swift; sourceTree = "<group>"; };
-		E2AAFC3428F99A3600BBC703 /* LocalizationLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationLayer.swift; sourceTree = "<group>"; };
 		E2BC08E128E8EC4F007F4B5D /* ControlResponseCaptureDone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseCaptureDone.swift; sourceTree = "<group>"; };
 		E2BC08E428EB76D6007F4B5D /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		E2BC08E628EB7703007F4B5D /* CMTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMTime.swift; sourceTree = "<group>"; };
@@ -197,6 +206,8 @@
 		E2BC08EA28EB781C007F4B5D /* CGImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGImage.swift; sourceTree = "<group>"; };
 		E2BC08EC28EB7914007F4B5D /* AVAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVAsset.swift; sourceTree = "<group>"; };
 		E2BC08EF28EC797D007F4B5D /* FrameCaptureError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameCaptureError.swift; sourceTree = "<group>"; };
+		E2BDE211290CABC3001CC439 /* CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPoint.swift; sourceTree = "<group>"; };
+		E2BDE213290D7FF5001CC439 /* CGSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGSize.swift; sourceTree = "<group>"; };
 		E2C078CC28D7CF0E00C55EEC /* UDPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDPClient.swift; sourceTree = "<group>"; };
 		E2C22E8128CFDC26003CD976 /* Sharktopoda.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sharktopoda.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2C22E8428CFDC26003CD976 /* SharktopodaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharktopodaApp.swift; sourceTree = "<group>"; };
@@ -214,6 +225,7 @@
 		E2C22ED428D36832003CD976 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		E2C22ED628D36888003CD976 /* VideoAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAsset.swift; sourceTree = "<group>"; };
 		E2C22ED928D386AE003CD976 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		E2D1C84D291302EF00961A0A /* LocalizationFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationFrame.swift; sourceTree = "<group>"; };
 		E2D47E9528D8C01F0068B192 /* ControlCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlCommand.swift; sourceTree = "<group>"; };
 		E2D47E9928D8C17D0068B192 /* ClientCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientCommand.swift; sourceTree = "<group>"; };
 		E2D47E9D28D8DF0F0068B192 /* UDPMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDPMessage.swift; sourceTree = "<group>"; };
@@ -260,6 +272,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E21DF790291038FE00038B41 /* PlayerView */ = {
+			isa = PBXGroup;
+			children = (
+				E2837B4529104BF700FC4CC2 /* PlayerView.swift */,
+				E213252028F722F900D6BFF6 /* NSPlayerView.swift */,
+				E21DF7912910391A00038B41 /* PlayerMouse.swift */,
+				E2837B3B29103DBD00FC4CC2 /* PlayerVideoControl.swift */,
+			);
+			path = PlayerView;
+			sourceTree = "<group>";
+		};
 		E237C08428ECA9F5002868D1 /* Requirements */ = {
 			isa = PBXGroup;
 			children = (
@@ -384,7 +407,11 @@
 			isa = PBXGroup;
 			children = (
 				E2BC08EC28EB7914007F4B5D /* AVAsset.swift */,
+				E28C6820290C714D00987828 /* CAShapeLayer.swift */,
 				E2BC08EA28EB781C007F4B5D /* CGImage.swift */,
+				E2BDE211290CABC3001CC439 /* CGPoint.swift */,
+				E28C681E290C6D5D00987828 /* CGRect.swift */,
+				E2BDE213290D7FF5001CC439 /* CGSize.swift */,
 				E2BC08E628EB7703007F4B5D /* CMTime.swift */,
 				E2989ABE28D3D083009D2D65 /* Color.swift */,
 				E2675E2B28DB5F9400F5F114 /* DefaultValue.swift */,
@@ -549,9 +576,8 @@
 			isa = PBXGroup;
 			children = (
 				E2C22ED428D36832003CD976 /* Localization.swift */,
-				E2505D5928EF91960027F280 /* LocalizationSet.swift */,
-				E2AAFC2C28F8EFEA00BBC703 /* LocalizationFrame.swift */,
-				E2AAFC2E28F8F01A00BBC703 /* FrameLocalization.swift */,
+				E2505D5928EF91960027F280 /* Localizations.swift */,
+				E2D1C84D291302EF00961A0A /* LocalizationFrame.swift */,
 			);
 			path = Localization;
 			sourceTree = "<group>";
@@ -579,9 +605,9 @@
 			isa = PBXGroup;
 			children = (
 				E2FAB21A28E24A7C006D2676 /* VideoWindow.swift */,
-				E213252028F722F900D6BFF6 /* VideoPlayerView.swift */,
+				E2837B4729104C6B00FC4CC2 /* VideoPlayerView.swift */,
 				E2AAFC3228F8F35000BBC703 /* VideoPlayerError.swift */,
-				E2AAFC3428F99A3600BBC703 /* LocalizationLayer.swift */,
+				E21DF790291038FE00038B41 /* PlayerView */,
 				E237C0A028ECFB2E002868D1 /* Open */,
 			);
 			path = Video;
@@ -731,39 +757,45 @@
 			buildActionMask = 2147483647;
 			files = (
 				E237C0A628EE108B002868D1 /* FloatingPanel.swift in Sources */,
-				E2AAFC2D28F8EFEA00BBC703 /* LocalizationFrame.swift in Sources */,
 				E2BC08E528EB76D6007F4B5D /* UserDefaults.swift in Sources */,
 				E2675E2828DAC08D00F5F114 /* ControlPause.swift in Sources */,
 				E22F72FD28DA5D9100253A48 /* ControlResponse.swift in Sources */,
-				E2AAFC3528F99A3600BBC703 /* LocalizationLayer.swift in Sources */,
 				E237C0AA28EE1AFC002868D1 /* View.swift in Sources */,
 				E2505D5328EF38B60027F280 /* OpenAlert.swift in Sources */,
 				E2C22EDA28D386AE003CD976 /* MainView.swift in Sources */,
-				E2505D5A28EF91960027F280 /* LocalizationSet.swift in Sources */,
+				E2505D5A28EF91960027F280 /* Localizations.swift in Sources */,
 				E2BC08E928EB7795007F4B5D /* NSImage.swift in Sources */,
 				E295627928D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift in Sources */,
 				E213252528F7651F00D6BFF6 /* DefaultPreferences.swift in Sources */,
+				E2BDE212290CABC3001CC439 /* CGPoint.swift in Sources */,
 				E2EE0E4028DB9DD200138A86 /* ControlAllInfo.swift in Sources */,
 				E237C0A828EE14B5002868D1 /* FloatingPanelModifier.swift in Sources */,
 				E2EE0E3C28DB9B3B00138A86 /* ControlSeek.swift in Sources */,
 				E2BC08F028EC797D007F4B5D /* FrameCaptureError.swift in Sources */,
 				E22F0EA428DA57800097A34E /* ControlRequest.swift in Sources */,
+				E2837B4629104BF700FC4CC2 /* PlayerView.swift in Sources */,
 				E2EE0E3E28DB9B9F00138A86 /* ControlCapture.swift in Sources */,
 				E223C31228F2207300274C3E /* ControlSelectLocalizations.swift in Sources */,
 				E2FFE1FE28E37C5000425F04 /* ControlResponseOk.swift in Sources */,
-				E213252128F722F900D6BFF6 /* VideoPlayerView.swift in Sources */,
+				E213252128F722F900D6BFF6 /* NSPlayerView.swift in Sources */,
 				E2E5962D28DA63700058D054 /* ControlOpen.swift in Sources */,
+				E2837B3C29103DBD00FC4CC2 /* PlayerVideoControl.swift in Sources */,
 				E2FFE21428E8824100425F04 /* ControlResponseState.swift in Sources */,
+				E2D1C84E291302EF00961A0A /* LocalizationFrame.swift in Sources */,
 				E21DEEE228DA1F3D00A2AC01 /* UDP.swift in Sources */,
 				E2989ABF28D3D083009D2D65 /* Color.swift in Sources */,
 				E2C22ECF28D27C2D003CD976 /* UDPServer.swift in Sources */,
 				E295627C28D5325A00E88ED1 /* NetworkControlPreferencesView.swift in Sources */,
 				E2675E2628DABF5600F5F114 /* ControlPlay.swift in Sources */,
+				E21DF7922910391A00038B41 /* PlayerMouse.swift in Sources */,
+				E28C6821290C714D00987828 /* CAShapeLayer.swift in Sources */,
 				E229F4C228D9150A001F220E /* ControlConnect.swift in Sources */,
 				E2989AC328D4F6EE009D2D65 /* AnnotationCreationPreferencesView.swift in Sources */,
 				E2675E2428DABEAC00F5F114 /* ControlShow.swift in Sources */,
+				E28C681F290C6D5D00987828 /* CGRect.swift in Sources */,
 				E2675E2A28DB52C600F5F114 /* ControlUnknown.swift in Sources */,
 				E2BC08E728EB7703007F4B5D /* CMTime.swift in Sources */,
+				E2837B4829104C6B00FC4CC2 /* VideoPlayerView.swift in Sources */,
 				E2C22ED528D36832003CD976 /* Localization.swift in Sources */,
 				E21DEEDF28DA13CB00A2AC01 /* ClientPing.swift in Sources */,
 				E2675E2F28DB729900F5F114 /* ControlInfo.swift in Sources */,
@@ -771,6 +803,7 @@
 				E2FFE21028E79AE000425F04 /* ControlResponseAllInfo.swift in Sources */,
 				E2D47E9628D8C01F0068B192 /* ControlCommand.swift in Sources */,
 				E2C078CD28D7CF0E00C55EEC /* UDPClient.swift in Sources */,
+				E2BDE214290D7FF5001CC439 /* CGSize.swift in Sources */,
 				E2675E3428DB7A4000F5F114 /* ControlAdvance.swift in Sources */,
 				E2C22ED728D36888003CD976 /* VideoAsset.swift in Sources */,
 				E2989AB728D3B261009D2D65 /* NetworkPreferencesView.swift in Sources */,
@@ -787,7 +820,6 @@
 				E2675E2228DABE4900F5F114 /* ControlClose.swift in Sources */,
 				E2FFE1FC28E37B8000425F04 /* ControlResponseFailed.swift in Sources */,
 				E2FAB21B28E24A7C006D2676 /* VideoWindow.swift in Sources */,
-				E2AAFC2F28F8F01A00BBC703 /* FrameLocalization.swift in Sources */,
 				E2BC08EB28EB781C007F4B5D /* CGImage.swift in Sources */,
 				E2FFE21228E7A8CA00425F04 /* ControlResponseElapsed.swift in Sources */,
 				E2C22E8528CFDC26003CD976 /* SharktopodaApp.swift in Sources */,

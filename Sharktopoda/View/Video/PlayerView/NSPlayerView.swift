@@ -16,7 +16,13 @@ final class NSPlayerView: NSView {
   var localizations: Localizations?
   var undoLocalizations: [Localization]?
   
+  /// Location within the current selected localization (for drag move/resize)
   var dragLocation: CGRect.Location?
+
+  /// Layer for selecting multiple locations
+  var dragLayer: CAShapeLayer?
+  
+  /// Queue on which off-main work is done
   var queue: DispatchQueue?
   
   private var _currentLocalization: Localization?

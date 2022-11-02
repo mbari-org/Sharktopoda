@@ -208,8 +208,6 @@ extension VideoWindow: NSWindowDelegate {
   }
   
   func windowDidResize(_ notification: Notification) {
-    DispatchQueue.main.async { [weak self] in
-      self?.playerView.resized()
-    }
+    playerView.resized()
   }
 }

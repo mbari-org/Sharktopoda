@@ -44,7 +44,7 @@ extension NSPlayerView {
     get { player?.rate ?? Float(0) }
     set {
       if paused {
-        clearPause()
+        clearAllLocalizations()
       }
       if newValue == 0.0 {
         pause()

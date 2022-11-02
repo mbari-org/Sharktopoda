@@ -26,7 +26,7 @@ class Localizations {
   }
 }
 
-/// Enums
+// MARK: Enums
 extension Localizations {
   private enum PutAction {
     case add
@@ -38,7 +38,7 @@ extension Localizations {
                                index: Int)
 }
 
-/// Storage
+// MARK: Storage
 extension Localizations {
   func add(_ localization: Localization) -> Bool {
     guard storage[localization.id] == nil else { return false }
@@ -131,7 +131,7 @@ extension Localizations {
   }
 }
 
-/// Frame number
+// MARK: Frame number
 extension Localizations {
   func frameNumber(for localization: Localization) -> Int {
     frameNumber(elapsedTime: localization.elapsedTime)
@@ -144,7 +144,7 @@ extension Localizations {
   }
 }
 
-/// Pause frames
+// MARK: Pause frames
 extension Localizations {
   private func pauseFrameInsert(_ localization: Localization) {
     let insertTime = localization.elapsedTime
@@ -175,7 +175,7 @@ extension Localizations {
   }
 }
 
-/// Forward frames
+// MARK: Forward frames
 extension Localizations {
   private func forwardFrameInsert(_ localization: Localization) {
     let useDuration = UserDefaults.standard.bool(forKey: PrefKeys.displayUseDuration)
@@ -216,7 +216,7 @@ extension Localizations {
   }
 }
 
-/// Reverse frames
+// MARK: Reverse frames
 extension Localizations {
   private func reverseFrameInsert(_ localization: Localization) {
     let useDuration = UserDefaults.standard.bool(forKey: PrefKeys.displayUseDuration)
@@ -259,7 +259,7 @@ extension Localizations {
   }
 }
 
-/// Abstract frame processing
+// MARK: Abstract frame processing
 extension Localizations {
   private func frameIndex(for frames: [LocalizationFrame], at elapsedTime: Int) -> Int {
     var left = 0
@@ -327,7 +327,7 @@ extension Localizations {
   }
 }
 
-/// Selected
+// MARK: Selected
 extension Localizations {
   func allSelected() -> [Localization] {
     selected.map { storage[$0]! }
@@ -380,32 +380,11 @@ extension Localizations {
   }
 }
 
-// MARK: Localization Frame
+// MARK: Resize all
 extension Localizations {
-  struct LocalizationFrame: Comparable {
-    let frameNumber: Int
-    
-    private(set) var ids: [String]
-    
-    init(_ localization: Localization, frameNumber: Int) {
-      self.frameNumber = frameNumber
-      ids = [String]()
-      //    ids.append(localization.id)
-    }
-    
-    mutating func add(_ localization: Localization) {
-      ids.append(localization.id)
-    }
-    
-    mutating func remove(_ localization: Localization) {
-      guard let index = ids.firstIndex(of: localization.id) else { return }
-      ids.remove(at: index)
-    }
-    
-    // Comparable
-    static func < (lhs: LocalizationFrame, rhs: LocalizationFrame) -> Bool {
-      lhs.frameNumber < rhs.frameNumber
+  func resize(for videoRect: CGRect) {
+    for localization in storage.values {
+      localization.resize(for: videoRect)
     }
   }
-
 }

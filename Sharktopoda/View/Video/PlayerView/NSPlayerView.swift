@@ -15,14 +15,17 @@ final class NSPlayerView: NSView {
 
   var localizations: Localizations?
   var undoLocalizations: [Localization]?
+  
   var dragLocation: CGRect.Location?
+  var queue: DispatchQueue?
   
   private var _currentLocalization: Localization?
   private var _videoAsset: VideoAsset?
-
+  
   // MARK: ctors
   init(videoAsset: VideoAsset) {
     let videoSize = videoAsset.size!
+    
     super.init(frame: NSMakeRect(0, 0, videoSize.width, videoSize.height))
 
     _videoAsset = videoAsset
@@ -54,6 +57,7 @@ final class NSPlayerView: NSView {
     localizations = Localizations(playerItem: currentItem!,
                                   frameDuration: videoAsset.frameDuration.asMillis())
 
+    queue = DispatchQueue(label: "Sharktopoda Video Queue: \(videoAsset.id)")
     setTimeObserver()
   }
 }
@@ -136,7 +140,7 @@ extension NSPlayerView {
 // MARK: Localizations
 extension NSPlayerView {
   func addLocalization(_ localization: Localization) -> Bool {
-    localization.resized(for: videoRect)
+    localization.resize(for: videoRect)
     
     guard let localizations = localizations,
           localizations.add(localization) else { return false }
@@ -159,8 +163,7 @@ extension NSPlayerView {
   func clearLocalizations() {
     guard let localizations = localizations else { return }
     
-    clearPause()
-    
+    clearAllLocalizations()
     localizations.clear()
   }
   
@@ -217,18 +220,28 @@ extension NSPlayerView {
   func displayPaused() {
     displayLocalizations(.paused, at: currentTime)
   }
-  
-  func clearPause() {
-    clearAllLocalizations()
-  }
-  
+}
+
+// MARK: Resized
+extension NSPlayerView {
   func resized() {
     guard paused else { return }
-
-    if let pausedLocalizations = localizations?.fetch(.paused, at: currentTime) {
+    
+    /// Resize paused localizations on main queue to see immediate effect
+    guard let pausedLocalizations = localizations?.fetch(.paused, at: currentTime) else { return }
+    let videoRect = self.videoRect
+    DispatchQueue.main.async {
       for localization in pausedLocalizations {
-        localization.resized(for: videoRect)
+        localization.resize(for: videoRect)
       }
+    }
+
+    /// Resize all localizations on background queue. Although paused localizations are resized again,
+    /// preventing that would be more overhead than re-resizing.
+    guard let queue = queue else { return }
+    guard let localizations = localizations else { return }
+    queue.async {
+      localizations.resize(for: videoRect)
     }
   }
 }
@@ -264,9 +277,10 @@ extension NSPlayerView {
 // MARK: Player time callback
 extension NSPlayerView {
   func setTimeObserver() {
-    let queue = DispatchQueue(label: "Sharktopoda Video Queue: \(videoAsset.id)")
+    guard let queue = queue else { return }
+
     let interval = CMTimeMultiplyByFloat64(videoAsset.frameDuration, multiplier: 0.9)
-    
+
     player?.addPeriodicTimeObserver(forInterval: interval, queue: queue) { [weak self] time in
       guard UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations) else { return }
 

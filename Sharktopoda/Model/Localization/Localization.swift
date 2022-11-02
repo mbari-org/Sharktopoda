@@ -55,7 +55,7 @@ class Localization {
   }
 }
 
-// MARK: Adjust region
+// MARK: Adjust
 extension Localization {
   func delta(by delta: DeltaRect) {
     move(by: delta.origin)
@@ -84,7 +84,7 @@ extension Localization {
     }
   }
   
-  func resized(for videoRect: CGRect) {
+  func resize(for videoRect: CGRect) {
     noAnimation {
       layer.frame = frame(for: videoRect)
       layer.path = layerPath()

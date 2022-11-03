@@ -36,8 +36,7 @@ extension NSPlayerView {
   }
   
   override func mouseExited(with event: NSEvent) {
-    dragCurrent = nil
-    selectLayer = nil
+    mouseUp(with: event)
   }
   
   override func mouseUp(with event: NSEvent) {
@@ -50,5 +49,17 @@ extension NSPlayerView {
       endDragSelect()
     }
 
+  }
+  
+  override func updateTrackingAreas() {
+    super.updateTrackingAreas()
+    
+    for trackingArea in trackingAreas {
+      removeTrackingArea(trackingArea)
+    }
+    
+    let options: NSTrackingArea.Options = [.mouseEnteredAndExited, .activeAlways]
+    let trackingArea = NSTrackingArea(rect: bounds, options: options, owner: self, userInfo: nil)
+    addTrackingArea(trackingArea)
   }
 }

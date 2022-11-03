@@ -51,6 +51,17 @@ extension NSPlayerView {
     return layer.location(of: layerPoint)
   }
   
+//  func dragCurrent(using dragPoint: CGPoint) {
+//    guard let currentLocation = currentLocation else { return }
+//    guard let anchorPoint = dragAnchorPoint else { return }
+//    
+//    let delta = anchorPoint.delta(to: dragPoint)
+//    
+//    
+//    
+//    
+//  }
+  
   func dragLocalization(_ localization: Localization, delta: DeltaPoint) {
 
     switch currentLocation {

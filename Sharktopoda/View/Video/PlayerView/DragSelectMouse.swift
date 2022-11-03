@@ -27,32 +27,13 @@ extension NSPlayerView {
     currentLocalization = nil
   }
   
-  func dragSelect(_ mousePoint: CGPoint) {
-    guard let selectPoint = dragAnchorPoint else { return }
+  func dragSelect(_ dragPoint: CGPoint) {
     guard let selectLayer = selectLayer else { return }
-
-    let delta = selectPoint.delta(to: mousePoint)
+    guard let anchorPoint = dragAnchorPoint else { return }
     
-    var origin: CGPoint
-    switch selectPoint.quadrant(of: mousePoint) {
-      case .qI:
-        origin = selectPoint
-      case .qII:
-        origin = CGPoint(x: selectPoint.x + delta.x,
-                         y: selectPoint.y)
-      case .qIII:
-        origin = CGPoint(x: selectPoint.x + delta.x,
-                         y: selectPoint.y + delta.y)
-      case .qIV:
-        origin = CGPoint(x: selectPoint.x,
-                         y: selectPoint.y + delta.y)
-    }
-    
-    let absDelta = delta.abs()
-    let size = DeltaSize(width: absDelta.x, height: absDelta.y)
-    
+    let frameRect = anchorPoint.diagonalRect(using: dragPoint)
     CALayer.noAnimation {
-      selectLayer.shapeFrame(origin: origin, size: size)
+      selectLayer.shapeFrame(frameRect)
     }
   }
   

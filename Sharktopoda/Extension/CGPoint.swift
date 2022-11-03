@@ -11,14 +11,14 @@ typealias DeltaPoint = CGPoint
 
 extension CGPoint {
   enum Quadrant: RawRepresentable {
-    case qI, qII, qIII, qIV
+    case I, II, III, IV
     
     init?(rawValue: (Int, Int)) {
       switch rawValue {
-        case ( 1,  1):  self = .qI
-        case (-1,  1):  self = .qII
-        case (-1, -1):  self = .qIII
-        case ( 1, -1):  self = .qIV
+        case ( 1,  1):  self = .I
+        case (-1,  1):  self = .II
+        case (-1, -1):  self = .III
+        case ( 1, -1):  self = .IV
         default:
           return nil
       }
@@ -26,10 +26,10 @@ extension CGPoint {
     
     var rawValue: (Int, Int) {
       switch self {
-        case .qI:   return ( 1,  1)
-        case .qII:  return (-1,  1)
-        case .qIII: return (-1, -1)
-        case .qIV:  return ( 1, -1)
+        case .I:   return ( 1,  1)
+        case .II:  return (-1,  1)
+        case .III: return (-1, -1)
+        case .IV:  return ( 1, -1)
       }
     }
   }
@@ -46,17 +46,41 @@ extension CGPoint {
     DeltaPoint(x: point.x - x, y: point.y - y)
   }
 
+  func move(by delta: DeltaPoint) -> CGPoint {
+    CGPoint(x: x + delta.x, y: y + delta.y)
+  }
+
   func quadrant(of point: CGPoint) -> Quadrant {
     let delta = delta(from: point)
     
     let signX = delta.x < 0 ? 1 : -1
     let signY = delta.y < 0 ? 1 : -1
-
+    
     return Quadrant(rawValue: (signX, signY))!
   }
-  
-  func move(by delta: DeltaPoint) -> CGPoint {
-    CGPoint(x: x + delta.x, y: y + delta.y)
+
+  func diagonalRect(using point: CGPoint) -> CGRect {
+    let delta = delta(to: point)
+    
+    var origin: CGPoint
+    switch quadrant(of: point) {
+      case .I:
+        origin = self
+      case .II:
+        origin = CGPoint(x: x + delta.x,
+                         y: y)
+      case .III:
+        origin = CGPoint(x: x + delta.x,
+                         y: y + delta.y)
+      case .IV:
+        origin = CGPoint(x: x,
+                         y: y + delta.y)
+    }
+    
+    let absDelta = delta.abs()
+    let size = DeltaSize(width: absDelta.x, height: absDelta.y)
+    
+    return CGRect(origin: origin, size: size)
   }
-  
+
 }

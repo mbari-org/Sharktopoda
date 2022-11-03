@@ -20,7 +20,7 @@ extension NSPlayerView {
       return false
     }
     
-    dragLocation = mouseLayer.location(of: layerPoint)
+    dragCurrent = mouseLayer.location(of: layerPoint)
     return true
   }
   
@@ -36,6 +36,7 @@ extension NSPlayerView {
   func mouseSelect(_ mousePoint: CGPoint) {
     guard let mouseLocalization = mouseLocalization(at: mousePoint) else {
       currentLocalization = nil
+      localizations?.clearSelected()
       return
     }
     
@@ -43,11 +44,11 @@ extension NSPlayerView {
     let layer = mouseLocalization.layer
     let layerPoint = layer.convertSuperPoint(mousePoint)
     currentLocalization = mouseLocalization
-    dragLocation = layer.location(of: layerPoint)
+    dragCurrent = layer.location(of: layerPoint)
   }
   
   func dragLocalization(_ localization: Localization, delta: DeltaPoint) {
-    switch dragLocation {
+    switch dragCurrent {
         /// deltaRect arguments should all be -1, 0, or 1
       case .middle:
         /// Move

@@ -23,6 +23,8 @@ extension NSPlayerView {
     selectLayer = layer
     
     playerLayer.addSublayer(layer)
+    
+    currentLocalization = nil
   }
   
   func dragSelect(_ mousePoint: CGPoint) {

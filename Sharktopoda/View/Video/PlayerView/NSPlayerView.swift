@@ -17,7 +17,7 @@ final class NSPlayerView: NSView {
   var undoLocalizations: [Localization]?
   
   /// Location within the current selected localization (for drag move/resize)
-  var dragLocation: CGRect.Location?
+  var dragCurrent: CGRect.Location?
 
   /// Layer and point for selecting multiple locations
   var selectLayer: CAShapeLayer?
@@ -106,7 +106,7 @@ extension NSPlayerView {
   var currentLocalization: Localization? {
     get { _currentLocalization }
     set {
-      dragLocation = nil
+      dragCurrent = nil
       if _currentLocalization != nil {
         localizations!.clearSelected()
       }

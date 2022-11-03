@@ -36,13 +36,13 @@ extension NSPlayerView {
   }
   
   override func mouseExited(with event: NSEvent) {
-    dragLocation = nil
+    dragCurrent = nil
     selectLayer = nil
   }
   
   override func mouseUp(with event: NSEvent) {
     if currentLocalization != nil {
-      dragLocation = nil
+      dragCurrent = nil
       return
     }
 

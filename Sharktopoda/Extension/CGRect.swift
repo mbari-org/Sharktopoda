@@ -17,80 +17,65 @@ extension CGRect {
     case outside
   }
 
-  func location(of point: CGPoint) -> Location {
+  func location(of point: CGPoint, corner: CGFloat = 0.2) -> Location {
     guard contains(point) else { return .outside }
     
-    let quarter = 0.25
-    let half = 0.5
+    let cornerWidth = corner * size.width
+    let cornerHeight = corner * size.height
     
-    let halfWidth = half * width
-    let halfHeight = half * height
+    let stripWidth = size.width - 2.0 * cornerWidth
+    let stripHeight = size.height - 2.0 * cornerHeight
     
-    let leftX = quarter * width
-    let bottomY = quarter * height
-    
+    let cornerUpperLeft = CGPoint(x: minX + cornerWidth,
+                                  y: maxY - cornerHeight)
+    let cornerUpperRight = CGPoint(x: maxX - cornerWidth,
+                                   y: maxY - cornerHeight)
+    let cornerLowerRight = CGPoint(x: maxX - cornerWidth,
+                                   y: minY + cornerHeight)
+    let cornerLowerLeft = CGPoint(x: minX + cornerWidth,
+                                  y: minY + cornerHeight)
+
     /// Middle
-    if CGRect(x: leftX, y: bottomY, width: halfWidth, height: halfHeight).contains(point) {
-      return .middle
-    }
-    
-    let rightX = leftX + halfWidth
-    let topY = bottomY + halfHeight
-    let quarterHeight = quarter * height
-    
+    if CGRect(origin: cornerLowerLeft,
+              size: CGSize(width: stripWidth, height: stripHeight))
+      .contains(point) { return .middle }
+
+    let tallSize = CGSize(width: cornerWidth, height: stripHeight)
+    let wideSize = CGSize(width: stripWidth, height: cornerHeight)
+
     /// Top
-    if CGRect(x: leftX, y: topY,
-              width: halfWidth, height: quarterHeight).contains(point) {
-      return .top
-    }
-    
-    let quarterWidth = quarter * width
+    if CGRect(origin: cornerUpperLeft, size: wideSize)
+      .contains(point) { return .top }
     
     /// Right
-    if CGRect(x: rightX, y: bottomY,
-              width: quarterWidth, height: halfHeight).contains(point) {
-      return .right
-    }
-    
+    if CGRect(origin: cornerLowerRight, size: tallSize)
+      .contains(point) { return .right }
+
     /// Bottom
-    if CGRect(x: leftX, y: 0,
-              width: halfWidth, height: quarterHeight).contains(point) {
-      return .bottom
-    }
-    
+    if CGRect(origin: CGPoint(x: cornerLowerLeft.x, y: minY), size: wideSize)
+      .contains(point) { return .bottom }
+
     /// Left
-    if CGRect(x: 0, y: quarterHeight,
-              width: quarterWidth, height: halfHeight).contains(point) {
-      return .left
-    }
+    if CGRect(origin: CGPoint(x: minX, y: cornerLowerLeft.y), size: tallSize)
+      .contains(point) { return .left }
     
-    let threeQuarterHeight = quarterHeight + halfHeight
+    let cornerSize = CGSize(width: cornerWidth, height: cornerHeight)
     
-    /// TopLeft
-    if CGRect(x: 0, y: threeQuarterHeight,
-              width: quarterWidth, height: quarterHeight).contains(point) {
-      return .topLeft
-    }
-    
-    let threeQuarterWidth = quarterWidth + halfWidth
-    
-    /// TopRight
-    if CGRect(x: threeQuarterWidth, y: threeQuarterHeight,
-              width: quarterWidth, height: quarterHeight).contains(point) {
-      return .topRight
-    }
-    
-    /// BottomRight
-    if CGRect(x: threeQuarterWidth, y: 0,
-              width: quarterWidth, height: quarterHeight).contains(point) {
-      return .bottomRight
-    }
-    
-    /// BottomLeft
-    if CGRect(x: 0, y: 0, width: quarterWidth,
-              height: quarterHeight).contains(point) {
-      return .bottomLeft
-    }
+    /// Top Left
+    if CGRect(origin: CGPoint(x: minX, y: maxY - cornerHeight), size: cornerSize)
+      .contains(point) { return .topLeft }
+
+    /// Top Right
+    if CGRect(origin: cornerUpperRight, size: cornerSize)
+      .contains(point) { return .topRight }
+
+    /// Bottom Right
+    if CGRect(origin: CGPoint(x: cornerLowerRight.x, y: minY), size: cornerSize)
+      .contains(point) { return .bottomRight }
+
+    /// Bottom Left
+    if CGRect(origin: origin, size: cornerSize)
+      .contains(point) { return .bottomLeft }
 
     return .outside
   }

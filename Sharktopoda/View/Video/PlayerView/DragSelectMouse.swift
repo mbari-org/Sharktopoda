@@ -11,7 +11,7 @@ extension NSPlayerView {
   func startDragSelect(_ mousePoint: CGPoint) {
     localizations?.clearSelected()
     
-    selectPoint = mousePoint
+    dragAnchorPoint = mousePoint
     
     let layer = CAShapeLayer()
     layer.anchorPoint = .zero
@@ -28,7 +28,7 @@ extension NSPlayerView {
   }
   
   func dragSelect(_ mousePoint: CGPoint) {
-    guard let selectPoint = selectPoint else { return }
+    guard let selectPoint = dragAnchorPoint else { return }
     guard let selectLayer = selectLayer else { return }
 
     let delta = selectPoint.delta(to: mousePoint)
@@ -59,11 +59,12 @@ extension NSPlayerView {
   func endDragSelect() {
     guard let selectLayer = selectLayer else { return }
     
+    /// Select the intersecting localizations
     localizations?.select(for: selectLayer.frame, at: currentTime)
 
+    /// Remove the selection layer and clean up
     selectLayer.removeFromSuperlayer()
-    
-    self.selectPoint = nil
+    self.dragAnchorPoint = nil
     self.selectLayer = nil
   }
 }

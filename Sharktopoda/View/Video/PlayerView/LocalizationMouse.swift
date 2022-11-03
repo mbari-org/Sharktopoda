@@ -8,47 +8,52 @@
 import AppKit
 
 extension NSPlayerView {
-  func clickedCurrentLocalization(_ mousePoint: CGPoint) -> Bool {
-    guard let mouseLayer = currentLocalization?.layer else { return false }
+  
+  /// Check if mouse click is inside the current localization layer
+  func clickedCurrentLocalization(_ mousePoint: CGPoint) -> CGRect.Location? {
+    guard let mouseLayer = currentLocalization?.layer else { return nil }
     
     let layerPoint = mouseLayer.convertSuperPoint(mousePoint)
+    /// If did not click in current location mouse layer, unselect any potentially selected locatizations
     guard mouseLayer.contains(layerPoint) else {
       if let id = currentLocalization?.id {
         localizations?.unselect(id: id)
         currentLocalization = nil
       }
-      return false
+      return nil
     }
     
-    dragCurrent = mouseLayer.location(of: layerPoint)
-    return true
+    /// Return where inside the current localization the mouse click occurred
+    return mouseLayer.location(of: layerPoint)
   }
   
+  ///
   func commandSelect(_ mousePoint: CGPoint) -> Bool {
     guard let localizations = localizations else { return false }
     guard localizations.areSelected() else { return false }
-    
     guard let mouseLocalization = mouseLocalization(at: mousePoint) else { return false }
+    
     currentLocalization = nil
     return localizations.select(id: mouseLocalization.id, clear: false)
   }
   
-  func mouseSelect(_ mousePoint: CGPoint) {
+  func currentSelect(_ mousePoint: CGPoint) -> CGRect.Location? {
     guard let mouseLocalization = mouseLocalization(at: mousePoint) else {
       currentLocalization = nil
       localizations?.clearSelected()
-      return
+      return nil
     }
     
     let _ = localizations?.select(id: mouseLocalization.id) 
     let layer = mouseLocalization.layer
     let layerPoint = layer.convertSuperPoint(mousePoint)
     currentLocalization = mouseLocalization
-    dragCurrent = layer.location(of: layerPoint)
+    return layer.location(of: layerPoint)
   }
   
   func dragLocalization(_ localization: Localization, delta: DeltaPoint) {
-    switch dragCurrent {
+
+    switch currentLocation {
         /// deltaRect arguments should all be -1, 0, or 1
       case .middle:
         /// Move

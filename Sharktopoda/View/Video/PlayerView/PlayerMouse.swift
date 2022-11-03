@@ -14,25 +14,41 @@ extension NSPlayerView {
     let mousePoint = event.locationInWindow
     
     if event.modifierFlags.intersection(.deviceIndependentFlagsMask) == .command {
-      if !commandSelect(mousePoint) {
-        startDragSelect(mousePoint)
-      }
-    } else if !clickedCurrentLocalization(mousePoint) {
-      mouseSelect(mousePoint)
+      if commandSelect(mousePoint) { return }
+
+      startDragSelect(mousePoint)
+      return
     }
+    
+    if let location = clickedCurrentLocalization(mousePoint) {
+      currentLocation = location
+      print("current with location: \(currentLocation!)")
+      return
+    }
+    
+    if let location = currentSelect(mousePoint) {
+      currentLocation = location
+      print("select with location: \(currentLocation!)")
+      return
+    }
+
   }
   
   override func mouseDragged(with event: NSEvent) {
+    let mousePoint = event.locationInWindow
+    
+    /// If there is a current localization, drag it
     if let localization = currentLocalization {
+      
       let delta = DeltaPoint(x: event.deltaX, y: event.deltaY)
       dragLocalization(localization, delta: delta)
       return
     }
 
-    if selectPoint != nil {
-      dragSelect(event.locationInWindow)
+    /// If there is a select locations layer, drag it
+    if selectLayer != nil {
+      dragSelect(mousePoint)
     }
-
   }
   
   override func mouseExited(with event: NSEvent) {
@@ -41,7 +57,8 @@ extension NSPlayerView {
   
   override func mouseUp(with event: NSEvent) {
     if currentLocalization != nil {
-      dragCurrent = nil
+      // CxInc Send update to UDP controller
+      currentLocation = nil
       return
     }
 

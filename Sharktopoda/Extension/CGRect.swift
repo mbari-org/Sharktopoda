@@ -106,7 +106,7 @@ extension CGRect {
     let x1 = x0 + size.width
     let y1 = y0 + size.height
     
-    return min(min(x-x0, x1-x), min(y-y0, y1-y))
+    return min(x-x0, x1-x, y-y0, y1-y)
   }
 
   func move(by delta: DeltaPoint) -> CGRect {

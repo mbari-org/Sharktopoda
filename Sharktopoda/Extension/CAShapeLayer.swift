@@ -14,7 +14,6 @@ extension CAShapeLayer {
   
   func boundsResize(by size: DeltaSize) {
     bounds = bounds.resize(by: size)
-    print("bounds: \(bounds)")
     boundsPath()
   }
   

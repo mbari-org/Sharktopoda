@@ -97,8 +97,8 @@ extension NSPlayerView {
     guard !mousedLocalizations.isEmpty else { return nil }
     
     return mousedLocalizations.min { a, b in
-      let aDistance = a.layer.bounds.minSideDistance(point: point)
-      let bDistance = b.layer.bounds.minSideDistance(point: point)
+      let aDistance = a.layer.frame.minSideDistance(point: point)
+      let bDistance = b.layer.frame.minSideDistance(point: point)
       return aDistance < bDistance
     }!
   }

@@ -24,17 +24,13 @@ extension NSPlayerView {
     return true
   }
   
-  func commandSelect(_ mousePoint: CGPoint) {
-    if localizations!.areSelected() {
-      guard let mouseLocalization = mouseLocalization(at: mousePoint) else {
-        currentLocalization = nil
-        return
-      }
-      let _ = localizations!.select(id: mouseLocalization.id, clear: false)
-    } else {
-      
-      //      dragRect = CGRect(origin: mousePoint, size: .zero)
-    }
+  func commandSelect(_ mousePoint: CGPoint) -> Bool {
+    guard let localizations = localizations else { return false }
+    guard localizations.areSelected() else { return false }
+    
+    guard let mouseLocalization = mouseLocalization(at: mousePoint) else { return false }
+    currentLocalization = nil
+    return localizations.select(id: mouseLocalization.id, clear: false)
   }
   
   func mouseSelect(_ mousePoint: CGPoint) {

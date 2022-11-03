@@ -10,14 +10,13 @@ import CoreGraphics
 typealias DeltaRect = CGRect
 
 extension CGRect {
-  
   enum Location {
     case middle
     case left, top, right, bottom
     case topLeft, topRight, bottomRight, bottomLeft
     case outside
   }
-  
+
   func location(of point: CGPoint) -> Location {
     guard contains(point) else { return .outside }
     
@@ -113,6 +112,7 @@ extension CGRect {
   func move(by delta: DeltaPoint) -> CGRect {
     CGRect(origin: origin.move(by: delta), size: size)
   }
+  
   
   func resize(by delta: DeltaSize) -> CGRect {
     CGRect(origin: origin, size: size.resize(by: delta))

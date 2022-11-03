@@ -8,6 +8,25 @@
 import AVFoundation
 
 extension CAShapeLayer {
+  func boundsPath() {
+    path = CGPath(rect: CGRect(origin: .zero, size: bounds.size), transform: nil)
+  }
+  
+  func boundsResize(by size: DeltaSize) {
+    bounds = bounds.resize(by: size)
+    print("bounds: \(bounds)")
+    boundsPath()
+  }
+  
+  func shapeFrame(_ frame: CGRect) {
+    self.frame = frame
+    boundsPath()
+  }
+  
+  func shapeFrame(origin: CGPoint, size: CGSize) {
+    shapeFrame(CGRect(origin: origin, size: size))
+  }
+  
   func containsSuperPoint(_ point: CGPoint) -> Bool {
     contains(convertSuperPoint(point))
   }

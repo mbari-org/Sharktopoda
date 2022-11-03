@@ -39,12 +39,12 @@ class Localization {
     layer = CAShapeLayer()
     layer.anchorPoint = .zero
     layer.fillColor = .clear
-    layer.frame = CGRect(origin: origin, size: region.size)
     layer.isOpaque = true
     layer.lineJoin = .round
     layer.lineWidth = CGFloat(UserDefaults.standard.integer(forKey: PrefKeys.displayBorderSize))
-    layer.path = layerPath()
     layer.strokeColor = Color(hex: hexColor)?.cgColor
+
+    layer.shapeFrame(CGRect(origin: origin, size: region.size))
 
     // CxTBD Investigate
     layer.shouldRasterize = true
@@ -67,7 +67,7 @@ extension Localization {
 
     region = region.move(by: delta)
     
-    noAnimation {
+    CALayer.noAnimation {
       layer.position = layer.position.move(by: delta)
     }
   }
@@ -77,25 +77,16 @@ extension Localization {
     
     region = region.resize(by: delta)
     
-    noAnimation {
-      layer.bounds = layer.bounds.resize(by: delta)
-      layer.path = layerPath()
+    CALayer.noAnimation {
+      layer.boundsResize(by: delta)
       layer.setNeedsLayout()
     }
   }
   
   func resize(for videoRect: CGRect) {
-    noAnimation {
-      layer.frame = frame(for: videoRect)
-      layer.path = layerPath()
+    CALayer.noAnimation {
+      layer.shapeFrame(frame(for: videoRect))
     }
-  }
-  
-  func noAnimation(_ modify: () -> Void) {
-    CATransaction.begin()
-    CATransaction.setValue(true, forKey: kCATransactionDisableActions)
-    modify()
-    CATransaction.commit()
   }
 }
 
@@ -123,9 +114,8 @@ extension Localization {
 
     let origin = CGPoint(x: region.origin.x,
                          y: videoSize.height - region.origin.y - region.size.height)
-    noAnimation {
-      layer.frame = CGRect(origin: origin, size: region.size)
-      layer.path = layerPath()
+    CALayer.noAnimation {
+      layer.shapeFrame(origin: origin, size: region.size)
     }
   }
 }
@@ -152,10 +142,6 @@ extension Localization: Hashable {
 
 // MARK: Shape Layer
 extension Localization {
-  private func layerPath() -> CGPath {
-    CGPath(rect: CGRect(origin: .zero, size: layer.bounds.size), transform: nil)
-  }
-
   private func frame(for videoRect: CGRect) -> CGRect {
     let scale = videoRect.size.width / videoSize.width
     let fullHeight = videoRect.height / scale

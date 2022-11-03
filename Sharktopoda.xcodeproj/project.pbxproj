@@ -96,6 +96,8 @@
 		E2C22EDA28D386AE003CD976 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22ED928D386AE003CD976 /* MainView.swift */; };
 		E2D1C84E291302EF00961A0A /* LocalizationFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1C84D291302EF00961A0A /* LocalizationFrame.swift */; };
 		E2D1C85029131E6E00961A0A /* LocalizationMouse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1C84F29131E6E00961A0A /* LocalizationMouse.swift */; };
+		E2D1C8522913208B00961A0A /* DragSelectMouse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1C8512913208B00961A0A /* DragSelectMouse.swift */; };
+		E2D1C85429132B1800961A0A /* CALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1C85329132B1800961A0A /* CALayer.swift */; };
 		E2D47E9628D8C01F0068B192 /* ControlCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D47E9528D8C01F0068B192 /* ControlCommand.swift */; };
 		E2D47E9A28D8C17D0068B192 /* ClientCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D47E9928D8C17D0068B192 /* ClientCommand.swift */; };
 		E2D47E9E28D8DF0F0068B192 /* UDPMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D47E9D28D8DF0F0068B192 /* UDPMessage.swift */; };
@@ -228,6 +230,8 @@
 		E2C22ED928D386AE003CD976 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		E2D1C84D291302EF00961A0A /* LocalizationFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationFrame.swift; sourceTree = "<group>"; };
 		E2D1C84F29131E6E00961A0A /* LocalizationMouse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationMouse.swift; sourceTree = "<group>"; };
+		E2D1C8512913208B00961A0A /* DragSelectMouse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragSelectMouse.swift; sourceTree = "<group>"; };
+		E2D1C85329132B1800961A0A /* CALayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CALayer.swift; sourceTree = "<group>"; };
 		E2D47E9528D8C01F0068B192 /* ControlCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlCommand.swift; sourceTree = "<group>"; };
 		E2D47E9928D8C17D0068B192 /* ClientCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientCommand.swift; sourceTree = "<group>"; };
 		E2D47E9D28D8DF0F0068B192 /* UDPMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDPMessage.swift; sourceTree = "<group>"; };
@@ -282,6 +286,7 @@
 				E21DF7912910391A00038B41 /* PlayerMouse.swift */,
 				E2837B3B29103DBD00FC4CC2 /* PlayerVideoControl.swift */,
 				E2D1C84F29131E6E00961A0A /* LocalizationMouse.swift */,
+				E2D1C8512913208B00961A0A /* DragSelectMouse.swift */,
 			);
 			path = PlayerView;
 			sourceTree = "<group>";
@@ -422,6 +427,7 @@
 				E2BC08E828EB7795007F4B5D /* NSImage.swift */,
 				E2BC08E428EB76D6007F4B5D /* UserDefaults.swift */,
 				E237C0A928EE1AFC002868D1 /* View.swift */,
+				E2D1C85329132B1800961A0A /* CALayer.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -800,6 +806,7 @@
 				E2BC08E728EB7703007F4B5D /* CMTime.swift in Sources */,
 				E2837B4829104C6B00FC4CC2 /* VideoPlayerView.swift in Sources */,
 				E2C22ED528D36832003CD976 /* Localization.swift in Sources */,
+				E2D1C8522913208B00961A0A /* DragSelectMouse.swift in Sources */,
 				E21DEEDF28DA13CB00A2AC01 /* ClientPing.swift in Sources */,
 				E2675E2F28DB729900F5F114 /* ControlInfo.swift in Sources */,
 				E21DEEE428DA533100A2AC01 /* ClientMessage.swift in Sources */,
@@ -847,6 +854,7 @@
 				E237C0A428EDFAA3002868D1 /* OpenUrlView.swift in Sources */,
 				E2989AB928D3B87E009D2D65 /* AnnotationPreferencesView.swift in Sources */,
 				E2C22EC828D2666A003CD976 /* Preferences.swift in Sources */,
+				E2D1C85429132B1800961A0A /* CALayer.swift in Sources */,
 				E295627728D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift in Sources */,
 				E2FAB21428E215F6006D2676 /* MainUDPStatusView.swift in Sources */,
 			);

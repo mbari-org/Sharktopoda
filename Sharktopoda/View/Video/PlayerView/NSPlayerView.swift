@@ -11,7 +11,7 @@ import AVFoundation
 final class NSPlayerView: NSView {
   // MARK: properties
   private let rootLayer = CALayer()
-  private let playerLayer = AVPlayerLayer()
+  let playerLayer = AVPlayerLayer()
 
   var localizations: Localizations?
   var undoLocalizations: [Localization]?
@@ -19,8 +19,9 @@ final class NSPlayerView: NSView {
   /// Location within the current selected localization (for drag move/resize)
   var dragLocation: CGRect.Location?
 
-  /// Layer for selecting multiple locations
-  var dragLayer: CAShapeLayer?
+  /// Layer and point for selecting multiple locations
+  var selectLayer: CAShapeLayer?
+  var selectPoint: CGPoint?
   
   /// Queue on which off-main work is done
   var queue: DispatchQueue?
@@ -200,11 +201,9 @@ extension NSPlayerView {
   
   func updateLocalization(_ control: ControlLocalization) -> Bool {
     guard localizations != nil else { return false }
-    let result = localizations!.update(using: control)
-//    localization.setup(for: videoRect, at: scale)
 
+    let result = localizations!.update(using: control)
     displayPaused()
-    
     return result
   }
 }

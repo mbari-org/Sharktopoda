@@ -22,6 +22,15 @@ extension NSPlayerView {
     }
   }
   
+  func endDragCurrent() {
+    guard let localization = currentLocation else { return }
+    
+    print("Send update to \(localization)")
+    
+    currentLocation = nil
+    currentLocation = nil
+  }
+  
   private func dragAction(for mouseDelta: DeltaPoint) -> DragAction {
     guard let location = currentLocation else { return .none }
     guard let frame = currentFrame else { return .none }

@@ -54,12 +54,10 @@ extension NSPlayerView {
     currentFrame = nil
     
     if currentLocalization != nil {
-      // CxInc Send update to UDP controller
-      currentLocation = nil
-      return
+      endDragCurrent()
+    } else {
+      endDragPurpose()
     }
-    
-    endDragPurpose()
   }
   
   private func setCurrentLocation(_ location: CGRect.Location) {

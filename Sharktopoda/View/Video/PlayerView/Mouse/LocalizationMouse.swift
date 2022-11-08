@@ -11,11 +11,11 @@ extension NSPlayerView {
   
   /// Check if mouse click is inside the current localization layer
   func clickedCurrentLocalization(_ mousePoint: CGPoint) -> CGRect.Location? {
-    guard let mouseLayer = currentLocalization?.layer else { return nil }
+    guard let currentLayer = currentLocalization?.layer else { return nil }
     
-    let layerPoint = mouseLayer.convertSuperPoint(mousePoint)
+    let layerPoint = currentLayer.convertSuperPoint(mousePoint)
     /// If did not click in current location mouse layer, unselect any potentially selected locatizations
-    guard mouseLayer.contains(layerPoint) else {
+    guard currentLayer.contains(layerPoint) else {
       if let id = currentLocalization?.id {
         localizations?.unselect(id: id)
         currentLocalization = nil
@@ -23,8 +23,8 @@ extension NSPlayerView {
       return nil
     }
     
-    /// Return where inside the current localization the mouse click occurred
-    return mouseLayer.location(of: layerPoint)
+    /// Return location inside the current localization where the mouse click occurred
+    return currentLayer.location(of: layerPoint)
   }
   
   /// Process command click for selecting a Localization

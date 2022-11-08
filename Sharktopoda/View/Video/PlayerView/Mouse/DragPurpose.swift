@@ -47,8 +47,7 @@ extension NSPlayerView {
        let layer = dragLayer {
 
       // CxTBD Parameterize min size
-      guard 10 < layer.frame.width,
-            10 < layer.frame.height else { return }
+      guard (10 < layer.frame.width || 10 < layer.frame.height) else { return }
       
       switch purpose {
         case .create:

@@ -10,16 +10,13 @@ import SwiftUI
 
 class Localization {
   let id: String
-
   var concept: String
   var duration: Int
   var elapsedTime: Int
   var hexColor: String
-  var region: CGRect
-  
-  var videoSize: CGSize
-
   var layer: CAShapeLayer
+  var region: CGRect
+  var videoSize: CGSize
   
   init(from controlLocalization: ControlLocalization, with videoSize: CGSize) {
     id = controlLocalization.uuid
@@ -33,21 +30,28 @@ class Localization {
                     height: CGFloat(controlLocalization.height))
 
     self.videoSize = videoSize
+
     let origin = CGPoint(x: region.origin.x,
                          y: videoSize.height - region.origin.y - region.size.height)
+    let layerFrame = CGRect(origin: origin, size: region.size)
+    let cgColor = Color(hex: hexColor)?.cgColor
+    layer = CAShapeLayer(frame: layerFrame, cgColor: cgColor!)
+  }
+  
+  init(using layer: CAShapeLayer, at elapsedTime: Int, with videoSize: CGSize) {
+    let scale = layer.superlayer!.frame.size.width / videoSize.width
+    let frame = layer.frame
+    let scaledFrame = frame.scale(by: scale)
 
-    layer = CAShapeLayer()
-    layer.anchorPoint = .zero
-    layer.fillColor = .clear
-    layer.isOpaque = true
-    layer.lineJoin = .round
-    layer.lineWidth = CGFloat(UserDefaults.standard.integer(forKey: PrefKeys.displayBorderSize))
-    layer.strokeColor = Color(hex: hexColor)?.cgColor
+    id = UUID().uuidString
+    concept = UserDefaults.standard.string(forKey: PrefKeys.captionDefault)!
+    duration = 0
+    self.elapsedTime = elapsedTime
+    hexColor = UserDefaults.standard.hexColor(forKey: PrefKeys.displayBorderColor)
+    region = scaledFrame
+    self.videoSize = videoSize
 
-    layer.shapeFrame(CGRect(origin: origin, size: region.size))
-
-    // CxTBD Investigate
-    layer.shouldRasterize = true
+    self.layer = layer
   }
 
   var debugDescription: String {
@@ -161,5 +165,7 @@ extension Localization {
     
     return CGRect(origin: origin, size: size)
   }
+  
+
 }
 

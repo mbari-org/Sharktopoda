@@ -22,8 +22,9 @@ final class NSPlayerView: NSView {
   /// Frame of current selected localization
   var currentFrame: CGRect?
   
-  /// Layer for selecting multiple locations
-  var selectLayer: CAShapeLayer?
+  /// Layer for either creating localization or selecting multiple localizations
+  var dragLayer: CAShapeLayer?
+  var dragPurpose: NSPlayerView.DragPurpose?
 
   /// Mouse point: either selecting locations initiated or drag localization anchor
   var dragAnchor: CGPoint?

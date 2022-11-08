@@ -104,9 +104,13 @@ extension CGRect {
     CGRect(origin: origin.move(by: delta), size: size)
   }
   
-  
   func resize(by delta: DeltaSize) -> CGRect {
     CGRect(origin: origin, size: size.resize(by: delta))
+  }
+  
+  func scale(by factor: CGFloat) -> CGRect {
+    CGRect(x: minX * factor, y: minY * factor,
+           width: width * factor, height: height * factor)
   }
 
 }

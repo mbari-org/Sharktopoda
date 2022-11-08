@@ -15,7 +15,7 @@ extension NSPlayerView {
 
     if event.modifierFlags.intersection(.deviceIndependentFlagsMask) == .command {
       if commandSelect(dragAnchor!) { return }
-      startDragSelect(with: dragAnchor!)
+      startDragPurpose(.select)
       return
     }
     
@@ -29,6 +29,7 @@ extension NSPlayerView {
       return
     }
     
+    startDragPurpose(.create)
   }
   
   override func mouseDragged(with event: NSEvent) {
@@ -38,10 +39,10 @@ extension NSPlayerView {
       /// If there is a current localization, drag it
       let delta = DeltaPoint(x: event.deltaX, y: event.deltaY)
       dragCurrent(by: delta)
-    } else if selectLayer != nil {
-      /// If there is a select locations layer, drag it
-      dragSelect(using: mousePoint)
+      return
     }
+
+    dragPurpose(using: mousePoint)
   }
   
   override func mouseExited(with event: NSEvent) {
@@ -57,11 +58,8 @@ extension NSPlayerView {
       currentLocation = nil
       return
     }
-
-    if selectLayer != nil {
-      endDragSelect()
-    }
-
+    
+    endDragPurpose()
   }
   
   private func setCurrentLocation(_ location: CGRect.Location) {

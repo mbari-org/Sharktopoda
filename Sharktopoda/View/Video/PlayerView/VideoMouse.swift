@@ -28,11 +28,7 @@ extension NSPlayerView {
       setCurrentLocation(location)
       return
     }
-  }
-  
-  private func setCurrentLocation(_ location: CGRect.Location) {
-    currentLocation = location
-    currentFrame = currentLocalization?.layer.frame
+    
   }
   
   override func mouseDragged(with event: NSEvent) {
@@ -66,6 +62,11 @@ extension NSPlayerView {
       endDragSelect()
     }
 
+  }
+  
+  private func setCurrentLocation(_ location: CGRect.Location) {
+    currentLocation = location
+    currentFrame = currentLocalization?.layer.frame
   }
   
   override func updateTrackingAreas() {

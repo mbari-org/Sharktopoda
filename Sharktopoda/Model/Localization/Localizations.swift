@@ -398,9 +398,9 @@ extension Localizations {
 
 // MARK: Resize all
 extension Localizations {
-  func resize(for videoRect: CGRect) {
+  func resize(for playerRect: CGRect) {
     for localization in storage.values {
-      localization.resize(for: videoRect)
+      localization.resize(for: playerRect)
     }
   }
 }

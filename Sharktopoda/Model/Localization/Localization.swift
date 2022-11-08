@@ -31,8 +31,8 @@ class Localization {
 
     self.videoSize = videoSize
 
-    let origin = CGPoint(x: region.origin.x,
-                         y: videoSize.height - region.origin.y - region.size.height)
+    let origin = CGPoint(x: region.minX,
+                         y: videoSize.height - (region.minY + region.height))
     let layerFrame = CGRect(origin: origin, size: region.size)
     let cgColor = Color(hex: hexColor)?.cgColor
     layer = CAShapeLayer(frame: layerFrame, cgColor: cgColor!)
@@ -93,9 +93,9 @@ extension Localization {
     }
   }
   
-  func resize(for videoRect: CGRect) {
+  func resize(for playerRect: CGRect) {
     CALayer.noAnimation {
-      layer.shapeFrame(frame(for: videoRect))
+      layer.shapeFrame(frame(for: playerRect))
     }
   }
 }
@@ -152,15 +152,15 @@ extension Localization: Hashable {
 
 // MARK: Shape Layer
 extension Localization {
-  private func frame(for videoRect: CGRect) -> CGRect {
-    let scale = videoRect.size.width / videoSize.width
-    let fullHeight = videoRect.height / scale
+  private func frame(for playerRect: CGRect) -> CGRect {
+    let scale = playerRect.size.width / videoSize.width
+    let videoHeight = playerRect.height / scale
     
     let size = CGSize(width: scale * region.size.width,
                       height: scale * region.size.height)
     
-    let x = videoRect.origin.x + scale * region.origin.x
-    let y = videoRect.origin.y + scale * (fullHeight - region.origin.y - region.size.height)
+    let x = playerRect.origin.x + scale * region.origin.x
+    let y = playerRect.origin.y + scale * (videoHeight - region.origin.y - region.size.height)
     let origin = CGPoint(x: x, y: y)
     
     return CGRect(origin: origin, size: size)

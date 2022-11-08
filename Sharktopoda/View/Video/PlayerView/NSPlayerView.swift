@@ -14,17 +14,20 @@ final class NSPlayerView: NSView {
   let playerLayer = AVPlayerLayer()
 
   var localizations: Localizations?
-  var undoLocalizations: [Localization]?
+  // CxFuture  var undoLocalizations: [Localization]?
   
   /// Location within the current selected localization (for drag move/resize)
   var currentLocation: CGRect.Location?
 
+  /// Frame of current selected localization
+  var currentFrame: CGRect?
+  
   /// Layer for selecting multiple locations
   var selectLayer: CAShapeLayer?
 
-  /// Mouse point at which either current location or selecting locations drag initiated
-  var dragAnchorPoint: CGPoint?
-  
+  /// Mouse point: either selecting locations initiated or drag localization anchor
+  var dragAnchor: CGPoint?
+
   /// Queue on which off-main work is done
   var queue: DispatchQueue?
   

@@ -16,6 +16,12 @@ extension CGRect {
     case topLeft, topRight, bottomRight, bottomLeft
     case outside
   }
+  
+  func diagonal(of cornerPoint: CGPoint) -> CGPoint {
+    let x = cornerPoint.x == minX ? maxX : minX
+    let y = cornerPoint.y == minY ? maxY : minY
+    return CGPoint(x: x, y: y)
+  }
 
   func location(of point: CGPoint, corner: CGFloat = 0.2) -> Location {
     guard contains(point) else { return .outside }

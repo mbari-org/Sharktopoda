@@ -8,10 +8,8 @@
 import AppKit
 
 extension NSPlayerView {
-  func startDragSelect(_ mousePoint: CGPoint) {
+  func startDragSelect(with mousePoint: CGPoint) {
     localizations?.clearSelected()
-    
-    dragAnchorPoint = mousePoint
     
     let layer = CAShapeLayer()
     layer.anchorPoint = .zero
@@ -27,9 +25,9 @@ extension NSPlayerView {
     currentLocalization = nil
   }
   
-  func dragSelect(_ dragPoint: CGPoint) {
+  func dragSelect(using dragPoint: CGPoint) {
     guard let selectLayer = selectLayer else { return }
-    guard let anchorPoint = dragAnchorPoint else { return }
+    guard let anchorPoint = dragAnchor else { return }
     
     let frameRect = anchorPoint.diagonalRect(using: dragPoint)
     CALayer.noAnimation {
@@ -45,7 +43,7 @@ extension NSPlayerView {
 
     /// Remove the selection layer and clean up
     selectLayer.removeFromSuperlayer()
-    self.dragAnchorPoint = nil
+    self.dragAnchor = nil
     self.selectLayer = nil
   }
 }

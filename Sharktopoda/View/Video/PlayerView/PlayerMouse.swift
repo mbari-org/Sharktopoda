@@ -11,43 +11,40 @@ extension NSPlayerView {
   override func mouseDown(with event: NSEvent) {
     pause()
     
-    let mousePoint = event.locationInWindow
-    
+    dragAnchor = event.locationInWindow
+
     if event.modifierFlags.intersection(.deviceIndependentFlagsMask) == .command {
-      if commandSelect(mousePoint) { return }
-
-      startDragSelect(mousePoint)
+      if commandSelect(dragAnchor!) { return }
+      startDragSelect(with: dragAnchor!)
       return
     }
     
-    if let location = clickedCurrentLocalization(mousePoint) {
-      currentLocation = location
-      print("current with location: \(currentLocation!)")
+    if let location = clickedCurrentLocalization(dragAnchor!) {
+      setCurrentLocation(location)
       return
     }
     
-    if let location = currentSelect(mousePoint) {
-      currentLocation = location
-      print("select with location: \(currentLocation!)")
+    if let location = currentSelect(dragAnchor!) {
+      setCurrentLocation(location)
       return
     }
-
+  }
+  
+  private func setCurrentLocation(_ location: CGRect.Location) {
+    currentLocation = location
+    currentFrame = currentLocalization?.layer.frame
   }
   
   override func mouseDragged(with event: NSEvent) {
     let mousePoint = event.locationInWindow
     
-    /// If there is a current localization, drag it
-    if let localization = currentLocalization {
-      
+    if currentLocation != nil {
+      /// If there is a current localization, drag it
       let delta = DeltaPoint(x: event.deltaX, y: event.deltaY)
-      dragLocalization(localization, delta: delta)
-      return
-    }
-
-    /// If there is a select locations layer, drag it
-    if selectLayer != nil {
-      dragSelect(mousePoint)
+      dragCurrent(by: delta)
+    } else if selectLayer != nil {
+      /// If there is a select locations layer, drag it
+      dragSelect(using: mousePoint)
     }
   }
   
@@ -56,6 +53,9 @@ extension NSPlayerView {
   }
   
   override func mouseUp(with event: NSEvent) {
+    dragAnchor = nil
+    currentFrame = nil
+    
     if currentLocalization != nil {
       // CxInc Send update to UDP controller
       currentLocation = nil

@@ -34,7 +34,7 @@ extension CGPoint {
     }
   }
   
-  func abs() -> DeltaPoint {
+ func abs() -> DeltaPoint {
     DeltaPoint(x: Swift.abs(x), y: Swift.abs(y))
   }
   
@@ -45,20 +45,7 @@ extension CGPoint {
   func delta(to point: CGPoint) -> DeltaPoint {
     DeltaPoint(x: point.x - x, y: point.y - y)
   }
-
-  func move(by delta: DeltaPoint) -> CGPoint {
-    CGPoint(x: x + delta.x, y: y + delta.y)
-  }
-
-  func quadrant(of point: CGPoint) -> Quadrant {
-    let delta = delta(from: point)
-    
-    let signX = delta.x < 0 ? 1 : -1
-    let signY = delta.y < 0 ? 1 : -1
-    
-    return Quadrant(rawValue: (signX, signY))!
-  }
-
+  
   func diagonalRect(using point: CGPoint) -> CGRect {
     let delta = delta(to: point)
     
@@ -81,6 +68,23 @@ extension CGPoint {
     let size = DeltaSize(width: absDelta.x, height: absDelta.y)
     
     return CGRect(origin: origin, size: size)
+  }
+
+  func move(by delta: DeltaPoint) -> CGPoint {
+    CGPoint(x: x + delta.x, y: y + delta.y)
+  }
+  
+  func opposite() -> DeltaPoint {
+    DeltaPoint(x: -x, y: -y)
+  }
+
+  func quadrant(of point: CGPoint) -> Quadrant {
+    let delta = delta(from: point)
+    
+    let signX = delta.x < 0 ? 1 : -1
+    let signY = delta.y < 0 ? 1 : -1
+    
+    return Quadrant(rawValue: (signX, signY))!
   }
 
 }

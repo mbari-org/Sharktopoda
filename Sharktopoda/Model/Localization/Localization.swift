@@ -55,8 +55,14 @@ class Localization {
   }
 }
 
-// MARK: Adjust
+// MARK: Modify region
 extension Localization {
+  func reframe(_ frame: CGRect) {
+    CALayer.noAnimation {
+      layer.shapeFrame(frame)
+    }
+  }
+  
   func delta(by delta: DeltaRect) {
     move(by: delta.origin)
     resize(by: delta.size)

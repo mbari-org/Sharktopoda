@@ -41,19 +41,25 @@ extension NSPlayerView {
   }
   
   func endDragPurpose() {
-    guard let purpose = dragPurpose else { return }
-    guard let layer = dragLayer else { return }
-
-    switch purpose {
-      case .create:
-        localizations?.create(using: layer, at: currentTime, with: videoSize)
-      case .select:
-        localizations?.select(using: layer.frame, at: currentTime)
-        /// Remove the selection layer as it's purpose is complet
-        layer.removeFromSuperlayer()
-    }
+    dragAnchor = nil
     
-    self.dragAnchor = nil
+    if let purpose = dragPurpose,
+       let layer = dragLayer {
+
+      // CxTBD Parameterize min size
+      guard 10 < layer.frame.width,
+            10 < layer.frame.height else { return }
+      
+      switch purpose {
+        case .create:
+          localizations?.create(using: layer, at: currentTime, with: videoSize)
+        case .select:
+          localizations?.select(using: layer.frame, at: currentTime)
+          /// Remove the selection layer as it's purpose is complet
+          layer.removeFromSuperlayer()
+      }
+    }
+
     self.dragLayer = nil
     self.dragPurpose = nil
   }

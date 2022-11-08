@@ -23,7 +23,7 @@ extension NSPlayerView {
   }
   
   func endDragCurrent() {
-    guard let localization = currentLocation else { return }
+    guard let localization = currentLocalization else { return }
     
     print("Send update to \(localization)")
     

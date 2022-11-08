@@ -26,7 +26,7 @@ final class NSPlayerView: NSView {
   var dragLayer: CAShapeLayer?
   var dragPurpose: NSPlayerView.DragPurpose?
 
-  /// Mouse point: either selecting locations initiated or drag localization anchor
+  /// Anchor point for either selecting locations or dragging current localization
   var dragAnchor: CGPoint?
 
   /// Queue on which off-main work is done

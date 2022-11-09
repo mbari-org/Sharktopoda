@@ -61,8 +61,8 @@ extension Localizations {
     selected.removeAll()
   }
   
-  func create(using layer: CAShapeLayer, at elapsedTime: Int, with videoSize: CGSize) {
-    let localization = Localization(using: layer, at: elapsedTime, with: videoSize)
+  func create(using layer: CAShapeLayer, at elapsedTime: Int, with fullSize: CGSize) {
+    let localization = Localization(using: layer, at: elapsedTime, with: fullSize)
     let _ = add(localization)
     let _ = select(id: localization.id)
   }

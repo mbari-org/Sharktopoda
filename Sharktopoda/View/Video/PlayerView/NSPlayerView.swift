@@ -37,9 +37,9 @@ final class NSPlayerView: NSView {
   
   // MARK: ctors
   init(videoAsset: VideoAsset) {
-    let videoSize = videoAsset.size!
+    let fullSize = videoAsset.size!
     
-    super.init(frame: NSMakeRect(0, 0, videoSize.width, videoSize.height))
+    super.init(frame: NSMakeRect(0, 0, fullSize.width, fullSize.height))
 
     _videoAsset = videoAsset
     setup()
@@ -127,7 +127,7 @@ extension NSPlayerView {
   var scale: CGFloat {
     /// Player always maintains original aspect so either width or height work here
     get {
-      playerRect.size.width / videoSize.width
+      playerRect.size.width / fullSize.width
     }
   }
   
@@ -143,7 +143,7 @@ extension NSPlayerView {
     }
   }
   
-  var videoSize: CGSize {
+  var fullSize: CGSize {
     get {
       videoAsset.size ?? .zero
     }

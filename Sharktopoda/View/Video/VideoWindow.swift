@@ -34,9 +34,9 @@ class VideoWindow: NSWindow {
 
     videoPlayerView = VideoPlayerView(videoAsset: videoAsset)
 
-    let videoSize = videoAsset.size!
+    let fullSize = videoAsset.size!
     super.init(
-      contentRect: NSMakeRect(0, 0, videoSize.width, videoSize.height),
+      contentRect: NSMakeRect(0, 0, fullSize.width, fullSize.height),
       styleMask: [.titled, .closable, .miniaturizable, .resizable],
       backing: .buffered,
       defer: false)

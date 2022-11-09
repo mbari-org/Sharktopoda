@@ -51,7 +51,7 @@ extension NSPlayerView {
       
       switch purpose {
         case .create:
-          localizations?.create(using: layer, at: currentTime, with: videoSize)
+          localizations?.create(using: layer, at: currentTime, with: fullSize)
         case .select:
           localizations?.select(using: layer.frame, at: currentTime)
           /// Remove the selection layer as it's purpose is complet

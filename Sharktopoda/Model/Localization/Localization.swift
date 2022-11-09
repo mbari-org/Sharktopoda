@@ -16,9 +16,9 @@ class Localization {
   var hexColor: String
   var layer: CAShapeLayer
   var region: CGRect
-  var videoSize: CGSize
+  var fullSize: CGSize
   
-  init(from controlLocalization: ControlLocalization, with videoSize: CGSize) {
+  init(from controlLocalization: ControlLocalization, with fullSize: CGSize) {
     id = controlLocalization.uuid
     concept = controlLocalization.concept
     duration = controlLocalization.durationMillis
@@ -29,24 +29,24 @@ class Localization {
                     width: CGFloat(controlLocalization.width),
                     height: CGFloat(controlLocalization.height))
 
-    self.videoSize = videoSize
+    self.fullSize = fullSize
 
     let origin = CGPoint(x: region.minX,
-                         y: videoSize.height - (region.minY + region.height))
+                         y: fullSize.height - (region.minY + region.height))
     let layerFrame = CGRect(origin: origin, size: region.size)
     let cgColor = Color(hex: hexColor)?.cgColor
     layer = CAShapeLayer(frame: layerFrame, cgColor: cgColor!)
   }
   
-  init(using layer: CAShapeLayer, at elapsedTime: Int, with videoSize: CGSize) {
+  init(using layer: CAShapeLayer, at elapsedTime: Int, with fullSize: CGSize) {
     let playerLayer = layer.superlayer!
 
     let playerFrame = playerLayer.frame
     let layerFrame = layer.frame
-    let scale = playerFrame.size.width / videoSize.width
+    let scale = playerFrame.size.width / fullSize.width
     
     let regionOrigin = CGPoint(x: layerFrame.minX,
-                               y: videoSize.height - layerFrame.minY - layerFrame.height)
+                               y: fullSize.height - layerFrame.minY - layerFrame.height)
     let regionSize = layerFrame.size.scale(by: 1 / scale)
     
 //    let scaledFrame = frame.scale(by: scale)
@@ -57,7 +57,7 @@ class Localization {
     self.elapsedTime = elapsedTime
     hexColor = UserDefaults.standard.hexColor(forKey: PrefKeys.displayBorderColor)
     region = CGRect(origin: regionOrigin, size: regionSize)
-    self.videoSize = videoSize
+    self.fullSize = fullSize
 
     self.layer = layer
   }
@@ -131,7 +131,7 @@ extension Localization {
     layer.strokeColor = Color(hex: hexColor)?.cgColor
 
     let origin = CGPoint(x: region.origin.x,
-                         y: videoSize.height - region.origin.y - region.size.height)
+                         y: fullSize.height - region.origin.y - region.size.height)
     CALayer.noAnimation {
       layer.shapeFrame(origin: origin, size: region.size)
     }
@@ -161,7 +161,7 @@ extension Localization: Hashable {
 // MARK: Shape Layer
 extension Localization {
   private func frame(for playerRect: CGRect) -> CGRect {
-    let scale = playerRect.size.width / videoSize.width
+    let scale = playerRect.size.width / fullSize.width
     let videoHeight = playerRect.height / scale
     
     let size = CGSize(width: scale * region.size.width,

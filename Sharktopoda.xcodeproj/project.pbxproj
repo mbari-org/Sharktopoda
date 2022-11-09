@@ -98,7 +98,6 @@
 		E2D1C85029131E6E00961A0A /* LocalizationMouse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1C84F29131E6E00961A0A /* LocalizationMouse.swift */; };
 		E2D1C85429132B1800961A0A /* CALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1C85329132B1800961A0A /* CALayer.swift */; };
 		E2D1C856291AC13900961A0A /* DragCurrent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1C855291AC13900961A0A /* DragCurrent.swift */; };
-		E2D1C858291AC20D00961A0A /* DragNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1C857291AC20D00961A0A /* DragNew.swift */; };
 		E2D1C85B291AC38000961A0A /* DragPurpose.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1C85A291AC38000961A0A /* DragPurpose.swift */; };
 		E2D47E9628D8C01F0068B192 /* ControlCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D47E9528D8C01F0068B192 /* ControlCommand.swift */; };
 		E2D47E9A28D8C17D0068B192 /* ClientCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D47E9928D8C17D0068B192 /* ClientCommand.swift */; };
@@ -234,7 +233,6 @@
 		E2D1C84F29131E6E00961A0A /* LocalizationMouse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationMouse.swift; sourceTree = "<group>"; };
 		E2D1C85329132B1800961A0A /* CALayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CALayer.swift; sourceTree = "<group>"; };
 		E2D1C855291AC13900961A0A /* DragCurrent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragCurrent.swift; sourceTree = "<group>"; };
-		E2D1C857291AC20D00961A0A /* DragNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragNew.swift; sourceTree = "<group>"; };
 		E2D1C85A291AC38000961A0A /* DragPurpose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragPurpose.swift; sourceTree = "<group>"; };
 		E2D47E9528D8C01F0068B192 /* ControlCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlCommand.swift; sourceTree = "<group>"; };
 		E2D47E9928D8C17D0068B192 /* ClientCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientCommand.swift; sourceTree = "<group>"; };
@@ -555,7 +553,6 @@
 				E21DF7912910391A00038B41 /* PlayerMouse.swift */,
 				E2D1C84F29131E6E00961A0A /* LocalizationMouse.swift */,
 				E2D1C855291AC13900961A0A /* DragCurrent.swift */,
-				E2D1C857291AC20D00961A0A /* DragNew.swift */,
 				E2D1C85A291AC38000961A0A /* DragPurpose.swift */,
 			);
 			path = Mouse;
@@ -830,7 +827,6 @@
 				E2BDE214290D7FF5001CC439 /* CGSize.swift in Sources */,
 				E2675E3428DB7A4000F5F114 /* ControlAdvance.swift in Sources */,
 				E2C22ED728D36888003CD976 /* VideoAsset.swift in Sources */,
-				E2D1C858291AC20D00961A0A /* DragNew.swift in Sources */,
 				E2989AB728D3B261009D2D65 /* NetworkPreferencesView.swift in Sources */,
 				E223C30C28F20D5D00274C3E /* ControlRemoveLocalizations.swift in Sources */,
 				E2675E1E28DAB65D00F5F114 /* ControlPing.swift in Sources */,

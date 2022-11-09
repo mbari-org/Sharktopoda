@@ -30,7 +30,7 @@ extension NSPlayerView {
     currentLocation = nil
     currentLocation = nil
   }
-  
+
   private func dragAction(for mouseDelta: DeltaPoint) -> DragAction {
     guard let location = currentLocation else { return .none }
     guard let frame = currentFrame else { return .none }
@@ -89,43 +89,48 @@ extension NSPlayerView {
     return flipData.from == flipData.to ? .adjust : .flip(flipData)
   }
   
+  /// CxNote UnitDeltas should all be -1, 0, or 1
+  typealias UnitDeltas = (x: CGFloat, y: CGFloat, w: CGFloat, h: CGFloat)
+
   /// Drag localiztion by delta inside same quadrant
   private func adjust(by delta: DeltaPoint) {
     guard let localization = currentLocalization else { return }
     guard let location = currentLocation else { return }
-    
-    /// CxNote deltaRect arguments should all be -1, 0, or 1
+
+    var unitDeltas: UnitDeltas
     switch location {
       case .middle:
         /// Move
-        localization.delta(by: deltaRect(1, -1, 0, 0, delta: delta))
+        unitDeltas = (1, -1, 0, 0)
       case .top:
         /// Resize
-        localization.delta(by: deltaRect(0, 0, 0, -1, delta: delta))
+        unitDeltas = (0, 0, 0, -1)
       case .topRight:
         /// Resize
-        localization.delta(by: deltaRect(0, 0, 1, -1, delta: delta))
+        unitDeltas = (0, 0, 1, -1)
       case .right:
         /// Resize
-        localization.delta(by: deltaRect(0, 0, 1, 0, delta: delta))
+        unitDeltas = (0, 0, 1, 0)
       case .bottomRight:
         /// Move and resize
-        localization.delta(by: deltaRect(0, -1, 1, 1, delta: delta))
+        unitDeltas = (0, -1, 1, 1)
       case .bottom:
         /// Move and resize
-        localization.delta(by: deltaRect(0, -1, 0, 1, delta: delta))
+        unitDeltas = (0, -1, 0, 1)
       case .bottomLeft:
         /// Move and resize
-        localization.delta(by: deltaRect(1, -1, -1, 1, delta: delta))
+        unitDeltas = (1, -1, -1, 1)
       case .left:
         /// Move and resize
-        localization.delta(by: deltaRect(1, 0, -1, 0, delta: delta))
+        unitDeltas = (1, 0, -1, 0)
       case .topLeft:
         /// Move and resize
-        localization.delta(by: deltaRect(1, 0, -1, -1, delta: delta))
+        unitDeltas = (1, 0, -1, -1)
       case .outside:
         return
     }
+    
+    localization.reframe(by: deltaRect(delta, unitDeltas: unitDeltas))
     currentFrame = localization.layer.frame
   }
   
@@ -237,7 +242,7 @@ extension NSPlayerView {
             return
         }
     }
-    localization.reframe(CGRect(origin: origin, size: size))
+    localization.reframe(to: CGRect(origin: origin, size: size))
     self.currentFrame = localization.layer.frame
   }
   
@@ -250,11 +255,11 @@ extension NSPlayerView {
     DeltaSize(width: w * delta.x, height: h * delta.y)
   }
   
-  private func deltaRect(_ x: CGFloat, _ y: CGFloat,
-                         _ w: CGFloat, _ h: CGFloat,
-                         delta: CGPoint) -> DeltaRect {
-    DeltaRect(origin: deltaPoint(x, y, delta: delta),
-              size: deltaSize(w, h, delta: delta))
+  private func deltaRect(_ delta: CGPoint, unitDeltas: UnitDeltas) -> DeltaRect {
+    DeltaRect(origin: deltaPoint(unitDeltas.x, unitDeltas.y,
+                                 delta: delta),
+              size: deltaSize(unitDeltas.w, unitDeltas.h,
+                              delta: delta))
   }
   
   typealias FlipData = (from: CGPoint.Quadrant, to: CGPoint.Quadrant, diagonal: CGPoint)

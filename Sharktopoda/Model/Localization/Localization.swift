@@ -69,9 +69,19 @@ class Localization {
 
 // MARK: Modify region
 extension Localization {
-  func reframe(_ frame: CGRect) {
+  func reframe(to frame: CGRect) {
     CALayer.noAnimation {
       layer.shapeFrame(frame)
+    }
+  }
+  
+  func reframe(by delta: DeltaRect) {
+    guard delta != .zero else { return }
+
+    CALayer.noAnimation {
+      layer.position = layer.position.move(by: delta.origin)
+      layer.boundsResize(by: delta.size)
+      layer.setNeedsLayout()
     }
   }
   
@@ -173,7 +183,5 @@ extension Localization {
     
     return CGRect(origin: origin, size: size)
   }
-  
-
 }
 

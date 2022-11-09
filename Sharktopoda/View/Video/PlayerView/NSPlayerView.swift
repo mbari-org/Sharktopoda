@@ -10,7 +10,7 @@ import AVFoundation
 
 final class NSPlayerView: NSView {
   // MARK: properties
-  private let rootLayer = CALayer()
+  let rootLayer = CALayer()
   let playerLayer = AVPlayerLayer()
 
   var localizations: Localizations?
@@ -34,6 +34,9 @@ final class NSPlayerView: NSView {
   
   private var _currentLocalization: Localization?
   private var _videoAsset: VideoAsset?
+  
+  // CxDebug
+  var windowLayer: CALayer?
   
   // MARK: ctors
   init(videoAsset: VideoAsset) {
@@ -66,6 +69,8 @@ final class NSPlayerView: NSView {
     playerLayer.autoresizingMask = [.layerWidthSizable, .layerHeightSizable]
         
     rootLayer.addSublayer(playerLayer)
+    
+    windowLayer = rootLayer.superlayer?.superlayer?.superlayer
 
     localizations = Localizations(playerItem: currentItem!,
                                   frameDuration: videoAsset.frameDuration.asMillis())
@@ -236,10 +241,12 @@ extension NSPlayerView {
 // MARK: Resized
 extension NSPlayerView {
   func resized() {
-    guard paused else { return }
+    pause()
+//    guard paused else { return }
     
     /// Resize paused localizations on main queue to see immediate effect
     guard let pausedLocalizations = localizations?.fetch(.paused, at: currentTime) else { return }
+
     let videoRect = self.videoRect
     DispatchQueue.main.async {
       for localization in pausedLocalizations {

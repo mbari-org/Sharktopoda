@@ -10,6 +10,8 @@ import CoreGraphics
 typealias DeltaPoint = CGPoint
 
 extension CGPoint {
+  static var infinity = CGPoint(x: CGFloat.infinity, y: CGFloat.infinity)
+  
   enum Quadrant: RawRepresentable {
     case I, II, III, IV
     

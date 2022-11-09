@@ -11,20 +11,23 @@ extension NSPlayerView {
   override func mouseDown(with event: NSEvent) {
     pause()
     
-    dragAnchor = event.locationInWindow
+    let playerPoint = locationInPlayer(with: event)
+    guard videoRect.contains(playerPoint) else { return }
+    
+    dragAnchor = playerPoint
 
     if event.modifierFlags.intersection(.deviceIndependentFlagsMask) == .command {
-      if commandSelect(dragAnchor!) { return }
+      if commandSelect(playerPoint) { return }
       startDragPurpose(.select)
       return
     }
     
-    if let location = clickedCurrentLocalization(dragAnchor!) {
+    if let location = clickedCurrentLocalization(playerPoint) {
       setCurrentLocation(location)
       return
     }
     
-    if let location = currentSelect(dragAnchor!) {
+    if let location = currentSelect(playerPoint) {
       setCurrentLocation(location)
       return
     }
@@ -33,7 +36,7 @@ extension NSPlayerView {
   }
   
   override func mouseDragged(with event: NSEvent) {
-    let mousePoint = event.locationInWindow
+    let playerPoint = locationInPlayer(with: event)
     
     if currentLocation != nil {
       /// If there is a current localization, drag it
@@ -42,7 +45,7 @@ extension NSPlayerView {
       return
     }
 
-    dragPurpose(using: mousePoint)
+    dragPurpose(using: playerPoint)
   }
   
   override func mouseExited(with event: NSEvent) {
@@ -76,4 +79,17 @@ extension NSPlayerView {
     let trackingArea = NSTrackingArea(rect: bounds, options: options, owner: self, userInfo: nil)
     addTrackingArea(trackingArea)
   }
+
+  private func locationInPlayer(with event: NSEvent) -> CGPoint {
+    guard let windowLayer = rootLayer.superlayer?.superlayer?.superlayer else { return .infinity }
+    
+    let windowPoint = event.locationInWindow
+    return playerLayer.convert(windowPoint, from: windowLayer)
+  }
+  
+  func videoPoint(of playerPoint: CGPoint) -> CGPoint {
+    guard playerPoint != .infinity else { return .infinity }
+    
+    return playerPoint.delta(to: videoRect.origin)
+   }
 }

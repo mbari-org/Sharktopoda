@@ -61,6 +61,12 @@ extension Localizations {
     selected.removeAll()
   }
   
+  func create(using layer: CAShapeLayer, at elapsedTime: Int, with fullSize: CGSize) {
+    let localization = Localization(using: layer, at: elapsedTime, with: fullSize)
+    let _ = add(localization)
+    let _ = select(id: localization.id)
+  }
+  
   func remove(id: String) -> Bool {
     guard let localization = storage[id] else { return false }
 
@@ -370,6 +376,16 @@ extension Localizations {
       localization.select(true)
       return true
     }
+  }
+  
+  func select(using rect: CGRect, at elapsedTime: Int) {
+    guard let pausedLocalizations = fetch(.paused, at: elapsedTime) else { return }
+
+    let ids = pausedLocalizations
+      .filter { rect.intersects($0.layer.frame) }
+      .map { $0.id }
+
+    let _ = select(ids: ids)
   }
   
   func unselect(id: String) {

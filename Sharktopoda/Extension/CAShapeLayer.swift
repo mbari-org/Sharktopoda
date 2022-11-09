@@ -8,6 +8,41 @@
 import AVFoundation
 
 extension CAShapeLayer {
+  convenience init(frame: CGRect, cgColor: CGColor) {
+    self.init()
+    
+    anchorPoint = .zero
+    fillColor = .clear
+    self.frame = frame
+    isOpaque = true
+    lineJoin = .round
+    lineWidth = CGFloat(UserDefaults.standard.integer(forKey: PrefKeys.displayBorderSize))
+    strokeColor = cgColor
+
+    // CxTBD Investigate
+    shouldRasterize = true
+    
+    boundsPath()
+  }
+  
+  func boundsPath() {
+    path = CGPath(rect: CGRect(origin: .zero, size: bounds.size), transform: nil)
+  }
+  
+  func boundsResize(by size: DeltaSize) {
+    bounds = bounds.resize(by: size)
+    boundsPath()
+  }
+  
+  func shapeFrame(_ frame: CGRect) {
+    self.frame = frame
+    boundsPath()
+  }
+  
+  func shapeFrame(origin: CGPoint, size: CGSize) {
+    shapeFrame(CGRect(origin: origin, size: size))
+  }
+  
   func containsSuperPoint(_ point: CGPoint) -> Bool {
     contains(convertSuperPoint(point))
   }

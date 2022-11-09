@@ -11,8 +11,6 @@ import SwiftUI
 struct VideoPlayerView: View {
   let videoAsset: VideoAsset
   let playerView: PlayerView
-//  var player: AVPlayer
-  
   
   init(videoAsset: VideoAsset) {
     self.videoAsset = videoAsset
@@ -23,8 +21,9 @@ struct VideoPlayerView: View {
     VStack {
       playerView
         .padding(0)
-//      Divider()
-//      Text("Hidable Video Control")
+      Divider()
+      Text("Hidable Video Control")
+        .padding(0)
     }
   }
 }

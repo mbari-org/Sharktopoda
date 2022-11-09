@@ -13,4 +13,8 @@ extension CGSize {
   func resize(by delta: DeltaSize) -> CGSize {
     CGSize(width: width + delta.width, height: height + delta.height)
   }
+  
+  func scale(by scale: CGFloat) -> CGSize {
+    CGSize(width: width * scale, height: height * scale)
+  }
 }

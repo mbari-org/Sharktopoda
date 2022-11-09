@@ -10,18 +10,15 @@ import SwiftUI
 
 class Localization {
   let id: String
-
   var concept: String
   var duration: Int
   var elapsedTime: Int
   var hexColor: String
-  var region: CGRect
-  
-  var videoSize: CGSize
-
   var layer: CAShapeLayer
+  var region: CGRect
+  var fullSize: CGSize
   
-  init(from controlLocalization: ControlLocalization, with videoSize: CGSize) {
+  init(from controlLocalization: ControlLocalization, with fullSize: CGSize) {
     id = controlLocalization.uuid
     concept = controlLocalization.concept
     duration = controlLocalization.durationMillis
@@ -32,22 +29,37 @@ class Localization {
                     width: CGFloat(controlLocalization.width),
                     height: CGFloat(controlLocalization.height))
 
-    self.videoSize = videoSize
-    let origin = CGPoint(x: region.origin.x,
-                         y: videoSize.height - region.origin.y - region.size.height)
+    self.fullSize = fullSize
 
-    layer = CAShapeLayer()
-    layer.anchorPoint = .zero
-    layer.fillColor = .clear
-    layer.frame = CGRect(origin: origin, size: region.size)
-    layer.isOpaque = true
-    layer.lineJoin = .round
-    layer.lineWidth = CGFloat(UserDefaults.standard.integer(forKey: PrefKeys.displayBorderSize))
-    layer.path = layerPath()
-    layer.strokeColor = Color(hex: hexColor)?.cgColor
+    let origin = CGPoint(x: region.minX,
+                         y: fullSize.height - (region.minY + region.height))
+    let layerFrame = CGRect(origin: origin, size: region.size)
+    let cgColor = Color(hex: hexColor)?.cgColor
+    layer = CAShapeLayer(frame: layerFrame, cgColor: cgColor!)
+  }
+  
+  init(using layer: CAShapeLayer, at elapsedTime: Int, with fullSize: CGSize) {
+    let playerLayer = layer.superlayer!
 
-    // CxTBD Investigate
-    layer.shouldRasterize = true
+    let playerFrame = playerLayer.frame
+    let layerFrame = layer.frame
+    let scale = playerFrame.size.width / fullSize.width
+    
+    let regionOrigin = CGPoint(x: layerFrame.minX,
+                               y: fullSize.height - layerFrame.minY - layerFrame.height)
+    let regionSize = layerFrame.size.scale(by: 1 / scale)
+    
+//    let scaledFrame = frame.scale(by: scale)
+
+    id = UUID().uuidString
+    concept = UserDefaults.standard.string(forKey: PrefKeys.captionDefault)!
+    duration = 0
+    self.elapsedTime = elapsedTime
+    hexColor = UserDefaults.standard.hexColor(forKey: PrefKeys.displayBorderColor)
+    region = CGRect(origin: regionOrigin, size: regionSize)
+    self.fullSize = fullSize
+
+    self.layer = layer
   }
 
   var debugDescription: String {
@@ -55,8 +67,14 @@ class Localization {
   }
 }
 
-// MARK: Adjust
+// MARK: Modify region
 extension Localization {
+  func reframe(_ frame: CGRect) {
+    CALayer.noAnimation {
+      layer.shapeFrame(frame)
+    }
+  }
+  
   func delta(by delta: DeltaRect) {
     move(by: delta.origin)
     resize(by: delta.size)
@@ -67,7 +85,7 @@ extension Localization {
 
     region = region.move(by: delta)
     
-    noAnimation {
+    CALayer.noAnimation {
       layer.position = layer.position.move(by: delta)
     }
   }
@@ -77,25 +95,16 @@ extension Localization {
     
     region = region.resize(by: delta)
     
-    noAnimation {
-      layer.bounds = layer.bounds.resize(by: delta)
-      layer.path = layerPath()
+    CALayer.noAnimation {
+      layer.boundsResize(by: delta)
       layer.setNeedsLayout()
     }
   }
   
   func resize(for videoRect: CGRect) {
-    noAnimation {
-      layer.frame = frame(for: videoRect)
-      layer.path = layerPath()
+    CALayer.noAnimation {
+      layer.shapeFrame(frame(for: videoRect))
     }
-  }
-  
-  func noAnimation(_ modify: () -> Void) {
-    CATransaction.begin()
-    CATransaction.setValue(true, forKey: kCATransactionDisableActions)
-    modify()
-    CATransaction.commit()
   }
 }
 
@@ -122,10 +131,9 @@ extension Localization {
     layer.strokeColor = Color(hex: hexColor)?.cgColor
 
     let origin = CGPoint(x: region.origin.x,
-                         y: videoSize.height - region.origin.y - region.size.height)
-    noAnimation {
-      layer.frame = CGRect(origin: origin, size: region.size)
-      layer.path = layerPath()
+                         y: fullSize.height - region.origin.y - region.size.height)
+    CALayer.noAnimation {
+      layer.shapeFrame(origin: origin, size: region.size)
     }
   }
 }
@@ -152,22 +160,20 @@ extension Localization: Hashable {
 
 // MARK: Shape Layer
 extension Localization {
-  private func layerPath() -> CGPath {
-    CGPath(rect: CGRect(origin: .zero, size: layer.bounds.size), transform: nil)
-  }
-
   private func frame(for videoRect: CGRect) -> CGRect {
-    let scale = videoRect.size.width / videoSize.width
-    let fullHeight = videoRect.height / scale
+    let scale = videoRect.size.width / fullSize.width
+    let videoHeight = videoRect.height / scale
     
     let size = CGSize(width: scale * region.size.width,
                       height: scale * region.size.height)
     
     let x = videoRect.origin.x + scale * region.origin.x
-    let y = videoRect.origin.y + scale * (fullHeight - region.origin.y - region.size.height)
+    let y = videoRect.origin.y + scale * (videoHeight - region.origin.y - region.size.height)
     let origin = CGPoint(x: x, y: y)
     
     return CGRect(origin: origin, size: size)
   }
+  
+
 }
 

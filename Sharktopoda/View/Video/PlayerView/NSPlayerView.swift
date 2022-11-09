@@ -10,23 +10,39 @@ import AVFoundation
 
 final class NSPlayerView: NSView {
   // MARK: properties
-  private let rootLayer = CALayer()
-  private let playerLayer = AVPlayerLayer()
+  let rootLayer = CALayer()
+  let playerLayer = AVPlayerLayer()
 
   var localizations: Localizations?
-  var undoLocalizations: [Localization]?
+  // CxFuture  var undoLocalizations: [Localization]?
   
-  var dragLocation: CGRect.Location?
+  /// Location within the current selected localization (for drag move/resize)
+  var currentLocation: CGRect.Location?
+
+  /// Frame of current selected localization
+  var currentFrame: CGRect?
+  
+  /// Layer for either creating localization or selecting multiple localizations
+  var dragLayer: CAShapeLayer?
+  var dragPurpose: NSPlayerView.DragPurpose?
+
+  /// Anchor point for either selecting locations or dragging current localization
+  var dragAnchor: CGPoint?
+
+  /// Queue on which off-main work is done
   var queue: DispatchQueue?
   
   private var _currentLocalization: Localization?
   private var _videoAsset: VideoAsset?
   
+  // CxDebug
+  var windowLayer: CALayer?
+  
   // MARK: ctors
   init(videoAsset: VideoAsset) {
-    let videoSize = videoAsset.size!
+    let fullSize = videoAsset.size!
     
-    super.init(frame: NSMakeRect(0, 0, videoSize.width, videoSize.height))
+    super.init(frame: NSMakeRect(0, 0, fullSize.width, fullSize.height))
 
     _videoAsset = videoAsset
     setup()
@@ -53,6 +69,8 @@ final class NSPlayerView: NSView {
     playerLayer.autoresizingMask = [.layerWidthSizable, .layerHeightSizable]
         
     rootLayer.addSublayer(playerLayer)
+    
+    windowLayer = rootLayer.superlayer?.superlayer?.superlayer
 
     localizations = Localizations(playerItem: currentItem!,
                                   frameDuration: videoAsset.frameDuration.asMillis())
@@ -99,7 +117,7 @@ extension NSPlayerView {
   var currentLocalization: Localization? {
     get { _currentLocalization }
     set {
-      dragLocation = nil
+      currentLocation = nil
       if _currentLocalization != nil {
         localizations!.clearSelected()
       }
@@ -114,7 +132,7 @@ extension NSPlayerView {
   var scale: CGFloat {
     /// Player always maintains original aspect so either width or height work here
     get {
-      videoRect.size.width / videoSize.width
+      videoRect.size.width / fullSize.width
     }
   }
   
@@ -130,7 +148,7 @@ extension NSPlayerView {
     }
   }
   
-  var videoSize: CGSize {
+  var fullSize: CGSize {
     get {
       videoAsset.size ?? .zero
     }
@@ -194,11 +212,9 @@ extension NSPlayerView {
   
   func updateLocalization(_ control: ControlLocalization) -> Bool {
     guard localizations != nil else { return false }
-    let result = localizations!.update(using: control)
-//    localization.setup(for: videoRect, at: scale)
 
+    let result = localizations!.update(using: control)
     displayPaused()
-    
     return result
   }
 }
@@ -225,10 +241,12 @@ extension NSPlayerView {
 // MARK: Resized
 extension NSPlayerView {
   func resized() {
-    guard paused else { return }
+    pause()
+//    guard paused else { return }
     
     /// Resize paused localizations on main queue to see immediate effect
     guard let pausedLocalizations = localizations?.fetch(.paused, at: currentTime) else { return }
+
     let videoRect = self.videoRect
     DispatchQueue.main.async {
       for localization in pausedLocalizations {

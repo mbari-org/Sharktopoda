@@ -127,7 +127,7 @@ extension NSPlayerView {
   var scale: CGFloat {
     /// Player always maintains original aspect so either width or height work here
     get {
-      playerRect.size.width / fullSize.width
+      videoRect.size.width / fullSize.width
     }
   }
   
@@ -137,7 +137,7 @@ extension NSPlayerView {
     }
   }
   
-  var playerRect: CGRect {
+  var videoRect: CGRect {
     get {
       playerLayer.videoRect
     }
@@ -153,7 +153,7 @@ extension NSPlayerView {
 // MARK: Localizations
 extension NSPlayerView {
   func addLocalization(_ localization: Localization) -> Bool {
-    localization.resize(for: playerRect)
+    localization.resize(for: videoRect)
     
     guard let localizations = localizations,
           localizations.add(localization) else { return false }
@@ -240,10 +240,10 @@ extension NSPlayerView {
     
     /// Resize paused localizations on main queue to see immediate effect
     guard let pausedLocalizations = localizations?.fetch(.paused, at: currentTime) else { return }
-    let playerRect = self.playerRect
+    let videoRect = self.videoRect
     DispatchQueue.main.async {
       for localization in pausedLocalizations {
-        localization.resize(for: playerRect)
+        localization.resize(for: videoRect)
       }
     }
 
@@ -252,7 +252,7 @@ extension NSPlayerView {
     guard let queue = queue else { return }
     guard let localizations = localizations else { return }
     queue.async {
-      localizations.resize(for: playerRect)
+      localizations.resize(for: videoRect)
     }
   }
 }

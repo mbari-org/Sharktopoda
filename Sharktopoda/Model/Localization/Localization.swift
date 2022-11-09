@@ -101,9 +101,9 @@ extension Localization {
     }
   }
   
-  func resize(for playerRect: CGRect) {
+  func resize(for videoRect: CGRect) {
     CALayer.noAnimation {
-      layer.shapeFrame(frame(for: playerRect))
+      layer.shapeFrame(frame(for: videoRect))
     }
   }
 }
@@ -160,15 +160,15 @@ extension Localization: Hashable {
 
 // MARK: Shape Layer
 extension Localization {
-  private func frame(for playerRect: CGRect) -> CGRect {
-    let scale = playerRect.size.width / fullSize.width
-    let videoHeight = playerRect.height / scale
+  private func frame(for videoRect: CGRect) -> CGRect {
+    let scale = videoRect.size.width / fullSize.width
+    let videoHeight = videoRect.height / scale
     
     let size = CGSize(width: scale * region.size.width,
                       height: scale * region.size.height)
     
-    let x = playerRect.origin.x + scale * region.origin.x
-    let y = playerRect.origin.y + scale * (videoHeight - region.origin.y - region.size.height)
+    let x = videoRect.origin.x + scale * region.origin.x
+    let y = videoRect.origin.y + scale * (videoHeight - region.origin.y - region.size.height)
     let origin = CGPoint(x: x, y: y)
     
     return CGRect(origin: origin, size: size)

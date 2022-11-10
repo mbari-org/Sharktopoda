@@ -31,8 +31,8 @@ extension NSPlayerView {
   func dragPurpose(using dragPoint: CGPoint) {
     guard dragPurpose != nil else { return }
 
-    guard let layer = dragLayer else { return }
-    guard let anchor = dragAnchor else { return }
+    guard let layer = dragLayer,
+          let anchor = dragAnchor else { return }
     
     let frameRect = anchor.diagonalRect(using: dragPoint)
     CALayer.noAnimation {
@@ -40,14 +40,16 @@ extension NSPlayerView {
     }
   }
   
-  func endDragPurpose() {
+  func endDragPurpose(at endPoint: CGPoint) {
     dragAnchor = nil
     
     if let purpose = dragPurpose,
-       let layer = dragLayer {
+       let layer = dragLayer,
+       let anchor = dragAnchor {
 
-      // CxTBD Parameterize min size
-      guard (10 < layer.frame.width || 10 < layer.frame.height) else { return }
+      // CxTBD Parameterize min drag
+      let totalDelta = anchor.delta(to: endPoint).abs()
+      guard 10 < totalDelta.x, 10 < totalDelta.y else { return }
       
       switch purpose {
         case .create:

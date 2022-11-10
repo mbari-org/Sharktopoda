@@ -23,11 +23,11 @@ extension NSPlayerView {
     
   }
   
-  func endDragCurrent(at playerPoint: CGPoint) {
+  func endDragCurrent(at endPoint: CGPoint) {
     guard let localization = currentLocalization else { return }
     guard let anchor = dragAnchor else { return }
     
-    let totalDelta = anchor.delta(to: playerPoint).abs()
+    let totalDelta = anchor.delta(to: endPoint).abs()
     guard 1 < totalDelta.x, 1 < totalDelta.y else { return }
     
     var layerFrame = localization.layer.frame

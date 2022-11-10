@@ -28,13 +28,12 @@ extension NSPlayerView {
   }
   
   /// Process command click for selecting a Localization
-  func commandSelect(_ mousePoint: CGPoint) -> Bool {
-    guard let localizations = localizations else { return false }
-    guard localizations.areSelected() else { return false }
-    guard let mouseLocalization = mousedLocalization(at: mousePoint) else { return false }
-    
-    currentLocalization = nil
-    
+  func commandSelect(at playerPoint: CGPoint) -> Bool {
+    guard let localizations = localizations,
+          let mouseLocalization = mousedLocalization(at: playerPoint) else {
+      return false
+    }
+
     return localizations.select(id: mouseLocalization.id, clear: false)
   }
   

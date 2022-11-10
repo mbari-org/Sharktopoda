@@ -41,28 +41,26 @@ extension NSPlayerView {
   }
   
   func endDragPurpose(at endPoint: CGPoint) {
-    dragAnchor = nil
-    
     if let purpose = dragPurpose,
        let layer = dragLayer,
        let anchor = dragAnchor {
 
       // CxTBD Parameterize min drag
       let totalDelta = anchor.delta(to: endPoint).abs()
-      guard 10 < totalDelta.x, 10 < totalDelta.y else { return }
-      
-      switch purpose {
-        case .create:
-          localizations?.create(using: layer, at: currentTime, with: fullSize)
-        case .select:
-          localizations?.select(using: layer.frame, at: currentTime)
-          /// Remove the selection layer as it's purpose is complet
-          layer.removeFromSuperlayer()
+      if 10 < totalDelta.x, 10 < totalDelta.y {
+        switch purpose {
+          case .create:
+            localizations?.create(using: layer, at: currentTime, with: fullSize)
+          case .select:
+            localizations?.select(using: layer.frame, at: currentTime)
+            /// Remove the selection layer as it's purpose is complete
+            layer.removeFromSuperlayer()
+        }
       }
     }
 
-    self.dragLayer = nil
-    self.dragPurpose = nil
+    dragLayer = nil
+    dragPurpose = nil
   }
   
   private func shapeLayer(_ origin: CGPoint) -> CAShapeLayer {

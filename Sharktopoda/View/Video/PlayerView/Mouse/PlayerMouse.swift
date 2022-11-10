@@ -55,9 +55,6 @@ extension NSPlayerView {
 //  }
   
   override func mouseUp(with event: NSEvent) {
-    dragAnchor = nil
-    currentFrame = nil
-    
     let endPoint = locationInPlayer(with: event)
     
     if event.modifierFlags.intersection(.deviceIndependentFlagsMask) == .command {
@@ -70,6 +67,9 @@ extension NSPlayerView {
       currentLocalization = nil
       endDragPurpose(at: endPoint)
     }
+    
+    dragAnchor = nil
+    currentFrame = nil
   }
   
   private func setCurrentLocation(_ location: CGRect.Location) {

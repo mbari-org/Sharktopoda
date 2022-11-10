@@ -48,16 +48,16 @@ extension NSPlayerView {
     dragPurpose(using: playerPoint)
   }
   
-  override func mouseExited(with event: NSEvent) {
-    mouseUp(with: event)
-  }
+//  override func mouseExited(with event: NSEvent) {
+//    mouseUp(with: event)
+//  }
   
   override func mouseUp(with event: NSEvent) {
     dragAnchor = nil
     currentFrame = nil
     
     if currentLocalization != nil {
-      endDragCurrent()
+      endDragCurrent(at: locationInPlayer(with: event))
     } else {
       endDragPurpose()
     }
@@ -86,10 +86,4 @@ extension NSPlayerView {
     let windowPoint = event.locationInWindow
     return playerLayer.convert(windowPoint, from: windowLayer)
   }
-  
-  func videoPoint(of playerPoint: CGPoint) -> CGPoint {
-    guard playerPoint != .infinity else { return .infinity }
-    
-    return playerPoint.delta(to: videoRect.origin)
-   }
 }

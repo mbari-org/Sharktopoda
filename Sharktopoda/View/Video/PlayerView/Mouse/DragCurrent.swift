@@ -20,14 +20,37 @@ extension NSPlayerView {
       case .none:
         return
     }
+    
   }
   
-  func endDragCurrent() {
+  func endDragCurrent(at playerPoint: CGPoint) {
     guard let localization = currentLocalization else { return }
+    guard let anchor = dragAnchor else { return }
     
-    print("Send update to \(localization)")
+    let totalDelta = anchor.delta(to: playerPoint).abs()
+    guard 1 < totalDelta.x, 1 < totalDelta.y else { return }
     
-    currentLocation = nil
+    var layerFrame = localization.layer.frame
+    if !videoRect.contains(layerFrame) {
+      // Clip layer
+      layerFrame = videoRect.intersection(layerFrame)
+      CALayer.noAnimation {
+        localization.layer.shapeFrame(layerFrame)
+      }
+    }
+
+    let scale = fullSize.width / videoRect.width
+      
+    let regionX = (layerFrame.minX - videoRect.minX) * scale
+    let regionY = fullSize.height - (layerFrame.maxY - videoRect.minY) * scale
+    let regionSize = layerFrame.size.scale(by: scale)
+
+    localization.region = CGRect(origin: CGPoint(x: regionX, y: regionY),
+                                 size: regionSize)
+
+    print("CxInc UDP send w/ \(localization.region) ")
+    
+    currentLocalization = nil
     currentLocation = nil
   }
 
@@ -100,36 +123,36 @@ extension NSPlayerView {
     var unitDeltas: UnitDeltas
     switch location {
       case .middle:
-        /// Move
+        /// Move dx, -dy
         unitDeltas = (1, -1, 0, 0)
       case .top:
-        /// Resize
+        /// Resize -dy
         unitDeltas = (0, 0, 0, -1)
       case .topRight:
-        /// Resize
+        /// Resize dx, -dy
         unitDeltas = (0, 0, 1, -1)
       case .right:
-        /// Resize
+        /// Resize dx
         unitDeltas = (0, 0, 1, 0)
       case .bottomRight:
-        /// Move and resize
+        /// Move -dx; resize dx, dy
         unitDeltas = (0, -1, 1, 1)
       case .bottom:
-        /// Move and resize
+        /// Move -dx; resize dy
         unitDeltas = (0, -1, 0, 1)
       case .bottomLeft:
-        /// Move and resize
+        /// Move dx, -dy; resize -dx, dy
         unitDeltas = (1, -1, -1, 1)
       case .left:
-        /// Move and resize
+        /// Move dx; resize -dx
         unitDeltas = (1, 0, -1, 0)
       case .topLeft:
-        /// Move and resize
+        /// Move dx; resize -dx, -dy
         unitDeltas = (1, 0, -1, -1)
       case .outside:
         return
     }
-    
+
     localization.reframe(by: deltaRect(delta, unitDeltas: unitDeltas))
     currentFrame = localization.layer.frame
   }
@@ -243,7 +266,7 @@ extension NSPlayerView {
         }
     }
     localization.reframe(to: CGRect(origin: origin, size: size))
-    self.currentFrame = localization.layer.frame
+    currentFrame = localization.layer.frame
   }
   
   /// CxNote x, y, w, h should all be -1, 0, or 1
@@ -275,5 +298,4 @@ extension NSPlayerView {
     let deltaDiagonal = diagonal.move(by: delta)
     return (from, dragAnchor!.quadrant(of: deltaDiagonal), deltaDiagonal)
   }
-
 }

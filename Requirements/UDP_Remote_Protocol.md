@@ -2,9 +2,7 @@
 
 ## <a name="overview">Overview
 
-### Incoming commands
-
-##### <a name="control_commands"></a> Control Commands
+### <a name="control_commands"></a> Control Commands
 
 `Sharktopoda 2` will support a remote protocol that will allow other applications to send commands to it via UDP. The protocol will support the following control commands:
 
@@ -75,17 +73,16 @@ Invalid JSON message structure will be reported as:
 NOTE: Sharktopoda does not determine or report why the message structure was invalid. It is expected the developer of the control messaging app will consult these requirements to determine the actual cause.
 
 
-### <a name="outgoing_commands"></a>Outgoing commands
+### <a name="client_commands"></a>Client Commands
 
 Sharktopoda can also send certain commands to the Remote App. These commands are explicitly sent to the **host/port** established by a preceding [connect](#---connect) control command. The amount of time to wait for a response (i.e. timeout) will be set in the preferences UI. These commands are:
 
-- [Frame capture done](#---frame-capture)
-- [Add localizations](#---add-localizations)
-- [Remove localizations](#---localizatons-deleted)
-- [Update localizations](#---localizationss-modified)
-- [Clear localizations](#---clear-all-localizations)
-- [Select localizations](#---select-localizations)
-- [Ping](#---ping)
+- [Add localizations](#client_add_localizations)
+- [Remove localizations](#client_remove_localizatons)
+- [Update localizations](#client_update_localizations)
+- [Clear localizations](#client_clear_localizations)
+- [Select localizations](#client_select_localizations)
+- [Ping](#client_ping)
 
 ```mermaid
 sequenceDiagram
@@ -726,9 +723,9 @@ Localizations can be added, selected, deleted, or modified from either a remote 
 
 Incoming messages will be no larger than 4096 bytes. In practice, the remote application will not send more than 10 localizations to Sharktopoda in a single Add or Update message.
 
-[Back](#localization_commands)
+[Back](#client_commands)
 
-### <a name="add_localizations"></a> Add Localizations
+### <a name="client_add_localizations"></a> Add Localizations
 
 The initiating app (both sharktopoda and the remote app can create localizations) will send a notification of a new localizations to the other app.
 
@@ -771,9 +768,9 @@ or a failure if the video with uuid does not exist:
 }
 ```
 
-[Back](#localization_commands)
+[Back](#client_commands)
 
-### <a name="remove_localizations"></a> Remove Localizatons
+### <a name="client_remove_localizations"></a> Remove Localizatons
 
 The initiating app will send a notification of localizations to be deleted.
 
@@ -807,9 +804,9 @@ or a failure if the video with uuid does not exist:
 }
 ```
 
-[Back](#localization_commands)
+[Back](#client_commands)
 
-### <a name="modify_localizations"></a> Update Localizationss
+### <a name="client_update_localizations"></a> Update Localizationss
 
 Update existing localizations in Sharktopoda. If a matching localization's UUID does not already exist in Sharktopoda, ignore that localization. (i.e. do not add, do not update)
 
@@ -852,9 +849,9 @@ or a failure if the video with uuid does not exist:
 }
 ```
 
-[Back](#localization_commands)
+[Back](#client_commands)
 
-### <a name="clear_localizations"></a> Clear Localizations
+### <a name="client_clear_localizations"></a> Clear Localizations
 
 This will only be sent from the remote app to Sharktopoda (not vice versa). Sharktopoda should remove all cached information about the localizations for a given video.
 
@@ -884,9 +881,9 @@ or a failure if the video with uuid does not exist:
 }
 ```
 
-[Back](#localization_commands)
+[Back](#client_commands)
 
-### <a name="select_localizations"></a> Select Localizations
+### <a name="client_select_localizations"></a> Select Localizations
 
 This indicates which localizations are _selected_. Selected localizations should be drawn in the selected color specified in the UI preferences.  If only a single localization is selected, that localization should become editable and be able to be moved and resized. When a select command is received, all previously selected annotations should no longer be selected and should be drawn using their original or default color. Any localization UUIDs that do not exist in Sharktopoda should be ignored.
 

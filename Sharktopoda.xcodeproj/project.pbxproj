@@ -57,6 +57,7 @@
 		E2837B4829104C6B00FC4CC2 /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2837B4729104C6B00FC4CC2 /* VideoPlayerView.swift */; };
 		E28C681F290C6D5D00987828 /* CGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28C681E290C6D5D00987828 /* CGRect.swift */; };
 		E28C6821290C714D00987828 /* CAShapeLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28C6820290C714D00987828 /* CAShapeLayer.swift */; };
+		E28CEEFE291D8919009E73B3 /* ClientSelectLocalizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28CEEFD291D8919009E73B3 /* ClientSelectLocalizations.swift */; };
 		E295627528D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295627428D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift */; };
 		E295627728D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295627628D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift */; };
 		E295627928D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295627828D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift */; };
@@ -188,6 +189,7 @@
 		E2837B4729104C6B00FC4CC2 /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
 		E28C681E290C6D5D00987828 /* CGRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRect.swift; sourceTree = "<group>"; };
 		E28C6820290C714D00987828 /* CAShapeLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAShapeLayer.swift; sourceTree = "<group>"; };
+		E28CEEFD291D8919009E73B3 /* ClientSelectLocalizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientSelectLocalizations.swift; sourceTree = "<group>"; };
 		E295627428D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationDisplayPreferencesView.swift; sourceTree = "<group>"; };
 		E295627628D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationSelectionPreferencesView.swift; sourceTree = "<group>"; };
 		E295627828D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationCaptionPreferencesView.swift; sourceTree = "<group>"; };
@@ -573,6 +575,7 @@
 				E2D47E9928D8C17D0068B192 /* ClientCommand.swift */,
 				E21DEEE328DA533100A2AC01 /* ClientMessage.swift */,
 				E21DEEDD28DA13CB00A2AC01 /* ClientPing.swift */,
+				E28CEEFD291D8919009E73B3 /* ClientSelectLocalizations.swift */,
 			);
 			path = Messages;
 			sourceTree = "<group>";
@@ -863,6 +866,7 @@
 				E2FAB21228E2157C006D2676 /* MainShortcutsView.swift in Sources */,
 				E237C09F28ECF9C2002868D1 /* OpenFileView.swift in Sources */,
 				E2505D5828EF7D950027F280 /* ControlLocalization.swift in Sources */,
+				E28CEEFE291D8919009E73B3 /* ClientSelectLocalizations.swift in Sources */,
 				E237C0A428EDFAA3002868D1 /* OpenUrlView.swift in Sources */,
 				E2989AB928D3B87E009D2D65 /* AnnotationPreferencesView.swift in Sources */,
 				E2C22EC828D2666A003CD976 /* Preferences.swift in Sources */,

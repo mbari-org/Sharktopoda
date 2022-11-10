@@ -55,9 +55,14 @@ extension NSPlayerView {
             let _ = localizations.add(localization)
             let _ = localizations.select(id: localization.id)
           case .select:
-            localizations.select(using: layer.frame, at: currentTime)
             /// Remove the selection layer as it's purpose is complete
-            layer.removeFromSuperlayer()
+            DispatchQueue.main.async {
+              layer.removeFromSuperlayer()
+            }
+            localizations.select(using: layer.frame, at: currentTime)
+
+            let message = ClientSelectLocalizations(videoId: videoAsset.id, ids: localizations.selectedIds())
+            UDP.client.process(message)
         }
       }
     }

@@ -30,23 +30,7 @@ extension NSPlayerView {
     let totalDelta = anchor.delta(to: endPoint).abs()
     guard 1 < totalDelta.x, 1 < totalDelta.y else { return }
     
-    var layerFrame = localization.layer.frame
-    if !videoRect.contains(layerFrame) {
-      // Clip layer
-      layerFrame = videoRect.intersection(layerFrame)
-      CALayer.noAnimation {
-        localization.layer.shapeFrame(layerFrame)
-      }
-    }
-
-    let scale = fullSize.width / videoRect.width
-      
-    let regionX = (layerFrame.minX - videoRect.minX) * scale
-    let regionY = fullSize.height - (layerFrame.maxY - videoRect.minY) * scale
-    let regionSize = layerFrame.size.scale(by: scale)
-
-    localization.region = CGRect(origin: CGPoint(x: regionX, y: regionY),
-                                 size: regionSize)
+    localization.region = region(from: localization.layer)
 
     print("CxInc UDP send w/ \(localization.region) ")
     

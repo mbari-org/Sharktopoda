@@ -43,16 +43,19 @@ extension NSPlayerView {
   func endDragPurpose(at endPoint: CGPoint) {
     if let purpose = dragPurpose,
        let layer = dragLayer,
-       let anchor = dragAnchor {
+       let anchor = dragAnchor,
+       let localizations = localizations {
 
       // CxTBD Parameterize min drag
       let totalDelta = anchor.delta(to: endPoint).abs()
       if 10 < totalDelta.x, 10 < totalDelta.y {
         switch purpose {
           case .create:
-            localizations?.create(using: layer, at: currentTime, with: fullSize)
+            let localization = Localization(at: currentTime, with: region(from: layer), layer: layer, fullSize: fullSize)
+            let _ = localizations.add(localization)
+            let _ = localizations.select(id: localization.id)
           case .select:
-            localizations?.select(using: layer.frame, at: currentTime)
+            localizations.select(using: layer.frame, at: currentTime)
             /// Remove the selection layer as it's purpose is complete
             layer.removeFromSuperlayer()
         }

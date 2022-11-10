@@ -61,12 +61,6 @@ extension Localizations {
     selected.removeAll()
   }
   
-  func create(using layer: CAShapeLayer, at elapsedTime: Int, with fullSize: CGSize) {
-    let localization = Localization(using: layer, at: elapsedTime, with: fullSize)
-    let _ = add(localization)
-    let _ = select(id: localization.id)
-  }
-  
   func remove(id: String) -> Bool {
     guard let localization = storage[id] else { return false }
 

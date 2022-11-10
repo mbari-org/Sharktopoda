@@ -52,6 +52,26 @@ extension NSPlayerView {
     return layer.location(of: layerPoint)
   }
   
+  func region(from layer: CAShapeLayer) -> CGRect {
+    var layerFrame = layer.frame
+    if !videoRect.contains(layerFrame) {
+      // Clip layer
+      layerFrame = videoRect.intersection(layerFrame)
+      CALayer.noAnimation {
+        layer.shapeFrame(layerFrame)
+      }
+    }
+
+    let scale = fullSize.width / videoRect.width
+    
+    let regionX = (layerFrame.minX - videoRect.minX) * scale
+    let regionY = fullSize.height - (layerFrame.maxY - videoRect.minY) * scale
+    let regionSize = layerFrame.size.scale(by: scale)
+    
+    return CGRect(origin: CGPoint(x: regionX, y: regionY),
+                   size: regionSize)
+  }
+  
   /// Find the Localization that both contains the point and has the closest edge
   private func mousedLocalization(at point: NSPoint) -> Localization? {
     guard paused else { return nil }
@@ -70,4 +90,5 @@ extension NSPlayerView {
       return aDistance < bDistance
     }!
   }
+  
 }

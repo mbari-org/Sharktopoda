@@ -38,27 +38,15 @@ class Localization {
     layer = CAShapeLayer(frame: layerFrame, cgColor: cgColor!)
   }
   
-  init(using layer: CAShapeLayer, at elapsedTime: Int, with fullSize: CGSize) {
-    let playerLayer = layer.superlayer!
-
-    let playerFrame = playerLayer.frame
-    let layerFrame = layer.frame
-    let scale = playerFrame.size.width / fullSize.width
-    
-    let regionOrigin = CGPoint(x: layerFrame.minX,
-                               y: fullSize.height - layerFrame.minY - layerFrame.height)
-    let regionSize = layerFrame.size.scale(by: 1 / scale)
-    
-//    let scaledFrame = frame.scale(by: scale)
-
+  init(at elapsedTime: Int, with region: CGRect, layer: CAShapeLayer, fullSize: CGSize) {
     id = UUID().uuidString
     concept = UserDefaults.standard.string(forKey: PrefKeys.captionDefault)!
     duration = 0
-    self.elapsedTime = elapsedTime
     hexColor = UserDefaults.standard.hexColor(forKey: PrefKeys.displayBorderColor)
-    region = CGRect(origin: regionOrigin, size: regionSize)
-    self.fullSize = fullSize
 
+    self.elapsedTime = elapsedTime
+    self.region = region
+    self.fullSize = fullSize
     self.layer = layer
   }
 

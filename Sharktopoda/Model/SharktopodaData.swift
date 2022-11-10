@@ -10,7 +10,7 @@ import AppKit
 
 final class SharktopodaData: ObservableObject {
   @Published var udpServer: UDPServer = UDP.server
-  @Published var udpClient: UDPClient = UDP.client
+  @Published var udpClient: UDPClient?
   
   @Published var udpServerError: String? = nil
 

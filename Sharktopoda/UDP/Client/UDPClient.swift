@@ -36,28 +36,33 @@ class UDPClient: ObservableObject {
     return TimeInterval(prefMillis) / 1000.0
   }
   
-  static func connect(using connectCommand: ControlConnect, completion: @escaping UDPClientConnectCompletion) {
+  static func connect(using controlConnect: ControlConnect, completion: @escaping UDPClientConnectCompletion) {
+    let host = controlConnect.host
+    let port = controlConnect.port
+    let clientData = ClientData(host: host, port: port)
+
+    if let client = UDP.sharktopodaData.udpClient {
+      if clientData.endpoint == client.clientData.endpoint {
+        return
+      } else if client.clientData.active {
+        client.stop()
+      }
+    }
     
-    let udpClient = UDPClient(using: connectCommand)
-    udpClient.connectCompletion = completion
-    udpClient.connection?.start(queue: UDPClient.queue)
+    /// CxSmell This has an odor and needs to be tidied up
+    let _ = UDPClient(using: clientData, completion: completion)
   }
   
-  init() {
-    clientData = ClientData(host: "", port: 0)
+  private init(using clientData: ClientData, completion: @escaping UDPClientConnectCompletion) {
+
+    self.clientData = clientData
     timeout = UDPClient.clientTimeout()
-  }
-  
-  private init(using connectCommand: ControlConnect) {
-    let host = connectCommand.host
-    let port = connectCommand.port
-    clientData = ClientData(host: host, port: port)
-    
-    timeout = UDPClient.clientTimeout()
-    
-    connection = UDP.connection(host: host, port: port)
+    connectCompletion = completion
+
+    connection = UDP.connection(host: clientData.host, port: clientData.port)
     connection?.stateUpdateHandler = stateUpdate(to:)
-    
+    connection?.start(queue: UDPClient.queue)
+
     log("connecting to \(clientData.endpoint)")
   }
   

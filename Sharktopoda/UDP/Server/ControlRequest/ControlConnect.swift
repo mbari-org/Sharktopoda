@@ -18,27 +18,12 @@ struct ControlConnect: ControlRequest {
   }
   
   func process() -> ControlResponse {
-    if endpoint != UDP.client.clientData.endpoint {
-      UDPClient.connect(using: self) { udpClient in
-        // If new client is active, use it
-        if udpClient.clientData.active {
-          UDP.client.stop()
-          DispatchQueue.main.async {
-            UDP.sharktopodaData.udpClient = udpClient
-          }
-        } else {
-          // If current client active, keep it
-          if UDP.client.clientData.active {
-            return
-          } else {
-            // Replace current inactive client active with new inactive host/port client
-            DispatchQueue.main.async {
-              UDP.sharktopodaData.udpClient = udpClient
-            }
-          }
-        }
+    UDPClient.connect(using: self) { client in
+      DispatchQueue.main.async {
+        UDP.sharktopodaData.udpClient = client
       }
     }
+
     return ControlResponseOk(response: command)
   }
 }

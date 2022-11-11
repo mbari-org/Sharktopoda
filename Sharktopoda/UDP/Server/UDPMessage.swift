@@ -8,24 +8,6 @@
 import Foundation
 import Network
 
-struct UDPMessageCoder {
-  static var encoder: JSONEncoder = {
-    let encoder = JSONEncoder()
-    let outputFormatting: JSONEncoder.OutputFormatting = [.sortedKeys, .withoutEscapingSlashes]
-    encoder.outputFormatting = outputFormatting
-    return encoder
-  }()
-  static var decoder = JSONDecoder()
-  
-  static func encode<T>(_ value: T) throws -> Data where T : Encodable {
-    try UDPMessageCoder.encoder.encode(value)
-  }
-
-  static func decode<T>(_ type: T.Type, from data: Data) throws -> T where T : Decodable {
-    try UDPMessageCoder.decoder.decode(type, from: data)
-  }
-}
-
 class UDPMessage {
   private static let messageQueue = DispatchQueue(label: "Sharktopoda UDP Message Queue")
   private static let captureQueue = DispatchQueue(label: "Sharktopoda UDP Capture Queue")

@@ -413,4 +413,13 @@ extension Localizations {
       client.process(message)
     }
   }
+  
+  func sendUpdateMessage(ids: [String]) {
+    if let client = UDP.sharktopodaData.udpClient {
+      let message = ClientUpdateLocalizations(videoId: videoAsset.id,
+                                              localizations: ids.map { storage[$0] })
+      client.process(message)
+    }
+  }
+
 }

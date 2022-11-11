@@ -58,6 +58,8 @@
 		E28C681F290C6D5D00987828 /* CGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28C681E290C6D5D00987828 /* CGRect.swift */; };
 		E28C6821290C714D00987828 /* CAShapeLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28C6820290C714D00987828 /* CAShapeLayer.swift */; };
 		E28CEEFE291D8919009E73B3 /* ClientSelectLocalizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28CEEFD291D8919009E73B3 /* ClientSelectLocalizations.swift */; };
+		E28CEF00291DF282009E73B3 /* ClientUpdateLocalizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28CEEFF291DF282009E73B3 /* ClientUpdateLocalizations.swift */; };
+		E28CEF02291DF42B009E73B3 /* UDPMessageCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28CEF01291DF42B009E73B3 /* UDPMessageCoder.swift */; };
 		E295627528D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295627428D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift */; };
 		E295627728D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295627628D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift */; };
 		E295627928D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295627828D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift */; };
@@ -190,6 +192,8 @@
 		E28C681E290C6D5D00987828 /* CGRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRect.swift; sourceTree = "<group>"; };
 		E28C6820290C714D00987828 /* CAShapeLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAShapeLayer.swift; sourceTree = "<group>"; };
 		E28CEEFD291D8919009E73B3 /* ClientSelectLocalizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientSelectLocalizations.swift; sourceTree = "<group>"; };
+		E28CEEFF291DF282009E73B3 /* ClientUpdateLocalizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientUpdateLocalizations.swift; sourceTree = "<group>"; };
+		E28CEF01291DF42B009E73B3 /* UDPMessageCoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDPMessageCoder.swift; sourceTree = "<group>"; };
 		E295627428D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationDisplayPreferencesView.swift; sourceTree = "<group>"; };
 		E295627628D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationSelectionPreferencesView.swift; sourceTree = "<group>"; };
 		E295627828D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationCaptionPreferencesView.swift; sourceTree = "<group>"; };
@@ -450,6 +454,7 @@
 				E2D47E9528D8C01F0068B192 /* ControlCommand.swift */,
 				E2675E2D28DB707500F5F114 /* ControlRequest */,
 				E2D47EA328D8ECDB0068B192 /* ControlResponse */,
+				E28CEF01291DF42B009E73B3 /* UDPMessageCoder.swift */,
 			);
 			path = Server;
 			sourceTree = "<group>";
@@ -576,6 +581,7 @@
 				E21DEEE328DA533100A2AC01 /* ClientMessage.swift */,
 				E21DEEDD28DA13CB00A2AC01 /* ClientPing.swift */,
 				E28CEEFD291D8919009E73B3 /* ClientSelectLocalizations.swift */,
+				E28CEEFF291DF282009E73B3 /* ClientUpdateLocalizations.swift */,
 			);
 			path = Messages;
 			sourceTree = "<group>";
@@ -817,10 +823,12 @@
 				E2989AC328D4F6EE009D2D65 /* AnnotationCreationPreferencesView.swift in Sources */,
 				E2675E2428DABEAC00F5F114 /* ControlShow.swift in Sources */,
 				E28C681F290C6D5D00987828 /* CGRect.swift in Sources */,
+				E28CEF00291DF282009E73B3 /* ClientUpdateLocalizations.swift in Sources */,
 				E2675E2A28DB52C600F5F114 /* ControlUnknown.swift in Sources */,
 				E2BC08E728EB7703007F4B5D /* CMTime.swift in Sources */,
 				E2837B4829104C6B00FC4CC2 /* VideoPlayerView.swift in Sources */,
 				E2C22ED528D36832003CD976 /* Localization.swift in Sources */,
+				E28CEF02291DF42B009E73B3 /* UDPMessageCoder.swift in Sources */,
 				E21DEEDF28DA13CB00A2AC01 /* ClientPing.swift in Sources */,
 				E2675E2F28DB729900F5F114 /* ControlInfo.swift in Sources */,
 				E21DEEE428DA533100A2AC01 /* ClientMessage.swift in Sources */,

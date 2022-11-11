@@ -806,7 +806,7 @@ or a failure if the video with uuid does not exist:
 
 [Back](#client_commands)
 
-### <a name="client_update_localizations"></a> Update Localizationss
+### <a name="client_update_localizations"></a> Update Localizations
 
 Update existing localizations in Sharktopoda. If a matching localization's UUID does not already exist in Sharktopoda, ignore that localization. (i.e. do not add, do not update)
 

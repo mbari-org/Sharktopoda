@@ -181,7 +181,7 @@ extension NSPlayerView {
   func clearLocalizations() {
     guard let localizations = localizations else { return }
     
-    clearAllLocalizations()
+    clearLocalizationLayers()
     localizations.clear()
   }
   
@@ -284,7 +284,7 @@ extension NSPlayerView {
     }
   }
 
-  func clearAllLocalizations() {
+  func clearLocalizationLayers() {
     let layers = localizationLayers()
     DispatchQueue.main.async {
       layers.forEach { $0.removeFromSuperlayer() }

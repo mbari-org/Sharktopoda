@@ -32,7 +32,7 @@ extension NSPlayerView {
     guard !paused else { return }
     
     player?.pause()
-    clearAllLocalizations()
+    clearLocalizationLayers()
     displayPaused()
   }
   
@@ -44,7 +44,7 @@ extension NSPlayerView {
     get { player?.rate ?? Float(0) }
     set {
       if paused {
-        clearAllLocalizations()
+        clearLocalizationLayers()
       }
       if newValue == 0.0 {
         pause()
@@ -60,7 +60,7 @@ extension NSPlayerView {
   func seek(elapsed: Int) {
     guard paused else { return }
     
-    clearAllLocalizations()
+    clearLocalizationLayers()
     
     /// Within a half frame span of the target seek we'll see all the frames for the specified seek time
     let quarterFrame = CMTimeMultiplyByFloat64(videoAsset.frameDuration, multiplier: 0.25)
@@ -75,7 +75,7 @@ extension NSPlayerView {
   func step(_ steps: Int) {
     guard paused else { return }
     
-    clearAllLocalizations()
+    clearLocalizationLayers()
     
     guard showLocalizations else { return }
     

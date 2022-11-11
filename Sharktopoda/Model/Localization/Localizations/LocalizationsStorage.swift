@@ -20,13 +20,13 @@ extension Localizations {
   }
   
   func clear() {
-    storage.removeAll()
+    selected.removeAll()
     
     pauseFrames.removeAll()
     forwardFrames.removeAll()
     reverseFrames.removeAll()
-    
-    selected.removeAll()
+
+    storage.removeAll()
   }
   
   func remove(id: String) -> Bool {

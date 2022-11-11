@@ -60,6 +60,12 @@
 		E28CEEFE291D8919009E73B3 /* ClientSelectLocalizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28CEEFD291D8919009E73B3 /* ClientSelectLocalizations.swift */; };
 		E28CEF00291DF282009E73B3 /* ClientUpdateLocalizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28CEEFF291DF282009E73B3 /* ClientUpdateLocalizations.swift */; };
 		E28CEF02291DF42B009E73B3 /* UDPMessageCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28CEF01291DF42B009E73B3 /* UDPMessageCoder.swift */; };
+		E28CEF04291E9929009E73B3 /* ClientLocalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28CEF03291E9929009E73B3 /* ClientLocalization.swift */; };
+		E28CEF07291E9BE5009E73B3 /* LocalizationsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28CEF06291E9BE5009E73B3 /* LocalizationsStorage.swift */; };
+		E28CEF09291E9C82009E73B3 /* LocalizationsRetrieve.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28CEF08291E9C82009E73B3 /* LocalizationsRetrieve.swift */; };
+		E28CEF0B291E9CCF009E73B3 /* LocalizationsFrames.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28CEF0A291E9CCF009E73B3 /* LocalizationsFrames.swift */; };
+		E28CEF0D291E9D37009E73B3 /* LocalizationsMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28CEF0C291E9D37009E73B3 /* LocalizationsMessages.swift */; };
+		E28CEF0F291E9D79009E73B3 /* LocalizationsSelect.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28CEF0E291E9D79009E73B3 /* LocalizationsSelect.swift */; };
 		E295627528D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295627428D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift */; };
 		E295627728D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295627628D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift */; };
 		E295627928D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295627828D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift */; };
@@ -194,6 +200,12 @@
 		E28CEEFD291D8919009E73B3 /* ClientSelectLocalizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientSelectLocalizations.swift; sourceTree = "<group>"; };
 		E28CEEFF291DF282009E73B3 /* ClientUpdateLocalizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientUpdateLocalizations.swift; sourceTree = "<group>"; };
 		E28CEF01291DF42B009E73B3 /* UDPMessageCoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDPMessageCoder.swift; sourceTree = "<group>"; };
+		E28CEF03291E9929009E73B3 /* ClientLocalization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientLocalization.swift; sourceTree = "<group>"; };
+		E28CEF06291E9BE5009E73B3 /* LocalizationsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationsStorage.swift; sourceTree = "<group>"; };
+		E28CEF08291E9C82009E73B3 /* LocalizationsRetrieve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationsRetrieve.swift; sourceTree = "<group>"; };
+		E28CEF0A291E9CCF009E73B3 /* LocalizationsFrames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationsFrames.swift; sourceTree = "<group>"; };
+		E28CEF0C291E9D37009E73B3 /* LocalizationsMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationsMessages.swift; sourceTree = "<group>"; };
+		E28CEF0E291E9D79009E73B3 /* LocalizationsSelect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationsSelect.swift; sourceTree = "<group>"; };
 		E295627428D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationDisplayPreferencesView.swift; sourceTree = "<group>"; };
 		E295627628D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationSelectionPreferencesView.swift; sourceTree = "<group>"; };
 		E295627828D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationCaptionPreferencesView.swift; sourceTree = "<group>"; };
@@ -381,6 +393,18 @@
 				E2505D5428EF7C670027F280 /* Localization */,
 			);
 			path = ControlRequest;
+			sourceTree = "<group>";
+		};
+		E28CEF05291E9BCC009E73B3 /* Localizations */ = {
+			isa = PBXGroup;
+			children = (
+				E28CEF06291E9BE5009E73B3 /* LocalizationsStorage.swift */,
+				E28CEF08291E9C82009E73B3 /* LocalizationsRetrieve.swift */,
+				E28CEF0A291E9CCF009E73B3 /* LocalizationsFrames.swift */,
+				E28CEF0C291E9D37009E73B3 /* LocalizationsMessages.swift */,
+				E28CEF0E291E9D79009E73B3 /* LocalizationsSelect.swift */,
+			);
+			path = Localizations;
 			sourceTree = "<group>";
 		};
 		E295627328D4FAC800E88ED1 /* Annotations */ = {
@@ -582,6 +606,7 @@
 				E21DEEDD28DA13CB00A2AC01 /* ClientPing.swift */,
 				E28CEEFD291D8919009E73B3 /* ClientSelectLocalizations.swift */,
 				E28CEEFF291DF282009E73B3 /* ClientUpdateLocalizations.swift */,
+				E28CEF03291E9929009E73B3 /* ClientLocalization.swift */,
 			);
 			path = Messages;
 			sourceTree = "<group>";
@@ -604,6 +629,7 @@
 		E2DAF8BC28F8EE460010ECB8 /* Localization */ = {
 			isa = PBXGroup;
 			children = (
+				E28CEF05291E9BCC009E73B3 /* Localizations */,
 				E2C22ED428D36832003CD976 /* Localization.swift */,
 				E2505D5928EF91960027F280 /* Localizations.swift */,
 				E2D1C84D291302EF00961A0A /* LocalizationFrame.swift */,
@@ -785,12 +811,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E28CEF0F291E9D79009E73B3 /* LocalizationsSelect.swift in Sources */,
 				E237C0A628EE108B002868D1 /* FloatingPanel.swift in Sources */,
 				E2BC08E528EB76D6007F4B5D /* UserDefaults.swift in Sources */,
 				E2675E2828DAC08D00F5F114 /* ControlPause.swift in Sources */,
 				E22F72FD28DA5D9100253A48 /* ControlResponse.swift in Sources */,
 				E237C0AA28EE1AFC002868D1 /* View.swift in Sources */,
 				E2505D5328EF38B60027F280 /* OpenAlert.swift in Sources */,
+				E28CEF0B291E9CCF009E73B3 /* LocalizationsFrames.swift in Sources */,
 				E2C22EDA28D386AE003CD976 /* MainView.swift in Sources */,
 				E2505D5A28EF91960027F280 /* Localizations.swift in Sources */,
 				E2BC08E928EB7795007F4B5D /* NSImage.swift in Sources */,
@@ -822,6 +850,7 @@
 				E229F4C228D9150A001F220E /* ControlConnect.swift in Sources */,
 				E2989AC328D4F6EE009D2D65 /* AnnotationCreationPreferencesView.swift in Sources */,
 				E2675E2428DABEAC00F5F114 /* ControlShow.swift in Sources */,
+				E28CEF04291E9929009E73B3 /* ClientLocalization.swift in Sources */,
 				E28C681F290C6D5D00987828 /* CGRect.swift in Sources */,
 				E28CEF00291DF282009E73B3 /* ClientUpdateLocalizations.swift in Sources */,
 				E2675E2A28DB52C600F5F114 /* ControlUnknown.swift in Sources */,
@@ -854,6 +883,7 @@
 				E2FFE1FC28E37B8000425F04 /* ControlResponseFailed.swift in Sources */,
 				E2FAB21B28E24A7C006D2676 /* VideoWindow.swift in Sources */,
 				E2BC08EB28EB781C007F4B5D /* CGImage.swift in Sources */,
+				E28CEF07291E9BE5009E73B3 /* LocalizationsStorage.swift in Sources */,
 				E2FFE21228E7A8CA00425F04 /* ControlResponseElapsed.swift in Sources */,
 				E2C22E8528CFDC26003CD976 /* SharktopodaApp.swift in Sources */,
 				E2C22EC528D144B0003CD976 /* SharktopodaData.swift in Sources */,
@@ -864,6 +894,7 @@
 				E2EE0E3A28DB9AAD00138A86 /* ControlState.swift in Sources */,
 				E2989AC128D4BAD0009D2D65 /* SizeColorRow.swift in Sources */,
 				E2D1C85029131E6E00961A0A /* LocalizationMouse.swift in Sources */,
+				E28CEF09291E9C82009E73B3 /* LocalizationsRetrieve.swift in Sources */,
 				E2D47E9A28D8C17D0068B192 /* ClientCommand.swift in Sources */,
 				E2EE0E3828DB9A6600138A86 /* ControlElapsed.swift in Sources */,
 				E295627528D4FAF900E88ED1 /* AnnotationDisplayPreferencesView.swift in Sources */,
@@ -879,6 +910,7 @@
 				E2989AB928D3B87E009D2D65 /* AnnotationPreferencesView.swift in Sources */,
 				E2C22EC828D2666A003CD976 /* Preferences.swift in Sources */,
 				E2D1C85429132B1800961A0A /* CALayer.swift in Sources */,
+				E28CEF0D291E9D37009E73B3 /* LocalizationsMessages.swift in Sources */,
 				E295627728D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift in Sources */,
 				E2FAB21428E215F6006D2676 /* MainUDPStatusView.swift in Sources */,
 			);

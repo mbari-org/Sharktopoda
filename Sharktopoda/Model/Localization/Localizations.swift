@@ -17,11 +17,11 @@ class Localizations {
   
   private var selected = Set<String>()
   
-  let playerItem: AVPlayerItem
+  let videoAsset: VideoAsset
   let frameDuration: Int
   
-  init(playerItem: AVPlayerItem, frameDuration: Int) {
-    self.playerItem = playerItem
+  init(videoAsset: VideoAsset, frameDuration: Int) {
+    self.videoAsset = videoAsset
     self.frameDuration = frameDuration
   }
 }
@@ -332,11 +332,14 @@ extension Localizations {
   func clearSelected() {
     selected.forEach { storage[$0]?.select(false) }
     selected.removeAll()
+    sendSelectedMessage()
   }
   
   func deleteSelected() -> Bool {
     guard !selected.isEmpty else { return false }
     selected.forEach { let _ = remove(id: $0) }
+    sendSelectedMessage()
+    /// CxInc send delete message
     return true
   }
   
@@ -349,6 +352,8 @@ extension Localizations {
 
     selected.insert(id)
     localization.select(true)
+
+    sendSelectedMessage()
     
     return true
   }
@@ -356,12 +361,16 @@ extension Localizations {
   func select(ids: [String]) -> [Bool] {
     clearSelected()
 
-    return ids.map { id in
+    let results = ids.map { id in
       guard let localization = storage[id] else { return false }
       selected.insert(id)
       localization.select(true)
       return true
     }
+    
+    sendSelectedMessage()
+    
+    return results
   }
   
   func select(using rect: CGRect, at elapsedTime: Int) {
@@ -383,6 +392,8 @@ extension Localizations {
     
     selected.remove(localization.id)
     localization.select(false)
+    
+    sendSelectedMessage()
   }
 }
 
@@ -391,6 +402,15 @@ extension Localizations {
   func resize(for videoRect: CGRect) {
     for localization in storage.values {
       localization.resize(for: videoRect)
+    }
+  }
+}
+// MARK: UDP Messaging
+extension Localizations {
+  func sendSelectedMessage() {
+    if let client = UDP.sharktopodaData.udpClient {
+      let message = ClientSelectLocalizations(videoId: videoAsset.id, ids: selectedIds())
+      client.process(message)
     }
   }
 }

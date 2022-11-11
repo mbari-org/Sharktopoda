@@ -72,7 +72,7 @@ final class NSPlayerView: NSView {
     
     windowLayer = rootLayer.superlayer?.superlayer?.superlayer
 
-    localizations = Localizations(playerItem: currentItem!,
+    localizations = Localizations(videoAsset: videoAsset,
                                   frameDuration: videoAsset.frameDuration.asMillis())
 
     queue = DispatchQueue(label: "Sharktopoda Video Queue: \(videoAsset.id)")

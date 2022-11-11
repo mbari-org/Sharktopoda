@@ -60,11 +60,6 @@ extension NSPlayerView {
               layer.removeFromSuperlayer()
             }
             localizations.select(using: layer.frame, at: currentTime)
-
-            if let client = UDP.sharktopodaData.udpClient {
-              let message = ClientSelectLocalizations(videoId: videoAsset.id, ids: localizations.selectedIds())
-              client.process(message)
-            }
         }
       }
     }

@@ -50,10 +50,6 @@ extension NSPlayerView {
     dragPurpose(using: playerPoint)
   }
   
-//  override func mouseExited(with event: NSEvent) {
-//    mouseUp(with: event)
-//  }
-  
   override func mouseUp(with event: NSEvent) {
     let endPoint = locationInPlayer(with: event)
     

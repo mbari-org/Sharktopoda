@@ -28,12 +28,10 @@ extension NSPlayerView {
     guard let anchor = dragAnchor else { return }
     
     let totalDelta = anchor.delta(to: endPoint).abs()
-    guard 1 < totalDelta.x, 1 < totalDelta.y else { return }
+    guard 1 < totalDelta.x && 1 < totalDelta.y else { return }
     
     localization.region = region(from: localization.layer)
 
-    print("CxInc UDP send w/ \(localization.region) ")
-    
     currentLocalization = nil
     currentLocation = nil
   }

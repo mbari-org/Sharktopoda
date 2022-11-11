@@ -33,7 +33,7 @@ extension NSPlayerView {
           let mouseLocalization = mousedLocalization(at: playerPoint) else {
       return false
     }
-
+    
     return localizations.select(id: mouseLocalization.id, clear: false)
   }
   
@@ -90,5 +90,4 @@ extension NSPlayerView {
       return aDistance < bDistance
     }!
   }
-  
 }

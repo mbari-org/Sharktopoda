@@ -73,12 +73,12 @@ extension Localization {
     }
   }
   
-  func delta(by delta: DeltaRect) {
+  private func delta(by delta: DeltaRect) {
     move(by: delta.origin)
     resize(by: delta.size)
   }
 
-  func move(by delta: DeltaPoint) {
+  private func move(by delta: DeltaPoint) {
     guard delta != .zero else { return }
 
     region = region.move(by: delta)
@@ -88,7 +88,7 @@ extension Localization {
     }
   }
   
-  func resize(by delta: DeltaSize) {
+  private func resize(by delta: DeltaSize) {
     guard delta != .zero else { return }
     
     region = region.resize(by: delta)

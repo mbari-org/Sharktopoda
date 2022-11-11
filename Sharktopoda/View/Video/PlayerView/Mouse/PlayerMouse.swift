@@ -17,6 +17,11 @@ extension NSPlayerView {
     dragAnchor = playerPoint
 
     if event.modifierFlags.intersection(.deviceIndependentFlagsMask) == .command {
+      if let localization = currentLocalization {
+        currentLocalization = nil
+        let _ = localizations?.select(id: localization.id)
+      }
+      
       if commandSelect(at: playerPoint) { return }
       
       localizations?.clearSelected()

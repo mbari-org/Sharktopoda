@@ -53,6 +53,7 @@ extension NSPlayerView {
           case .create:
             let localization = Localization(at: currentTime, with: region(from: layer), layer: layer, fullSize: fullSize)
             let _ = localizations.add(localization)
+            localizations.sendLocalizationsMessage(.addLocalizations, ids: [localization.id])
             let _ = localizations.select(id: localization.id)
           case .select:
             /// Remove the selection layer as it's purpose is complete

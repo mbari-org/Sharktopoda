@@ -31,6 +31,9 @@ extension NSPlayerView {
     guard 1 < totalDelta.x && 1 < totalDelta.y else { return }
     
     localization.region = region(from: localization.layer)
+    
+    localizations?.sendLocalizationsMessage(.updateLocalizations,
+                                            ids: [localization.id])
 
     currentLocalization = nil
     currentLocation = nil

@@ -7,15 +7,15 @@
 
 import Foundation
 
-struct ClientUpdateLocalizations: ClientMessage {
+struct ClientCommandLocalizations: ClientMessage {
   var command: ClientCommand
   let uuid: String
-  let localizations: [Localization]
+  let localizations: [ClientLocalization]
   
-  init(videoId: String, localizations: [Localization]) {
-    command = .updateLocalizations
+  init(_ command: ClientCommand, videoId: String, localizations: [Localization]) {
+    self.command = command
     uuid = videoId
-    self.localizations = localizations
+    self.localizations = localizations.map { ClientLocalization(for: $0) }
   }
   
   func data() -> Data {

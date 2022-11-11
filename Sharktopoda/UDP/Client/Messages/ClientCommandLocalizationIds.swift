@@ -1,19 +1,19 @@
 //
-//  ClientSelectLocalizations.swift
-//  Created for Sharktopoda on 11/10/22.
+//  ClientCommandLocalizationIds.swift
+//  Created for Sharktopoda on 11/11/22.
 //
 //  Apache License 2.0 — See project LICENSE file
 //
 
 import Foundation
 
-struct ClientSelectLocalizations: ClientMessage {
+struct ClientCommandLocalizationIds: ClientMessage {
   var command: ClientCommand
   let uuid: String
   let localizations: [String]
   
-  init(videoId: String, ids: [String]) {
-    command = .selectLocalizations
+  init(_ command: ClientCommand, videoId: String, ids: [String]) {
+    self.command = command
     uuid = videoId
     localizations = ids
   }

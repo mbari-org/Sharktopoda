@@ -289,6 +289,7 @@ extension NSPlayerView {
     DispatchQueue.main.async {
       layers.forEach { $0.removeFromSuperlayer() }
     }
+    localizations?.clearSelected()
   }
 }
 

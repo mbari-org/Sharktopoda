@@ -7,8 +7,6 @@
 
 import Foundation
 
-// CxInc add control localization commands
-
 enum ControlCommand: String, Codable {
   case addLocalizations = "add localizations"
   case advance = "frame advance"

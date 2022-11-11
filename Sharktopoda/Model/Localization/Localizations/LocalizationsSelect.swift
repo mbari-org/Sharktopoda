@@ -9,16 +9,22 @@ import Foundation
 
 extension Localizations {
   func clearSelected() {
+    guard !selected.isEmpty else { return }
+    
     selected.forEach { storage[$0]?.select(false) }
     selected.removeAll()
-    sendSelectedMessage()
+    sendIdsMessage(.selectLocalizations, ids: [])
   }
   
   func deleteSelected() -> Bool {
     guard !selected.isEmpty else { return false }
+    
+    sendIdsMessage(.removeLocalizations, ids: selectedIds())
+    
     selected.forEach { let _ = remove(id: $0) }
-    sendSelectedMessage()
-    /// CxInc send delete message
+
+//    sendIdsMessage(.selectLocalizations, ids: [])
+    
     return true
   }
   
@@ -32,7 +38,7 @@ extension Localizations {
     selected.insert(id)
     localization.select(true)
     
-    sendSelectedMessage()
+    sendIdsMessage(.selectLocalizations, ids: selectedIds())
     
     return true
   }
@@ -47,7 +53,7 @@ extension Localizations {
       return true
     }
     
-    sendSelectedMessage()
+    sendIdsMessage(.selectLocalizations, ids: ids)
     
     return results
   }
@@ -72,6 +78,6 @@ extension Localizations {
     selected.remove(localization.id)
     localization.select(false)
     
-    sendSelectedMessage()
+    sendIdsMessage(.selectLocalizations, ids: selectedIds())
   }
 }

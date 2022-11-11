@@ -78,7 +78,7 @@ NOTE: Sharktopoda does not determine or report why the message structure was inv
 Sharktopoda can also send certain commands to the Remote App. These commands are explicitly sent to the **host/port** established by a preceding [connect](#---connect) control command. The amount of time to wait for a response (i.e. timeout) will be set in the preferences UI. These commands are:
 
 - [Add localizations](#client_add_localizations)
-- [Remove localizations](#client_remove_localizatons)
+- [Remove localizations](#client_remove_localizations)
 - [Update localizations](#client_update_localizations)
 - [Clear localizations](#client_clear_localizations)
 - [Select localizations](#client_select_localizations)

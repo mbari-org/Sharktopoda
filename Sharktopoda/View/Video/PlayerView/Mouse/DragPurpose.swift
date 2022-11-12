@@ -51,7 +51,10 @@ extension NSPlayerView {
       if 10 < totalDelta.x, 10 < totalDelta.y {
         switch purpose {
           case .create:
-            let localization = Localization(at: currentTime, with: region(from: layer), layer: layer, fullSize: fullSize)
+            let localization = Localization(at: currentTime,
+                                            with: region(from: layer),
+                                            layer: layer,
+                                            fullSize: fullSize)
             let _ = localizations.add(localization)
             localizations.sendLocalizationsMessage(.addLocalizations, ids: [localization.id])
             let _ = localizations.select(id: localization.id)

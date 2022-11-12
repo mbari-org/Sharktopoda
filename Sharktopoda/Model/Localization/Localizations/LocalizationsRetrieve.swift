@@ -37,6 +37,10 @@ extension Localizations {
   func fetch(_ direction: NSPlayerView.PlayDirection, at elapsedTime: Int) -> [Localization]? {
     guard let ids = ids(for: direction, at: elapsedTime) else { return nil }
     
-    return ids.map { storage[$0]! }
+    return ids.reduce(into: [Localization]()) { acc, id in
+      if let localization = storage[id] {
+        acc.append(localization)
+      }
+    }
   }
 }

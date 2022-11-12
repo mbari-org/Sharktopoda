@@ -12,6 +12,8 @@ extension NSPlayerView {
   func dragCurrent(by delta: DeltaPoint) {
     guard delta != .zero else { return }
     
+    conceptLayer?.removeFromSuperlayer()
+    
     switch dragAction(for: delta) {
       case .adjust:
         adjust(by: delta)
@@ -20,7 +22,6 @@ extension NSPlayerView {
       case .none:
         return
     }
-    
   }
   
   func endDragCurrent(at endPoint: CGPoint) {
@@ -35,7 +36,6 @@ extension NSPlayerView {
     localizations?.sendLocalizationsMessage(.updateLocalizations,
                                             ids: [localization.id])
 
-    currentLocalization = nil
     currentLocation = nil
   }
 

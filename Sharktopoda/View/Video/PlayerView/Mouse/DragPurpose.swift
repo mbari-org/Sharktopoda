@@ -55,6 +55,7 @@ extension NSPlayerView {
             let _ = localizations.add(localization)
             localizations.sendLocalizationsMessage(.addLocalizations, ids: [localization.id])
             let _ = localizations.select(id: localization.id)
+            displayConcept(localization)
           case .select:
             /// Remove the selection layer as it's purpose is complete
             DispatchQueue.main.async {

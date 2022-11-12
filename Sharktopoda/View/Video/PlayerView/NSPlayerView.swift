@@ -22,6 +22,9 @@ final class NSPlayerView: NSView {
   /// Frame of current selected localization
   var currentFrame: CGRect?
   
+  /// Layer for displaying current location concept
+  var conceptLayer: CATextLayer?
+  
   /// Layer for either creating localization or selecting multiple localizations
   var dragLayer: CAShapeLayer?
   var dragPurpose: NSPlayerView.DragPurpose?
@@ -67,7 +70,13 @@ final class NSPlayerView: NSView {
     playerLayer.player = player
     playerLayer.frame = bounds
     playerLayer.autoresizingMask = [.layerWidthSizable, .layerHeightSizable]
-        
+
+    let conceptLayer = CATextLayer()
+    conceptLayer.fontSize = CGFloat(UserDefaults.standard.integer(forKey: PrefKeys.captionFontSize))
+    conceptLayer.foregroundColor = UserDefaults.standard.color(forKey: PrefKeys.captionFontColor).cgColor
+    conceptLayer.alignmentMode = .left
+    self.conceptLayer = conceptLayer
+    
     rootLayer.addSublayer(playerLayer)
     
     windowLayer = rootLayer.superlayer?.superlayer?.superlayer
@@ -117,11 +126,14 @@ extension NSPlayerView {
   var currentLocalization: Localization? {
     get { _currentLocalization }
     set {
-      currentLocation = nil
       if _currentLocalization != nil {
         localizations!.clearSelected()
       }
       _currentLocalization = newValue
+      if newValue == nil {
+        currentLocation = nil
+        conceptLayer?.removeFromSuperlayer()
+      }
     }
   }
   
@@ -191,14 +203,13 @@ extension NSPlayerView {
     }
     
     let result = ids.map { localizations!.remove(id: $0) }
-    
     displayPaused()
-    
     return result
   }
   
   func deleteSelected() -> Bool {
     guard let localizations = localizations else { return false }
+    conceptLayer?.removeFromSuperlayer()
     return localizations.deleteSelected()
   }
   

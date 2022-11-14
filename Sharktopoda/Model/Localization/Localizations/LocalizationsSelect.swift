@@ -63,7 +63,7 @@ extension Localizations {
     
     let ids = pausedLocalizations
       .filter { rect.intersects($0.layer.frame) }
-      .map { $0.id }
+      .map(\.id)
     
     let _ = select(ids: ids)
   }

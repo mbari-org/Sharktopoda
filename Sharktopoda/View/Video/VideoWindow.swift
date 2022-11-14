@@ -10,28 +10,16 @@ import AppKit
 import AVFoundation
 import SwiftUI
 
-class VideoWindow: NSWindow {
-  struct KeyInfo {
-    var keyTime: Date
-    var isKey: Bool = false
-    
-    static func <(lhs: KeyInfo, rhs: KeyInfo) -> Bool {
-      lhs.keyTime < rhs.keyTime
-    }
-  }
-  
-  var keyInfo: KeyInfo
-  var videoAsset: VideoAsset {
-    get {
-      videoPlayerView.videoAsset
-    }
-  }
-  
+final class VideoWindow: NSWindow {
+
   var videoPlayerView: VideoPlayerView
+  var videoAsset: VideoAsset {
+    videoPlayerView.videoAsset
+  }
+  var keyInfo: KeyInfo
 
   init(for videoAsset: VideoAsset) {
     keyInfo = KeyInfo(keyTime: Date())
-
     videoPlayerView = VideoPlayerView(videoAsset: videoAsset)
 
     let fullSize = videoAsset.size!
@@ -49,6 +37,17 @@ class VideoWindow: NSWindow {
 
     delegate = self
     makeKeyAndOrderFront(nil)
+  }
+}
+
+extension VideoWindow {
+  struct KeyInfo {
+    var keyTime: Date
+    var isKey: Bool = false
+    
+    static func <(lhs: KeyInfo, rhs: KeyInfo) -> Bool {
+      lhs.keyTime < rhs.keyTime
+    }
   }
 }
 
@@ -171,22 +170,6 @@ extension VideoWindow {
 extension VideoWindow {
   static func <(lhs: VideoWindow, rhs: VideoWindow) -> Bool {
     lhs.keyInfo < rhs.keyInfo
-  }
-  
-  static func scaleSize(size: NSSize) -> NSSize {
-    let screenFrame = NSScreen.main!.frame
-    let maxSize = NSMakeSize(0.9 * screenFrame.width, 0.9 * screenFrame.height)
-    
-    if size.width < maxSize.width && size.height < maxSize.height {
-      return size
-    }
-    
-    let widthScale: CGFloat = maxSize.width / size.width
-    let heightScale: CGFloat = maxSize.height / size.height
-    
-    let scale = widthScale < heightScale ? widthScale : heightScale
-    
-    return NSMakeSize(size.width * scale, size.height * scale)
   }
   
   static func open(path: String) -> Error? {

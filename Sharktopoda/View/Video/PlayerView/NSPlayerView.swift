@@ -288,7 +288,7 @@ extension NSPlayerView {
   
   func clearLocalizations(_ direction: PlayDirection, at elapsedTime: Int) {
     guard let fetched = localizations?.fetch(direction, at: elapsedTime) else { return }
-    let layers = fetched.map { $0.layer }
+    let layers = fetched.map(\.layer)
 
     DispatchQueue.main.async {
       layers.forEach { $0.removeFromSuperlayer() }

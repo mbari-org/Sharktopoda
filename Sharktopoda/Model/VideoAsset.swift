@@ -30,9 +30,7 @@ struct VideoAsset {
   }
   
   var frameDuration: CMTime {
-    get {
-      avAssetTrack?.minFrameDuration ?? .zero
-    }
+    avAssetTrack?.minFrameDuration ?? .zero
   }
   
   func frameGrab(at captureTime: Int, destination: String) async -> FrameGrabResult {
@@ -49,6 +47,3 @@ struct VideoAsset {
     return NSMakeSize(abs(size.width), abs(size.height))
   }
 }
-
-
-

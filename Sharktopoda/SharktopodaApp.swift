@@ -11,6 +11,8 @@ import SwiftUI
 struct SharktopodaApp: App {
   @StateObject private var sharktopodaData = SharktopodaData()
   
+  @StateObject private var dataStore = DataStore()
+  
   init() {
     setAppDefaults()
   }
@@ -25,6 +27,16 @@ struct SharktopodaApp: App {
       SharktopodaCommands()
     }
     
+//    WindowGroup("Note", for: Note.ID.self) { $noteId in
+//      NoteView(noteId: noteId)
+//        .environmentObject(dataStore)
+//    }
+
+//    WindowGroup("Video", for: VideoAsset.ID.self) { $videoId in
+//      VideoView(id: videoId)
+//        .environmentObject(sharktopodaData)
+//    }
+    
     Settings {
       Preferences()
         .environmentObject(sharktopodaData)
@@ -32,53 +44,33 @@ struct SharktopodaApp: App {
   }
 }
 
-/// User Defaults
-private extension SharktopodaApp {
-  func setAppDefaults() {
-    let appDefault = DefaultPreferences()
-    
-    /// Annotation Creation
-    if UserDefaults.standard.color(forKey: PrefKeys.creationCursorColor) == .black {
-      UserDefaults.standard.setHexColor(appDefault.colorHex, forKey: PrefKeys.creationCursorColor)
-    }
-    if UserDefaults.standard.integer(forKey: PrefKeys.creationCursorSize) == 0 {
-      UserDefaults.standard.setValue(appDefault.cursorSize, forKey: PrefKeys.creationCursorSize)
-    }
-    if UserDefaults.standard.color(forKey: PrefKeys.creationBorderColor) == .black {
-      UserDefaults.standard.setHexColor(appDefault.colorHex, forKey: PrefKeys.creationBorderColor)
-    }
-    if UserDefaults.standard.integer(forKey: PrefKeys.creationBorderSize) == 0 {
-      UserDefaults.standard.setValue(appDefault.borderSize, forKey: PrefKeys.creationBorderSize)
-    }
-
-    /// Annotation Display
-    if UserDefaults.standard.color(forKey: PrefKeys.displayBorderColor) == .black {
-      UserDefaults.standard.setHexColor(appDefault.colorHex, forKey: PrefKeys.displayBorderColor)
-    }
-    if UserDefaults.standard.integer(forKey: PrefKeys.displayBorderSize) == 0 {
-      UserDefaults.standard.setValue(appDefault.borderSize, forKey: PrefKeys.displayBorderSize)
-    }
-    if UserDefaults.standard.integer(forKey: PrefKeys.displayTimeWindow) == 0 {
-      UserDefaults.standard.setValue(appDefault.displayTimeWindow, forKey: PrefKeys.displayTimeWindow)
-    }
-    
-    /// Annotation Selection
-    if UserDefaults.standard.color(forKey: PrefKeys.selectionBorderColor) == .black {
-      UserDefaults.standard.setHexColor(appDefault.colorHex, forKey: PrefKeys.selectionBorderColor)
-    }
-    if UserDefaults.standard.integer(forKey: PrefKeys.selectionBorderSize) == 0 {
-      UserDefaults.standard.setValue(appDefault.borderSize, forKey: PrefKeys.selectionBorderSize)
-    }
-    
-    /// Annotation Caption
-    if UserDefaults.standard.string(forKey: PrefKeys.captionDefault) == nil {
-      UserDefaults.standard.setValue(appDefault.caption, forKey: PrefKeys.captionDefault)
-    }
-    if UserDefaults.standard.color(forKey: PrefKeys.captionFontColor) == .black {
-      UserDefaults.standard.setHexColor(appDefault.fontColorHex, forKey: PrefKeys.captionFontColor)
-    }
-    if UserDefaults.standard.integer(forKey: PrefKeys.captionFontSize) == 0 {
-      UserDefaults.standard.setValue(appDefault.fontSize, forKey: PrefKeys.captionFontSize)
+struct NoteView: View {
+  @EnvironmentObject var dataStore: DataStore
+  let noteId: UUID?
+  
+  var body: some View {
+    if let noteId {
+      if let index = dataStore.notes.firstIndex(
+        where: { $0.id == noteId }
+      ) {
+        TextEditor(text: $dataStore.notes[index].text)
+          .navigationTitle(dataStore.notes[index].name)
+      } else {
+        // If we ended up here, it means that the note detail window was state restored by SwiftUI, but we didn't implement data persistence, so we can't show the note.
+        Text("Couldn't find the presented note, because data persistence is not implemented in this sample project")
+      }
+    } else {
+      Text("Nothing selected")
     }
   }
+}
+
+class DataStore: ObservableObject {
+  @Published var notes: [Note] = []
+}
+
+struct Note: Identifiable {
+  var id = UUID()
+  var text: String = ""
+  var name: String
 }

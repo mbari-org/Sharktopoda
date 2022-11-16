@@ -9,7 +9,7 @@ import AVFoundation
 
 // CxNote Assume that a VideoAsset has one and only one track
 
-struct VideoAsset {
+struct VideoAsset: Identifiable {
   let id: String
   let url: URL
   

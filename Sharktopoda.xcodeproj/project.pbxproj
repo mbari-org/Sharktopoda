@@ -117,6 +117,9 @@
 		E2EE0E3C28DB9B3B00138A86 /* ControlSeek.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EE0E3B28DB9B3B00138A86 /* ControlSeek.swift */; };
 		E2EE0E3E28DB9B9F00138A86 /* ControlCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EE0E3D28DB9B9F00138A86 /* ControlCapture.swift */; };
 		E2EE0E4028DB9DD200138A86 /* ControlAllInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EE0E3F28DB9DD200138A86 /* ControlAllInfo.swift */; };
+		E2F3A2302925513B00F2551F /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F3A22F2925513B00F2551F /* VideoView.swift */; };
+		E2F3A2322925705A00F2551F /* SharktopodaAppDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F3A2312925705A00F2551F /* SharktopodaAppDefaults.swift */; };
+		E2F3A234292570FF00F2551F /* VideoViewKeyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F3A233292570FF00F2551F /* VideoViewKeyInfo.swift */; };
 		E2FAB21028E213A9006D2676 /* MainTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB20F28E213A9006D2676 /* MainTitleView.swift */; };
 		E2FAB21228E2157C006D2676 /* MainShortcutsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB21128E2157C006D2676 /* MainShortcutsView.swift */; };
 		E2FAB21428E215F6006D2676 /* MainUDPStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB21328E215F6006D2676 /* MainUDPStatusView.swift */; };
@@ -261,6 +264,9 @@
 		E2EE0E3B28DB9B3B00138A86 /* ControlSeek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlSeek.swift; sourceTree = "<group>"; };
 		E2EE0E3D28DB9B9F00138A86 /* ControlCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlCapture.swift; sourceTree = "<group>"; };
 		E2EE0E3F28DB9DD200138A86 /* ControlAllInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlAllInfo.swift; sourceTree = "<group>"; };
+		E2F3A22F2925513B00F2551F /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
+		E2F3A2312925705A00F2551F /* SharktopodaAppDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharktopodaAppDefaults.swift; sourceTree = "<group>"; };
+		E2F3A233292570FF00F2551F /* VideoViewKeyInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewKeyInfo.swift; sourceTree = "<group>"; };
 		E2FAB20F28E213A9006D2676 /* MainTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTitleView.swift; sourceTree = "<group>"; };
 		E2FAB21128E2157C006D2676 /* MainShortcutsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainShortcutsView.swift; sourceTree = "<group>"; };
 		E2FAB21328E215F6006D2676 /* MainUDPStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainUDPStatusView.swift; sourceTree = "<group>"; };
@@ -508,6 +514,7 @@
 			isa = PBXGroup;
 			children = (
 				E2C22E8428CFDC26003CD976 /* SharktopodaApp.swift */,
+				E2F3A2312925705A00F2551F /* SharktopodaAppDefaults.swift */,
 				E2C22ECD28D27B81003CD976 /* UDP */,
 				E2C22EC328D14495003CD976 /* Model */,
 				E2C22EC628D2662A003CD976 /* View */,
@@ -659,6 +666,8 @@
 		E2FAB21528E2168F006D2676 /* Video */ = {
 			isa = PBXGroup;
 			children = (
+				E2F3A22F2925513B00F2551F /* VideoView.swift */,
+				E2F3A233292570FF00F2551F /* VideoViewKeyInfo.swift */,
 				E2FAB21A28E24A7C006D2676 /* VideoWindow.swift */,
 				E2837B4729104C6B00FC4CC2 /* VideoPlayerView.swift */,
 				E2AAFC3228F8F35000BBC703 /* VideoPlayerError.swift */,
@@ -843,6 +852,8 @@
 				E21DEEE228DA1F3D00A2AC01 /* UDP.swift in Sources */,
 				E2989ABF28D3D083009D2D65 /* Color.swift in Sources */,
 				E2C22ECF28D27C2D003CD976 /* UDPServer.swift in Sources */,
+				E2F3A2322925705A00F2551F /* SharktopodaAppDefaults.swift in Sources */,
+				E2F3A2302925513B00F2551F /* VideoView.swift in Sources */,
 				E295627C28D5325A00E88ED1 /* NetworkControlPreferencesView.swift in Sources */,
 				E2675E2628DABF5600F5F114 /* ControlPlay.swift in Sources */,
 				E21DF7922910391A00038B41 /* PlayerMouse.swift in Sources */,
@@ -905,6 +916,7 @@
 				E2A6B39628DB8E8500C1A5EA /* ControlInvalid.swift in Sources */,
 				E2FAB21228E2157C006D2676 /* MainShortcutsView.swift in Sources */,
 				E237C09F28ECF9C2002868D1 /* OpenFileView.swift in Sources */,
+				E2F3A234292570FF00F2551F /* VideoViewKeyInfo.swift in Sources */,
 				E2505D5828EF7D950027F280 /* ControlLocalization.swift in Sources */,
 				E237C0A428EDFAA3002868D1 /* OpenUrlView.swift in Sources */,
 				E2989AB928D3B87E009D2D65 /* AnnotationPreferencesView.swift in Sources */,
@@ -999,7 +1011,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1053,7 +1065,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -1083,6 +1095,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.mbari.Sharktopoda;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1112,6 +1125,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.mbari.Sharktopoda;
 				PRODUCT_NAME = "$(TARGET_NAME)";

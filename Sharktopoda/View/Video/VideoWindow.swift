@@ -204,11 +204,11 @@ extension VideoWindow: NSWindowDelegate {
   }
   
   func windowDidBecomeKey(_ notification: Notification) {
-    self.keyInfo = KeyInfo(keyTime: Date(), isKey: true)
+    keyInfo = KeyInfo(keyTime: Date(), isKey: true)
   }
   
   func windowDidResignKey(_ notification: Notification) {
-    self.keyInfo = KeyInfo(keyTime: self.keyInfo.keyTime, isKey: false)
+    keyInfo = KeyInfo(keyTime: keyInfo.keyTime, isKey: false)
   }
   
   func windowDidResize(_ notification: Notification) {

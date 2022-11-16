@@ -7,43 +7,57 @@
 
 import AVFoundation
 
-// CxNote Assume that a VideoAsset has one and only one track
+// CxNote Binds to first AVAsset video track
 
-struct VideoAsset: Identifiable {
+final class VideoAsset: Identifiable {
+  static let timescaleMillis: Int32 = 1000
+  
+  
   let id: String
   let url: URL
   
   var avAsset: AVURLAsset
-  var avAssetTrack: AVAssetTrack?
 
-  let durationMillis: Int
+  var avAssetTrack: AVAssetTrack
+  var durationMillis: Int
+  var frameDuration: CMTime
+  var frameRate: Float
+  var fullSize: NSSize
   
-  static let timescaleMillis: Int32 = 1000
-  
-  init(id: String, url: URL) {
+  init?(id: String, url: URL) async {
     self.id = id
     self.url = url
+
     avAsset = AVURLAsset(url: url)
-    avAssetTrack = avAsset.tracks(withMediaType: AVMediaType.video).first
     
-    durationMillis = avAsset.duration.asMillis()
-  }
-  
-  var frameDuration: CMTime {
-    avAssetTrack?.minFrameDuration ?? .zero
+    do {
+      let duration = try await avAsset.load(.duration)
+      durationMillis = duration.asMillis()
+      
+      let tracks = try await avAsset.loadTracks(withMediaType: AVMediaType.video)
+      guard let track = tracks.first else { return nil }
+      
+      frameDuration = try await track.load(.minFrameDuration)
+      frameRate = try await track.load(.nominalFrameRate)
+
+      let trackTransform = try await track.load(.preferredTransform)
+      let trackSize = try await track.load(.naturalSize)
+      let size = trackSize.applying(trackTransform)
+      fullSize = NSMakeSize(abs(size.width), abs(size.height))
+      
+      self.avAssetTrack = track
+
+    } catch let error {
+      print("CxInc VideoAsset error: \(error)")
+      return nil
+    }
   }
   
   func frameGrab(at captureTime: Int, destination: String) async -> FrameGrabResult {
     avAsset.frameGrab(at: captureTime, destination: destination)
   }
   
-  var frameRate: Float {
-    avAssetTrack?.nominalFrameRate ?? 0
-  }
-  
-  var size: NSSize? {
-    guard let track = avAssetTrack else { return nil }
-    let size = track.naturalSize.applying(track.preferredTransform)
-    return NSMakeSize(abs(size.width), abs(size.height))
-  }
+//  var frameRate: Float {
+//    avAssetTrack?.nominalFrameRate ?? 0
+//  }
 }

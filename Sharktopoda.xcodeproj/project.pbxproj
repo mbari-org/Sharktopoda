@@ -304,6 +304,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E2020D6D2925A0280090B60B /* VideoView */ = {
+			isa = PBXGroup;
+			children = (
+				E2F3A233292570FF00F2551F /* VideoViewKeyInfo.swift */,
+			);
+			path = VideoView;
+			sourceTree = "<group>";
+		};
 		E21DF790291038FE00038B41 /* PlayerView */ = {
 			isa = PBXGroup;
 			children = (
@@ -667,7 +675,7 @@
 			isa = PBXGroup;
 			children = (
 				E2F3A22F2925513B00F2551F /* VideoView.swift */,
-				E2F3A233292570FF00F2551F /* VideoViewKeyInfo.swift */,
+				E2020D6D2925A0280090B60B /* VideoView */,
 				E2FAB21A28E24A7C006D2676 /* VideoWindow.swift */,
 				E2837B4729104C6B00FC4CC2 /* VideoPlayerView.swift */,
 				E2AAFC3228F8F35000BBC703 /* VideoPlayerError.swift */,

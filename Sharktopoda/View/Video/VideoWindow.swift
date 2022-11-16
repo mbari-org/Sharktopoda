@@ -22,7 +22,7 @@ final class VideoWindow: NSWindow {
     keyInfo = KeyInfo(keyTime: Date())
     videoPlayerView = VideoPlayerView(videoAsset: videoAsset)
 
-    let fullSize = videoAsset.size!
+    let fullSize = videoAsset.fullSize
     super.init(
       contentRect: NSMakeRect(0, 0, fullSize.width, fullSize.height),
       styleMask: [.titled, .closable, .miniaturizable, .resizable],
@@ -136,7 +136,7 @@ extension VideoWindow {
 extension VideoWindow {
   func addLocalizations(_ controlLocalizations: [ControlLocalization]) -> [Bool] {
     controlLocalizations
-      .map { Localization(from: $0, with: videoAsset.size!) }
+      .map { Localization(from: $0, with: videoAsset.fullSize) }
       .map { playerView.addLocalization($0) }
   }
   
@@ -177,21 +177,21 @@ extension VideoWindow {
   }
   
   static func open(id: String, url: URL) -> Error? {
-    if let videoWindow = UDP.sharktopodaData.videoWindows.values.first(where: { $0.url == url } ) {
-      DispatchQueue.main.async {
-        videoWindow.makeKeyAndOrderFront(nil)
-      }
-    } else {
-      let videoAsset = VideoAsset(id: id, url: url)
-      guard videoAsset.avAsset.isPlayable else {
-        return OpenVideoError.notPlayable
-      }
-      DispatchQueue.main.async {
-        let videoWindow = VideoWindow(for: videoAsset)
-        videoWindow.makeKeyAndOrderFront(nil)
-        UDP.sharktopodaData.videoWindows[id] = videoWindow
-      }
-    }
+//    if let videoWindow = UDP.sharktopodaData.videoWindows.values.first(where: { $0.url == url } ) {
+//      DispatchQueue.main.async {
+//        videoWindow.makeKeyAndOrderFront(nil)
+//      }
+//    } else {
+//      let videoAsset = VideoAsset(id: id, url: url)
+//      guard videoAsset.avAsset.isPlayable else {
+//        return OpenVideoError.notPlayable
+//      }
+//      DispatchQueue.main.async {
+//        let videoWindow = VideoWindow(for: videoAsset)
+//        videoWindow.makeKeyAndOrderFront(nil)
+//        UDP.sharktopodaData.videoWindows[id] = videoWindow
+//      }
+//    }
     return nil
   }
 }

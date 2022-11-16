@@ -43,7 +43,7 @@ final class NSPlayerView: NSView {
   
   // MARK: ctors
   init(videoAsset: VideoAsset) {
-    let fullSize = videoAsset.size!
+    let fullSize = videoAsset.fullSize
     
     super.init(frame: NSMakeRect(0, 0, fullSize.width, fullSize.height))
 
@@ -162,7 +162,7 @@ extension NSPlayerView {
   
   var fullSize: CGSize {
     get {
-      videoAsset.size ?? .zero
+      videoAsset.fullSize
     }
   }
 }

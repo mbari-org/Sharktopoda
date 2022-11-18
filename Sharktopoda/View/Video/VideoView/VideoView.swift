@@ -12,25 +12,24 @@ struct VideoView: View {
 //  @Environment(\.openWindow) var openWindow
 //  @EnvironmentObject var sharktopodaData: SharktopodaData
 //  private var sharktopodaData: SharktopodaData?
+
   
-  private var videoAsset: VideoAsset
-  var playerView: PlayerView
+  var sharktopodaData: SharktopodaData
+  var videoAsset: VideoAsset
   var keyInfo: KeyInfo = KeyInfo()
   
-  init(id: String, model: SharktopodaData) {
-    videoAsset = model.videoAssets[id]!
-    
-//    let player = AVPlayer(playerItem: videoAsset.currentItem)
-    
-    playerView = PlayerView(videoAsset: videoAsset)
+  init(_ model: SharktopodaData, videoId: String) {
+    videoAsset = model.videoAssets[videoId]!
+    sharktopodaData = model
   }
-  
+
   var body: some View {
     VStack {
-      playerView
+      PlayerView(videoAsset: videoAsset)
         .padding(0)
       Divider()
-      Text("Hidable Video Control")
+      VideoControlView()
+        .environmentObject(sharktopodaData)
         .padding(0)
     }
   }
@@ -39,6 +38,6 @@ struct VideoView: View {
 struct VideoView_Previews: PreviewProvider {
   static var previews: some View {
 //    VideoView(id: "CxDebug").environmentObject(SharktopodaData())
-    VideoView(id: "CxDebug", model: SharktopodaData())
+    VideoView(SharktopodaData(), videoId: "CxDebug")
   }
 }

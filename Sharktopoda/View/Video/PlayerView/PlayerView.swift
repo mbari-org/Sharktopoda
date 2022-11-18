@@ -9,14 +9,14 @@ import AVKit
 import SwiftUI
 
 struct PlayerView: NSViewRepresentable {
-  let playerView: AVPlayerView
+  let nsPlayerView: NSPlayerView
   
   init(videoAsset: VideoAsset) {
-    playerView = AVPlayerView()
+    nsPlayerView = NSPlayerView(videoAsset: videoAsset)
   }
   
   func makeNSView(context: Context) -> some NSView {
-    return playerView
+    return nsPlayerView
   }
   
   func updateNSView(_ nsView: NSViewType, context: Context) {}

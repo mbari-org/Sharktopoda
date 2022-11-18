@@ -9,30 +9,41 @@ import SwiftUI
 
 @main
 struct SharktopodaApp: App {
+  @NSApplicationDelegateAdaptor private var appDelegate: SharktopodaAppDelegate
+  
+  @Environment(\.openWindow) private var openWindow
+
   @StateObject private var sharktopodaData = SharktopodaData()
+
+//  private let videoViewLauncher = VideoViewLauncher.launcher
   
   init() {
     setAppDefaults()
   }
   
   var body: some Scene {
-    WindowGroup {
-      MainView()
-        .environmentObject(sharktopodaData)
-      
+    Window("Sharktopoda", id: "SharktopodaApp") {
+      MainView().environmentObject(sharktopodaData)
     }
-    .commands {
-      SharktopodaCommands()
-    }
+    .commands { SharktopodaCommands() }
+    
+//    WindowGroup(id: "VideoViewLauncher") {
+//      VideoViewLauncher.launcher
+//    }
 
+//    WindowGroup {
+//      VideoViewLauncher.launcher
+//    }
+    
     WindowGroup("Video", for: VideoAsset.ID.self) { $videoId in
-      VideoView(id: videoId!)
-        .environmentObject(sharktopodaData)
+//      if let videoId = videoId {
+        VideoView(id: videoId!, model: sharktopodaData)
+//      }
+//        VideoView(id: videoId!).environmentObject(sharktopodaData)
     }
     
     Settings {
-      Preferences()
-        .environmentObject(sharktopodaData)
+      Preferences().environmentObject(sharktopodaData)
     }
   }
 }

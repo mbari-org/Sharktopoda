@@ -9,23 +9,24 @@ import SwiftUI
 
 struct VideoView: View {
 //  @Environment(\.openWindow) var openWindow
+//  @EnvironmentObject var sharktopodaData: SharktopodaData
+//  private var sharktopodaData: SharktopodaData?
   
-  @EnvironmentObject var sharktopodaData: SharktopodaData
-  @State private var viewIndex: Int? = nil
-  
-  let id: String
+  private var videoAsset: VideoAsset
   var keyInfo: KeyInfo = KeyInfo()
   
+  init(id: String, model: SharktopodaData) {
+    videoAsset = model.videoAssets[id]!
+  }
+  
   var body: some View {
-//    if let videoId = videoId {
-//      if let index = sharktopodaData.videoWindows
-//    }
-    Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+    Text("Yes")
   }
 }
 
 struct VideoView_Previews: PreviewProvider {
   static var previews: some View {
-    VideoView(id: "CxDebug")
+//    VideoView(id: "CxDebug").environmentObject(SharktopodaData())
+    VideoView(id: "CxDebug", model: SharktopodaData())
   }
 }

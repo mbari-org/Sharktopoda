@@ -12,6 +12,9 @@ struct MainView: View {
   private static var height: CGFloat = 425
   private static var width = CGFloat(MainView.height * MainView.ratio)
   
+  @EnvironmentObject var sharktopodaData: SharktopodaData
+  @Environment(\.openWindow) var openWindow
+  
   var body: some View {
     HStack {
       MainTitleView()
@@ -23,9 +26,22 @@ struct MainView: View {
       VStack(alignment: .leading, spacing: 20) {
         MainShortcutsView()
         
+        Button("CxDebug") {
+          Task {
+            let id = "b52cf7f1-e19c-40ba-b176-a7e479a3b170"
+            let url = URL(string: "https://freetestdata.com/wp-content/uploads/2021/10/Free_Test_Data_1MB_MOV.mov")
+            if let videoAsset = await VideoAsset(id: id, url: url!) {
+              DispatchQueue.main.async {
+                UDP.sharktopodaData.videoAssets[id] = videoAsset
+                openWindow(value: videoAsset.id)
+              }
+            }
+          }
+        }
+        
         Spacer()
 
-        MainUDPStatusView()
+        MainUDPStatusView().environmentObject(sharktopodaData)
       }
       .padding(20)
       .padding(.top, 20)
@@ -37,7 +53,6 @@ struct MainView: View {
 
 struct Main_Previews: PreviewProvider {
   static var previews: some View {
-    MainView()
-      .environmentObject(SharktopodaData())
+    MainView().environmentObject(SharktopodaData())
   }
 }

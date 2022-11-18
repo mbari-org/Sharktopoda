@@ -12,7 +12,6 @@ import AVFoundation
 final class VideoAsset: Identifiable {
   static let timescaleMillis: Int32 = 1000
   
-  
   let id: String
   let url: URL
   
@@ -56,8 +55,4 @@ final class VideoAsset: Identifiable {
   func frameGrab(at captureTime: Int, destination: String) async -> FrameGrabResult {
     avAsset.frameGrab(at: captureTime, destination: destination)
   }
-  
-//  var frameRate: Float {
-//    avAssetTrack?.nominalFrameRate ?? 0
-//  }
 }

@@ -7,33 +7,32 @@
 
 import Foundation
 import AppKit
+import SwiftUI
 
 final class SharktopodaData: ObservableObject {
   @Published var udpServer: UDPServer = UDP.server
   @Published var udpClient: UDPClient?
-  
   @Published var udpServerError: String? = nil
 
+  @Published var videoAssets = [String: VideoAsset]()
+  @Published var videoViews = [String: VideoView]()
+
   @Published var videoWindows = [String: VideoWindow]()
-  @Published var videoViews = [VideoView]()
 
   init() {
     // This allows non-View related changes to sharktopoda data to notify observing Views
     UDP.sharktopodaData = self
   }
   
-  func indexOf(_ id: String) -> Int? {
-    videoViews.firstIndex(where: {$0.id == id})
-  }
-  
   func latestVideoView() -> VideoView? {
     guard !videoViews.isEmpty else { return nil }
-    
-    if let videoView = videoViews.first(where: \.keyInfo.isKey) {
+
+    let views = Array(videoViews.values)
+    if let videoView = views.first(where: \.keyInfo.isKey) {
       return videoView
     }
-  
-    return videoViews.sorted(by: { $0 < $1 }).last
+
+    return views.sorted(by: { $0 < $1 }).last
   }
   
   func latestVideoWindow() -> VideoWindow? {
@@ -47,4 +46,22 @@ final class SharktopodaData: ObservableObject {
 
     return windows.sorted(by: { $0 < $1 }).last
   }
+  
+//  func open(path: String) {
+//    open(id: path, url: URL(fileURLWithPath: path))
+//  }
+//  
+//  func open(id: String, url: URL) {
+//    
+//    Task {
+//      if let videoAsset = await VideoAsset(id: id, url: url) {
+//        DispatchQueue.main.async {
+//          UDP.sharktopodaData.videoAssets[id] = videoAsset
+//          
+//          
+//          
+//        }
+//      }
+//    }
+//  }
 }

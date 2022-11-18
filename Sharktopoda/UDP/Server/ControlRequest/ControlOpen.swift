@@ -18,10 +18,11 @@ struct ControlOpen: ControlRequest {
     guard let url = URL(string: url) else {
       return failed("Malformed URL")
     }
-    
-    if let error = VideoWindow.open(id: uuid, url: url) {
-      return failed(error.localizedDescription)
-    }
+
+    /// Fire and forget async operation
+    VideoViewLauncher.launcher.open(id: uuid, url: url)
+//    UDP.sharktopodaData.open(id: uuid, url: url)
+
     return ok()
   }
 }

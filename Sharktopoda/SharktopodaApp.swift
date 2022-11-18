@@ -26,7 +26,8 @@ struct SharktopodaApp: App {
     .commands { SharktopodaCommands() }
 
     WindowGroup("Video", for: VideoAsset.ID.self) { $videoId in
-      if let videoId = videoId {
+      if let videoId = videoId,
+         sharktopodaData.videoAssets[videoId] != nil {
         VideoView(id: videoId, model: sharktopodaData)
 //        VideoView(id: videoId!).environmentObject(sharktopodaData)
       }

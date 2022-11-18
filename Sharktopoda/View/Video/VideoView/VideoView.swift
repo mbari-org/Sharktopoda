@@ -5,6 +5,7 @@
 //  Apache License 2.0 — See project LICENSE file
 //
 
+import AVFoundation
 import SwiftUI
 
 struct VideoView: View {
@@ -13,14 +14,25 @@ struct VideoView: View {
 //  private var sharktopodaData: SharktopodaData?
   
   private var videoAsset: VideoAsset
+  var playerView: PlayerView
   var keyInfo: KeyInfo = KeyInfo()
   
   init(id: String, model: SharktopodaData) {
     videoAsset = model.videoAssets[id]!
+    
+//    let player = AVPlayer(playerItem: videoAsset.currentItem)
+    
+    playerView = PlayerView(videoAsset: videoAsset)
   }
   
   var body: some View {
-    Text("Yes")
+    VStack {
+      playerView
+        .padding(0)
+      Divider()
+      Text("Hidable Video Control")
+        .padding(0)
+    }
   }
 }
 

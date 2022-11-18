@@ -70,11 +70,12 @@ struct OpenUrlPanel: View {
       alert(path: url.path, error: OpenVideoError.unknown(error.localizedDescription))
       return
     }
-    
-    if let error = VideoWindow.open(id: url.path, url: url) as? OpenVideoError {
-      alert(path: url.path, error: error)
-      return
-    }
+
+    // CxInc
+//    if let error = VideoWindow.open(id: url.path, url: url) as? OpenVideoError {
+//      alert(path: url.path, error: error)
+//      return
+//    }
   }
   
   func alert(path: String, error: OpenVideoError) {

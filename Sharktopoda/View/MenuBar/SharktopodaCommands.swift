@@ -21,13 +21,13 @@ struct SharktopodaCommands: Commands {
     
     CommandMenu("Video") {
       Button("Play") {
-        videoWindow?.play()
+//        videoWindow?.play()
       }
       .disabled(videoWindow == nil)
 //      .disabled(videoWindow == nil && playerView?.playDirection == .paused)
 
       Button("Pause") {
-        videoWindow?.pause()
+//        videoWindow?.pause()
       }
       .disabled(videoWindow == nil)
 //      .disabled(videoWindow == nil && playerView?.playDirection != .paused)
@@ -37,13 +37,17 @@ struct SharktopodaCommands: Commands {
   
   var videoWindow: VideoWindow? {
     get {
-      UDP.sharktopodaData.latestVideoWindow()
+      // CxInc
+//      UDP.sharktopodaData.latestVideoWindow()
+      return nil
     }
   }
 
   var playerView: NSPlayerView? {
     get {
-      videoWindow?.playerView
+      // CxInc
+//      videoWindow?.playerView
+      return nil
     }
   }
 }

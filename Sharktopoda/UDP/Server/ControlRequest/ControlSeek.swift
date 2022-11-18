@@ -13,12 +13,13 @@ struct ControlSeek: ControlRequest {
   let elapsedTimeMillis: Int
   
   func process() -> ControlResponse {
-    guard let videoWindow = UDP.sharktopodaData.videoWindows[uuid] else {
-      return failed("No video for uuid")
-    }
+//    guard let videoWindow = UDP.sharktopodaData.videoWindows[uuid] else {
+//      return failed("No video for uuid")
+//    }
 
-    videoWindow.seek(elapsed: elapsedTimeMillis)
+//    videoWindow.seek(elapsed: elapsedTimeMillis)
 
-    return ok()
+//    return ok()
+    return failed("CxInc")
   }
 }

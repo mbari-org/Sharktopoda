@@ -34,34 +34,17 @@ final class SharktopodaData: ObservableObject {
 
     return views.sorted(by: { $0 < $1 }).last
   }
-  
-  func latestVideoWindow() -> VideoWindow? {
-    guard !videoWindows.isEmpty else { return nil }
-     
-    let windows: [VideoWindow] = Array(videoWindows.values)
-    
-    if let videoWindow = windows.first(where: \.keyInfo.isKey) {
-      return videoWindow
-    }
 
-    return windows.sorted(by: { $0 < $1 }).last
-  }
-  
-//  func open(path: String) {
-//    open(id: path, url: URL(fileURLWithPath: path))
-//  }
-//  
-//  func open(id: String, url: URL) {
-//    
-//    Task {
-//      if let videoAsset = await VideoAsset(id: id, url: url) {
-//        DispatchQueue.main.async {
-//          UDP.sharktopodaData.videoAssets[id] = videoAsset
-//          
-//          
-//          
-//        }
-//      }
+  // CxInc
+//  func latestVideoWindow() -> VideoWindow? {
+//    guard !videoWindows.isEmpty else { return nil }
+//
+//    let windows: [VideoWindow] = Array(videoWindows.values)
+//
+//    if let videoWindow = windows.first(where: \.keyInfo.isKey) {
+//      return videoWindow
 //    }
+//
+//    return windows.sorted(by: { $0 < $1 }).last
 //  }
 }

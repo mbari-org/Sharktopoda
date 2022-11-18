@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E2020D732926E8AE0090B60B /* SharktopodaAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2020D722926E8AE0090B60B /* SharktopodaAppDelegate.swift */; };
+		E2020D752927FDD00090B60B /* VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2020D742927FDD00090B60B /* VideoPlayer.swift */; };
 		E213252128F722F900D6BFF6 /* NSPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E213252028F722F900D6BFF6 /* NSPlayerView.swift */; };
 		E213252528F7651F00D6BFF6 /* DefaultPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = E213252428F7651F00D6BFF6 /* DefaultPreferences.swift */; };
 		E21DEEDF28DA13CB00A2AC01 /* ClientPing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21DEEDD28DA13CB00A2AC01 /* ClientPing.swift */; };
@@ -152,6 +153,7 @@
 
 /* Begin PBXFileReference section */
 		E2020D722926E8AE0090B60B /* SharktopodaAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharktopodaAppDelegate.swift; sourceTree = "<group>"; };
+		E2020D742927FDD00090B60B /* VideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayer.swift; sourceTree = "<group>"; };
 		E213252028F722F900D6BFF6 /* NSPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSPlayerView.swift; sourceTree = "<group>"; };
 		E213252428F7651F00D6BFF6 /* DefaultPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultPreferences.swift; sourceTree = "<group>"; };
 		E21DEEDD28DA13CB00A2AC01 /* ClientPing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientPing.swift; sourceTree = "<group>"; };
@@ -309,7 +311,10 @@
 		E2020D6D2925A0280090B60B /* VideoView */ = {
 			isa = PBXGroup;
 			children = (
+				E2F3A22F2925513B00F2551F /* VideoView.swift */,
+				E2837B4729104C6B00FC4CC2 /* VideoPlayerView.swift */,
 				E2F3A233292570FF00F2551F /* VideoViewKeyInfo.swift */,
+				E2020D742927FDD00090B60B /* VideoPlayer.swift */,
 			);
 			path = VideoView;
 			sourceTree = "<group>";
@@ -677,10 +682,8 @@
 		E2FAB21528E2168F006D2676 /* Video */ = {
 			isa = PBXGroup;
 			children = (
-				E2F3A22F2925513B00F2551F /* VideoView.swift */,
 				E2020D6D2925A0280090B60B /* VideoView */,
 				E2FAB21A28E24A7C006D2676 /* VideoWindow.swift */,
-				E2837B4729104C6B00FC4CC2 /* VideoPlayerView.swift */,
 				E2AAFC3228F8F35000BBC703 /* VideoPlayerError.swift */,
 				E21DF790291038FE00038B41 /* PlayerView */,
 				E237C0A028ECFB2E002868D1 /* Open */,
@@ -869,6 +872,7 @@
 				E295627C28D5325A00E88ED1 /* NetworkControlPreferencesView.swift in Sources */,
 				E2675E2628DABF5600F5F114 /* ControlPlay.swift in Sources */,
 				E21DF7922910391A00038B41 /* PlayerMouse.swift in Sources */,
+				E2020D752927FDD00090B60B /* VideoPlayer.swift in Sources */,
 				E28C6821290C714D00987828 /* CAShapeLayer.swift in Sources */,
 				E229F4C228D9150A001F220E /* ControlConnect.swift in Sources */,
 				E2989AC328D4F6EE009D2D65 /* AnnotationCreationPreferencesView.swift in Sources */,

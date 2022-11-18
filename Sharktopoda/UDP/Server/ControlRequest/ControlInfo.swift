@@ -11,10 +11,12 @@ struct ControlInfo: ControlRequest {
   var command: ControlCommand
   
   func process() -> ControlResponse {
-    if let latestWindow = UDP.sharktopodaData.latestVideoWindow() {
-      return ControlResponseInfo(using: latestWindow)
-    }
-
-    return failed("No open video for uuid")
+//    if let latestWindow = UDP.sharktopodaData.latestVideoWindow() {
+//      return ControlResponseInfo(using: latestWindow)
+//    }
+//
+//    return failed("No open video for uuid")
+    
+    return failed("CxInc")
   }
 }

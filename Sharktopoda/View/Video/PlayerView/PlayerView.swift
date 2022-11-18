@@ -5,24 +5,20 @@
 //  Apache License 2.0 — See project LICENSE file
 //
 
-import AppKit
+import AVKit
 import SwiftUI
 
-final class PlayerView: NSViewRepresentable {
-  let videoAsset: VideoAsset
-  let nsPlayerView: NSPlayerView
+struct PlayerView: NSViewRepresentable {
+  let playerView: AVPlayerView
   
   init(videoAsset: VideoAsset) {
-    self.videoAsset = videoAsset
-    nsPlayerView = NSPlayerView(videoAsset: videoAsset)
+    playerView = AVPlayerView()
   }
   
   func makeNSView(context: Context) -> some NSView {
-    return nsPlayerView
+    return playerView
   }
   
-  func updateNSView(_ nsView: NSViewType, context: Context) {
-    
-  }
+  func updateNSView(_ nsView: NSViewType, context: Context) {}
   
 }

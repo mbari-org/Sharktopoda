@@ -13,12 +13,13 @@ struct ControlSelectLocalizations: ControlRequest {
   var localizations: [String]
   
   func process() -> ControlResponse {
-    guard let videoWindow = UDP.sharktopodaData.videoWindows[uuid] else {
-      return failed("No video for uuid")
-    }
+//    guard let videoWindow = UDP.sharktopodaData.videoWindows[uuid] else {
+//      return failed("No video for uuid")
+//    }
     
-    let _ = videoWindow.selectLocalizations(localizations)
+//    let _ = videoWindow.selectLocalizations(localizations)
     
-    return ok()
+//    return ok()
+    return failed("CxInc")
   }
 }

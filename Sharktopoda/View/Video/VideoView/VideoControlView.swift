@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct VideoControlView: View {
-  @EnvironmentObject var sharktopodaData: SharktopodaData
+//  @EnvironmentObject var sharktopodaData: SharktopodaData
+  @EnvironmentObject var videoAsset: VideoAsset
   
   var body: some View {
     Text("Hey now")

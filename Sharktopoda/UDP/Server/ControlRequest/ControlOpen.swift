@@ -24,7 +24,7 @@ struct ControlOpen: ControlRequest {
       if let videoAsset = await VideoAsset(id: uuid, url: url) {
         DispatchQueue.main.async {
           UDP.sharktopodaData.videoAssets[uuid] = videoAsset
-          // CxInc Fire up the VideoView for the asset
+          print("Video URL loaded")
         }
       }
     }

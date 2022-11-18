@@ -9,7 +9,7 @@ import AVFoundation
 
 // CxNote Binds to first AVAsset video track
 
-final class VideoAsset: Identifiable {
+final class VideoAsset: Identifiable, ObservableObject {
   static let timescaleMillis: Int32 = 1000
   
   let id: String
@@ -22,6 +22,8 @@ final class VideoAsset: Identifiable {
   var frameDuration: CMTime
   var frameRate: Float
   var fullSize: NSSize
+  
+  var localizations: Localizations?
   
   init?(id: String, url: URL) async {
     self.id = id
@@ -45,6 +47,9 @@ final class VideoAsset: Identifiable {
       fullSize = NSMakeSize(abs(size.width), abs(size.height))
       
       self.avAssetTrack = track
+      
+      localizations = Localizations(videoAsset: self,
+                                    frameDuration: frameDuration.asMillis())
 
     } catch let error {
       print("CxInc VideoAsset error: \(error)")

@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct MainView: View {
+  @EnvironmentObject var sharktopodaData: SharktopodaData
+  @Environment(\.openWindow) var openWindow
+
   private static var ratio: CGFloat = 1.75
   private static var height: CGFloat = 425
   private static var width = CGFloat(MainView.height * MainView.ratio)
-  
-  @EnvironmentObject var sharktopodaData: SharktopodaData
-  @Environment(\.openWindow) var openWindow
   
   var body: some View {
     HStack {

@@ -13,9 +13,6 @@ final class NSPlayerView: NSView {
   let rootLayer = CALayer()
   let playerLayer = AVPlayerLayer()
 
-  var localizations: Localizations?
-  // CxFuture  var undoLocalizations: [Localization]?
-  
   /// Location within the current selected localization (for drag move/resize)
   var currentLocation: CGRect.Location?
 
@@ -81,9 +78,6 @@ final class NSPlayerView: NSView {
     
     windowLayer = rootLayer.superlayer?.superlayer?.superlayer
 
-    localizations = Localizations(videoAsset: videoAsset,
-                                  frameDuration: videoAsset.frameDuration.asMillis())
-
     queue = DispatchQueue(label: "Sharktopoda Video Queue: \(videoAsset.id)")
     setTimeObserver()
   }
@@ -119,10 +113,6 @@ extension NSPlayerView {
     }
   }
   
-  var showLocalizations: Bool {
-    UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations)
-  }
-
   var currentLocalization: Localization? {
     get { _currentLocalization }
     set {
@@ -135,6 +125,10 @@ extension NSPlayerView {
         conceptLayer?.removeFromSuperlayer()
       }
     }
+  }
+  
+  var localizations: Localizations? {
+    get { _videoAsset?.localizations }
   }
   
   var player: AVPlayer? {
@@ -164,69 +158,6 @@ extension NSPlayerView {
     get {
       videoAsset.fullSize
     }
-  }
-}
-
-// MARK: Localizations
-extension NSPlayerView {
-  func addLocalization(_ localization: Localization) -> Bool {
-    localization.resize(for: videoRect)
-    
-    guard let localizations = localizations,
-          localizations.add(localization) else { return false }
-
-    guard paused else { return true }
-    
-    let currentFrameNumber = localizations.frameNumber(elapsedTime: currentTime)
-    let localizationFrameNumber = localizations.frameNumber(for: localization)
-    
-    if showLocalizations,
-      currentFrameNumber == localizationFrameNumber {
-      DispatchQueue.main.async { [weak self] in
-        self?.playerLayer.addSublayer(localization.layer)
-      }
-    }
-
-    return true
-  }
-
-  func clearLocalizations() {
-    guard let localizations = localizations else { return }
-    
-    clearLocalizationLayers()
-    localizations.clear()
-  }
-  
-  func removeLocalizations(_ ids: [String]) -> [Bool] {
-    guard localizations != nil else {
-      return ids.map { _ in false }
-    }
-    
-    let result = ids.map { localizations!.remove(id: $0) }
-    displayPaused()
-    return result
-  }
-  
-  func deleteSelected() -> Bool {
-    guard let localizations = localizations else { return false }
-    conceptLayer?.removeFromSuperlayer()
-    return localizations.deleteSelected()
-  }
-  
-  func selectLocalizations(_ ids: [String]) -> [Bool] {
-    guard let localizations = localizations else {
-      return Array(repeating: false, count: ids.count)
-    }
-    
-    return localizations.select(ids: ids)
-  }
-  
-  func updateLocalization(_ control: ControlLocalization) -> Bool {
-    guard localizations != nil else { return false }
-
-    let result = localizations!.update(using: control)
-    displayPaused()
-    return result
   }
 }
 
@@ -302,6 +233,11 @@ extension NSPlayerView {
     }
     localizations?.clearSelected()
   }
+  
+  var showLocalizations: Bool {
+    UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations)
+  }
+
 }
 
 // MARK: Player time callback

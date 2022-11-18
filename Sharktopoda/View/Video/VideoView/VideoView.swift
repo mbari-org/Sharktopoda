@@ -9,11 +9,6 @@ import AVFoundation
 import SwiftUI
 
 struct VideoView: View {
-//  @Environment(\.openWindow) var openWindow
-//  @EnvironmentObject var sharktopodaData: SharktopodaData
-//  private var sharktopodaData: SharktopodaData?
-
-  
   var sharktopodaData: SharktopodaData
   var videoAsset: VideoAsset
   var keyInfo: KeyInfo = KeyInfo()
@@ -29,7 +24,7 @@ struct VideoView: View {
         .padding(0)
       Divider()
       VideoControlView()
-        .environmentObject(sharktopodaData)
+        .environmentObject(videoAsset)
         .padding(0)
     }
   }

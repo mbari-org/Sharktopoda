@@ -15,8 +15,6 @@ struct SharktopodaApp: App {
 
   @StateObject private var sharktopodaData = SharktopodaData()
 
-//  private let videoViewLauncher = VideoViewLauncher.launcher
-  
   init() {
     setAppDefaults()
   }

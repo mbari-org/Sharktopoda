@@ -19,10 +19,15 @@ struct ControlOpen: ControlRequest {
       return failed("Malformed URL")
     }
 
-    /// Fire and forget async operation
-    VideoViewLauncher.launcher.open(id: uuid, url: url)
-//    UDP.sharktopodaData.open(id: uuid, url: url)
-
+    /// Async load URL, then fire up the VideoView
+    Task {
+      if let videoAsset = await VideoAsset(id: uuid, url: url) {
+        DispatchQueue.main.async {
+          UDP.sharktopodaData.videoAssets[uuid] = videoAsset
+          // CxInc Fire up the VideoView for the asset
+        }
+      }
+    }
     return ok()
   }
 }

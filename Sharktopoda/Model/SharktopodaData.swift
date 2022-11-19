@@ -11,30 +11,20 @@ import SwiftUI
 
 final class SharktopodaData: ObservableObject {
   @Published var udpServer: UDPServer = UDP.server
-  @Published var udpClient: UDPClient?
   @Published var udpServerError: String? = nil
+  @Published var udpClient: UDPClient?
 
-  @Published var videoAssets = [String: VideoAsset]()
-  @Published var videoViews = [String: VideoView]()
-
+  /// Open video windows
   @Published var videoWindows = [String: VideoWindow]()
+  
+  /// Tmp video assets used during Control Open
+  @Published var tmpVideoAssets = [String: VideoAsset]()
 
   init() {
-    // This allows non-View related changes to sharktopoda data to notify observing Views
+    // Needed for non-View related changes to sharktopodaData to notify observing Views
     UDP.sharktopodaData = self
   }
   
-  func latestVideoView() -> VideoView? {
-    guard !videoViews.isEmpty else { return nil }
-
-    let views = Array(videoViews.values)
-    if let videoView = views.first(where: \.keyInfo.isKey) {
-      return videoView
-    }
-
-    return views.sorted(by: { $0 < $1 }).last
-  }
-
   func latestVideoWindow() -> VideoWindow? {
     guard !videoWindows.isEmpty else { return nil }
 

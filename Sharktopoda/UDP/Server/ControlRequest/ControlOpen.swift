@@ -23,7 +23,7 @@ struct ControlOpen: ControlRequest {
     Task {
       if let videoAsset = await VideoAsset(id: uuid, url: url) {
         DispatchQueue.main.async {
-          UDP.sharktopodaData.videoAssets[uuid] = videoAsset
+          UDP.sharktopodaData.tmpVideoAssets[uuid] = videoAsset
           let error = VideoWindow.open(id: uuid)
           if error != nil {
             print("ControlOpen error: \(error.debugDescription)")

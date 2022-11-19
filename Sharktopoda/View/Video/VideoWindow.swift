@@ -171,13 +171,8 @@ extension VideoWindow {
       DispatchQueue.main.async {
         videoWindow.makeKeyAndOrderFront(nil)
       }
-//    }
-//    if let videoWindow = UDP.sharktopodaData.videoWindows.values.first(where: { $0.url == url } ) {
-//      DispatchQueue.main.async {
-//        videoWindow.makeKeyAndOrderFront(nil)
-//      }
     } else {
-      guard let videoAsset = UDP.sharktopodaData.videoAssets[id] else {
+      guard let videoAsset = UDP.sharktopodaData.tmpVideoAssets[id] else {
         return OpenVideoError.notLoaded
       }
       
@@ -185,7 +180,7 @@ extension VideoWindow {
         return OpenVideoError.notPlayable
       }
       
-      UDP.sharktopodaData.videoAssets[id] = nil
+      UDP.sharktopodaData.tmpVideoAssets[id] = nil
       
       DispatchQueue.main.async {
         let videoWindow = VideoWindow(for: videoAsset)

@@ -35,16 +35,15 @@ final class SharktopodaData: ObservableObject {
     return views.sorted(by: { $0 < $1 }).last
   }
 
-  // CxInc
-//  func latestVideoWindow() -> VideoWindow? {
-//    guard !videoWindows.isEmpty else { return nil }
-//
-//    let windows: [VideoWindow] = Array(videoWindows.values)
-//
-//    if let videoWindow = windows.first(where: \.keyInfo.isKey) {
-//      return videoWindow
-//    }
-//
-//    return windows.sorted(by: { $0 < $1 }).last
-//  }
+  func latestVideoWindow() -> VideoWindow? {
+    guard !videoWindows.isEmpty else { return nil }
+
+    let windows: [VideoWindow] = Array(videoWindows.values)
+
+    if let videoWindow = windows.first(where: \.keyInfo.isKey) {
+      return videoWindow
+    }
+
+    return windows.sorted(by: { $0 < $1 }).last
+  }
 }

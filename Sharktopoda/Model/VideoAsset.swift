@@ -22,6 +22,7 @@ final class VideoAsset: Identifiable, ObservableObject {
   var frameDuration: CMTime
   var frameRate: Float
   var fullSize: NSSize
+  var isPlayable: Bool
   
   var localizations: Localizations?
   
@@ -34,6 +35,7 @@ final class VideoAsset: Identifiable, ObservableObject {
     do {
       let duration = try await avAsset.load(.duration)
       durationMillis = duration.asMillis()
+      isPlayable = try await avAsset.load(.isPlayable)
       
       let tracks = try await avAsset.loadTracks(withMediaType: AVMediaType.video)
       guard let track = tracks.first else { return nil }

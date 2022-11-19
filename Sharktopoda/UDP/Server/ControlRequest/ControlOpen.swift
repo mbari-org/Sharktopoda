@@ -24,6 +24,10 @@ struct ControlOpen: ControlRequest {
       if let videoAsset = await VideoAsset(id: uuid, url: url) {
         DispatchQueue.main.async {
           UDP.sharktopodaData.videoAssets[uuid] = videoAsset
+          let error = VideoWindow.open(id: uuid)
+          if error != nil {
+            print("ControlOpen error: \(error.debugDescription)")
+          }
           print("Video URL loaded")
         }
       }

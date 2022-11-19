@@ -25,12 +25,12 @@ struct SharktopodaApp: App {
     }
     .commands { SharktopodaCommands() }
 
-    WindowGroup("Video", for: VideoAsset.ID.self) { $videoId in
-      if let videoId = videoId,
-         sharktopodaData.videoAssets[videoId] != nil {
-        VideoView(sharktopodaData, videoId: videoId)
-      }
-    }
+//    WindowGroup("Video", for: VideoAsset.ID.self) { $videoId in
+//      if let videoId = videoId,
+//         let videoAsset = sharktopodaData.videoAssets[videoId] {
+//        VideoView(sharktopodaData, videoId: videoId)
+//      }
+//    }
     
     Settings {
       Preferences().environmentObject(sharktopodaData)

@@ -9,13 +9,12 @@ import AVFoundation
 import SwiftUI
 
 struct VideoView: View {
-  var sharktopodaData: SharktopodaData
+//  var sharktopodaData: SharktopodaData
   var videoAsset: VideoAsset
   var keyInfo: KeyInfo = KeyInfo()
   
-  init(_ model: SharktopodaData, videoId: String) {
-    videoAsset = model.videoAssets[videoId]!
-    sharktopodaData = model
+  init(_ model: VideoAsset) {
+    videoAsset = model
   }
 
   var body: some View {
@@ -30,9 +29,9 @@ struct VideoView: View {
   }
 }
 
-struct VideoView_Previews: PreviewProvider {
-  static var previews: some View {
-//    VideoView(id: "CxDebug").environmentObject(SharktopodaData())
-    VideoView(SharktopodaData(), videoId: "CxDebug")
-  }
-}
+//struct VideoView_Previews: PreviewProvider {
+//  static var previews: some View {
+////    VideoView(id: "CxDebug").environmentObject(SharktopodaData())
+//    VideoView(VideoAsset(), videoId: "CxDebug")
+//  }
+//}

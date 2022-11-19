@@ -10,45 +10,39 @@ import AVKit
 import SwiftUI
 
 final class VideoWindow: NSWindow {
-//  var videoPlayerView: VideoPlayerView
-//  var videoAsset: VideoAsset {
-//    videoPlayerView.videoAsset
-//  }
-//  var keyInfo: KeyInfo
-//
-//  init(for videoAsset: VideoAsset) {
-//    keyInfo = KeyInfo(keyTime: Date())
-//    videoPlayerView = VideoPlayerView(videoAsset: videoAsset)
-//
-//    let fullSize = videoAsset.fullSize
-//    super.init(
-//      contentRect: NSMakeRect(0, 0, fullSize.width, fullSize.height),
-//      styleMask: [.titled, .closable, .miniaturizable, .resizable],
-//      backing: .buffered,
-//      defer: false)
-//
-//    center()
-//    isReleasedWhenClosed = false
-//    title = videoAsset.id
-//
-//    contentView = NSHostingView(rootView: videoPlayerView)
-//
-//    delegate = self
-//    makeKeyAndOrderFront(nil)
-//  }
-//}
-//
-//extension VideoWindow {
-//  struct KeyInfo {
-//    var keyTime: Date
-//    var isKey: Bool = false
-//    
-//    static func <(lhs: KeyInfo, rhs: KeyInfo) -> Bool {
-//      lhs.keyTime < rhs.keyTime
-//    }
-//  }
-//}
-//
+  var videoView: VideoView
+  var keyInfo: KeyInfo
+  //
+  init(for videoAsset: VideoAsset) {
+    keyInfo = KeyInfo(keyTime: Date())
+    videoView = VideoView(videoAsset)
+    
+    let fullSize = videoAsset.fullSize
+    super.init(
+      contentRect: NSMakeRect(0, 0, fullSize.width, fullSize.height),
+      styleMask: [.titled, .closable, .miniaturizable, .resizable],
+      backing: .buffered,
+      defer: false)
+    
+    center()
+    isReleasedWhenClosed = false
+    title = videoAsset.id
+    
+    contentView = NSHostingView(rootView: videoView)
+    
+    delegate = self
+    makeKeyAndOrderFront(nil)
+  }
+  
+  var videoAsset: VideoAsset {
+    videoView.videoAsset
+  }
+  var url: URL {
+    videoView.videoAsset.url
+  }
+
+}
+
 ///// Convenience functions
 //extension VideoWindow {
 //  override func keyDown(with event: NSEvent) {
@@ -165,54 +159,62 @@ final class VideoWindow: NSWindow {
 //}
 //
 ///// Static functions
-//extension VideoWindow {
-//  static func <(lhs: VideoWindow, rhs: VideoWindow) -> Bool {
-//    lhs.keyInfo < rhs.keyInfo
-//  }
-//  
-//  static func open(path: String) -> Error? {
+extension VideoWindow {
+  static func open(path: String) -> Error? {
+    // CxInc
 //    open(id: path, url: URL(fileURLWithPath: path))
-//  }
-//  
-//  static func open(id: String, url: URL) -> Error? {
-//    
-//    
-//    
-////    if let videoWindow = UDP.sharktopodaData.videoWindows.values.first(where: { $0.url == url } ) {
-////      DispatchQueue.main.async {
-////        videoWindow.makeKeyAndOrderFront(nil)
-////      }
-////    } else {
-////      let videoAsset = VideoAsset(id: id, url: url)
-////      guard videoAsset.avAsset.isPlayable else {
-////        return OpenVideoError.notPlayable
-////      }
-////      DispatchQueue.main.async {
-////        let videoWindow = VideoWindow(for: videoAsset)
-////        videoWindow.makeKeyAndOrderFront(nil)
-////        UDP.sharktopodaData.videoWindows[id] = videoWindow
-////      }
-////    }
-//    return nil
-//  }
-//}
-//
-//extension VideoWindow: NSWindowDelegate {
-//  func windowWillClose(_ notification: Notification) {
-//    DispatchQueue.main.async {
-//      UDP.sharktopodaData.videoWindows.removeValue(forKey: self.videoAsset.id)
+    return OpenVideoError.unknown("CxInc VideoWindow.open(path)")
+  }
+  
+  static func open(id: String) -> Error? {
+    if let videoWindow = UDP.sharktopodaData.videoWindows[id] {
+      DispatchQueue.main.async {
+        videoWindow.makeKeyAndOrderFront(nil)
+      }
 //    }
-//  }
-//  
-//  func windowDidBecomeKey(_ notification: Notification) {
-//    keyInfo = KeyInfo(keyTime: Date(), isKey: true)
-//  }
-//  
-//  func windowDidResignKey(_ notification: Notification) {
-//    keyInfo = KeyInfo(keyTime: keyInfo.keyTime, isKey: false)
-//  }
-//  
-//  func windowDidResize(_ notification: Notification) {
+//    if let videoWindow = UDP.sharktopodaData.videoWindows.values.first(where: { $0.url == url } ) {
+//      DispatchQueue.main.async {
+//        videoWindow.makeKeyAndOrderFront(nil)
+//      }
+    } else {
+      guard let videoAsset = UDP.sharktopodaData.videoAssets[id] else {
+        return OpenVideoError.notLoaded
+      }
+      
+      guard videoAsset.isPlayable else {
+        return OpenVideoError.notPlayable
+      }
+      
+      UDP.sharktopodaData.videoAssets[id] = nil
+      
+      DispatchQueue.main.async {
+        let videoWindow = VideoWindow(for: videoAsset)
+        videoWindow.makeKeyAndOrderFront(nil)
+        UDP.sharktopodaData.videoWindows[id] = videoWindow
+      }
+    }
+    return nil
+  }
+}
+  
+extension VideoWindow: NSWindowDelegate {
+  func windowWillClose(_ notification: Notification) {
+    DispatchQueue.main.async {
+      // CxInc
+//      UDP.sharktopodaData.videoWindows.removeValue(forKey: self.videoAsset.id)
+    }
+  }
+  
+  func windowDidBecomeKey(_ notification: Notification) {
+    keyInfo = KeyInfo(keyTime: Date(), isKey: true)
+  }
+  
+  func windowDidResignKey(_ notification: Notification) {
+    keyInfo = KeyInfo(keyTime: keyInfo.keyTime, isKey: false)
+  }
+  
+  func windowDidResize(_ notification: Notification) {
+    // CxInc
 //    playerView.resized()
-//  }
+  }
 }

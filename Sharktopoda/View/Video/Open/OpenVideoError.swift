@@ -7,8 +7,10 @@
 
 import Foundation
 
-enum OpenVideoError: Error {
+enum OpenVideoError: Error, CustomDebugStringConvertible {
+  
   case invalidUrl
+  case notLoaded
   case notPlayable
   case notReachable
   case unknown(_ cause: String)
@@ -18,15 +20,22 @@ enum OpenVideoError: Error {
       case .invalidUrl:
         return "Invalid URL"
         
+      case .notLoaded:
+        return "Video not loaded"
+
       case .notPlayable:
-        return "Resource not playable"
-        
+        return "Video not playable"
+
       case .notReachable:
-        return "Video file not reachable"
-        
+        return "Video not reachable"
+
       case .unknown(let cause):
         return cause
     }
+  }
+
+  var debugDescription: String {
+    description
   }
   
   var localizedDescription: String {

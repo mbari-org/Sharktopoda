@@ -160,10 +160,18 @@ final class VideoWindow: NSWindow {
 //
 ///// Static functions
 extension VideoWindow {
-  static func open(path: String) -> Error? {
-    // CxInc
-//    open(id: path, url: URL(fileURLWithPath: path))
-    return OpenVideoError.unknown("CxInc VideoWindow.open(path)")
+  static func open(path: String) {
+    Task {
+      if let videoAsset = await VideoAsset(id: path, url: URL(fileURLWithPath: path)) {
+        DispatchQueue.main.async {
+          UDP.sharktopodaData.tmpVideoAssets[path] = videoAsset
+          if let error = VideoWindow.open(id: path) {
+            let openAlert = OpenAlert(path: path, error: error as! OpenVideoError)
+            openAlert.show()
+          }
+        }
+      }
+    }
   }
   
   static func open(id: String) -> Error? {

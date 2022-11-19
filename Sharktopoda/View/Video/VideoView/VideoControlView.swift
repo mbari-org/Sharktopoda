@@ -12,7 +12,7 @@ struct VideoControlView: View {
   @EnvironmentObject var videoAsset: VideoAsset
   
   var body: some View {
-    Text("Hey now")
+    Text("CxInc Video Control View")
   }
 }
 

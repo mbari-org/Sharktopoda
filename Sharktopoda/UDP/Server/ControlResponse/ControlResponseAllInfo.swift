@@ -12,14 +12,10 @@ struct ControlResponseAllInfo: ControlResponse {
   var status: ControlResponseStatus
   var videos: [ControlResponseInfo.VideoInfo]
   
-  // CxInc
-  init(using videoWindows: [VideoWindow]) {
+  init(with videos: [ControlResponseInfo.VideoInfo]) {
     response = .all
-//    status = .ok
-//    videos = videoWindows.map({ ControlResponseInfo.VideoInfo(using: $0) })
-    
-    status = .failed
-    videos = []
+    status = .ok
+    self.videos = videos
   }
 }
   

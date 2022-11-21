@@ -7,8 +7,4 @@
 import AppKit
 
 class SharktopodaAppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
-  func applicationDidFinishLaunching(_ notification: Notification) {
-    print("CxInc is SharktopodaAppDelegate.applicationDidFinishLaunching needed???")
-  }
-
 }

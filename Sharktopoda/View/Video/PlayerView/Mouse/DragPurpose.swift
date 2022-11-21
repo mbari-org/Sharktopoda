@@ -19,7 +19,7 @@ extension NSPlayerView {
     guard let anchor = dragAnchor else { return }
     dragPurpose = purpose
     
-    localizations?.clearSelected()
+    localizations.clearSelected()
     currentLocalization = nil
     
     let layer = shapeLayer(anchor)
@@ -43,8 +43,7 @@ extension NSPlayerView {
   func endDragPurpose(at endPoint: CGPoint) {
     if let purpose = dragPurpose,
        let layer = dragLayer,
-       let anchor = dragAnchor,
-       let localizations = localizations {
+       let anchor = dragAnchor {
 
       // CxTBD Parameterize min drag
       let totalDelta = anchor.delta(to: endPoint).abs()

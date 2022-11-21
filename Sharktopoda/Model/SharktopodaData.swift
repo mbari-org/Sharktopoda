@@ -25,6 +25,26 @@ final class SharktopodaData: ObservableObject {
     UDP.sharktopodaData = self
   }
   
+  func localizations(id: String) -> Localizations? {
+    guard let videoWindow = videoWindows[id] else { return nil}
+    return videoWindow.localizations
+  }
+  
+  func playerControl(id: String) -> PlayerControl? {
+    guard let videoWindow = videoWindows[id] else { return nil}
+    return videoWindow.playerControl
+  }
+
+  func playerView(id: String) -> PlayerView? {
+    guard let videoWindow = videoWindows[id] else { return nil}
+    return videoWindow.videoView.playerView
+  }
+
+  func videoAsset(id: String) -> VideoAsset? {
+    guard let videoWindow = videoWindows[id] else { return nil}
+    return videoWindow.videoAsset
+  }
+  
   func latestVideoWindow() -> VideoWindow? {
     guard !videoWindows.isEmpty else { return nil }
 

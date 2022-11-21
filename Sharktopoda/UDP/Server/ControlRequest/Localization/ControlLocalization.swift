@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ControlLocalization: Decodable, CustomStringConvertible {
+struct ControlLocalization: Decodable {
   var uuid: String
   var concept: String
   var elapsedTimeMillis: Int
@@ -17,8 +17,4 @@ struct ControlLocalization: Decodable, CustomStringConvertible {
   var width: Int
   var height: Int
   @Default<String.LocalizationHexColor> var color: String
-
-  var description: String {
-    "CxInc ControlLocalization.description"
-  }
 }

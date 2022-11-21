@@ -24,7 +24,7 @@ final class VideoAsset: Identifiable, ObservableObject {
   var fullSize: NSSize
   var isPlayable: Bool
   
-  var localizations: Localizations?
+//  var localizations: Localizations?
   
   init?(id: String, url: URL) async {
     self.id = id
@@ -39,6 +39,7 @@ final class VideoAsset: Identifiable, ObservableObject {
       
       let tracks = try await avAsset.loadTracks(withMediaType: AVMediaType.video)
       guard let track = tracks.first else { return nil }
+      avAssetTrack = track
       
       frameDuration = try await track.load(.minFrameDuration)
       frameRate = try await track.load(.nominalFrameRate)
@@ -47,12 +48,6 @@ final class VideoAsset: Identifiable, ObservableObject {
       let trackSize = try await track.load(.naturalSize)
       let size = trackSize.applying(trackTransform)
       fullSize = NSMakeSize(abs(size.width), abs(size.height))
-      
-      self.avAssetTrack = track
-      
-      localizations = Localizations(videoAsset: self,
-                                    frameDuration: frameDuration.asMillis())
-
     } catch let error {
       print("CxInc VideoAsset error: \(error)")
       return nil

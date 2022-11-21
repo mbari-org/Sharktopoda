@@ -10,22 +10,30 @@ import SwiftUI
 
 struct VideoView: View {
 //  var sharktopodaData: SharktopodaData
-  var videoAsset: VideoAsset
+  var playerView: PlayerView
   var keyInfo: KeyInfo = KeyInfo()
   
-  init(_ model: VideoAsset) {
-    videoAsset = model
+  init(_ videoAsset: VideoAsset) {
+    playerView = PlayerView(videoAsset: videoAsset)
   }
 
   var body: some View {
     VStack {
-      PlayerView(videoAsset: videoAsset)
+      playerView
         .padding(0)
       Divider()
       VideoControlView()
         .environmentObject(videoAsset)
         .padding(0)
     }
+  }
+  
+  var player: AVPlayer {
+    playerView.player
+  }
+  
+  var videoAsset: VideoAsset {
+    playerView.videoAsset
   }
 }
 

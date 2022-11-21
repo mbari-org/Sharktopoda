@@ -12,10 +12,23 @@ import SwiftUI
 final class VideoWindow: NSWindow {
   var videoView: VideoView
   var keyInfo: KeyInfo
+
+  let localizations: Localizations
+  let playerControl: PlayerControl
+
   //
   init(for videoAsset: VideoAsset) {
     keyInfo = KeyInfo(keyTime: Date())
     videoView = VideoView(videoAsset)
+    
+    let seekTolerance = CMTimeMultiplyByFloat64(videoAsset.frameDuration,
+                                                multiplier: 0.25)
+    
+    playerControl = PlayerControl(player: videoView.player,
+                                       seekTolerance: seekTolerance)
+    
+    localizations = Localizations(frameDuration: videoAsset.frameDuration.asMillis(),
+                                  videoId: videoAsset.id)
     
     let fullSize = videoAsset.fullSize
     super.init(
@@ -34,13 +47,17 @@ final class VideoWindow: NSWindow {
     makeKeyAndOrderFront(nil)
   }
   
-  var videoAsset: VideoAsset {
-    videoView.videoAsset
+  var playerView: PlayerView {
+    videoView.playerView
   }
+  
   var url: URL {
     videoView.videoAsset.url
   }
 
+  var videoAsset: VideoAsset {
+    videoView.videoAsset
+  }
 }
 
 ///// Convenience functions
@@ -87,7 +104,7 @@ final class VideoWindow: NSWindow {
 //    playerView.canStep(steps)
 //  }
 //  
-//  func playbackTime() -> Int {
+//  func playbackTime() -> Int {x
 //    playerView.currentTime
 //  }
 //

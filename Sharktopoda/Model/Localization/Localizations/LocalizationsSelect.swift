@@ -16,16 +16,15 @@ extension Localizations {
     sendIdsMessage(.selectLocalizations, ids: [])
   }
   
-  func deleteSelected() -> Bool {
-    guard !selected.isEmpty else { return false }
+  func deleteSelected() {
+    guard !selected.isEmpty else { return }
     
     sendIdsMessage(.removeLocalizations, ids: selectedIds())
     
     selected.forEach { let _ = remove(id: $0) }
 
+    // CxInc
 //    sendIdsMessage(.selectLocalizations, ids: [])
-    
-    return true
   }
   
   func select(id: String, clear: Bool = true) -> Bool {
@@ -43,19 +42,16 @@ extension Localizations {
     return true
   }
   
-  func select(ids: [String]) -> [Bool] {
+  func select(ids: [String]) {
     clearSelected()
     
-    let results = ids.map { id in
-      guard let localization = storage[id] else { return false }
+    ids.forEach { id in
+      guard let localization = storage[id] else { return }
       selected.insert(id)
       localization.select(true)
-      return true
     }
     
     sendIdsMessage(.selectLocalizations, ids: ids)
-    
-    return results
   }
   
   func select(using rect: CGRect, at elapsedTime: Int) {

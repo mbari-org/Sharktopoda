@@ -9,6 +9,8 @@ import AVKit
 import SwiftUI
 
 struct PlayerView: NSViewRepresentable {
+//  @EnvironmentObject
+  
   let nsPlayerView: NSPlayerView
   
   init(videoAsset: VideoAsset) {
@@ -21,4 +23,19 @@ struct PlayerView: NSViewRepresentable {
   
   func updateNSView(_ nsView: NSViewType, context: Context) {}
   
+  var currentTime: Int {
+    nsPlayerView.currentTime
+  }
+  
+  var player: AVPlayer {
+    nsPlayerView.player
+  }
+  
+  var videoAsset: VideoAsset {
+    nsPlayerView.videoAsset
+  }
+  
+  var videoRect: CGRect {
+    nsPlayerView.videoRect
+  }
 }

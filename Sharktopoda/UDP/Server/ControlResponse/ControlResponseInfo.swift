@@ -15,15 +15,14 @@ struct ControlResponseInfo: ControlResponse {
     var frameRate: Float
     var isKey: Bool
 
-    // CxInc
-//    init(using videoWindow: VideoWindow) {
-//      let videoAsset = videoWindow.videoAsset
-//      self.uuid = videoAsset.id
-//      self.url = videoAsset.url.absoluteString
-//      self.durationMillis = videoAsset.durationMillis
-//      self.frameRate = videoAsset.frameRate
-//      self.isKey = videoWindow.keyInfo.isKey
-//    }
+    init(using videoWindow: VideoWindow) {
+      let videoAsset = videoWindow.videoAsset
+      self.uuid = videoAsset.id
+      self.url = videoAsset.url.absoluteString
+      self.durationMillis = videoAsset.durationMillis
+      self.frameRate = videoAsset.frameRate
+      self.isKey = videoWindow.keyInfo.isKey
+    }
   }
   
   var response: ControlCommand
@@ -45,8 +44,8 @@ struct ControlResponseInfo: ControlResponse {
     self.isKey = videoInfo.isKey
   }
 
-//  init(using videoWindow: VideoWindow) {
-//    let windowInfo = VideoInfo(using: videoWindow)
-//    self.init(using: windowInfo)
-//  }
+  init(using videoWindow: VideoWindow) {
+    let windowInfo = VideoInfo(using: videoWindow)
+    self.init(using: windowInfo)
+  }
 }

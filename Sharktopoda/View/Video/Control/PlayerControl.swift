@@ -21,10 +21,8 @@ struct PlayerControl {
     player.currentItem
   }
   
-  var currentTime: Int {
-    // CxInc
-//    player.currentTime
-    return 0
+  var currentTime: Int? {
+    player.currentItem?.currentTime().asMillis()
   }
 
   func pause() {

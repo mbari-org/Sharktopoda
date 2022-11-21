@@ -12,9 +12,8 @@ struct ControlState: ControlRequest {
   var uuid: String
   
   func process() -> ControlResponse {
-    if let window = UDP.sharktopodaData.videoWindows[uuid] {
-      return ControlResponseState(using: window)
+    withPlayerControl(id: uuid) { playerControl in
+      ControlResponseState(using: playerControl)
     }
-    return failed("No video for uuid")
   }
 }

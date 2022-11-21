@@ -13,14 +13,23 @@ struct ControlAddLocalizations: ControlRequest {
   var localizations: [ControlLocalization]
   
   func process() -> ControlResponse {
-//    guard let videoWindow = UDP.sharktopodaData.videoWindows[uuid] else {
-//      return failed("No video for uuid")
-//    }
-    
-//    let _ = videoWindow.addLocalizations(localizations)
-//
-//    return ok()
-    
-    return failed("CxInc")
+    withVideoWindow(id: uuid) { videoWindow in
+      let existingLocalizations = videoWindow.localizations
+      let fullSize = videoWindow.videoAsset.fullSize
+      let playerControl = videoWindow.playerControl
+      let playerView = videoWindow.playerView
+      
+      localizations
+        .map { Localization(from: $0, with: fullSize) }
+        .forEach {
+          $0.resize(for: playerView.videoRect)
+          existingLocalizations.add($0)
+
+          guard playerControl.paused else { return }
+          
+//          playerView.addLocalization($0, time: <#T##Int#>)
+        }
+      return ok()
+    }
   }
 }

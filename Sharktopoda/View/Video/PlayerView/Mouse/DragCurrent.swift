@@ -33,7 +33,7 @@ extension NSPlayerView {
     
     localization.region = region(from: localization.layer)
     
-    localizations?.sendLocalizationsMessage(.updateLocalizations,
+    localizations.sendLocalizationsMessage(.updateLocalizations,
                                             ids: [localization.id])
 
     currentLocation = nil

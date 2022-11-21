@@ -17,7 +17,7 @@ extension NSPlayerView {
     /// If did not click in current location mouse layer, unselect any potentially selected locatizations
     guard currentLayer.contains(layerPoint) else {
       if let id = currentLocalization?.id {
-        localizations?.unselect(id: id)
+        localizations.unselect(id: id)
         currentLocalization = nil
       }
       return nil
@@ -29,8 +29,7 @@ extension NSPlayerView {
   
   /// Process command click for selecting a Localization
   func commandSelect(at playerPoint: CGPoint) -> Bool {
-    guard let localizations = localizations,
-          let mouseLocalization = mousedLocalization(at: playerPoint) else {
+    guard let mouseLocalization = mousedLocalization(at: playerPoint) else {
       return false
     }
     
@@ -41,11 +40,11 @@ extension NSPlayerView {
   func currentSelect(_ mousePoint: CGPoint) -> CGRect.Location? {
     guard let mouseLocalization = mousedLocalization(at: mousePoint) else {
       currentLocalization = nil
-      localizations?.clearSelected()
+      localizations.clearSelected()
       return nil
     }
     
-    let _ = localizations?.select(id: mouseLocalization.id) 
+    let _ = localizations.select(id: mouseLocalization.id)
     let layer = mouseLocalization.layer
     let layerPoint = layer.convertSuperPoint(mousePoint)
     currentLocalization = mouseLocalization
@@ -76,7 +75,7 @@ extension NSPlayerView {
   private func mousedLocalization(at point: NSPoint) -> Localization? {
     guard paused else { return nil }
     guard showLocalizations else { return nil }
-    guard let pausedLocalizations = localizations?.fetch(.paused, at: currentTime) else { return nil }
+    guard let pausedLocalizations = localizations.fetch(.paused, at: currentTime) else { return nil }
     guard !pausedLocalizations.isEmpty else { return nil }
     
     let mousedLocalizations = pausedLocalizations.filter {

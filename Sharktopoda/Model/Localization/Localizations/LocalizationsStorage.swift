@@ -8,15 +8,13 @@
 import Foundation
 
 extension Localizations {
-  func add(_ localization: Localization) -> Bool {
-    guard storage[localization.id] == nil else { return false }
+  func add(_ localization: Localization) {
+    guard storage[localization.id] == nil else { return }
     
     storage[localization.id] = localization
     pauseFrameInsert(localization)
     forwardFrameInsert(localization)
     reverseFrameInsert(localization)
-    
-    return true
   }
   
   func clear() {
@@ -29,8 +27,8 @@ extension Localizations {
     storage.removeAll()
   }
   
-  func remove(id: String) -> Bool {
-    guard let localization = storage[id] else { return false }
+  func remove(id: String) {
+    guard let localization = storage[id] else { return }
     
     pauseFrameRemove(localization)
     forwardFrameRemove(localization)
@@ -40,12 +38,10 @@ extension Localizations {
     
     localization.layer.removeFromSuperlayer()
     storage[id] = nil
-    
-    return true
   }
   
-  func update(using control: ControlLocalization) -> Bool {
-    guard let stored = storage[control.uuid] else { return false }
+  func update(using control: ControlLocalization) {
+    guard let stored = storage[control.uuid] else { return }
     
     if stored.sameTime(as: control) {
       pauseFrameRemove(stored)
@@ -60,8 +56,6 @@ extension Localizations {
     } else {
       stored.update(using: control)
     }
-    
-    return true
   }
 }
 

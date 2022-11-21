@@ -17,12 +17,12 @@ class Localizations {
   
   var selected = Set<String>()
   
-  let videoAsset: VideoAsset
   let frameDuration: Int
+  let videoId: String
   
-  init(videoAsset: VideoAsset, frameDuration: Int) {
-    self.videoAsset = videoAsset
+  init(frameDuration: Int, videoId: String) {
     self.frameDuration = frameDuration
+    self.videoId = videoId
   }
 }
 

@@ -21,4 +21,8 @@ extension PlayerView {
       playerLayer.addSublayer(localization.layer)
     }
   }
+  
+  func clearLocalizations() {
+    nsPlayerView.clearLocalizationLayers()
+  }
 }

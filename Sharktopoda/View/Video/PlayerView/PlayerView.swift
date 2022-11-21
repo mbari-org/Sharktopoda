@@ -28,6 +28,10 @@ struct PlayerView: NSViewRepresentable {
     nsPlayerView.currentTime
   }
   
+  func displayPaused() {
+    nsPlayerView.displayPaused()
+  }
+  
   var id: String {
     videoAsset.id
   }
@@ -38,6 +42,10 @@ struct PlayerView: NSViewRepresentable {
   
   var playerLayer: AVPlayerLayer {
     nsPlayerView.playerLayer
+  }
+  
+  var showLocalizations: Bool {
+    nsPlayerView.showLocalizations
   }
   
   var videoAsset: VideoAsset {

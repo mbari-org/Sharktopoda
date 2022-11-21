@@ -176,6 +176,7 @@ extension NSPlayerView {
 // MARK: Pause layers
 extension NSPlayerView {
   func displayPaused() {
+    clearLocalizationLayers()
     displayLocalizations(.paused, at: currentTime)
   }
 }
@@ -230,7 +231,6 @@ extension NSPlayerView {
     DispatchQueue.main.async {
       layers.forEach { $0.removeFromSuperlayer() }
     }
-    localizations.clearSelected()
   }
   
   var showLocalizations: Bool {

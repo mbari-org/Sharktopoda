@@ -26,12 +26,7 @@ struct PlayerControl {
   }
 
   func pause() {
-    guard !paused else { return }
-    
     player.pause()
-    // CxInc
-//    clearLocalizationLayers()
-//    displayPaused()
   }
   
   var paused: Bool {
@@ -58,21 +53,12 @@ struct PlayerControl {
     player.rate
   }
   
-  func seek(elapsed: Int) {
-    guard paused else { return }
-
-    // CxInc
-//    clearLocalizationLayers()
-    
+  func seek(elapsed: Int, done: @escaping (Bool) -> Void) {
+    player.pause()
     player.seek(to: CMTime.fromMillis(elapsed),
                 toleranceBefore: seekTolerance,
-                toleranceAfter: seekTolerance) { done in
-      if done,
-         UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations) {
-        // CxInc
-//        self?.displayPaused()
-      }
-    }
+                toleranceAfter: seekTolerance,
+                completionHandler: done)
   }
   
   func step(_ steps: Int) {

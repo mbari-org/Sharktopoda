@@ -13,8 +13,17 @@ struct ControlSeek: ControlRequest {
   let elapsedTimeMillis: Int
   
   func process() -> ControlResponse {
-    withPlayerControl(id: uuid) { playerControl in
-      playerControl.seek(elapsed: elapsedTimeMillis)
+    withVideoWindow(id: uuid) { videoWindow in
+      let playerControl = videoWindow.playerControl
+      let playerView = videoWindow.playerView
+      let localizations = videoWindow.localizations
+      playerControl.seek(elapsed: elapsedTimeMillis) { done in
+        DispatchQueue.main.async {
+          localizations.clearSelected()
+          // CxTBD Investigate layer flicker
+          playerView.displayPaused()
+        }
+      }
       return ok()
     }
   }

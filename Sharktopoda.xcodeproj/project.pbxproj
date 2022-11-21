@@ -61,7 +61,6 @@
 		E280384E292BD5400017E28C /* PlayerViewLocalizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E280384D292BD5400017E28C /* PlayerViewLocalizations.swift */; };
 		E2837B3C29103DBD00FC4CC2 /* NSPlayerViewControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2837B3B29103DBD00FC4CC2 /* NSPlayerViewControl.swift */; };
 		E2837B4629104BF700FC4CC2 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2837B4529104BF700FC4CC2 /* PlayerView.swift */; };
-		E2837B4829104C6B00FC4CC2 /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2837B4729104C6B00FC4CC2 /* VideoPlayerView.swift */; };
 		E28C681F290C6D5D00987828 /* CGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28C681E290C6D5D00987828 /* CGRect.swift */; };
 		E28C6821290C714D00987828 /* CAShapeLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28C6820290C714D00987828 /* CAShapeLayer.swift */; };
 		E28CEF00291DF282009E73B3 /* ClientCommandLocalizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28CEEFF291DF282009E73B3 /* ClientCommandLocalizations.swift */; };
@@ -211,7 +210,6 @@
 		E280384D292BD5400017E28C /* PlayerViewLocalizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewLocalizations.swift; sourceTree = "<group>"; };
 		E2837B3B29103DBD00FC4CC2 /* NSPlayerViewControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSPlayerViewControl.swift; sourceTree = "<group>"; };
 		E2837B4529104BF700FC4CC2 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
-		E2837B4729104C6B00FC4CC2 /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
 		E28C681E290C6D5D00987828 /* CGRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRect.swift; sourceTree = "<group>"; };
 		E28C6820290C714D00987828 /* CAShapeLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAShapeLayer.swift; sourceTree = "<group>"; };
 		E28CEEFF291DF282009E73B3 /* ClientCommandLocalizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientCommandLocalizations.swift; sourceTree = "<group>"; };
@@ -322,7 +320,6 @@
 			isa = PBXGroup;
 			children = (
 				E2F3A22F2925513B00F2551F /* VideoView.swift */,
-				E2837B4729104C6B00FC4CC2 /* VideoPlayerView.swift */,
 				E2F3A233292570FF00F2551F /* VideoViewKeyInfo.swift */,
 				E2020D76292834770090B60B /* VideoControlView.swift */,
 			);
@@ -906,7 +903,6 @@
 				E28CEF00291DF282009E73B3 /* ClientCommandLocalizations.swift in Sources */,
 				E2675E2A28DB52C600F5F114 /* ControlUnknown.swift in Sources */,
 				E2BC08E728EB7703007F4B5D /* CMTime.swift in Sources */,
-				E2837B4829104C6B00FC4CC2 /* VideoPlayerView.swift in Sources */,
 				E2C22ED528D36832003CD976 /* Localization.swift in Sources */,
 				E2803847292931E60017E28C /* PlayerControl.swift in Sources */,
 				E28CEF02291DF42B009E73B3 /* UDPMessageCoder.swift in Sources */,

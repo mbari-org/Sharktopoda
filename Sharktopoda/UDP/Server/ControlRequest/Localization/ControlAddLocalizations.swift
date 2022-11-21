@@ -27,7 +27,7 @@ struct ControlAddLocalizations: ControlRequest {
 
           guard playerControl.paused else { return }
           
-//          playerView.addLocalization($0, time: <#T##Int#>)
+          playerView.addLocalization($0)
         }
       return ok()
     }

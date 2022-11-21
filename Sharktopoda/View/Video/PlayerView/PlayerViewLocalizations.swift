@@ -10,15 +10,15 @@ import Foundation
 extension PlayerView {
   func addLocalization(_ localization: Localization) {
     guard nsPlayerView.showLocalizations else { return }
+    guard let localizations = sharktopodaData.localizations(id: id) else { return }
+            
+    let currentFrameNumber = localizations.frameNumber(elapsedTime: currentTime)
+    let localizationFrameNumber = localizations.frameNumber(for: localization)
 
-    // CxInc
-//    let currentFrameNumber = localizations.frameNumber(elapsedTime: currentTime)
-//    let localizationFrameNumber = localizations.frameNumber(for: localization)
-//    if showLocalizations,
-//       currentFrameNumber == localizationFrameNumber {
-//      DispatchQueue.main.async { [weak self] in
-//        self?.playerLayer.addSublayer(localization.layer)
-//      }
-//    }
+    guard currentFrameNumber == localizationFrameNumber else { return }
+
+    DispatchQueue.main.async {
+      playerLayer.addSublayer(localization.layer)
+    }
   }
 }

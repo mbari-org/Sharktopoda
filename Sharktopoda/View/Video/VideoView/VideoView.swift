@@ -9,12 +9,11 @@ import AVFoundation
 import SwiftUI
 
 struct VideoView: View {
-//  var sharktopodaData: SharktopodaData
   var playerView: PlayerView
   var keyInfo: KeyInfo = KeyInfo()
   
-  init(_ videoAsset: VideoAsset) {
-    playerView = PlayerView(videoAsset: videoAsset)
+  init(videoAsset: VideoAsset, sharktopodaData: SharktopodaData) {
+    playerView = PlayerView(videoAsset: videoAsset, sharktopodaData: sharktopodaData)
   }
 
   var body: some View {

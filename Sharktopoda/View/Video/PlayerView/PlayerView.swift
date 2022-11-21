@@ -9,12 +9,13 @@ import AVKit
 import SwiftUI
 
 struct PlayerView: NSViewRepresentable {
-//  @EnvironmentObject
+  let sharktopodaData: SharktopodaData
   
   let nsPlayerView: NSPlayerView
   
-  init(videoAsset: VideoAsset) {
+  init(videoAsset: VideoAsset, sharktopodaData: SharktopodaData) {
     nsPlayerView = NSPlayerView(videoAsset: videoAsset)
+    self.sharktopodaData = sharktopodaData
   }
   
   func makeNSView(context: Context) -> some NSView {
@@ -27,8 +28,16 @@ struct PlayerView: NSViewRepresentable {
     nsPlayerView.currentTime
   }
   
+  var id: String {
+    videoAsset.id
+  }
+  
   var player: AVPlayer {
     nsPlayerView.player
+  }
+  
+  var playerLayer: AVPlayerLayer {
+    nsPlayerView.playerLayer
   }
   
   var videoAsset: VideoAsset {

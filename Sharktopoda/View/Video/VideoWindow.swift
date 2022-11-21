@@ -19,7 +19,8 @@ final class VideoWindow: NSWindow {
   //
   init(for videoAsset: VideoAsset) {
     keyInfo = KeyInfo(keyTime: Date())
-    videoView = VideoView(videoAsset)
+    
+    videoView = VideoView(videoAsset: videoAsset, sharktopodaData: UDP.sharktopodaData)
     
     let seekTolerance = CMTimeMultiplyByFloat64(videoAsset.frameDuration,
                                                 multiplier: 0.25)

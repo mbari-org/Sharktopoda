@@ -13,7 +13,11 @@ struct ControlPlay: ControlRequest {
   @Default<Float.PlaybackRate> var rate: Float
 
   func process() -> ControlResponse {
-    withPlayerControl(id: uuid) { playerControl in
+    withVideoWindow(id: uuid) { videoWindow in
+      let playerControl = videoWindow.playerControl
+      let playerView = videoWindow.playerView
+      
+      playerView.clear()
       playerControl.play(rate: rate)
       return ok()
     }

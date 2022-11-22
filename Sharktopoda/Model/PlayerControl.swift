@@ -8,9 +8,18 @@
 import AVFoundation
 import Foundation
 
-struct PlayerControl {
+final class PlayerControl: Identifiable, ObservableObject {
+  let id: String
   let player: AVPlayer
   let seekTolerance: CMTime
+  
+  var previousRate: Float = 0.0
+  
+  init(id: String, player: AVPlayer, seekTolerance: CMTime) {
+    self.id = id
+    self.player = player
+    self.seekTolerance = seekTolerance
+  }
   
   func canStep(_ steps: Int) -> Bool {
     guard let item = currentItem else { return false }
@@ -26,6 +35,7 @@ struct PlayerControl {
   }
 
   func pause() {
+    previousRate = rate
     player.pause()
   }
   
@@ -33,8 +43,13 @@ struct PlayerControl {
     rate == 0.0
   }
   
+  func play() {
+    play(rate: previousRate)
+  }
+  
   func play(rate: Float) {
     player.rate = rate
+    previousRate = rate
   }
   
   var rate: Float {

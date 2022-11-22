@@ -36,9 +36,15 @@ extension VideoWindow {
     /// Space:  Toggle play/pause forward
     /// Ctrl-Space:  Toggle play/pause and direction
     if event.keyCode == KeyCode.space.rawValue {
-      let playDirection: Float = isControl(event) ? -1 : 1
-      let playRate = playDirection * videoValues.rate
-      playerControl.paused ? playerControl.play(rate: playRate) : pause()
+      if !playerControl.paused {
+        playerControl.pause()
+        return
+      }
+      if isControl(event) {
+        playerControl.play(rate: -1 * playerControl.previousRate)
+        return
+      }
+      playerControl.play()
       return
     }
     

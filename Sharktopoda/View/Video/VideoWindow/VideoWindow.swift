@@ -16,8 +16,6 @@ final class VideoWindow: NSWindow {
   let localizations: Localizations
   var playerControl: PlayerControl
   
-  var videoValues = VideoValues()
-  
   /// Queue on which off-main work is done
   let queue: DispatchQueue
 
@@ -30,7 +28,8 @@ final class VideoWindow: NSWindow {
     let seekTolerance = CMTimeMultiplyByFloat64(videoAsset.frameDuration,
                                                 multiplier: 0.25)
     
-    playerControl = PlayerControl(player: videoView.player,
+    playerControl = PlayerControl(id: videoAsset.id,
+                                  player: videoView.player,
                                   seekTolerance: seekTolerance)
     
     localizations = Localizations(frameDuration: videoAsset.frameDuration.asMillis(),

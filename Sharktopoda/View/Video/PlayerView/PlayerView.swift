@@ -23,6 +23,10 @@ struct PlayerView: NSViewRepresentable {
   }
   
   func updateNSView(_ nsView: NSViewType, context: Context) {}
+
+  func clearConcept() {
+    nsPlayerView.conceptLayer?.removeFromSuperlayer()
+  }
   
   var currentTime: Int {
     nsPlayerView.currentTime

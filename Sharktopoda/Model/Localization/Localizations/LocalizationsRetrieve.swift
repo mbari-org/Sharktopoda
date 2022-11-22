@@ -20,22 +20,21 @@ extension Localizations {
     }
   }
   
-  func ids(for direction: PlayerControl.PlayDirection, at elapsedTime: Int) -> [String]? {
+  func ids(for direction: PlayerControl.PlayDirection, at elapsedTime: Int) -> [String] {
     guard let frames = frames(for: direction),
-          !frames.isEmpty else { return nil }
+          !frames.isEmpty else { return [] }
     
     let index = frameIndex(for: frames, at: elapsedTime)
-    guard index != frames.count else { return nil }
+    guard index != frames.count else { return [] }
     
     let frame = frames[index]
-    guard frame.frameNumber == frameNumber(elapsedTime: elapsedTime) else { return nil }
+    guard frame.frameNumber == frameNumber(elapsedTime: elapsedTime) else { return [] }
     
     return frame.ids
-    
   }
   
-  func fetch(_ direction: PlayerControl.PlayDirection, at elapsedTime: Int) -> [Localization]? {
-    guard let ids = ids(for: direction, at: elapsedTime) else { return nil }
+  func fetch(_ direction: PlayerControl.PlayDirection, at elapsedTime: Int) -> [Localization] {
+    let ids = ids(for: direction, at: elapsedTime)
     
     return ids.reduce(into: [Localization]()) { acc, id in
       if let localization = storage[id] {

@@ -55,7 +55,7 @@ extension Localizations {
   }
   
   func select(using rect: CGRect, at elapsedTime: Int) {
-    guard let pausedLocalizations = fetch(.paused, at: elapsedTime) else { return }
+    let pausedLocalizations = fetch(.paused, at: elapsedTime)
     
     let ids = pausedLocalizations
       .filter { rect.intersects($0.layer.frame) }

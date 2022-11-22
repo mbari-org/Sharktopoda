@@ -75,9 +75,9 @@ extension NSPlayerView {
   private func mousedLocalization(at point: NSPoint) -> Localization? {
     guard paused else { return nil }
     guard showLocalizations else { return nil }
-    guard let pausedLocalizations = localizations.fetch(.paused, at: currentTime) else { return nil }
-    guard !pausedLocalizations.isEmpty else { return nil }
-    
+
+    let pausedLocalizations = localizations.fetch(.paused, at: currentTime)
+
     let mousedLocalizations = pausedLocalizations.filter {
       $0.layer.containsSuperPoint(point)
     }

@@ -171,7 +171,7 @@ extension NSPlayerView {
 //    guard paused else { return }
     
     /// Resize paused localizations on main queue to see immediate effect
-    guard let pausedLocalizations = localizations.fetch(.paused, at: currentTime) else { return }
+    let pausedLocalizations = localizations.fetch(.paused, at: currentTime)
 
     let videoRect = self.videoRect
     DispatchQueue.main.async {
@@ -193,7 +193,8 @@ extension NSPlayerView {
 extension NSPlayerView {
   func displayLocalizations(_ direction: PlayerControl.PlayDirection, at elapsedTime: Int) {
     guard showLocalizations else { return }
-    guard let localizations = localizations.fetch(direction, at: elapsedTime) else { return }
+    
+    let localizations = localizations.fetch(direction, at: elapsedTime)
     
     DispatchQueue.main.async { [weak self] in
       localizations.forEach { self?.playerLayer.addSublayer($0.layer) }
@@ -201,8 +202,9 @@ extension NSPlayerView {
   }
   
   func clearLocalizations(_ direction: PlayerControl.PlayDirection, at elapsedTime: Int) {
-    guard let fetched = localizations.fetch(direction, at: elapsedTime) else { return }
-    let layers = fetched.map(\.layer)
+    let layers = localizations
+      .fetch(direction, at: elapsedTime)
+      .map(\.layer)
 
     DispatchQueue.main.async {
       layers.forEach { $0.removeFromSuperlayer() }

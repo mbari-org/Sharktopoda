@@ -438,6 +438,7 @@
 		E28CEF05291E9BCC009E73B3 /* Localizations */ = {
 			isa = PBXGroup;
 			children = (
+				E2505D5928EF91960027F280 /* Localizations.swift */,
 				E28CEF06291E9BE5009E73B3 /* LocalizationsStorage.swift */,
 				E28CEF08291E9C82009E73B3 /* LocalizationsRetrieve.swift */,
 				E28CEF0A291E9CCF009E73B3 /* LocalizationsFrames.swift */,
@@ -673,7 +674,6 @@
 			children = (
 				E28CEF05291E9BCC009E73B3 /* Localizations */,
 				E2C22ED428D36832003CD976 /* Localization.swift */,
-				E2505D5928EF91960027F280 /* Localizations.swift */,
 				E2D1C84D291302EF00961A0A /* LocalizationFrame.swift */,
 			);
 			path = Localization;

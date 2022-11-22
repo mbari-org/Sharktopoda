@@ -26,7 +26,7 @@ final class VideoWindow: NSWindow {
                                                 multiplier: 0.25)
     
     playerControl = PlayerControl(player: videoView.player,
-                                       seekTolerance: seekTolerance)
+                                  seekTolerance: seekTolerance)
     
     localizations = Localizations(frameDuration: videoAsset.frameDuration.asMillis(),
                                   videoId: videoAsset.id)

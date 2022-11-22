@@ -56,8 +56,6 @@
 		E2675E3428DB7A4000F5F114 /* ControlAdvance.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E3328DB7A4000F5F114 /* ControlAdvance.swift */; };
 		E280384529284A380017E28C /* VideoWindowKeyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E280384429284A380017E28C /* VideoWindowKeyInfo.swift */; };
 		E2803847292931E60017E28C /* PlayerControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2803846292931E60017E28C /* PlayerControl.swift */; };
-		E280384A292A75BC0017E28C /* LocalizationsControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2803849292A75BC0017E28C /* LocalizationsControl.swift */; };
-		E280384C292A75C90017E28C /* LayersControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E280384B292A75C90017E28C /* LayersControl.swift */; };
 		E280384E292BD5400017E28C /* PlayerViewLocalizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E280384D292BD5400017E28C /* PlayerViewLocalizations.swift */; };
 		E2837B3C29103DBD00FC4CC2 /* NSPlayerViewControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2837B3B29103DBD00FC4CC2 /* NSPlayerViewControl.swift */; };
 		E2837B4629104BF700FC4CC2 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2837B4529104BF700FC4CC2 /* PlayerView.swift */; };
@@ -205,8 +203,6 @@
 		E2675E3328DB7A4000F5F114 /* ControlAdvance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlAdvance.swift; sourceTree = "<group>"; };
 		E280384429284A380017E28C /* VideoWindowKeyInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoWindowKeyInfo.swift; sourceTree = "<group>"; };
 		E2803846292931E60017E28C /* PlayerControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerControl.swift; sourceTree = "<group>"; };
-		E2803849292A75BC0017E28C /* LocalizationsControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationsControl.swift; sourceTree = "<group>"; };
-		E280384B292A75C90017E28C /* LayersControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayersControl.swift; sourceTree = "<group>"; };
 		E280384D292BD5400017E28C /* PlayerViewLocalizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewLocalizations.swift; sourceTree = "<group>"; };
 		E2837B3B29103DBD00FC4CC2 /* NSPlayerViewControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSPlayerViewControl.swift; sourceTree = "<group>"; };
 		E2837B4529104BF700FC4CC2 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
@@ -329,6 +325,7 @@
 		E21DF790291038FE00038B41 /* PlayerView */ = {
 			isa = PBXGroup;
 			children = (
+				E2803846292931E60017E28C /* PlayerControl.swift */,
 				E2837B4529104BF700FC4CC2 /* PlayerView.swift */,
 				E280384D292BD5400017E28C /* PlayerViewLocalizations.swift */,
 				E213252028F722F900D6BFF6 /* NSPlayerView.swift */,
@@ -428,9 +425,6 @@
 			isa = PBXGroup;
 			children = (
 				E2837B3B29103DBD00FC4CC2 /* NSPlayerViewControl.swift */,
-				E2803846292931E60017E28C /* PlayerControl.swift */,
-				E2803849292A75BC0017E28C /* LocalizationsControl.swift */,
-				E280384B292A75C90017E28C /* LayersControl.swift */,
 			);
 			path = Control;
 			sourceTree = "<group>";
@@ -881,7 +875,6 @@
 				E213252128F722F900D6BFF6 /* NSPlayerView.swift in Sources */,
 				E2E5962D28DA63700058D054 /* ControlOpen.swift in Sources */,
 				E2837B3C29103DBD00FC4CC2 /* NSPlayerViewControl.swift in Sources */,
-				E280384C292A75C90017E28C /* LayersControl.swift in Sources */,
 				E280384E292BD5400017E28C /* PlayerViewLocalizations.swift in Sources */,
 				E2D1C856291AC13900961A0A /* DragCurrent.swift in Sources */,
 				E2FFE21428E8824100425F04 /* ControlResponseState.swift in Sources */,
@@ -923,7 +916,6 @@
 				E2AAFC3328F8F35000BBC703 /* VideoPlayerError.swift in Sources */,
 				E2D1C85B291AC38000961A0A /* DragPurpose.swift in Sources */,
 				E2505D4F28EF22E10027F280 /* EnvironmentValues.swift in Sources */,
-				E280384A292A75BC0017E28C /* LocalizationsControl.swift in Sources */,
 				E2AAFC3128F8F28B00BBC703 /* OpenVideoError.swift in Sources */,
 				E295628A28D67A6500E88ED1 /* SharktopodaCommands.swift in Sources */,
 				E2FFE20C28E7619900425F04 /* ControlResponseInfo.swift in Sources */,

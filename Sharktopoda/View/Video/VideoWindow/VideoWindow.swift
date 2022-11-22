@@ -14,7 +14,9 @@ final class VideoWindow: NSWindow {
   var keyInfo: KeyInfo
 
   let localizations: Localizations
-  let playerControl: PlayerControl
+  var playerControl: PlayerControl
+  
+  var videoValues = VideoValues()
   
   /// Queue on which off-main work is done
   let queue: DispatchQueue

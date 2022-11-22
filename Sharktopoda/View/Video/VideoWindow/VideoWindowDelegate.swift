@@ -24,7 +24,7 @@ extension VideoWindow: NSWindowDelegate {
   }
   
   func windowDidResize(_ notification: Notification) {
-    playerControl.pause()
+    pause()
     
     let videoRect = playerView.videoRect
     

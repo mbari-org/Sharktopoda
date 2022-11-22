@@ -17,8 +17,8 @@ struct ControlSeek: ControlRequest {
       let playerControl = videoWindow.playerControl
       let playerView = videoWindow.playerView
       let localizations = videoWindow.localizations
-      
-      playerControl.pause()
+
+      videoWindow.pause()
       DispatchQueue.main.async {
         localizations.clearSelected()
         playerView.clear()

@@ -34,10 +34,11 @@ extension VideoWindow {
     }
     
     /// Space:  Toggle play/pause forward
-    /// Ctrl-Space:  Toggle play/pause reverse
+    /// Ctrl-Space:  Toggle play/pause and direction
     if event.keyCode == KeyCode.space.rawValue {
-      let rate: Float = isControl(event) ? -1 : 1
-      playerControl.paused ? playerControl.play(rate: rate) : playerControl.pause()
+      let playDirection: Float = isControl(event) ? -1 : 1
+      let playRate = playDirection * videoValues.rate
+      playerControl.paused ? playerControl.play(rate: playRate) : pause()
       return
     }
     

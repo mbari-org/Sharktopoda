@@ -34,19 +34,7 @@ struct PlayerControl {
   }
   
   func play(rate: Float) {
-    if paused {
-      // CxInc
-      //        clearLocalizationLayers()
-    }
-    if rate == 0.0 {
-      pause()
-    } else if 0 < rate {
-      //        displayLocalizations(.forward, at: currentTime)
-    } else {
-      //        displayLocalizations(.reverse, at: currentTime)
-    }
     player.rate = rate
-
   }
   
   var rate: Float {

@@ -31,11 +31,7 @@ struct PlayerView: NSViewRepresentable {
   func display(localizations: [Localization]) {
     nsPlayerView.display(localizations: localizations)
   }
-  
-  func displayPaused() {
-    nsPlayerView.displayPaused()
-  }
-    
+
   var id: String {
     videoAsset.id
   }

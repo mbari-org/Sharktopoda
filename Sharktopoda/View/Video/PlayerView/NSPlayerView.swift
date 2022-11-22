@@ -153,15 +153,6 @@ extension NSPlayerView {
       }
     } ?? []
   }
-
-}
-
-// MARK: Pause layers
-extension NSPlayerView {
-  func displayPaused() {
-    clearLocalizationLayers()
-    displayLocalizations(.paused, at: currentTime)
-  }
 }
 
 // MARK: Resized
@@ -191,43 +182,31 @@ extension NSPlayerView {
 
 // MARK: Display and Clear
 extension NSPlayerView {
-  func display(localizations: [Localization]) {
-    DispatchQueue.main.async { [weak self] in
-      localizations.forEach { self?.playerLayer.addSublayer($0.layer) }
-    }
-  }
-  
-  func displayLocalizations(_ direction: PlayerControl.PlayDirection, at elapsedTime: Int) {
-    guard showLocalizations else { return }
-    
-    let localizations = localizations.fetch(direction, at: elapsedTime)
-    
-    DispatchQueue.main.async { [weak self] in
-      localizations.forEach { self?.playerLayer.addSublayer($0.layer) }
-    }
-  }
-  
-  func clearLocalizations(_ direction: PlayerControl.PlayDirection, at elapsedTime: Int) {
-    let layers = localizations
-      .fetch(direction, at: elapsedTime)
-      .map(\.layer)
 
-    DispatchQueue.main.async {
-      layers.forEach { $0.removeFromSuperlayer() }
-    }
-  }
-
-  func clearLocalizationLayers() {
+  func clear() {
     let layers = localizationLayers()
     DispatchQueue.main.async {
       layers.forEach { $0.removeFromSuperlayer() }
     }
   }
   
+  func clear(localizations: [Localization]) {
+    DispatchQueue.main.async {
+      localizations.forEach { $0.layer.removeFromSuperlayer()}
+    }
+  }
+  
+  func display(localizations: [Localization]) {
+    guard showLocalizations else { return }
+    
+    DispatchQueue.main.async { [weak self] in
+      localizations.forEach { self?.playerLayer.addSublayer($0.layer) }
+    }
+  }
+
   var showLocalizations: Bool {
     UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations)
   }
-
 }
 
 // MARK: Player time callback

@@ -23,6 +23,6 @@ extension PlayerView {
   }
   
   func clear() {
-    nsPlayerView.clearLocalizationLayers()
+    nsPlayerView.clear()
   }
 }

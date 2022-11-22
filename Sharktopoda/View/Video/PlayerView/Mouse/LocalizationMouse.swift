@@ -76,11 +76,10 @@ extension NSPlayerView {
     guard paused else { return nil }
     guard showLocalizations else { return nil }
 
-    let pausedLocalizations = localizations.fetch(.paused, at: currentTime)
-
-    let mousedLocalizations = pausedLocalizations.filter {
-      $0.layer.containsSuperPoint(point)
-    }
+    let mousedLocalizations = localizations
+      .fetch(.paused, at: currentTime)
+      .filter { $0.layer.containsSuperPoint(point) }
+    
     guard !mousedLocalizations.isEmpty else { return nil }
     
     return mousedLocalizations.min { a, b in

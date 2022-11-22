@@ -8,7 +8,7 @@
 import Foundation
 
 extension PlayerView {
-  func addLocalization(_ localization: Localization) {
+  func add(localization: Localization) {
     guard nsPlayerView.showLocalizations else { return }
     guard let localizations = sharktopodaData.localizations(id: id) else { return }
             
@@ -22,7 +22,7 @@ extension PlayerView {
     }
   }
   
-  func clearLocalizations() {
+  func clear() {
     nsPlayerView.clearLocalizationLayers()
   }
 }

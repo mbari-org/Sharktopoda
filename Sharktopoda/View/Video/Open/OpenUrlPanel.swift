@@ -60,22 +60,8 @@ struct OpenUrlPanel: View {
       alert(path: path, error: OpenVideoError.invalidUrl)
       return
     }
-    
-    do {
-      if !(try url.checkResourceIsReachable()) {
-        alert(path: url.path, error: OpenVideoError.invalidUrl)
-        return
-      }
-    } catch {
-      alert(path: url.path, error: OpenVideoError.unknown(error.localizedDescription))
-      return
-    }
 
-    // CxInc
-//    if let error = VideoWindow.open(id: url.path, url: url) as? OpenVideoError {
-//      alert(path: url.path, error: error)
-//      return
-//    }
+    VideoWindow.open(url: url)
   }
   
   func alert(path: String, error: OpenVideoError) {

@@ -194,8 +194,12 @@ extension VideoWindow {
       }
     }
   }
-  
-  static func open(videoId: String) -> Error? {
+
+  static func open(url: URL) {
+    open(id: url.path, url: url, alert: true)
+  }
+
+  private static func open(videoId: String) -> Error? {
     if let videoWindow = UDP.sharktopodaData.videoWindows[videoId] {
       DispatchQueue.main.async {
         videoWindow.makeKeyAndOrderFront(nil)

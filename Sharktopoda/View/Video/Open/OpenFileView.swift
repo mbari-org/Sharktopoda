@@ -22,7 +22,7 @@ struct OpenFileView: View {
       guard dialog.runModal() == NSApplication.ModalResponse.OK else { return }
       guard let fileUrl = dialog.url else { return }
       
-      VideoWindow.open(id: fileUrl.path, url: fileUrl)
+      VideoWindow.open(url: fileUrl)
     }
   }
 }

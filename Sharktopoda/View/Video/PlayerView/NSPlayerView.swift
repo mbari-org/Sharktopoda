@@ -74,9 +74,6 @@ final class NSPlayerView: NSView {
     rootLayer.addSublayer(playerLayer)
     
     windowLayer = rootLayer.superlayer?.superlayer?.superlayer
-
-    // CxInc
-//    setTimeObserver()
   }
 }
 
@@ -179,27 +176,5 @@ extension NSPlayerView {
 
   var showLocalizations: Bool {
     UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations)
-  }
-}
-
-// MARK: Player time callback
-extension NSPlayerView {
-  // CxInc
-  func setTimeObserver() {
-//    guard let queue = queue else { return }
-//
-//    let interval = CMTimeMultiplyByFloat64(videoAsset.frameDuration, multiplier: 0.9)
-//
-//    player.addPeriodicTimeObserver(forInterval: interval, queue: queue) { [weak self] time in
-//      guard UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations) else { return }
-//
-//      guard let direction = self?.playDirection else { return }
-//      
-//      let elapsedTime = time.asMillis()
-//      let opposite = direction.opposite()
-//      
-//      self?.displayLocalizations(direction, at: elapsedTime)
-//      self?.clearLocalizations(opposite, at: elapsedTime)
-//    }
   }
 }

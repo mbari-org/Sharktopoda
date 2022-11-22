@@ -51,6 +51,8 @@ final class VideoWindow: NSWindow {
     
     contentView = NSHostingView(rootView: videoView)
     delegate = self
+    
+    setLocalizationsObserver()
         
     makeKeyAndOrderFront(nil)
   }
@@ -67,5 +69,3 @@ final class VideoWindow: NSWindow {
     videoView.videoAsset
   }
 }
-
-///// Function overrides

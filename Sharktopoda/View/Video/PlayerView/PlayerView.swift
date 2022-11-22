@@ -28,6 +28,10 @@ struct PlayerView: NSViewRepresentable {
     nsPlayerView.clear()
   }
 
+  func clear(localizations: [Localization]) {
+    nsPlayerView.clear(localizations: localizations)
+  }
+
   func clearConcept() {
     nsPlayerView.conceptLayer?.removeFromSuperlayer()
   }

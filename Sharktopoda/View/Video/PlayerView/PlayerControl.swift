@@ -63,17 +63,9 @@ struct PlayerControl {
   
   func step(_ steps: Int) {
     guard paused else { return }
-    
-    // CxInc
-//    clearLocalizationLayers()
-    
-//    guard showLocalizations else { return }
-    
-    currentItem?.step(byCount: steps)
-//    displayPaused()
-  }
 
-  
+    currentItem?.step(byCount: steps)
+  }
 }
 
 extension PlayerControl {

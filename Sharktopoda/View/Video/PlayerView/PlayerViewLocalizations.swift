@@ -22,7 +22,4 @@ extension PlayerView {
     }
   }
   
-  func clear() {
-    nsPlayerView.clear()
-  }
 }

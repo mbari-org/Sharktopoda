@@ -159,6 +159,7 @@ extension NSPlayerView {
     let layers = localizationLayers()
     DispatchQueue.main.async {
       layers.forEach { $0.removeFromSuperlayer() }
+      self.conceptLayer?.removeFromSuperlayer()
     }
   }
   

@@ -24,6 +24,10 @@ struct PlayerView: NSViewRepresentable {
   
   func updateNSView(_ nsView: NSViewType, context: Context) {}
 
+  func clear() {
+    nsPlayerView.clear()
+  }
+
   func clearConcept() {
     nsPlayerView.conceptLayer?.removeFromSuperlayer()
   }

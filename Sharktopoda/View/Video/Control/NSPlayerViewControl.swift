@@ -14,16 +14,6 @@ extension NSPlayerView {
     return steps < 0 ? item.canStepBackward : item.canStepForward
   }
   
-  var playDirection: PlayDirection {
-    if paused {
-      return .paused
-    } else if 0 < rate {
-      return .forward
-    } else {
-      return .reverse
-    }
-  }
-  
   func frameGrab(at captureTime: Int, destination: String) async -> FrameGrabResult {
     return await videoAsset.frameGrab(at: captureTime, destination: destination)
   }

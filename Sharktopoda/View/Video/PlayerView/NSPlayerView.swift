@@ -83,23 +83,6 @@ final class NSPlayerView: NSView {
   }
 }
 
-// MARK: Enums
-extension NSPlayerView {
-  enum PlayDirection: Int {
-    case reverse = -1
-    case paused = 0
-    case forward =  1
-    
-    func opposite() -> PlayDirection {
-      if self == .paused {
-        return .paused
-      } else {
-        return self == .reverse ? .forward : .reverse
-      }
-    }
-  }
-}
-
 // MARK: Computed properties
 extension NSPlayerView {
   var currentItem: AVPlayerItem? {
@@ -208,7 +191,7 @@ extension NSPlayerView {
 
 // MARK: Display and Clear
 extension NSPlayerView {
-  func displayLocalizations(_ direction: PlayDirection, at elapsedTime: Int) {
+  func displayLocalizations(_ direction: PlayerControl.PlayDirection, at elapsedTime: Int) {
     guard showLocalizations else { return }
     guard let localizations = localizations.fetch(direction, at: elapsedTime) else { return }
     
@@ -217,7 +200,7 @@ extension NSPlayerView {
     }
   }
   
-  func clearLocalizations(_ direction: PlayDirection, at elapsedTime: Int) {
+  func clearLocalizations(_ direction: PlayerControl.PlayDirection, at elapsedTime: Int) {
     guard let fetched = localizations.fetch(direction, at: elapsedTime) else { return }
     let layers = fetched.map(\.layer)
 
@@ -241,21 +224,22 @@ extension NSPlayerView {
 
 // MARK: Player time callback
 extension NSPlayerView {
+  // CxInc
   func setTimeObserver() {
-    guard let queue = queue else { return }
-
-    let interval = CMTimeMultiplyByFloat64(videoAsset.frameDuration, multiplier: 0.9)
-
-    player.addPeriodicTimeObserver(forInterval: interval, queue: queue) { [weak self] time in
-      guard UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations) else { return }
-
-      guard let direction = self?.playDirection else { return }
-      
-      let elapsedTime = time.asMillis()
-      let opposite = direction.opposite()
-      
-      self?.displayLocalizations(direction, at: elapsedTime)
-      self?.clearLocalizations(opposite, at: elapsedTime)
-    }
+//    guard let queue = queue else { return }
+//
+//    let interval = CMTimeMultiplyByFloat64(videoAsset.frameDuration, multiplier: 0.9)
+//
+//    player.addPeriodicTimeObserver(forInterval: interval, queue: queue) { [weak self] time in
+//      guard UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations) else { return }
+//
+//      guard let direction = self?.playDirection else { return }
+//      
+//      let elapsedTime = time.asMillis()
+//      let opposite = direction.opposite()
+//      
+//      self?.displayLocalizations(direction, at: elapsedTime)
+//      self?.clearLocalizations(opposite, at: elapsedTime)
+//    }
   }
 }

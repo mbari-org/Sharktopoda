@@ -9,7 +9,7 @@ import Foundation
 
 // Retrieve Localizations for some time value
 extension Localizations {
-  func frames(for direction: NSPlayerView.PlayDirection) -> [LocalizationFrame]? {
+  func frames(for direction: PlayerControl.PlayDirection) -> [LocalizationFrame]? {
     switch direction {
       case .forward:
         return forwardFrames
@@ -20,7 +20,7 @@ extension Localizations {
     }
   }
   
-  func ids(for direction: NSPlayerView.PlayDirection, at elapsedTime: Int) -> [String]? {
+  func ids(for direction: PlayerControl.PlayDirection, at elapsedTime: Int) -> [String]? {
     guard let frames = frames(for: direction),
           !frames.isEmpty else { return nil }
     
@@ -34,7 +34,7 @@ extension Localizations {
     
   }
   
-  func fetch(_ direction: NSPlayerView.PlayDirection, at elapsedTime: Int) -> [Localization]? {
+  func fetch(_ direction: PlayerControl.PlayDirection, at elapsedTime: Int) -> [Localization]? {
     guard let ids = ids(for: direction, at: elapsedTime) else { return nil }
     
     return ids.reduce(into: [Localization]()) { acc, id in

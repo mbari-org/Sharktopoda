@@ -19,11 +19,12 @@ extension Localizations {
   func deleteSelected() {
     guard !selected.isEmpty else { return }
     
-    sendIdsMessage(.removeLocalizations, ids: selectedIds())
-    
-    selected.forEach { let _ = remove(id: $0) }
+    let ids = selectedIds()
 
-    // CxInc
+    sendIdsMessage(.removeLocalizations, ids: ids)
+    remove(ids: ids)
+    
+    // CxTBD Is an "empty" selected message necessary?
 //    sendIdsMessage(.selectLocalizations, ids: [])
   }
   

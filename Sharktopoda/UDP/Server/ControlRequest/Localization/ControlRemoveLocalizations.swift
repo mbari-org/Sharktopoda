@@ -15,18 +15,7 @@ struct ControlRemoveLocalizations: ControlRequest {
   
   func process() -> ControlResponse {
     withLocalizations(id: uuid) { videoLocalizations in
-      let layers = localizations
-        .reduce(into: [CALayer]()) { acc, id in
-          if let remove = videoLocalizations.remove(id: id) {
-            acc.append(remove.layer)
-          }
-        }
-      
-      DispatchQueue.main.async {
-        layers
-          .forEach { $0.removeFromSuperlayer() }
-      }
-
+      videoLocalizations.remove(ids: localizations)
       return ok()
     }
   }

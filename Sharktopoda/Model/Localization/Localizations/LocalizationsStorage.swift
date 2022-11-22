@@ -27,16 +27,22 @@ extension Localizations {
     storage.removeAll()
   }
   
-  func remove(id: String) -> Localization? {
-    guard let localization = storage[id] else { return nil }
-    
-    pauseFrameRemove(localization)
-    forwardFrameRemove(localization)
-    reverseFrameRemove(localization)
-    selected.remove(id)
-    storage[id] = nil
-    
-    return localization
+  func remove(ids: [String]) {
+    let removed = ids.reduce(into: [Localization]()) { acc, id in
+      guard let localization = storage[id] else { return }
+
+      pauseFrameRemove(localization)
+      forwardFrameRemove(localization)
+      reverseFrameRemove(localization)
+      selected.remove(id)
+      storage[id] = nil
+      
+      acc.append(localization)
+    }
+
+    DispatchQueue.main.async {
+      removed.forEach { $0.layer.removeFromSuperlayer() }
+    }
   }
   
   func update(using control: ControlLocalization) {

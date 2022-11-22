@@ -54,9 +54,11 @@ extension NSPlayerView {
                                             with: region(from: layer),
                                             layer: layer,
                                             fullSize: fullSize)
-            let _ = localizations.add(localization)
+            localizations.add(localization)
             localizations.sendLocalizationsMessage(.addLocalizations, ids: [localization.id])
-            let _ = localizations.select(id: localization.id)
+            localizations.select(id: localization.id)
+            // CxTBD Is an updated selected message necessary?
+            localizations.sendLocalizationsMessage(.selectLocalizations, ids: [localization.id])
             displayConcept(localization)
           case .select:
             /// Remove the selection layer as it's purpose is complete

@@ -19,7 +19,7 @@ extension NSPlayerView {
     if event.modifierFlags.intersection(.deviceIndependentFlagsMask) == .command {
       if let localization = currentLocalization {
         currentLocalization = nil
-        let _ = localizations.select(id: localization.id)
+        localizations.select(id: localization.id)
       }
       
       if commandSelect(at: playerPoint) { return }

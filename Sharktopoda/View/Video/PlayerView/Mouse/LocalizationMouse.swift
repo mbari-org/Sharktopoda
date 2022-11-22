@@ -33,7 +33,8 @@ extension NSPlayerView {
       return false
     }
     
-    return localizations.select(id: mouseLocalization.id, clear: false)
+    localizations.select(id: mouseLocalization.id, clear: false)
+    return true
   }
   
   /// Process click to see if and where a click occurred in a Localization
@@ -44,7 +45,7 @@ extension NSPlayerView {
       return nil
     }
     
-    let _ = localizations.select(id: mouseLocalization.id)
+    localizations.select(id: mouseLocalization.id)
     let layer = mouseLocalization.layer
     let layerPoint = layer.convertSuperPoint(mousePoint)
     currentLocalization = mouseLocalization

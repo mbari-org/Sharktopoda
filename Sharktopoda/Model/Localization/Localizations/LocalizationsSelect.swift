@@ -24,12 +24,12 @@ extension Localizations {
     sendIdsMessage(.removeLocalizations, ids: ids)
     remove(ids: ids)
     
-    // CxTBD Is an "empty" selected message necessary?
-//    sendIdsMessage(.selectLocalizations, ids: [])
+    // CxTBD Is an updated selected message necessary?
+    sendIdsMessage(.selectLocalizations, ids: selectedIds())
   }
   
-  func select(id: String, clear: Bool = true) -> Bool {
-    guard let localization = storage[id] else { return false }
+  func select(id: String, clear: Bool = true) {
+    guard let localization = storage[id] else { return }
     
     if clear {
       clearSelected()
@@ -39,11 +39,9 @@ extension Localizations {
     localization.select(true)
     
     sendIdsMessage(.selectLocalizations, ids: selectedIds())
-    
-    return true
   }
   
-  func select(ids: [String]) {
+  func select(ids: [String], notifyClient: Bool = true) {
     clearSelected()
     
     ids.forEach { id in
@@ -51,8 +49,9 @@ extension Localizations {
       selected.insert(id)
       localization.select(true)
     }
-    
-    sendIdsMessage(.selectLocalizations, ids: ids)
+    if notifyClient {
+      sendIdsMessage(.selectLocalizations, ids: selectedIds())
+    }
   }
   
   func select(using rect: CGRect, at elapsedTime: Int) {
@@ -62,7 +61,7 @@ extension Localizations {
       .filter { rect.intersects($0.layer.frame) }
       .map(\.id)
     
-    let _ = select(ids: ids)
+    select(ids: ids)
   }
   
   func selectedIds() -> [String] {

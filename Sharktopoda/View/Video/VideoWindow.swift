@@ -178,12 +178,13 @@ final class VideoWindow: NSWindow {
 //
 ///// Static functions
 extension VideoWindow {
+    
   static func open(path: String) {
     Task {
       if let videoAsset = await VideoAsset(id: path, url: URL(fileURLWithPath: path)) {
         DispatchQueue.main.async {
           UDP.sharktopodaData.tmpVideoAssets[path] = videoAsset
-          if let error = VideoWindow.open(id: path) {
+          if let error = VideoWindow.open(videoId: path) {
             let openAlert = OpenAlert(path: path, error: error as! OpenVideoError)
             openAlert.show()
           }
@@ -192,13 +193,28 @@ extension VideoWindow {
     }
   }
   
-  static func open(id: String) -> Error? {
-    if let videoWindow = UDP.sharktopodaData.videoWindows[id] {
+  static func open(id: String, url: URL) {
+    Task {
+      if let videoAsset = await VideoAsset(id: id, url: url) {
+        DispatchQueue.main.async {
+          UDP.sharktopodaData.tmpVideoAssets[id] = videoAsset
+          let error = VideoWindow.open(videoId: id)
+          if error != nil {
+            print("ControlOpen error: \(error.debugDescription)")
+          }
+          print("Video URL loaded")
+        }
+      }
+    }
+  }
+  
+  static func open(videoId: String) -> Error? {
+    if let videoWindow = UDP.sharktopodaData.videoWindows[videoId] {
       DispatchQueue.main.async {
         videoWindow.makeKeyAndOrderFront(nil)
       }
     } else {
-      guard let videoAsset = UDP.sharktopodaData.tmpVideoAssets[id] else {
+      guard let videoAsset = UDP.sharktopodaData.tmpVideoAssets[videoId] else {
         return OpenVideoError.notLoaded
       }
       
@@ -206,12 +222,12 @@ extension VideoWindow {
         return OpenVideoError.notPlayable
       }
       
-      UDP.sharktopodaData.tmpVideoAssets[id] = nil
+      UDP.sharktopodaData.tmpVideoAssets[videoId] = nil
       
       DispatchQueue.main.async {
         let videoWindow = VideoWindow(for: videoAsset)
         videoWindow.makeKeyAndOrderFront(nil)
-        UDP.sharktopodaData.videoWindows[id] = videoWindow
+        UDP.sharktopodaData.videoWindows[videoId] = videoWindow
       }
     }
     return nil

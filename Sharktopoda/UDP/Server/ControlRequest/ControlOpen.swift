@@ -19,19 +19,9 @@ struct ControlOpen: ControlRequest {
       return failed("Malformed URL")
     }
 
-    /// Async load URL, then fire up the VideoView
-    Task {
-      if let videoAsset = await VideoAsset(id: uuid, url: url) {
-        DispatchQueue.main.async {
-          UDP.sharktopodaData.tmpVideoAssets[uuid] = videoAsset
-          let error = VideoWindow.open(id: uuid)
-          if error != nil {
-            print("ControlOpen error: \(error.debugDescription)")
-          }
-          print("Video URL loaded")
-        }
-      }
-    }
+    /// Load URL is async
+    VideoWindow.open(id: uuid, url: url)
+
     return ok()
   }
 }

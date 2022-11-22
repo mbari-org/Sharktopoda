@@ -439,11 +439,11 @@
 			isa = PBXGroup;
 			children = (
 				E2505D5928EF91960027F280 /* Localizations.swift */,
-				E28CEF06291E9BE5009E73B3 /* LocalizationsStorage.swift */,
-				E28CEF08291E9C82009E73B3 /* LocalizationsRetrieve.swift */,
 				E28CEF0A291E9CCF009E73B3 /* LocalizationsFrames.swift */,
 				E28CEF0C291E9D37009E73B3 /* LocalizationsMessages.swift */,
+				E28CEF08291E9C82009E73B3 /* LocalizationsRetrieve.swift */,
 				E28CEF0E291E9D79009E73B3 /* LocalizationsSelect.swift */,
+				E28CEF06291E9BE5009E73B3 /* LocalizationsStorage.swift */,
 			);
 			path = Localizations;
 			sourceTree = "<group>";
@@ -595,6 +595,7 @@
 				E2C22EC428D144B0003CD976 /* SharktopodaData.swift */,
 				E2C22ED628D36888003CD976 /* VideoAsset.swift */,
 				E2DAF8BC28F8EE460010ECB8 /* Localization */,
+				E28CEF05291E9BCC009E73B3 /* Localizations */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -672,12 +673,11 @@
 		E2DAF8BC28F8EE460010ECB8 /* Localization */ = {
 			isa = PBXGroup;
 			children = (
-				E28CEF05291E9BCC009E73B3 /* Localizations */,
 				E2C22ED428D36832003CD976 /* Localization.swift */,
 				E2D1C84D291302EF00961A0A /* LocalizationFrame.swift */,
+				E2448C02292D6FC300F2C2E2 /* LocalizationMisc.swift */,
 				E2448BFE292D6EAE00F2C2E2 /* LocalizationRegion.swift */,
 				E2448C00292D6F5D00F2C2E2 /* LocalizationUpdate.swift */,
-				E2448C02292D6FC300F2C2E2 /* LocalizationMisc.swift */,
 			);
 			path = Localization;
 			sourceTree = "<group>";

@@ -13,19 +13,12 @@ struct ControlUpdateLocalizations: ControlRequest {
   var localizations: [ControlLocalization]
   
   func process() -> ControlResponse {
-    withVideoWindow(id: uuid) { videoWindow in
-      
-  
+    withLocalizations(id: uuid) { videoLocalizations in
+      localizations
+        .forEach { controlLocalization in
+          videoLocalizations.update(using: controlLocalization)
+        }
       return ok()
     }
-//    guard let videoWindow = UDP.sharktopodaData.videoWindows[uuid] else {
-//      return failed("No video for uuid")
-//    }
-//
-//    let _ = videoWindow.updateLocalizations(localizations)
-//
-//
-
-
   }
 }

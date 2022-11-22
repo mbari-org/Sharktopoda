@@ -26,12 +26,16 @@ extension Localization {
                     width: CGFloat(control.width),
                     height: CGFloat(control.height))
     
-    layer.strokeColor = Color(hex: hexColor)?.cgColor
+    self.layer.strokeColor = Color(hex: hexColor)?.cgColor
     
     let origin = CGPoint(x: region.origin.x,
                          y: fullSize.height - region.origin.y - region.size.height)
-    CALayer.noAnimation {
-      layer.shapeFrame(origin: origin, size: region.size)
+
+    let size = region.size
+    DispatchQueue.main.async {
+      CALayer.noAnimation {
+        self.layer.shapeFrame(origin: origin, size: size)
+      }
     }
   }
 }

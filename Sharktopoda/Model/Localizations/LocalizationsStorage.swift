@@ -46,20 +46,20 @@ extension Localizations {
   }
   
   func update(using control: ControlLocalization) {
-    guard let stored = storage[control.uuid] else { return }
+    guard let localization = storage[control.uuid] else { return }
     
-    if stored.sameTime(as: control) {
-      pauseFrameRemove(stored)
-      forwardFrameRemove(stored)
-      reverseFrameRemove(stored)
+    if localization.sameTime(as: control) {
+      pauseFrameRemove(localization)
+      forwardFrameRemove(localization)
+      reverseFrameRemove(localization)
       
-      stored.update(using: control)
+      localization.update(using: control)
       
-      pauseFrameInsert(stored)
-      forwardFrameInsert(stored)
-      reverseFrameInsert(stored)
+      pauseFrameInsert(localization)
+      forwardFrameInsert(localization)
+      reverseFrameInsert(localization)
     } else {
-      stored.update(using: control)
+      localization.update(using: control)
     }
   }
 }

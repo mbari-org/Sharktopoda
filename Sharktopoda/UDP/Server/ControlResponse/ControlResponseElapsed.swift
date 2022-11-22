@@ -15,6 +15,6 @@ struct ControlResponseElapsed: ControlResponse {
   init(using playerControl: PlayerControl) {
     response = .info
     status = .ok
-    elapsedTimeMillis = playerControl.currentTime!
+    elapsedTimeMillis = playerControl.currentTime
   }
 }

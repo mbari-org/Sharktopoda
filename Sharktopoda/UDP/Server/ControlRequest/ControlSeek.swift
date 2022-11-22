@@ -17,11 +17,17 @@ struct ControlSeek: ControlRequest {
       let playerControl = videoWindow.playerControl
       let playerView = videoWindow.playerView
       let localizations = videoWindow.localizations
+      
+      playerControl.pause()
+      DispatchQueue.main.async {
+        localizations.clearSelected()
+        playerView.clear()
+      }
+      
       playerControl.seek(elapsed: elapsedTimeMillis) { done in
+        let pausedLocalizations = localizations.fetch(.paused, at: playerControl.currentTime)
         DispatchQueue.main.async {
-          localizations.clearSelected()
-          // CxTBD Investigate layer flicker
-          playerView.displayPaused()
+          playerView.display(localizations: pausedLocalizations)
         }
       }
       return ok()

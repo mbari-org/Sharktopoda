@@ -191,6 +191,12 @@ extension NSPlayerView {
 
 // MARK: Display and Clear
 extension NSPlayerView {
+  func display(localizations: [Localization]) {
+    DispatchQueue.main.async { [weak self] in
+      localizations.forEach { self?.playerLayer.addSublayer($0.layer) }
+    }
+  }
+  
   func displayLocalizations(_ direction: PlayerControl.PlayDirection, at elapsedTime: Int) {
     guard showLocalizations else { return }
     

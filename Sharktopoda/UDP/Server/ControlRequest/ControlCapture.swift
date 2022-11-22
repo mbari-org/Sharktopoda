@@ -24,10 +24,6 @@ struct ControlCapture: ControlRequest {
       // as possible. We put this time in the ControlResponse so it can be used later during
       // image capture processing. This means the time is sent in the initial 'ok' response but
       // the command contoller can just ignore it.
-      guard let currentTime = playerControl.currentTime else {
-        return failed("Player item not accessible")
-      }
-      
       guard let fileUrl = URL(string: imageLocation) else {
         return failed("Image location is malformed URL")
       }
@@ -41,7 +37,7 @@ struct ControlCapture: ControlRequest {
         return failed("Image location not writable")
       }
       
-      return ControlResponseCaptureOk(currentTime)
+      return ControlResponseCaptureOk(playerControl.currentTime)
     }
   }
   

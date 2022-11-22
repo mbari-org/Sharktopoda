@@ -21,8 +21,8 @@ struct PlayerControl {
     player.currentItem
   }
   
-  var currentTime: Int? {
-    player.currentItem?.currentTime().asMillis()
+  var currentTime: Int {
+    player.currentItem?.currentTime().asMillis() ?? -1
   }
 
   func pause() {

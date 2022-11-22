@@ -34,6 +34,6 @@ struct ControlResponseState: ControlResponse {
     status = .ok
     rate = playerControl.rate
     state = PlayState(rate: rate)
-    elapsedTimeMillis = playerControl.currentTime!
+    elapsedTimeMillis = playerControl.currentTime
   }
 }

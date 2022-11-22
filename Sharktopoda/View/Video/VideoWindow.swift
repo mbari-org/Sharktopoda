@@ -15,6 +15,9 @@ final class VideoWindow: NSWindow {
 
   let localizations: Localizations
   let playerControl: PlayerControl
+  
+  /// Queue on which off-main work is done
+  let queue: DispatchQueue
 
   //
   init(for videoAsset: VideoAsset) {
@@ -31,6 +34,8 @@ final class VideoWindow: NSWindow {
     localizations = Localizations(frameDuration: videoAsset.frameDuration.asMillis(),
                                   videoId: videoAsset.id)
     
+    queue = DispatchQueue(label: "Sharktopoda Video Queue: \(videoAsset.id)")
+    
     let fullSize = videoAsset.fullSize
     super.init(
       contentRect: NSMakeRect(0, 0, fullSize.width, fullSize.height),
@@ -43,8 +48,9 @@ final class VideoWindow: NSWindow {
     title = videoAsset.id
     
     contentView = NSHostingView(rootView: videoView)
-    
     delegate = self
+    
+    
     makeKeyAndOrderFront(nil)
   }
   
@@ -230,9 +236,9 @@ extension VideoWindow {
   
 extension VideoWindow: NSWindowDelegate {
   func windowWillClose(_ notification: Notification) {
+    let videoId = videoAsset.id
     DispatchQueue.main.async {
-      // CxInc
-//      UDP.sharktopodaData.videoWindows.removeValue(forKey: self.videoAsset.id)
+      UDP.sharktopodaData.videoWindows.removeValue(forKey: videoId)
     }
   }
   
@@ -245,7 +251,22 @@ extension VideoWindow: NSWindowDelegate {
   }
   
   func windowDidResize(_ notification: Notification) {
-    // CxInc
-//    playerView.resized()
+    playerControl.pause()
+
+    let videoRect = playerView.videoRect
+
+    /// Resize paused localizations on main queue to see immediate effect
+    let pausedLocalizations = localizations.fetch(.paused, at: playerControl.currentTime)
+    DispatchQueue.main.async {
+      for localization in pausedLocalizations {
+        localization.resize(for: videoRect)
+      }
+    }
+    
+    /// Resize all localizations on background queue. Although paused localizations are resized again,
+    /// preventing that would be more overhead than re-resizing.
+    queue.async {
+      self.localizations.resize(for: videoRect)
+    }
   }
 }

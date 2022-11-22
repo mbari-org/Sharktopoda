@@ -29,9 +29,6 @@ final class NSPlayerView: NSView {
   /// Anchor point for either selecting locations or dragging current localization
   var dragAnchor: CGPoint?
 
-  /// Queue on which off-main work is done
-  var queue: DispatchQueue?
-  
   private var _currentLocalization: Localization?
   private var _videoAsset: VideoAsset?
   
@@ -78,8 +75,8 @@ final class NSPlayerView: NSView {
     
     windowLayer = rootLayer.superlayer?.superlayer?.superlayer
 
-    queue = DispatchQueue(label: "Sharktopoda Video Queue: \(videoAsset.id)")
-    setTimeObserver()
+    // CxInc
+//    setTimeObserver()
   }
 }
 
@@ -152,31 +149,6 @@ extension NSPlayerView {
         acc.append(layer)
       }
     } ?? []
-  }
-}
-
-// MARK: Resized
-extension NSPlayerView {
-  func resized() {
-    pause()
-//    guard paused else { return }
-    
-    /// Resize paused localizations on main queue to see immediate effect
-    let pausedLocalizations = localizations.fetch(.paused, at: currentTime)
-
-    let videoRect = self.videoRect
-    DispatchQueue.main.async {
-      for localization in pausedLocalizations {
-        localization.resize(for: videoRect)
-      }
-    }
-
-    /// Resize all localizations on background queue. Although paused localizations are resized again,
-    /// preventing that would be more overhead than re-resizing.
-    guard let queue = queue else { return }
-    queue.async {
-      self.localizations.resize(for: videoRect)
-    }
   }
 }
 

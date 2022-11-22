@@ -18,7 +18,7 @@ class Localization {
   var region: CGRect
   var fullSize: CGSize
   
-  init(from controlLocalization: ControlLocalization, with fullSize: CGSize) {
+  init(from controlLocalization: ControlLocalization, size: CGSize) {
     id = controlLocalization.uuid
     concept = controlLocalization.concept
     duration = controlLocalization.durationMillis
@@ -29,10 +29,10 @@ class Localization {
                     width: CGFloat(controlLocalization.width),
                     height: CGFloat(controlLocalization.height))
 
-    self.fullSize = fullSize
+    self.fullSize = size
 
     let origin = CGPoint(x: region.minX,
-                         y: fullSize.height - (region.minY + region.height))
+                         y: size.height - (region.minY + region.height))
     let layerFrame = CGRect(origin: origin, size: region.size)
     let cgColor = Color(hex: hexColor)?.cgColor
     layer = CAShapeLayer(frame: layerFrame, cgColor: cgColor!)

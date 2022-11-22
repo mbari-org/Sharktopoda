@@ -20,7 +20,7 @@ struct ControlAddLocalizations: ControlRequest {
       let playerView = videoWindow.playerView
       
       localizations
-        .map { Localization(from: $0, with: fullSize) }
+        .map { Localization(from: $0, size: fullSize) }
         .forEach {
           $0.resize(for: playerView.videoRect)
           existingLocalizations.add($0)

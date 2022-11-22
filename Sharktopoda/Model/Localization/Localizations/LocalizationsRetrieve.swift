@@ -9,6 +9,18 @@ import Foundation
 
 // Retrieve Localizations for some time value
 extension Localizations {
+  func fetch(ids: [String]) -> [Localization] {
+    ids.reduce(into: [Localization]()) { acc, id in
+      if let localization = storage[id] {
+        acc.append(localization)
+      }
+    }
+  }
+  
+  func fetch(_ direction: PlayerControl.PlayDirection, at elapsedTime: Int) -> [Localization] {
+    fetch(ids: ids(for: direction, at: elapsedTime))
+  }
+
   func frames(for direction: PlayerControl.PlayDirection) -> [LocalizationFrame]? {
     switch direction {
       case .forward:
@@ -31,15 +43,5 @@ extension Localizations {
     guard frame.frameNumber == frameNumber(elapsedTime: elapsedTime) else { return [] }
     
     return frame.ids
-  }
-  
-  func fetch(_ direction: PlayerControl.PlayDirection, at elapsedTime: Int) -> [Localization] {
-    let ids = ids(for: direction, at: elapsedTime)
-    
-    return ids.reduce(into: [Localization]()) { acc, id in
-      if let localization = storage[id] {
-        acc.append(localization)
-      }
-    }
   }
 }

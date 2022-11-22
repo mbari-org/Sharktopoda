@@ -49,7 +49,7 @@ final class VideoAsset: Identifiable, ObservableObject {
       let size = trackSize.applying(trackTransform)
       fullSize = NSMakeSize(abs(size.width), abs(size.height))
     } catch let error {
-      print("CxInc VideoAsset error: \(error)")
+      UDP.log("VideoAsset error: \(error)")
       return nil
     }
   }

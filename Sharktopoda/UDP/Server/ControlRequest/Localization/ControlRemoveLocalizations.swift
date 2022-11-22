@@ -5,6 +5,7 @@
 //  Apache License 2.0 — See project LICENSE file
 //
 
+import AVFoundation
 import Foundation
 
 struct ControlRemoveLocalizations: ControlRequest {
@@ -13,13 +14,20 @@ struct ControlRemoveLocalizations: ControlRequest {
   var localizations: [String]
   
   func process() -> ControlResponse {
-//    guard let videoWindow = UDP.sharktopodaData.videoWindows[uuid] else {
-//      return failed("No video for uuid")
-//    }
-    
-//    let _ = videoWindow.removeLocalizations(localizations)
-    
-//    return ok()
-    return failed("CxInc")
+    withLocalizations(id: uuid) { videoLocalizations in
+      let layers = localizations
+        .reduce(into: [CALayer]()) { acc, id in
+          if let remove = videoLocalizations.remove(id: id) {
+            acc.append(remove.layer)
+          }
+        }
+      
+      DispatchQueue.main.async {
+        layers
+          .forEach { $0.removeFromSuperlayer() }
+      }
+
+      return ok()
+    }
   }
 }

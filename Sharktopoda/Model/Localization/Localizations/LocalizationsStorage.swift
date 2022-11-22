@@ -27,17 +27,16 @@ extension Localizations {
     storage.removeAll()
   }
   
-  func remove(id: String) {
-    guard let localization = storage[id] else { return }
+  func remove(id: String) -> Localization? {
+    guard let localization = storage[id] else { return nil }
     
     pauseFrameRemove(localization)
     forwardFrameRemove(localization)
     reverseFrameRemove(localization)
-    
     selected.remove(id)
-    
-    localization.layer.removeFromSuperlayer()
     storage[id] = nil
+    
+    return localization
   }
   
   func update(using control: ControlLocalization) {

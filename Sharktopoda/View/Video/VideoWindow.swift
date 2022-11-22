@@ -178,31 +178,18 @@ final class VideoWindow: NSWindow {
 //
 ///// Static functions
 extension VideoWindow {
-    
-  static func open(path: String) {
-    Task {
-      if let videoAsset = await VideoAsset(id: path, url: URL(fileURLWithPath: path)) {
-        DispatchQueue.main.async {
-          UDP.sharktopodaData.tmpVideoAssets[path] = videoAsset
-          if let error = VideoWindow.open(videoId: path) {
-            let openAlert = OpenAlert(path: path, error: error as! OpenVideoError)
-            openAlert.show()
-          }
-        }
-      }
-    }
-  }
-  
-  static func open(id: String, url: URL) {
+  static func open(id: String, url: URL, alert: Bool = false) {
     Task {
       if let videoAsset = await VideoAsset(id: id, url: url) {
         DispatchQueue.main.async {
           UDP.sharktopodaData.tmpVideoAssets[id] = videoAsset
-          let error = VideoWindow.open(videoId: id)
-          if error != nil {
-            print("ControlOpen error: \(error.debugDescription)")
+          if let error = VideoWindow.open(videoId: id) as? OpenVideoError {
+            UDP.log("Open \(url.absoluteString) error: \(error.debugDescription)")
+            if alert {
+              let openAlert = OpenAlert(path: url.absoluteString, error: error)
+              openAlert.show()
+            }
           }
-          print("Video URL loaded")
         }
       }
     }

@@ -20,10 +20,9 @@ struct OpenFileView: View {
       dialog.isFloatingPanel         = true
       
       guard dialog.runModal() == NSApplication.ModalResponse.OK else { return }
-
       guard let fileUrl = dialog.url else { return }
-
-      VideoWindow.open(path: fileUrl.path)
+      
+      VideoWindow.open(id: fileUrl.path, url: fileUrl)
     }
   }
 }

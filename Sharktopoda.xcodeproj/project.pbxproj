@@ -39,6 +39,9 @@
 		E237C0A628EE108B002868D1 /* FloatingPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E237C0A528EE108B002868D1 /* FloatingPanel.swift */; };
 		E237C0A828EE14B5002868D1 /* FloatingPanelModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E237C0A728EE14B5002868D1 /* FloatingPanelModifier.swift */; };
 		E237C0AA28EE1AFC002868D1 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = E237C0A928EE1AFC002868D1 /* View.swift */; };
+		E2448BFF292D6EAE00F2C2E2 /* LocalizationRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2448BFE292D6EAE00F2C2E2 /* LocalizationRegion.swift */; };
+		E2448C01292D6F5D00F2C2E2 /* LocalizationUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2448C00292D6F5D00F2C2E2 /* LocalizationUpdate.swift */; };
+		E2448C03292D6FC300F2C2E2 /* LocalizationMisc.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2448C02292D6FC300F2C2E2 /* LocalizationMisc.swift */; };
 		E2505D4F28EF22E10027F280 /* EnvironmentValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2505D4E28EF22E10027F280 /* EnvironmentValues.swift */; };
 		E2505D5128EF2A8F0027F280 /* OpenUrlPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2505D5028EF2A8F0027F280 /* OpenUrlPanel.swift */; };
 		E2505D5328EF38B60027F280 /* OpenAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2505D5228EF38B60027F280 /* OpenAlert.swift */; };
@@ -186,6 +189,9 @@
 		E237C0A528EE108B002868D1 /* FloatingPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPanel.swift; sourceTree = "<group>"; };
 		E237C0A728EE14B5002868D1 /* FloatingPanelModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPanelModifier.swift; sourceTree = "<group>"; };
 		E237C0A928EE1AFC002868D1 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		E2448BFE292D6EAE00F2C2E2 /* LocalizationRegion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationRegion.swift; sourceTree = "<group>"; };
+		E2448C00292D6F5D00F2C2E2 /* LocalizationUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationUpdate.swift; sourceTree = "<group>"; };
+		E2448C02292D6FC300F2C2E2 /* LocalizationMisc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationMisc.swift; sourceTree = "<group>"; };
 		E2505D4E28EF22E10027F280 /* EnvironmentValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentValues.swift; sourceTree = "<group>"; };
 		E2505D5028EF2A8F0027F280 /* OpenUrlPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenUrlPanel.swift; sourceTree = "<group>"; };
 		E2505D5228EF38B60027F280 /* OpenAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAlert.swift; sourceTree = "<group>"; };
@@ -669,6 +675,9 @@
 				E28CEF05291E9BCC009E73B3 /* Localizations */,
 				E2C22ED428D36832003CD976 /* Localization.swift */,
 				E2D1C84D291302EF00961A0A /* LocalizationFrame.swift */,
+				E2448BFE292D6EAE00F2C2E2 /* LocalizationRegion.swift */,
+				E2448C00292D6F5D00F2C2E2 /* LocalizationUpdate.swift */,
+				E2448C02292D6FC300F2C2E2 /* LocalizationMisc.swift */,
 			);
 			path = Localization;
 			sourceTree = "<group>";
@@ -861,6 +870,7 @@
 				E2505D5A28EF91960027F280 /* Localizations.swift in Sources */,
 				E2BC08E928EB7795007F4B5D /* NSImage.swift in Sources */,
 				E295627928D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift in Sources */,
+				E2448C01292D6F5D00F2C2E2 /* LocalizationUpdate.swift in Sources */,
 				E213252528F7651F00D6BFF6 /* DefaultPreferences.swift in Sources */,
 				E2BDE212290CABC3001CC439 /* CGPoint.swift in Sources */,
 				E2EE0E4028DB9DD200138A86 /* ControlAllInfo.swift in Sources */,
@@ -886,6 +896,7 @@
 				E2F3A2302925513B00F2551F /* VideoView.swift in Sources */,
 				E295627C28D5325A00E88ED1 /* NetworkControlPreferencesView.swift in Sources */,
 				E2675E2628DABF5600F5F114 /* ControlPlay.swift in Sources */,
+				E2448BFF292D6EAE00F2C2E2 /* LocalizationRegion.swift in Sources */,
 				E21DF7922910391A00038B41 /* PlayerMouse.swift in Sources */,
 				E28C6821290C714D00987828 /* CAShapeLayer.swift in Sources */,
 				E229F4C228D9150A001F220E /* ControlConnect.swift in Sources */,
@@ -932,6 +943,7 @@
 				E2675E2C28DB5F9400F5F114 /* DefaultValue.swift in Sources */,
 				E2BC08ED28EB7914007F4B5D /* AVAsset.swift in Sources */,
 				E2505D5628EF7D600027F280 /* ControlAddLocalizations.swift in Sources */,
+				E2448C03292D6FC300F2C2E2 /* LocalizationMisc.swift in Sources */,
 				E2D47E9E28D8DF0F0068B192 /* UDPMessage.swift in Sources */,
 				E2EE0E3A28DB9AAD00138A86 /* ControlState.swift in Sources */,
 				E2989AC128D4BAD0009D2D65 /* SizeColorRow.swift in Sources */,

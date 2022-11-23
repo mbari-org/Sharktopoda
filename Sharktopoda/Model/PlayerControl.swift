@@ -14,8 +14,11 @@ final class PlayerControl: Identifiable, ObservableObject {
 
   let fullSize: CGSize
   let seekTolerance: CMTime
-  
+
+  var rate: Float = 0.0
   var previousRate: Float = 1.0
+  
+  @Published var paused: Bool = true
   
   init(videoAsset: VideoAsset, player: AVPlayer, seekTolerance: CMTime) {
     id = videoAsset.id
@@ -40,25 +43,26 @@ final class PlayerControl: Identifiable, ObservableObject {
   }
 
   func pause() {
-    previousRate = rate
-    player.pause()
+    guard !paused else { return }
+    
+    DispatchQueue.main.async {
+      self.player.rate = 0.0
+      self.paused = true
+    }
   }
-  
-  var paused: Bool {
-    rate == 0.0
-  }
-  
+
   func play() {
     play(rate: previousRate)
   }
   
-  func play(rate: Float) {
-    player.rate = rate
-    previousRate = rate
-  }
-  
-  var rate: Float {
-    player.rate
+  func play(rate playRate: Float) {
+    guard playRate != 0.0 else { return pause() }
+
+    previousRate = playRate
+    DispatchQueue.main.async {
+      self.player.rate = playRate
+      self.paused = false
+    }
   }
   
   func seek(elapsed: Int, done: @escaping (Bool) -> Void) {

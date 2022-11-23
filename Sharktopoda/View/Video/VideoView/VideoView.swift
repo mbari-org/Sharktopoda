@@ -34,11 +34,6 @@ struct VideoView: View {
         .padding(0)
     }
   }
-  
-  var player: AVPlayer {
-    playerView.player
-  }
-
 }
 
 //struct VideoView_Previews: PreviewProvider {

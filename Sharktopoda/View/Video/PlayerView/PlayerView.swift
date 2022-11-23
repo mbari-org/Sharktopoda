@@ -11,9 +11,12 @@ import SwiftUI
 struct PlayerView: NSViewRepresentable {
   let sharktopodaData: SharktopodaData
   
+  let id: String
+  
   let nsPlayerView: NSPlayerView
   
-  init(videoAsset: VideoAsset, sharktopodaData: SharktopodaData) {
+  init(id: String, videoAsset: VideoAsset, sharktopodaData: SharktopodaData) {
+    self.id = id
     nsPlayerView = NSPlayerView(videoAsset: videoAsset)
     self.sharktopodaData = sharktopodaData
   }
@@ -44,10 +47,6 @@ struct PlayerView: NSViewRepresentable {
     nsPlayerView.display(localizations: localizations)
   }
 
-  var id: String {
-    videoAsset.id
-  }
-  
   var player: AVPlayer {
     nsPlayerView.player
   }

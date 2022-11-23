@@ -13,7 +13,9 @@ struct VideoView: View {
   var keyInfo: KeyInfo = KeyInfo()
   
   init(videoAsset: VideoAsset, sharktopodaData: SharktopodaData) {
-    playerView = PlayerView(videoAsset: videoAsset, sharktopodaData: sharktopodaData)
+    playerView = PlayerView(id: videoAsset.id,
+                            videoAsset: videoAsset,
+                            sharktopodaData: sharktopodaData)
   }
 
   var body: some View {

@@ -18,6 +18,7 @@ final class PlayerControl: Identifiable, ObservableObject {
   var rate: Float = 0.0
   var previousRate: Float = 1.0
   
+  @Published var playerTime: Int = 0
   @Published var paused: Bool = true
   
   init(videoAsset: VideoAsset, player: AVPlayer, seekTolerance: CMTime) {

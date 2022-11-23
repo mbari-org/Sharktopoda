@@ -11,16 +11,27 @@ struct VideoControlView: View {
   @EnvironmentObject var playerControl: PlayerControl
   
   var body: some View {
-    Button(action: {
-      playerControl.paused ? playerControl.play() : playerControl.pause()
-    }) {
-      Image(systemName: playerControl.paused ? "play" : "pause")
+    HStack {
+      Button(action: {
+        playerControl.paused ? playerControl.play() : playerControl.pause()
+      }) {
+        Image(systemName: playerControl.paused ? "play" : "pause")
+      }
+      .padding(.leading, 10)
+      .padding(.trailing, 10)
+      
+      Spacer()
+      
+      Text(String(playerControl.playerTime))
+        .padding(.leading, 10)
+        .padding(.trailing, 10)
     }
+    .padding(.bottom, 10)
   }
 }
 
-struct VideoControlView_Previews: PreviewProvider {
-  static var previews: some View {
-    VideoControlView()
-  }
-}
+//struct VideoControlView_Previews: PreviewProvider {
+//  static var previews: some View {
+//    VideoControlView().environmentObject(PlayerControl())
+//  }
+//}

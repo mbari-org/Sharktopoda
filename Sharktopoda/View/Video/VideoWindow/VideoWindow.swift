@@ -29,6 +29,9 @@ final class VideoWindow: NSWindow {
     
     keyInfo = KeyInfo(keyTime: Date())
     
+    localizations = Localizations(frameDuration: videoAsset.frameDuration.asMillis(),
+                                  videoId: videoAsset.id)
+        
     let playerItem = AVPlayerItem(asset: videoAsset.avAsset)
     let player = AVPlayer(playerItem: playerItem)
     let seekTolerance = CMTimeMultiplyByFloat64(videoAsset.frameDuration,
@@ -38,13 +41,9 @@ final class VideoWindow: NSWindow {
                                   player: player,
                                   seekTolerance: seekTolerance)
     
-    videoView = VideoView(playerControl: playerControl,
-                          videoAsset: videoAsset,
-                          sharktopodaData: UDP.sharktopodaData)
-    
-    localizations = Localizations(frameDuration: videoAsset.frameDuration.asMillis(),
-                                  videoId: videoAsset.id)
-    
+    videoView = VideoView(localizations: localizations,
+                          playerControl: playerControl)
+
     queue = DispatchQueue(label: "Sharktopoda Video Queue: \(videoAsset.id)")
     
     let fullSize = videoAsset.fullSize

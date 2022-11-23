@@ -10,7 +10,6 @@ import Foundation
 extension PlayerView {
   func add(localization: Localization) {
     guard nsPlayerView.showLocalizations else { return }
-    guard let localizations = sharktopodaData.localizations(id: id) else { return }
             
     let currentFrameNumber = localizations.frameNumber(elapsedTime: currentTime)
     let localizationFrameNumber = localizations.frameNumber(for: localization)

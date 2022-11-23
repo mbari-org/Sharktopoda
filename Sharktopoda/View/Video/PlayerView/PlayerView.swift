@@ -9,19 +9,18 @@ import AVKit
 import SwiftUI
 
 struct PlayerView: NSViewRepresentable {
-  let sharktopodaData: SharktopodaData
-  
   let id: String
-  
+
+  let localizations: Localizations
   let nsPlayerView: NSPlayerView
   
   init(id: String,
-       playerControl: PlayerControl,
-       videoAsset: VideoAsset,
-       sharktopodaData: SharktopodaData) {
+       localizations: Localizations,
+       playerControl: PlayerControl) {
     self.id = id
     nsPlayerView = NSPlayerView(playerControl: playerControl)
-    self.sharktopodaData = sharktopodaData
+    
+    self.localizations = localizations
   }
   
   func makeNSView(context: Context) -> some NSView {

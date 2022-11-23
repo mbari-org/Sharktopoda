@@ -12,14 +12,12 @@ struct VideoView: View {
   var playerView: PlayerView
   var keyInfo: KeyInfo = KeyInfo()
   
-  init(playerControl: PlayerControl,
-       videoAsset: VideoAsset,
-       sharktopodaData: SharktopodaData) {
+  init(localizations: Localizations,
+       playerControl: PlayerControl) {
 
-    playerView = PlayerView(id: videoAsset.id,
-                            playerControl: playerControl,
-                            videoAsset: videoAsset,
-                            sharktopodaData: sharktopodaData)
+    playerView = PlayerView(id: playerControl.id,
+                            localizations: localizations,
+                            playerControl: playerControl)
   }
 
   var body: some View {

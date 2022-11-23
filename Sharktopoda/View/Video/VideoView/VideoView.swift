@@ -10,7 +10,6 @@ import SwiftUI
 
 struct VideoView: View {
   var playerView: PlayerView
-  var keyInfo: KeyInfo = KeyInfo()
   
   init(localizations: Localizations,
        playerControl: PlayerControl) {

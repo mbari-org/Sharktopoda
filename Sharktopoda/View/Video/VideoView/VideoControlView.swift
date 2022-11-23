@@ -8,11 +8,14 @@
 import SwiftUI
 
 struct VideoControlView: View {
-//  @EnvironmentObject var sharktopodaData: SharktopodaData
-  @EnvironmentObject var videoAsset: VideoAsset
+  @EnvironmentObject var playerControl: PlayerControl
   
   var body: some View {
-    Text("CxInc Video Control View")
+    Button(action: {
+      playerControl.paused ? playerControl.play() : playerControl.pause()
+    }) {
+      Image(systemName: playerControl.paused ? "play" : "pause")
+    }
   }
 }
 

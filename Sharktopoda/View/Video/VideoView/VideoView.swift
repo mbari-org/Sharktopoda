@@ -9,10 +9,15 @@ import AVFoundation
 import SwiftUI
 
 struct VideoView: View {
+  let localizations: Localizations
+  let playerControl: PlayerControl
+  
   var playerView: PlayerView
   
   init(localizations: Localizations,
        playerControl: PlayerControl) {
+    self.localizations = localizations
+    self.playerControl = playerControl
 
     playerView = PlayerView(id: playerControl.id,
                             localizations: localizations,
@@ -25,7 +30,7 @@ struct VideoView: View {
         .padding(0)
       Divider()
       VideoControlView()
-//        .environmentObject(videoAsset)
+        .environmentObject(playerControl)
         .padding(0)
     }
   }

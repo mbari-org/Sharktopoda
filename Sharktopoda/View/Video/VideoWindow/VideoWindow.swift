@@ -10,6 +10,9 @@ import AVKit
 import SwiftUI
 
 final class VideoWindow: NSWindow {
+  var id: String
+  var videoAsset: VideoAsset
+  
   var videoView: VideoView
   var keyInfo: KeyInfo
 
@@ -21,16 +24,23 @@ final class VideoWindow: NSWindow {
 
   //
   init(for videoAsset: VideoAsset) {
+    id = videoAsset.id
+    self.videoAsset = videoAsset
+    
     keyInfo = KeyInfo(keyTime: Date())
     
-    videoView = VideoView(videoAsset: videoAsset, sharktopodaData: UDP.sharktopodaData)
-    
+    let playerItem = AVPlayerItem(asset: videoAsset.avAsset)
+    let player = AVPlayer(playerItem: playerItem)
     let seekTolerance = CMTimeMultiplyByFloat64(videoAsset.frameDuration,
                                                 multiplier: 0.25)
     
-    playerControl = PlayerControl(id: videoAsset.id,
-                                  player: videoView.player,
+    playerControl = PlayerControl(videoAsset: videoAsset,
+                                  player: player,
                                   seekTolerance: seekTolerance)
+    
+    videoView = VideoView(playerControl: playerControl,
+                          videoAsset: videoAsset,
+                          sharktopodaData: UDP.sharktopodaData)
     
     localizations = Localizations(frameDuration: videoAsset.frameDuration.asMillis(),
                                   videoId: videoAsset.id)
@@ -51,7 +61,9 @@ final class VideoWindow: NSWindow {
     contentView = NSHostingView(rootView: videoView)
     delegate = self
     
-    setLocalizationsObserver()
+    let pollingInterval = CMTimeMultiplyByFloat64(videoAsset.frameDuration,
+                                                  multiplier: 0.66)
+    setLocalizationsObserver(pollingInterval)
         
     makeKeyAndOrderFront(nil)
   }
@@ -60,11 +72,11 @@ final class VideoWindow: NSWindow {
     videoView.playerView
   }
   
-  var url: URL {
-    videoView.videoAsset.url
-  }
-
-  var videoAsset: VideoAsset {
-    videoView.videoAsset
-  }
+//  var url: URL {
+//    videoView.videoAsset.url
+//  }
+//
+//  var videoAsset: VideoAsset {
+//    videoView.videoAsset
+//  }
 }

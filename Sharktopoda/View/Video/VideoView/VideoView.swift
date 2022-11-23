@@ -12,8 +12,12 @@ struct VideoView: View {
   var playerView: PlayerView
   var keyInfo: KeyInfo = KeyInfo()
   
-  init(videoAsset: VideoAsset, sharktopodaData: SharktopodaData) {
+  init(playerControl: PlayerControl,
+       videoAsset: VideoAsset,
+       sharktopodaData: SharktopodaData) {
+
     playerView = PlayerView(id: videoAsset.id,
+                            playerControl: playerControl,
                             videoAsset: videoAsset,
                             sharktopodaData: sharktopodaData)
   }
@@ -24,7 +28,7 @@ struct VideoView: View {
         .padding(0)
       Divider()
       VideoControlView()
-        .environmentObject(videoAsset)
+//        .environmentObject(videoAsset)
         .padding(0)
     }
   }
@@ -32,10 +36,7 @@ struct VideoView: View {
   var player: AVPlayer {
     playerView.player
   }
-  
-  var videoAsset: VideoAsset {
-    playerView.videoAsset
-  }
+
 }
 
 //struct VideoView_Previews: PreviewProvider {

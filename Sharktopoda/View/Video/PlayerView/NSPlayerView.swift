@@ -28,21 +28,17 @@ final class NSPlayerView: NSView {
 
   /// Anchor point for either selecting locations or dragging current localization
   var dragAnchor: CGPoint?
-
-  private var _currentLocalization: Localization?
-  private var _videoAsset: VideoAsset?
   
-  // CxDebug
-  var windowLayer: CALayer?
+  var _playerControl: PlayerControl?
+  
+  private var _currentLocalization: Localization?
   
   // MARK: ctors
-  init(videoAsset: VideoAsset) {
-    let fullSize = videoAsset.fullSize
-    
-    super.init(frame: NSMakeRect(0, 0, fullSize.width, fullSize.height))
+  init(playerControl: PlayerControl) {
+    let size = playerControl.fullSize
+    super.init(frame: NSMakeRect(0, 0, size.width, size.height))
 
-    _videoAsset = videoAsset
-    setup()
+    setup(playerControl)
   }
   
   override public init(frame frameRect: NSRect) {
@@ -56,15 +52,16 @@ final class NSPlayerView: NSView {
   }
   
   // MARK: setup
-  private func setup() {
+  private func setup(_ playerControl: PlayerControl? = nil) {
+    guard let playerControl = playerControl else { return }
+    
     wantsLayer = true
     layer = rootLayer
     
-    let player = AVPlayer(url: videoAsset.url)
-    playerLayer.player = player
+    playerLayer.player = playerControl.player
     playerLayer.frame = bounds
     playerLayer.autoresizingMask = [.layerWidthSizable, .layerHeightSizable]
-
+    
     let conceptLayer = CATextLayer()
     conceptLayer.fontSize = CGFloat(UserDefaults.standard.integer(forKey: PrefKeys.captionFontSize))
     conceptLayer.foregroundColor = UserDefaults.standard.color(forKey: PrefKeys.captionFontColor).cgColor
@@ -73,7 +70,7 @@ final class NSPlayerView: NSView {
     
     rootLayer.addSublayer(playerLayer)
     
-    windowLayer = rootLayer.superlayer?.superlayer?.superlayer
+    _playerControl = playerControl
   }
 }
 
@@ -104,36 +101,33 @@ extension NSPlayerView {
     }
   }
   
+  var fullSize: CGSize {
+    playerControl.fullSize
+  }
+  
+  // CxTBD This doesn't seem right
   var localizations: Localizations {
-    UDP.sharktopodaData.localizations(id: videoAsset.id)!
+    UDP.sharktopodaData.localizations(id: playerControl.id)!
   }
   
   var player: AVPlayer {
     get { playerLayer.player! }
   }
   
+  var playerControl: PlayerControl {
+    get { _playerControl! }
+  }
+  
   var scale: CGFloat {
     /// Player always maintains original aspect so either width or height work here
     get {
-      videoRect.size.width / fullSize.width
-    }
-  }
-  
-  var videoAsset: VideoAsset {
-    get {
-      _videoAsset!
+      videoRect.size.width / playerControl.fullSize.width
     }
   }
   
   var videoRect: CGRect {
     get {
       playerLayer.videoRect
-    }
-  }
-  
-  var fullSize: CGSize {
-    get {
-      videoAsset.fullSize
     }
   }
 }

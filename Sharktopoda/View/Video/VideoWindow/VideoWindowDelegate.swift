@@ -9,9 +9,8 @@ import AppKit
 
 extension VideoWindow: NSWindowDelegate {
   func windowWillClose(_ notification: Notification) {
-    let videoId = videoAsset.id
     DispatchQueue.main.async {
-      UDP.sharktopodaData.videoWindows.removeValue(forKey: videoId)
+      UDP.sharktopodaData.videoWindows.removeValue(forKey: self.id)
     }
   }
   

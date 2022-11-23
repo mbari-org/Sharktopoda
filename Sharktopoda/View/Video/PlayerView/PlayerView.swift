@@ -15,9 +15,12 @@ struct PlayerView: NSViewRepresentable {
   
   let nsPlayerView: NSPlayerView
   
-  init(id: String, videoAsset: VideoAsset, sharktopodaData: SharktopodaData) {
+  init(id: String,
+       playerControl: PlayerControl,
+       videoAsset: VideoAsset,
+       sharktopodaData: SharktopodaData) {
     self.id = id
-    nsPlayerView = NSPlayerView(videoAsset: videoAsset)
+    nsPlayerView = NSPlayerView(playerControl: playerControl)
     self.sharktopodaData = sharktopodaData
   }
   
@@ -57,10 +60,6 @@ struct PlayerView: NSViewRepresentable {
   
   var showLocalizations: Bool {
     nsPlayerView.showLocalizations
-  }
-  
-  var videoAsset: VideoAsset {
-    nsPlayerView.videoAsset
   }
   
   var videoRect: CGRect {

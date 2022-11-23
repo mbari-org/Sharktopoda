@@ -11,14 +11,19 @@ import Foundation
 final class PlayerControl: Identifiable, ObservableObject {
   let id: String
   let player: AVPlayer
+
+  let fullSize: CGSize
   let seekTolerance: CMTime
   
-  var previousRate: Float = 0.0
+  var previousRate: Float = 1.0
   
-  init(id: String, player: AVPlayer, seekTolerance: CMTime) {
-    self.id = id
+  init(videoAsset: VideoAsset, player: AVPlayer, seekTolerance: CMTime) {
+    id = videoAsset.id
+    
     self.player = player
     self.seekTolerance = seekTolerance
+    
+    fullSize = videoAsset.fullSize
   }
   
   func canStep(_ steps: Int) -> Bool {

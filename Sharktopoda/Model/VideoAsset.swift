@@ -23,9 +23,7 @@ final class VideoAsset: Identifiable, ObservableObject {
   var frameRate: Float
   var fullSize: NSSize
   var isPlayable: Bool
-  
-//  var localizations: Localizations?
-  
+
   init?(id: String, url: URL) async {
     self.id = id
     self.url = url

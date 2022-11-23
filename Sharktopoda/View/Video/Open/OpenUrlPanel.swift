@@ -57,7 +57,7 @@ struct OpenUrlPanel: View {
     showPanel = false
 
     guard let url = URL(string: path) else {
-      alert(path: path, error: OpenVideoError.invalidUrl)
+      alert(path: path, error: OpenVideoError.invalidPath(path))
       return
     }
 

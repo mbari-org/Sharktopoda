@@ -616,8 +616,8 @@
 			isa = PBXGroup;
 			children = (
 				E2C22EC428D144B0003CD976 /* SharktopodaData.swift */,
-				E2C22ED628D36888003CD976 /* VideoAsset.swift */,
 				E2803846292931E60017E28C /* PlayerControl.swift */,
+				E2C22ED628D36888003CD976 /* VideoAsset.swift */,
 				E2DAF8BC28F8EE460010ECB8 /* Localization */,
 				E28CEF05291E9BCC009E73B3 /* Localizations */,
 			);

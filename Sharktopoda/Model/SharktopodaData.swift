@@ -17,9 +17,6 @@ final class SharktopodaData: ObservableObject {
   /// Open video windows
   @Published var videoWindows = [String: VideoWindow]()
   
-  /// Tmp video assets used during Control Open
-  @Published var tmpVideoAssets = [String: VideoAsset]()
-
   init() {
     // Needed for non-View related changes to sharktopodaData to notify observing Views
     UDP.sharktopodaData = self

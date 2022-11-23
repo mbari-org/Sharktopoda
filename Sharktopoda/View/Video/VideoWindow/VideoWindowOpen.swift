@@ -8,20 +8,17 @@
 import Foundation
 
 extension VideoWindow {
+  static func onMain(_ fn: @escaping () -> Void) {
+    DispatchQueue.main.async { fn() }
+  }
+  
   static func open(id: String, url: URL, alert: Bool = false) {
-    Task {
-      if let videoAsset = await VideoAsset(id: id, url: url) {
-        DispatchQueue.main.async {
-          UDP.sharktopodaData.tmpVideoAssets[id] = videoAsset
-          if let error = VideoWindow.open(videoId: id) as? OpenVideoError {
-            UDP.log("Open \(url.absoluteString) error: \(error.debugDescription)")
-            if alert {
-              let openAlert = OpenAlert(path: url.absoluteString, error: error)
-              openAlert.show()
-            }
-          }
-        }
+    if let videoWindow = UDP.sharktopodaData.videoWindows[id] {
+      onMain {
+        videoWindow.makeKeyAndOrderFront(nil)
       }
+    } else {
+      window(id: id, url: url, alert: alert)
     }
   }
   
@@ -29,28 +26,37 @@ extension VideoWindow {
     open(id: url.path, url: url, alert: true)
   }
   
-  private static func open(videoId: String) -> Error? {
-    if let videoWindow = UDP.sharktopodaData.videoWindows[videoId] {
-      DispatchQueue.main.async {
-        videoWindow.makeKeyAndOrderFront(nil)
-      }
-    } else {
-      guard let videoAsset = UDP.sharktopodaData.tmpVideoAssets[videoId] else {
-        return OpenVideoError.notLoaded
-      }
-      
-      guard videoAsset.isPlayable else {
-        return OpenVideoError.notPlayable
-      }
-      
-      UDP.sharktopodaData.tmpVideoAssets[videoId] = nil
-      
-      DispatchQueue.main.async {
-        let videoWindow = VideoWindow(for: videoAsset)
-        videoWindow.makeKeyAndOrderFront(nil)
-        UDP.sharktopodaData.videoWindows[videoId] = videoWindow
+  private static func window(id: String, url: URL, alert: Bool = false) {
+    Task {
+      if let videoAsset = await VideoAsset(id: id, url: url) {
+        window(for: videoAsset, alert: alert)
+      } else {
+        report(path: url.absoluteString,
+               error: OpenVideoError.notLoaded(url),
+               alert: alert)
       }
     }
-    return nil
+  }
+  
+  private static func window(for videoAsset: VideoAsset, alert: Bool) {
+    if !videoAsset.isPlayable {
+      report(path: videoAsset.url.absoluteString,
+             error: OpenVideoError.notPlayable(videoAsset.url),
+             alert: alert)
+    } else {
+      let videoWindow = VideoWindow(for: videoAsset)
+      UDP.sharktopodaData.videoWindows[videoAsset.id] = videoWindow
+      onMain {
+        videoWindow.makeKeyAndOrderFront(nil)
+      }
+    }
+  }
+  
+  private static func report(path: String, error: OpenVideoError, alert: Bool) {
+    if alert {
+      let openAlert = OpenAlert(path: path, error: error)
+      onMain { openAlert.show() }
+    }
+    UDP.log(error.description)
   }
 }

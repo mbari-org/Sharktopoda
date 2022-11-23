@@ -67,7 +67,7 @@ final class PlayerControl: Identifiable, ObservableObject {
   }
   
   func seek(elapsed: Int, done: @escaping (Bool) -> Void) {
-    player.pause()
+    self.pause()
     player.seek(to: CMTime.fromMillis(elapsed),
                 toleranceBefore: seekTolerance,
                 toleranceAfter: seekTolerance,

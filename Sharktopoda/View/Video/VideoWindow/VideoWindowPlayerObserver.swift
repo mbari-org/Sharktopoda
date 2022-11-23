@@ -24,7 +24,9 @@ extension VideoWindow {
       playerView.display(localizations: localizations.fetch(direction, at: elapsedTime))
       playerView.clear(localizations: localizations.fetch(opposite, at: elapsedTime))
       
-      playerControl.playerTime = elapsedTime
+      DispatchQueue.main.async {
+        playerControl.playerTime = elapsedTime
+      }
     }
   }
 }

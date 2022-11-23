@@ -19,20 +19,18 @@ struct SharktopodaCommands: Commands {
         .keyboardShortcut("O", modifiers: [.shift, .command])
     }
     
-    CommandMenu("Video") {
-      Button("Play") {
-//        videoWindow?.play()
-      }
-      .disabled(videoWindow == nil)
-//      .disabled(videoWindow == nil && playerView?.playDirection == .paused)
-
-      Button("Pause") {
-//        videoWindow?.pause()
-      }
-      .disabled(videoWindow == nil)
-//      .disabled(videoWindow == nil && playerView?.playDirection != .paused)
-
-    }
+    // CxTBD Needs work
+//    CommandMenu("Video") {
+//      Button("Play") {
+//        videoWindow?.playerControl.play()
+//      }
+//      .disabled(videoWindow == nil || videoWindow!.playerControl.paused)
+//
+//      Button("Pause") {
+//        videoWindow?.playerControl.pause()
+//      }
+//      .disabled(videoWindow == nil || !videoWindow!.playerControl.paused)
+//    }
   }
   
   var videoWindow: VideoWindow? {

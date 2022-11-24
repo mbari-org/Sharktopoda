@@ -45,6 +45,13 @@ final class VideoControl: Identifiable, ObservableObject {
 
   func pause() {
     guard !paused else { return }
+
+    withPlayerView { playerView in
+      DispatchQueue.main.async {
+        playerView.clear()
+        playerView.display(localizations: self.pausedLocalizations())
+      }
+    }
     
     DispatchQueue.main.async {
       self.player.rate = 0.0
@@ -58,6 +65,14 @@ final class VideoControl: Identifiable, ObservableObject {
   
   func play(rate playRate: Float) {
     guard playRate != 0.0 else { return pause() }
+    
+    if paused {
+      withPlayerView { playerView in
+        DispatchQueue.main.async {
+          playerView.clear(localizations: self.pausedLocalizations())
+        }
+      }
+    }
 
     previousRate = playRate
     DispatchQueue.main.async {
@@ -105,4 +120,28 @@ extension VideoControl {
       return .reverse
     }
   }
+}
+
+extension VideoControl {
+  func pausedLocalizations() -> [Localization] {
+    guard paused else { return [] }
+    guard let videoWindow = UDP.sharktopodaData.videoWindows[id] else { return [] }
+    
+    return videoWindow.localizations.fetch(.paused, at: currentTime)
+  }
+
+  typealias PlayerViewFn = (_ playerView: PlayerView) -> Void
+  func withPlayerView(_ fn: PlayerViewFn) {
+    guard let videoWindow = UDP.sharktopodaData.videoWindows[id] else { return }
+    fn(videoWindow.playerView)
+  }
+
+  
+  typealias VideoWindowFn = (_ videoWindow: VideoWindow) -> Void
+  func withVideoWindow(_ fn: VideoWindowFn) {
+    guard let videoWindow = UDP.sharktopodaData.videoWindows[id] else { return }
+    fn(videoWindow)
+  }
+  
+  
 }

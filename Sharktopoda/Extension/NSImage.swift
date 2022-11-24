@@ -34,7 +34,7 @@ extension NSImage {
         return FrameCaptureError.pngRepresentation
       }
 
-      print("Write image data to: \(fileUrl)")
+      UDP.log("Write image data to: \(fileUrl)")
 
       try data.write(to: fileUrl, options: .withoutOverwriting)
 

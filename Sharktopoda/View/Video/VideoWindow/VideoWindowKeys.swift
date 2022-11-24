@@ -16,7 +16,7 @@ extension VideoWindow {
       case space = 49
     }
     
-//    print("keyCode: \(event.keyCode)")
+//    print("CxDebug keyCode: \(event.keyCode)")
     
     func isCommand(_ event: NSEvent) -> Bool {
       event.modifierFlags.intersection(.deviceIndependentFlagsMask) == .command

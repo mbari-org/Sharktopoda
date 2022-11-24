@@ -40,7 +40,6 @@ class UDPMessage {
         processMessage()
 
       case .failed(let error):
-        print(error)
         log("state update failed error \(error)")
         exit(EXIT_FAILURE)
 

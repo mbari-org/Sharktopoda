@@ -49,7 +49,7 @@ enum ControlCommand: String, Codable {
       controlCommand = maybeControlCommand
     }
     catch let error {
-      print(error)
+      UDP.log("state update failed error \(error)")
       return ControlInvalid(cause: error.localizedDescription)
     }
     

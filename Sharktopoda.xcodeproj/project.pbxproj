@@ -61,6 +61,7 @@
 		E2675E2C28DB5F9400F5F114 /* DefaultValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2B28DB5F9400F5F114 /* DefaultValue.swift */; };
 		E2675E2F28DB729900F5F114 /* ControlInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2E28DB729900F5F114 /* ControlInfo.swift */; };
 		E2675E3428DB7A4000F5F114 /* ControlAdvance.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E3328DB7A4000F5F114 /* ControlAdvance.swift */; };
+		E2747105292FE66700EDDAD6 /* VideoWindowData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2747104292FE66700EDDAD6 /* VideoWindowData.swift */; };
 		E280384529284A380017E28C /* VideoWindowKeyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E280384429284A380017E28C /* VideoWindowKeyInfo.swift */; };
 		E2803847292931E60017E28C /* VideoControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2803846292931E60017E28C /* VideoControl.swift */; };
 		E280384E292BD5400017E28C /* PlayerViewLocalizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E280384D292BD5400017E28C /* PlayerViewLocalizations.swift */; };
@@ -215,6 +216,7 @@
 		E2675E2B28DB5F9400F5F114 /* DefaultValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultValue.swift; sourceTree = "<group>"; };
 		E2675E2E28DB729900F5F114 /* ControlInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlInfo.swift; sourceTree = "<group>"; };
 		E2675E3328DB7A4000F5F114 /* ControlAdvance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlAdvance.swift; sourceTree = "<group>"; };
+		E2747104292FE66700EDDAD6 /* VideoWindowData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoWindowData.swift; sourceTree = "<group>"; };
 		E280384429284A380017E28C /* VideoWindowKeyInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoWindowKeyInfo.swift; sourceTree = "<group>"; };
 		E2803846292931E60017E28C /* VideoControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoControl.swift; sourceTree = "<group>"; };
 		E280384D292BD5400017E28C /* PlayerViewLocalizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewLocalizations.swift; sourceTree = "<group>"; };
@@ -390,6 +392,7 @@
 			isa = PBXGroup;
 			children = (
 				E2FAB21A28E24A7C006D2676 /* VideoWindow.swift */,
+				E2747104292FE66700EDDAD6 /* VideoWindowData.swift */,
 				E2448C06292D7A6600F2C2E2 /* VideoWindowDelegate.swift */,
 				E280384429284A380017E28C /* VideoWindowKeyInfo.swift */,
 				E2448C0A292D7B1000F2C2E2 /* VideoWindowKeys.swift */,
@@ -971,6 +974,7 @@
 				E2EE0E3A28DB9AAD00138A86 /* ControlState.swift in Sources */,
 				E2989AC128D4BAD0009D2D65 /* SizeColorRow.swift in Sources */,
 				E2D1C85029131E6E00961A0A /* LocalizationMouse.swift in Sources */,
+				E2747105292FE66700EDDAD6 /* VideoWindowData.swift in Sources */,
 				E28CEF09291E9C82009E73B3 /* LocalizationsRetrieve.swift in Sources */,
 				E2D47E9A28D8C17D0068B192 /* ClientCommand.swift in Sources */,
 				E2EE0E3828DB9A6600138A86 /* ControlElapsed.swift in Sources */,

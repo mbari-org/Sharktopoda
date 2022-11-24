@@ -9,7 +9,8 @@ import AppKit
 
 extension NSPlayerView {
   override func mouseDown(with event: NSEvent) {
-    videoControl.pause()
+    // CxInc
+//    videoControl.pause()
     
     let playerPoint = locationInPlayer(with: event)
     guard videoRect.contains(playerPoint) else { return }

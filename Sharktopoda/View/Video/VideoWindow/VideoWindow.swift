@@ -11,26 +11,26 @@ import SwiftUI
 
 final class VideoWindow: NSWindow {
   var id: String
-  var videoAsset: VideoAsset
-  
-  var videoView: VideoView
   var keyInfo: KeyInfo
 
   let localizations: Localizations
+
+  var videoAsset: VideoAsset
   var videoControl: VideoControl
-  
+  var videoView: VideoView
+
   /// Queue on which off-main work is done
   let queue: DispatchQueue
 
   //
   init(for videoAsset: VideoAsset) {
     id = videoAsset.id
-    self.videoAsset = videoAsset
-    
     keyInfo = KeyInfo(keyTime: Date())
-    
-    localizations = Localizations(frameDuration: videoAsset.frameDuration.asMillis(),
-                                  videoId: videoAsset.id)
+
+    self.videoAsset = videoAsset
+
+    let frameDuration = videoAsset.frameDuration.asMillis()
+    localizations = Localizations(id: videoAsset.id, frameDuration: frameDuration)
         
     let playerItem = AVPlayerItem(asset: videoAsset.avAsset)
     let player = AVPlayer(playerItem: playerItem)

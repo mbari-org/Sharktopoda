@@ -29,13 +29,17 @@ final class VideoWindow: NSWindow {
 
     self.videoAsset = videoAsset
 
-    let frameDuration = videoAsset.frameDuration.asMillis()
-    localizations = Localizations(id: videoAsset.id, frameDuration: frameDuration)
+    let frameDuration = videoAsset.frameDuration
+    localizations = Localizations(id: videoAsset.id,
+                                  frameDuration: frameDuration.asMillis())
         
     let playerItem = AVPlayerItem(asset: videoAsset.avAsset)
     let player = AVPlayer(playerItem: playerItem)
     
-    videoControl = VideoControl(player: player, videoAsset: videoAsset)
+    videoControl = VideoControl(id: videoAsset.id,
+                                frameDuration: frameDuration,
+                                fullSize: videoAsset.fullSize,
+                                player: player)
     
     videoView = VideoView(localizations: localizations,
                           videoControl: videoControl)

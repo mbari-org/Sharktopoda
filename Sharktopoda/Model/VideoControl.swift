@@ -20,14 +20,13 @@ final class VideoControl: Identifiable, ObservableObject {
   
   @Published var playerTime: Int = 0
   @Published var paused: Bool = true
-  
-  init(player: AVPlayer, videoAsset: VideoAsset) {
+
+  init(id: String, frameDuration: CMTime, fullSize: CGSize, player: AVPlayer) {
+    self.id = id
+    self.fullSize = fullSize
     self.player = player
     
-    id = videoAsset.id
-    fullSize = videoAsset.fullSize
-    seekTolerance = CMTimeMultiplyByFloat64(videoAsset.frameDuration,
-                                            multiplier: 0.25)
+    seekTolerance = CMTimeMultiplyByFloat64(frameDuration, multiplier: 0.25)
   }
   
   func canStep(_ steps: Int) -> Bool {

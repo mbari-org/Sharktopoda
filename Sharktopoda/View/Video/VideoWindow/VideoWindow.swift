@@ -24,24 +24,27 @@ final class VideoWindow: NSWindow {
 
   //
   init(for videoAsset: VideoAsset) {
-    id = videoAsset.id
+    let id = videoAsset.id
+    
+    self.id = id
     keyInfo = KeyInfo(keyTime: Date())
 
     self.videoAsset = videoAsset
 
     let frameDuration = videoAsset.frameDuration
-    localizations = Localizations(id: videoAsset.id,
+    localizations = Localizations(id: id,
                                   frameDuration: frameDuration.asMillis())
         
     let playerItem = AVPlayerItem(asset: videoAsset.avAsset)
     let player = AVPlayer(playerItem: playerItem)
     
-    videoControl = VideoControl(id: videoAsset.id,
+    videoControl = VideoControl(id: id,
                                 frameDuration: frameDuration,
                                 fullSize: videoAsset.fullSize,
                                 player: player)
     
-    videoView = VideoView(localizations: localizations,
+    videoView = VideoView(id: id,
+                          localizations: localizations,
                           videoControl: videoControl)
 
     queue = DispatchQueue(label: "Sharktopoda Video Queue: \(videoAsset.id)")

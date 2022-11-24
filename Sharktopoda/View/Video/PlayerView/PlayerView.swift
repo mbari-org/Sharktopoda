@@ -9,6 +9,8 @@ import AVKit
 import SwiftUI
 
 struct PlayerView: NSViewRepresentable {
+  @EnvironmentObject private var sharktopodaData: SharktopodaData
+  
   let id: String
 
   let localizations: Localizations
@@ -20,7 +22,7 @@ struct PlayerView: NSViewRepresentable {
     self.id = id
     self.localizations = localizations
   
-    nsPlayerView = NSPlayerView(videoControl: videoControl)
+    nsPlayerView = NSPlayerView(id: id, videoControl: videoControl)
   }
   
   func makeNSView(context: Context) -> some NSView {

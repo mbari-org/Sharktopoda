@@ -10,6 +10,8 @@ import AVFoundation
 
 final class NSPlayerView: NSView {
   // MARK: properties
+  var id: String = "CxNone"
+  
   let rootLayer = CALayer()
   let playerLayer = AVPlayerLayer()
 
@@ -34,7 +36,9 @@ final class NSPlayerView: NSView {
   private var _currentLocalization: Localization?
   
   // MARK: ctors
-  init(videoControl: VideoControl) {
+  init(id: String, videoControl: VideoControl) {
+    self.id = id
+    
     let size = videoControl.fullSize
     super.init(frame: NSMakeRect(0, 0, size.width, size.height))
 

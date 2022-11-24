@@ -9,13 +9,19 @@ import AVFoundation
 import SwiftUI
 
 struct VideoView: View {
+  @EnvironmentObject private var sharktopodaData: SharktopodaData
+  
+  let id: String
+  
   let localizations: Localizations
   let videoControl: VideoControl
   
   var playerView: PlayerView
   
-  init(localizations: Localizations,
+  init(id: String,
+       localizations: Localizations,
        videoControl: VideoControl) {
+    self.id = id
     self.localizations = localizations
     self.videoControl = videoControl
 

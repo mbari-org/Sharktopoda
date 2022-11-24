@@ -23,12 +23,12 @@ final class VideoWindow: NSWindow {
   let queue: DispatchQueue
 
   //
-  init(for videoAsset: VideoAsset) {
+  init(for videoAsset: VideoAsset, with sharktopodaData: SharktopodaData) {
     let id = videoAsset.id
     
     self.id = id
     keyInfo = KeyInfo(keyTime: Date())
-
+    
     self.videoAsset = videoAsset
 
     let frameDuration = videoAsset.frameDuration
@@ -46,6 +46,7 @@ final class VideoWindow: NSWindow {
     videoView = VideoView(id: id,
                           localizations: localizations,
                           videoControl: videoControl)
+//    videoAsset.environmentObject(<#T##T#>)
 
     queue = DispatchQueue(label: "Sharktopoda Video Queue: \(videoAsset.id)")
     

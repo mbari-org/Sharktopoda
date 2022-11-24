@@ -44,7 +44,7 @@ extension VideoWindow {
              error: OpenVideoError.notPlayable(videoAsset.url),
              alert: alert)
     } else {
-      let videoWindow = VideoWindow(for: videoAsset)
+      let videoWindow = VideoWindow(for: videoAsset, with: UDP.sharktopodaData)
       UDP.sharktopodaData.videoWindows[videoAsset.id] = videoWindow
       onMain {
         videoWindow.makeKeyAndOrderFront(nil)

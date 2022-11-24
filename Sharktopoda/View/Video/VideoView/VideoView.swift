@@ -10,18 +10,18 @@ import SwiftUI
 
 struct VideoView: View {
   let localizations: Localizations
-  let playerControl: PlayerControl
+  let videoControl: VideoControl
   
   var playerView: PlayerView
   
   init(localizations: Localizations,
-       playerControl: PlayerControl) {
+       videoControl: VideoControl) {
     self.localizations = localizations
-    self.playerControl = playerControl
+    self.videoControl = videoControl
 
-    playerView = PlayerView(id: playerControl.id,
+    playerView = PlayerView(id: videoControl.id,
                             localizations: localizations,
-                            playerControl: playerControl)
+                            videoControl: videoControl)
   }
 
   var body: some View {
@@ -30,7 +30,7 @@ struct VideoView: View {
         .padding(0)
       Divider()
       VideoControlView()
-        .environmentObject(playerControl)
+        .environmentObject(videoControl)
         .padding(0)
     }
   }

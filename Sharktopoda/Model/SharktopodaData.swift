@@ -27,9 +27,9 @@ final class SharktopodaData: ObservableObject {
     return videoWindow.localizations
   }
   
-  func playerControl(id: String) -> PlayerControl? {
+  func videoControl(id: String) -> VideoControl? {
     guard let videoWindow = videoWindows[id] else { return nil}
-    return videoWindow.playerControl
+    return videoWindow.videoControl
   }
 
   func playerView(id: String) -> PlayerView? {

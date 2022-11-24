@@ -12,8 +12,8 @@ struct ControlPause: ControlRequest {
   var uuid: String
   
   func process() -> ControlResponse {
-    withPlayerControl(id: uuid) { playerControl in
-      playerControl.pause()
+    withVideoControl(id: uuid) { videoControl in
+      videoControl.pause()
       return ok()
     }
   }

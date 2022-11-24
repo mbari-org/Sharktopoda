@@ -29,16 +29,16 @@ final class NSPlayerView: NSView {
   /// Anchor point for either selecting locations or dragging current localization
   var dragAnchor: CGPoint?
   
-  var _playerControl: PlayerControl?
+  var _playerControl: VideoControl?
   
   private var _currentLocalization: Localization?
   
   // MARK: ctors
-  init(playerControl: PlayerControl) {
-    let size = playerControl.fullSize
+  init(videoControl: VideoControl) {
+    let size = videoControl.fullSize
     super.init(frame: NSMakeRect(0, 0, size.width, size.height))
 
-    setup(playerControl)
+    setup(videoControl)
   }
   
   override public init(frame frameRect: NSRect) {
@@ -52,13 +52,13 @@ final class NSPlayerView: NSView {
   }
   
   // MARK: setup
-  private func setup(_ playerControl: PlayerControl? = nil) {
-    guard let playerControl = playerControl else { return }
+  private func setup(_ videoControl: VideoControl? = nil) {
+    guard let videoControl = videoControl else { return }
     
     wantsLayer = true
     layer = rootLayer
     
-    playerLayer.player = playerControl.player
+    playerLayer.player = videoControl.player
     playerLayer.frame = bounds
     playerLayer.autoresizingMask = [.layerWidthSizable, .layerHeightSizable]
     
@@ -70,7 +70,7 @@ final class NSPlayerView: NSView {
     
     rootLayer.addSublayer(playerLayer)
     
-    _playerControl = playerControl
+    _playerControl = videoControl
   }
 }
 
@@ -102,26 +102,26 @@ extension NSPlayerView {
   }
   
   var fullSize: CGSize {
-    playerControl.fullSize
+    videoControl.fullSize
   }
   
   // CxTBD This doesn't seem right
   var localizations: Localizations {
-    UDP.sharktopodaData.localizations(id: playerControl.id)!
+    UDP.sharktopodaData.localizations(id: videoControl.id)!
   }
   
   var player: AVPlayer {
     get { playerLayer.player! }
   }
   
-  var playerControl: PlayerControl {
+  var videoControl: VideoControl {
     get { _playerControl! }
   }
   
   var scale: CGFloat {
     /// Player always maintains original aspect so either width or height work here
     get {
-      videoRect.size.width / playerControl.fullSize.width
+      videoRect.size.width / videoControl.fullSize.width
     }
   }
   

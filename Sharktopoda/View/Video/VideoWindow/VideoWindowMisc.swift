@@ -22,9 +22,9 @@ extension VideoWindow {
       self?.playerView.clear()
     }
     
-    playerControl.step(steps)
+    videoControl.step(steps)
     
-    let pausedLocalizations = localizations.fetch(.paused, at: playerControl.currentTime)
+    let pausedLocalizations = localizations.fetch(.paused, at: videoControl.currentTime)
     DispatchQueue.main.async { [weak self] in
       self?.playerView.display(localizations: pausedLocalizations)
     }

@@ -8,7 +8,7 @@
 import AVFoundation
 import Foundation
 
-final class PlayerControl: Identifiable, ObservableObject {
+final class VideoControl: Identifiable, ObservableObject {
   let id: String
   let player: AVPlayer
 
@@ -81,7 +81,7 @@ final class PlayerControl: Identifiable, ObservableObject {
   }
 }
 
-extension PlayerControl {
+extension VideoControl {
   enum PlayDirection: Int {
     case reverse = -1
     case paused = 0

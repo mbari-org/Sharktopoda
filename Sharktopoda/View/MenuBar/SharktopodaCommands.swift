@@ -22,14 +22,14 @@ struct SharktopodaCommands: Commands {
     // CxTBD Needs work
 //    CommandMenu("Video") {
 //      Button("Play") {
-//        videoWindow?.playerControl.play()
+//        videoWindow?.videoControl.play()
 //      }
-//      .disabled(videoWindow == nil || videoWindow!.playerControl.paused)
+//      .disabled(videoWindow == nil || videoWindow!.videoControl.paused)
 //
 //      Button("Pause") {
-//        videoWindow?.playerControl.pause()
+//        videoWindow?.videoControl.pause()
 //      }
-//      .disabled(videoWindow == nil || !videoWindow!.playerControl.paused)
+//      .disabled(videoWindow == nil || !videoWindow!.videoControl.paused)
 //    }
   }
   

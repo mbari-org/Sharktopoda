@@ -14,18 +14,18 @@ struct ControlSeek: ControlRequest {
   
   func process() -> ControlResponse {
     withVideoWindow(id: uuid) { videoWindow in
-      let playerControl = videoWindow.playerControl
+      let videoControl = videoWindow.videoControl
       let playerView = videoWindow.playerView
       let localizations = videoWindow.localizations
 
-      playerControl.pause()
+      videoControl.pause()
       DispatchQueue.main.async {
         localizations.clearSelected()
         playerView.clear()
       }
       
-      playerControl.seek(elapsed: elapsedTimeMillis) { done in
-        let pausedLocalizations = localizations.fetch(.paused, at: playerControl.currentTime)
+      videoControl.seek(elapsed: elapsedTimeMillis) { done in
+        let pausedLocalizations = localizations.fetch(.paused, at: videoControl.currentTime)
         DispatchQueue.main.async {
           playerView.display(localizations: pausedLocalizations)
         }

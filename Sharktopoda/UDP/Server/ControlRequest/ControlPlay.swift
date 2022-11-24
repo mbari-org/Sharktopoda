@@ -14,11 +14,11 @@ struct ControlPlay: ControlRequest {
 
   func process() -> ControlResponse {
     withVideoWindow(id: uuid) { videoWindow in
-      let playerControl = videoWindow.playerControl
+      let videoControl = videoWindow.videoControl
       let playerView = videoWindow.playerView
       
       playerView.clear()
-      playerControl.play(rate: rate)
+      videoControl.play(rate: rate)
       return ok()
     }
   }

@@ -34,11 +34,11 @@ extension ControlRequest {
     }
   }
   
-  typealias PlayerControlFn = (_ playerControl: PlayerControl) -> ControlResponse
-  func withPlayerControl(id: String,
-                         fn: PlayerControlFn) -> ControlResponse {
+  typealias VideoControlFn = (_ videoControl: VideoControl) -> ControlResponse
+  func withVideoControl(id: String,
+                         fn: VideoControlFn) -> ControlResponse {
     withVideoWindow(id: id) { videoWindow in
-      fn(videoWindow.playerControl)
+      fn(videoWindow.videoControl)
     }
   }
 

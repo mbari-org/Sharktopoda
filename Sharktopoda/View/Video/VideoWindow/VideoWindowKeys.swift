@@ -36,15 +36,15 @@ extension VideoWindow {
     /// Space:  Toggle play/pause forward
     /// Ctrl-Space:  Toggle play/pause and direction
     if event.keyCode == KeyCode.space.rawValue {
-      if !playerControl.paused {
-        playerControl.pause()
+      if !videoControl.paused {
+        videoControl.pause()
         return
       }
       if isControl(event) {
-        playerControl.play(rate: -1 * playerControl.previousRate)
+        videoControl.play(rate: -1 * videoControl.previousRate)
         return
       }
-      playerControl.play()
+      videoControl.play()
       return
     }
     

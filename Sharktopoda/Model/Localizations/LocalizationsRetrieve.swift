@@ -17,11 +17,11 @@ extension Localizations {
     }
   }
   
-  func fetch(_ direction: PlayerControl.PlayDirection, at elapsedTime: Int) -> [Localization] {
+  func fetch(_ direction: VideoControl.PlayDirection, at elapsedTime: Int) -> [Localization] {
     fetch(ids: ids(for: direction, at: elapsedTime))
   }
 
-  func frames(for direction: PlayerControl.PlayDirection) -> [LocalizationFrame]? {
+  func frames(for direction: VideoControl.PlayDirection) -> [LocalizationFrame]? {
     switch direction {
       case .forward:
         return forwardFrames
@@ -32,7 +32,7 @@ extension Localizations {
     }
   }
   
-  func ids(for direction: PlayerControl.PlayDirection, at elapsedTime: Int) -> [String] {
+  func ids(for direction: VideoControl.PlayDirection, at elapsedTime: Int) -> [String] {
     guard let frames = frames(for: direction),
           !frames.isEmpty else { return [] }
     

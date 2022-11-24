@@ -9,8 +9,6 @@ import AVKit
 import SwiftUI
 
 struct PlayerView: NSViewRepresentable {
-//  @EnvironmentObject var playerControl: PlayerControl
-  
   let id: String
 
   let localizations: Localizations
@@ -18,11 +16,11 @@ struct PlayerView: NSViewRepresentable {
   
   init(id: String,
        localizations: Localizations,
-       playerControl: PlayerControl) {
+       videoControl: VideoControl) {
     self.id = id
     self.localizations = localizations
   
-    nsPlayerView = NSPlayerView(playerControl: playerControl)
+    nsPlayerView = NSPlayerView(videoControl: videoControl)
   }
   
   func makeNSView(context: Context) -> some NSView {

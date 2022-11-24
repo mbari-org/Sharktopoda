@@ -29,11 +29,11 @@ struct ControlResponseState: ControlResponse {
   var state: PlayState
   var elapsedTimeMillis: Int
 
-  init(using playerControl: PlayerControl) {
+  init(using videoControl: VideoControl) {
     response = .state
     status = .ok
-    rate = playerControl.rate
+    rate = videoControl.rate
     state = PlayState(rate: rate)
-    elapsedTimeMillis = playerControl.currentTime
+    elapsedTimeMillis = videoControl.currentTime
   }
 }

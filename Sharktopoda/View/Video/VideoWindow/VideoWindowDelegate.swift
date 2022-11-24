@@ -23,12 +23,12 @@ extension VideoWindow: NSWindowDelegate {
   }
   
   func windowDidResize(_ notification: Notification) {
-    playerControl.pause()
+    videoControl.pause()
     
     let videoRect = playerView.videoRect
     
     /// Resize paused localizations on main queue to see immediate effect
-    let pausedLocalizations = localizations.fetch(.paused, at: playerControl.currentTime)
+    let pausedLocalizations = localizations.fetch(.paused, at: videoControl.currentTime)
     DispatchQueue.main.async {
       for localization in pausedLocalizations {
         localization.resize(for: videoRect)

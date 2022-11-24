@@ -17,7 +17,7 @@ final class VideoWindow: NSWindow {
   var keyInfo: KeyInfo
 
   let localizations: Localizations
-  var playerControl: PlayerControl
+  var videoControl: VideoControl
   
   /// Queue on which off-main work is done
   let queue: DispatchQueue
@@ -37,12 +37,12 @@ final class VideoWindow: NSWindow {
     let seekTolerance = CMTimeMultiplyByFloat64(videoAsset.frameDuration,
                                                 multiplier: 0.25)
     
-    playerControl = PlayerControl(videoAsset: videoAsset,
+    videoControl = VideoControl(videoAsset: videoAsset,
                                   player: player,
                                   seekTolerance: seekTolerance)
     
     videoView = VideoView(localizations: localizations,
-                          playerControl: playerControl)
+                          videoControl: videoControl)
 
     queue = DispatchQueue(label: "Sharktopoda Video Queue: \(videoAsset.id)")
     

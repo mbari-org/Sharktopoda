@@ -8,21 +8,21 @@
 import SwiftUI
 
 struct VideoControlView: View {
-  @EnvironmentObject var playerControl: PlayerControl
+  @EnvironmentObject var videoControl: VideoControl
   
   var body: some View {
     HStack {
       Button(action: {
-        playerControl.paused ? playerControl.play() : playerControl.pause()
+        videoControl.paused ? videoControl.play() : videoControl.pause()
       }) {
-        Image(systemName: playerControl.paused ? "play" : "pause")
+        Image(systemName: videoControl.paused ? "play" : "pause")
       }
       .padding(.leading, 10)
       .padding(.trailing, 10)
       
       Spacer()
       
-      Text(String(playerControl.playerTime))
+      Text(String(videoControl.playerTime))
         .padding(.leading, 10)
         .padding(.trailing, 10)
     }
@@ -32,6 +32,6 @@ struct VideoControlView: View {
 
 //struct VideoControlView_Previews: PreviewProvider {
 //  static var previews: some View {
-//    VideoControlView().environmentObject(PlayerControl())
+//    VideoControlView().environmentObject(VideoControl())
 //  }
 //}

@@ -34,12 +34,8 @@ final class VideoWindow: NSWindow {
         
     let playerItem = AVPlayerItem(asset: videoAsset.avAsset)
     let player = AVPlayer(playerItem: playerItem)
-    let seekTolerance = CMTimeMultiplyByFloat64(videoAsset.frameDuration,
-                                                multiplier: 0.25)
     
-    videoControl = VideoControl(videoAsset: videoAsset,
-                                  player: player,
-                                  seekTolerance: seekTolerance)
+    videoControl = VideoControl(player: player, videoAsset: videoAsset)
     
     videoView = VideoView(localizations: localizations,
                           videoControl: videoControl)

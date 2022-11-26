@@ -9,20 +9,12 @@ import AVKit
 import SwiftUI
 
 struct PlayerView: NSViewRepresentable {
-  @EnvironmentObject private var sharktopodaData: SharktopodaData
+  @EnvironmentObject private var windowData: WindowData
   
-  let id: String
-
-  let localizations: Localizations
   let nsPlayerView: NSPlayerView
   
-  init(id: String,
-       localizations: Localizations,
-       videoControl: VideoControl) {
-    self.id = id
-    self.localizations = localizations
-  
-    nsPlayerView = NSPlayerView(id: id, videoControl: videoControl)
+  init(frame: CGRect) {
+    nsPlayerView = NSPlayerView(frame: frame)
   }
   
   func makeNSView(context: Context) -> some NSView {
@@ -30,7 +22,9 @@ struct PlayerView: NSViewRepresentable {
   }
   
   func updateNSView(_ nsView: NSViewType, context: Context) {}
-
+}
+ 
+extension PlayerView {
   func clear() {
     nsPlayerView.clear()
   }
@@ -63,3 +57,22 @@ struct PlayerView: NSViewRepresentable {
     nsPlayerView.videoRect
   }
 }
+
+extension PlayerView {
+  func add(localization: Localization) {
+    guard nsPlayerView.showLocalizations else { return }
+    
+    let localizations = windowData.localizations
+    
+    let currentFrameNumber = localizations.frameNumber(elapsedTime: currentTime)
+    let localizationFrameNumber = localizations.frameNumber(for: localization)
+    
+    guard currentFrameNumber == localizationFrameNumber else { return }
+    
+    DispatchQueue.main.async {
+      playerLayer.addSublayer(localization.layer)
+    }
+  }
+  
+}
+

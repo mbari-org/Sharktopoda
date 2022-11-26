@@ -9,10 +9,8 @@ import AVFoundation
 import Foundation
 
 final class VideoControl: Identifiable, ObservableObject {
-  let id: String
-  let player: AVPlayer
+  private var windowData: WindowData
 
-  let fullSize: CGSize
   let seekTolerance: CMTime
 
   var rate: Float = 0.0
@@ -21,12 +19,10 @@ final class VideoControl: Identifiable, ObservableObject {
   @Published var playerTime: Int = 0
   @Published var paused: Bool = true
 
-  init(id: String, frameDuration: CMTime, fullSize: CGSize, player: AVPlayer) {
-    self.id = id
-    self.fullSize = fullSize
-    self.player = player
+  init (windowData: WindowData) {
+    self.windowData = windowData
     
-    seekTolerance = CMTimeMultiplyByFloat64(frameDuration, multiplier: 0.25)
+    seekTolerance = CMTimeMultiplyByFloat64(windowData.frameDuration, multiplier: 0.25)
   }
   
   func canStep(_ steps: Int) -> Bool {
@@ -45,11 +41,9 @@ final class VideoControl: Identifiable, ObservableObject {
   func pause() {
     guard !paused else { return }
 
-    withPlayerView { playerView in
-      DispatchQueue.main.async {
-        playerView.clear()
-        playerView.display(localizations: self.pausedLocalizations())
-      }
+    DispatchQueue.main.async {
+      self.playerView.clear()
+      self.playerView.display(localizations: self.pausedLocalizations())
     }
     
     DispatchQueue.main.async {
@@ -66,10 +60,8 @@ final class VideoControl: Identifiable, ObservableObject {
     guard playRate != 0.0 else { return pause() }
     
     if paused {
-      withPlayerView { playerView in
-        DispatchQueue.main.async {
-          playerView.clear(localizations: self.pausedLocalizations())
-        }
+      DispatchQueue.main.async {
+        self.playerView.clear(localizations: self.pausedLocalizations())
       }
     }
 
@@ -78,6 +70,14 @@ final class VideoControl: Identifiable, ObservableObject {
       self.player.rate = playRate
       self.paused = false
     }
+  }
+  
+  var player: AVPlayer {
+    windowData.player
+  }
+  
+  var playerView: PlayerView {
+    windowData.playerView
   }
   
   func seek(elapsed: Int, done: @escaping (Bool) -> Void) {
@@ -124,23 +124,7 @@ extension VideoControl {
 extension VideoControl {
   func pausedLocalizations() -> [Localization] {
     guard paused else { return [] }
-    guard let videoWindow = UDP.sharktopodaData.videoWindows[id] else { return [] }
-    
-    return videoWindow.localizations.fetch(.paused, at: currentTime)
+    return windowData.localizations.fetch(.paused, at: currentTime)
   }
 
-  typealias PlayerViewFn = (_ playerView: PlayerView) -> Void
-  func withPlayerView(_ fn: PlayerViewFn) {
-    guard let videoWindow = UDP.sharktopodaData.videoWindows[id] else { return }
-    fn(videoWindow.playerView)
-  }
-
-  
-  typealias VideoWindowFn = (_ videoWindow: VideoWindow) -> Void
-  func withVideoWindow(_ fn: VideoWindowFn) {
-    guard let videoWindow = UDP.sharktopodaData.videoWindows[id] else { return }
-    fn(videoWindow)
-  }
-  
-  
 }

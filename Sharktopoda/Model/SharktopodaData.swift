@@ -34,7 +34,7 @@ final class SharktopodaData: ObservableObject {
 
   func playerView(id: String) -> PlayerView? {
     guard let videoWindow = videoWindows[id] else { return nil}
-    return videoWindow.videoView.playerView
+    return videoWindow.playerView
   }
 
   func videoAsset(id: String) -> VideoAsset? {

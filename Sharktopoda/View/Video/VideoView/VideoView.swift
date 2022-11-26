@@ -9,34 +9,14 @@ import AVFoundation
 import SwiftUI
 
 struct VideoView: View {
-  @EnvironmentObject private var sharktopodaData: SharktopodaData
-  
-  let id: String
-  
-  let localizations: Localizations
-  let videoControl: VideoControl
-  
-  var playerView: PlayerView
-  
-  init(id: String,
-       localizations: Localizations,
-       videoControl: VideoControl) {
-    self.id = id
-    self.localizations = localizations
-    self.videoControl = videoControl
-
-    playerView = PlayerView(id: videoControl.id,
-                            localizations: localizations,
-                            videoControl: videoControl)
-  }
+  @EnvironmentObject private var windowData: WindowData
 
   var body: some View {
     VStack {
-      playerView
+      windowData.playerView
         .padding(0)
       Divider()
       VideoControlView()
-        .environmentObject(videoControl)
         .padding(0)
     }
   }

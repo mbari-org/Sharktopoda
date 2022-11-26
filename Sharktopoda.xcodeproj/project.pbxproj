@@ -61,10 +61,9 @@
 		E2675E2C28DB5F9400F5F114 /* DefaultValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2B28DB5F9400F5F114 /* DefaultValue.swift */; };
 		E2675E2F28DB729900F5F114 /* ControlInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2E28DB729900F5F114 /* ControlInfo.swift */; };
 		E2675E3428DB7A4000F5F114 /* ControlAdvance.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E3328DB7A4000F5F114 /* ControlAdvance.swift */; };
-		E2747105292FE66700EDDAD6 /* VideoWindowData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2747104292FE66700EDDAD6 /* VideoWindowData.swift */; };
+		E27471072931273800EDDAD6 /* WindowData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27471062931273800EDDAD6 /* WindowData.swift */; };
 		E280384529284A380017E28C /* VideoWindowKeyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E280384429284A380017E28C /* VideoWindowKeyInfo.swift */; };
 		E2803847292931E60017E28C /* VideoControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2803846292931E60017E28C /* VideoControl.swift */; };
-		E280384E292BD5400017E28C /* PlayerViewLocalizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E280384D292BD5400017E28C /* PlayerViewLocalizations.swift */; };
 		E2837B3C29103DBD00FC4CC2 /* NSPlayerViewControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2837B3B29103DBD00FC4CC2 /* NSPlayerViewControl.swift */; };
 		E2837B4629104BF700FC4CC2 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2837B4529104BF700FC4CC2 /* PlayerView.swift */; };
 		E28C681F290C6D5D00987828 /* CGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28C681E290C6D5D00987828 /* CGRect.swift */; };
@@ -216,10 +215,9 @@
 		E2675E2B28DB5F9400F5F114 /* DefaultValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultValue.swift; sourceTree = "<group>"; };
 		E2675E2E28DB729900F5F114 /* ControlInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlInfo.swift; sourceTree = "<group>"; };
 		E2675E3328DB7A4000F5F114 /* ControlAdvance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlAdvance.swift; sourceTree = "<group>"; };
-		E2747104292FE66700EDDAD6 /* VideoWindowData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoWindowData.swift; sourceTree = "<group>"; };
+		E27471062931273800EDDAD6 /* WindowData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowData.swift; sourceTree = "<group>"; };
 		E280384429284A380017E28C /* VideoWindowKeyInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoWindowKeyInfo.swift; sourceTree = "<group>"; };
 		E2803846292931E60017E28C /* VideoControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoControl.swift; sourceTree = "<group>"; };
-		E280384D292BD5400017E28C /* PlayerViewLocalizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewLocalizations.swift; sourceTree = "<group>"; };
 		E2837B3B29103DBD00FC4CC2 /* NSPlayerViewControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSPlayerViewControl.swift; sourceTree = "<group>"; };
 		E2837B4529104BF700FC4CC2 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		E28C681E290C6D5D00987828 /* CGRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRect.swift; sourceTree = "<group>"; };
@@ -341,7 +339,6 @@
 			isa = PBXGroup;
 			children = (
 				E2837B4529104BF700FC4CC2 /* PlayerView.swift */,
-				E280384D292BD5400017E28C /* PlayerViewLocalizations.swift */,
 				E213252028F722F900D6BFF6 /* NSPlayerView.swift */,
 				E2AAFC3228F8F35000BBC703 /* VideoPlayerError.swift */,
 				E2D1C859291AC31C00961A0A /* Mouse */,
@@ -392,7 +389,6 @@
 			isa = PBXGroup;
 			children = (
 				E2FAB21A28E24A7C006D2676 /* VideoWindow.swift */,
-				E2747104292FE66700EDDAD6 /* VideoWindowData.swift */,
 				E2448C06292D7A6600F2C2E2 /* VideoWindowDelegate.swift */,
 				E280384429284A380017E28C /* VideoWindowKeyInfo.swift */,
 				E2448C0A292D7B1000F2C2E2 /* VideoWindowKeys.swift */,
@@ -616,6 +612,7 @@
 			isa = PBXGroup;
 			children = (
 				E2C22EC428D144B0003CD976 /* SharktopodaData.swift */,
+				E27471062931273800EDDAD6 /* WindowData.swift */,
 				E2803846292931E60017E28C /* VideoControl.swift */,
 				E2C22ED628D36888003CD976 /* VideoAsset.swift */,
 				E2DAF8BC28F8EE460010ECB8 /* Localization */,
@@ -908,7 +905,6 @@
 				E213252128F722F900D6BFF6 /* NSPlayerView.swift in Sources */,
 				E2E5962D28DA63700058D054 /* ControlOpen.swift in Sources */,
 				E2837B3C29103DBD00FC4CC2 /* NSPlayerViewControl.swift in Sources */,
-				E280384E292BD5400017E28C /* PlayerViewLocalizations.swift in Sources */,
 				E2D1C856291AC13900961A0A /* DragCurrent.swift in Sources */,
 				E2FFE21428E8824100425F04 /* ControlResponseState.swift in Sources */,
 				E2D1C84E291302EF00961A0A /* LocalizationFrame.swift in Sources */,
@@ -931,6 +927,7 @@
 				E2675E2A28DB52C600F5F114 /* ControlUnknown.swift in Sources */,
 				E2BC08E728EB7703007F4B5D /* CMTime.swift in Sources */,
 				E2C22ED528D36832003CD976 /* Localization.swift in Sources */,
+				E27471072931273800EDDAD6 /* WindowData.swift in Sources */,
 				E2803847292931E60017E28C /* VideoControl.swift in Sources */,
 				E2FA39AD292D88F800008CBD /* VideoWindowPlayerObserver.swift in Sources */,
 				E28CEF02291DF42B009E73B3 /* UDPMessageCoder.swift in Sources */,
@@ -974,7 +971,6 @@
 				E2EE0E3A28DB9AAD00138A86 /* ControlState.swift in Sources */,
 				E2989AC128D4BAD0009D2D65 /* SizeColorRow.swift in Sources */,
 				E2D1C85029131E6E00961A0A /* LocalizationMouse.swift in Sources */,
-				E2747105292FE66700EDDAD6 /* VideoWindowData.swift in Sources */,
 				E28CEF09291E9C82009E73B3 /* LocalizationsRetrieve.swift in Sources */,
 				E2D47E9A28D8C17D0068B192 /* ClientCommand.swift in Sources */,
 				E2EE0E3828DB9A6600138A86 /* ControlElapsed.swift in Sources */,

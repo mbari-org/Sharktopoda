@@ -10,47 +10,20 @@ import AVKit
 import SwiftUI
 
 final class VideoWindow: NSWindow {
-  var id: String
+  @StateObject private var windowData = WindowData()
+  
   var keyInfo: KeyInfo
-
-  let localizations: Localizations
-
-  var videoAsset: VideoAsset
-  var videoControl: VideoControl
-  var videoView: VideoView
 
   /// Queue on which off-main work is done
   let queue: DispatchQueue
 
   //
   init(for videoAsset: VideoAsset, with sharktopodaData: SharktopodaData) {
-    let id = videoAsset.id
-    
-    self.id = id
     keyInfo = KeyInfo(keyTime: Date())
-    
-    self.videoAsset = videoAsset
-
-    let frameDuration = videoAsset.frameDuration
-    localizations = Localizations(id: id,
-                                  frameDuration: frameDuration.asMillis())
-        
-    let playerItem = AVPlayerItem(asset: videoAsset.avAsset)
-    let player = AVPlayer(playerItem: playerItem)
-    
-    videoControl = VideoControl(id: id,
-                                frameDuration: frameDuration,
-                                fullSize: videoAsset.fullSize,
-                                player: player)
-    
-    videoView = VideoView(id: id,
-                          localizations: localizations,
-                          videoControl: videoControl)
-//    videoAsset.environmentObject(<#T##T#>)
-
     queue = DispatchQueue(label: "Sharktopoda Video Queue: \(videoAsset.id)")
-    
+
     let fullSize = videoAsset.fullSize
+
     super.init(
       contentRect: NSMakeRect(0, 0, fullSize.width, fullSize.height),
       styleMask: [.titled, .closable, .miniaturizable, .resizable],
@@ -60,7 +33,22 @@ final class VideoWindow: NSWindow {
     center()
     isReleasedWhenClosed = false
     title = videoAsset.id
+
+
+    let frame = NSMakeRect(0, 0, fullSize.width, fullSize.height)
+    let frameDuration = videoAsset.frameDuration
+    let playerItem = AVPlayerItem(asset: videoAsset.avAsset)
     
+    windowData.id = videoAsset.id
+    windowData.player = AVPlayer(playerItem: playerItem)
+    windowData.localizations = Localizations(id: videoAsset.id,
+                                             frameDuration: frameDuration.asMillis())
+    windowData.videoControl = VideoControl(windowData: windowData)
+    windowData.playerView = PlayerView(frame: frame)
+    
+    let videoView = VideoView()
+      .environmentObject(windowData) as! VideoView
+
     contentView = NSHostingView(rootView: videoView)
     delegate = self
     
@@ -71,15 +59,30 @@ final class VideoWindow: NSWindow {
     makeKeyAndOrderFront(nil)
   }
   
-  var playerView: PlayerView {
-    videoView.playerView
+  var id: String {
+    windowData.id
+  }
+}
+
+extension VideoWindow {
+  var fullSize: CGSize {
+    windowData.fullSize
   }
   
-//  var url: URL {
-//    videoView.videoAsset.url
-//  }
-//
-//  var videoAsset: VideoAsset {
-//    videoView.videoAsset
-//  }
+  var localizations: Localizations {
+    windowData.localizations
+  }
+  
+  var playerView: PlayerView {
+    windowData.playerView
+  }
+
+  var videoAsset: VideoAsset {
+    windowData.videoAsset
+  }
+
+  var videoControl: VideoControl {
+    windowData.videoControl
+  }
 }
+

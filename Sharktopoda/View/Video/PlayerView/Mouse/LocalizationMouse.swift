@@ -74,7 +74,7 @@ extension NSPlayerView {
   
   /// Find the Localization that both contains the point and has the closest edge
   private func mousedLocalization(at point: NSPoint) -> Localization? {
-    guard videoControl.paused else { return nil }
+    guard windowData.videoControl.paused else { return nil }
     guard showLocalizations else { return nil }
 
     let mousedLocalizations = localizations

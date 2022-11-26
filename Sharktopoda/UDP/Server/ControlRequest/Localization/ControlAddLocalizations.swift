@@ -15,10 +15,9 @@ struct ControlAddLocalizations: ControlRequest {
   func process() -> ControlResponse {
     withVideoWindow(id: uuid) { videoWindow in
       let existingLocalizations = videoWindow.localizations
-      let videoControl = videoWindow.videoControl
+      let fullSize = videoWindow.fullSize
       let playerView = videoWindow.playerView
-
-      let fullSize = videoControl.fullSize
+      let videoControl = videoWindow.videoControl
 
       localizations
         .map { Localization(from: $0, size: fullSize) }

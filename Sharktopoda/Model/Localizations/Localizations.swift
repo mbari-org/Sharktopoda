@@ -16,9 +16,9 @@ class Localizations {
   var reverseFrames = [LocalizationFrame]()
   
   var selected = Set<String>()
-  
-  let frameDuration: Int
+
   let id: String
+  let frameDuration: Int
   
   init(id: String, frameDuration: Int) {
     self.id = id

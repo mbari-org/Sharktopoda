@@ -9,11 +9,9 @@ import SwiftUI
 
 @main
 struct SharktopodaApp: App {
-  @NSApplicationDelegateAdaptor private var appDelegate: SharktopodaAppDelegate
-  
-  @Environment(\.openWindow) private var openWindow
-
   @StateObject private var sharktopodaData = SharktopodaData()
+
+  @NSApplicationDelegateAdaptor private var appDelegate: SharktopodaAppDelegate
 
   init() {
     setAppDefaults()

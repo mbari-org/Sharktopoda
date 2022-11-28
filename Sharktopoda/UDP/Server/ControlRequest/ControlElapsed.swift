@@ -12,8 +12,8 @@ struct ControlElapsed: ControlRequest {
   var uuid: String
   
   func process() -> ControlResponse {
-    withVideoControl(id: uuid) { videoControl in
-      ControlResponseElapsed(using: videoControl)
+    withWindowData(id: uuid) { windowData in
+      ControlResponseElapsed(using: windowData)
     }
   }
 }

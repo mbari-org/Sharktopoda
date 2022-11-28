@@ -64,7 +64,6 @@ final class WindowData: ObservableObject {
 
 extension WindowData {
   func advance(steps: Int) {
-    
     let pausedLocalizations = pausedLocalizations()
     
     DispatchQueue.main.async { [weak self] in
@@ -78,8 +77,9 @@ extension WindowData {
   }
 
   func pause() {
-    videoControl.pause()
-    DispatchQueue.main.async {
+    DispatchQueue.main.async { [weak self] in
+      guard let self = self else { return }
+      self.play(rate: 0.0)
       self.playerView.clear()
       self.playerView.display(localizations: self.pausedLocalizations())
     }
@@ -90,12 +90,11 @@ extension WindowData {
   }
   
   func play(rate: Float) {
-    if videoControl.paused {
-      DispatchQueue.main.async {
-        self.playerView.clear(localizations: self.pausedLocalizations())
-        self.videoControl.play(rate: rate)
-        self.playerDirection = PlayerDirection.at(rate: rate)
-      }
+    DispatchQueue.main.async { [weak self] in
+      guard let self = self else { return }
+      self.playerDirection = PlayerDirection.at(rate: rate)
+      self.playerView.clear(localizations: self.pausedLocalizations())
+      self.videoControl.play(rate: rate)
     }
   }
   

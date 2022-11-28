@@ -10,10 +10,6 @@ import SwiftUI
 struct VideoControlView: View {
   @EnvironmentObject var windowData: WindowData
   
-  var videoControl: VideoControl {
-    windowData.videoControl
-  }
-  
   var playerDirection: WindowData.PlayerDirection {
     windowData.playerDirection
   }
@@ -36,9 +32,9 @@ struct VideoControlView: View {
 
       Button(action: {
         guard playerDirection != .paused else { return }
-        videoControl.pause()
+        windowData.pause()
       }) {
-        Image(systemName: videoControl.paused
+        Image(systemName: playerDirection == .paused
               ? "pause.circle.fill"
               : "pause.circle")
       }
@@ -47,7 +43,7 @@ struct VideoControlView: View {
         guard playerDirection != .forward else { return }
         previousDirection == .forward ? windowData.play() : windowData.reverse()
       }) {
-        Image(systemName: playerDirection == .reverse
+        Image(systemName: playerDirection == .forward
               ? "play.circle.fill"
               : "play.circle")
       }

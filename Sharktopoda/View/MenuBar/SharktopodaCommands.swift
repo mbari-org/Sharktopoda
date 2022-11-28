@@ -18,33 +18,12 @@ struct SharktopodaCommands: Commands {
       OpenUrlView()
         .keyboardShortcut("O", modifiers: [.shift, .command])
     }
-    
-    // CxTBD Needs work
-//    CommandMenu("Video") {
-//      Button("Play") {
-//        videoWindow?.videoControl.play()
-//      }
-//      .disabled(videoWindow == nil || videoWindow!.videoControl.paused)
-//
-//      Button("Pause") {
-//        videoWindow?.videoControl.pause()
-//      }
-//      .disabled(videoWindow == nil || !videoWindow!.videoControl.paused)
-//    }
   }
   
   var videoWindow: VideoWindow? {
     get {
       // CxInc
 //      UDP.sharktopodaData.latestVideoWindow()
-      return nil
-    }
-  }
-
-  var playerView: NSPlayerView? {
-    get {
-      // CxInc
-//      videoWindow?.playerView
       return nil
     }
   }

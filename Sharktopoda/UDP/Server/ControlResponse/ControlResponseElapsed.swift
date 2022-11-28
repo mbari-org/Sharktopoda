@@ -12,9 +12,9 @@ struct ControlResponseElapsed: ControlResponse {
   var status: ControlResponseStatus
   var elapsedTimeMillis: Int
   
-  init(using videoControl: VideoControl) {
+  init(using windowData: WindowData) {
     response = .info
     status = .ok
-    elapsedTimeMillis = videoControl.currentTime
+    elapsedTimeMillis = windowData.videoControl.currentTime
   }
 }

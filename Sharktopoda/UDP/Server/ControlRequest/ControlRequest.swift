@@ -26,30 +26,6 @@ extension ControlRequest {
     ControlResponseFailed(response: command, cause: cause)
   }
 
-  typealias VideoControlFn = (_ videoControl: VideoControl) -> ControlResponse
-  func withVideoControl(id: String,
-                         fn: VideoControlFn) -> ControlResponse {
-    withWindowData(id: id) { windowData in
-      fn(windowData.videoControl)
-    }
-  }
-
-  typealias PlayerViewFn = (_ playerView: PlayerView) -> ControlResponse
-  func withPlayerView(id: String,
-                      fn: PlayerViewFn) -> ControlResponse {
-    withWindowData(id: id) { windowData in
-      fn(windowData.playerView)
-    }
-  }
-
-  typealias VideoAssetFn = (_ videoAsset: VideoAsset) -> ControlResponse
-  func withVideoAsset(id: String,
-                      fn: VideoAssetFn) -> ControlResponse {
-    withWindowData(id: id) { windowData in
-      fn(windowData.videoAsset)
-    }
-  }
-
   typealias VideoWindowFn = (_ videoWindow: VideoWindow) -> ControlResponse
   func withVideoWindow(id: String,
                        fn: VideoWindowFn) -> ControlResponse {

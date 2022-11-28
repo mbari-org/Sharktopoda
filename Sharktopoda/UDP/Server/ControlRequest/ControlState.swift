@@ -12,8 +12,8 @@ struct ControlState: ControlRequest {
   var uuid: String
   
   func process() -> ControlResponse {
-    withVideoControl(id: uuid) { videoControl in
-      ControlResponseState(using: videoControl)
+    withWindowData(id: uuid) { windowData in
+      ControlResponseState(using: windowData)
     }
   }
 }

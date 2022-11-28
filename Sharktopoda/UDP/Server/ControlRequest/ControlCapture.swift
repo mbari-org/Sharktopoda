@@ -19,7 +19,7 @@ struct ControlCapture: ControlRequest {
   static let saveImageQueue = DispatchQueue(label: "save image queue")
   
   func process() -> ControlResponse {
-    withVideoControl(id: uuid) { videoControl in
+    withWindowData(id: uuid) { windowData in
       // CxNote Immediately capture current time to get frame as close to command request
       // as possible. We put this time in the ControlResponse so it can be used later during
       // image capture processing. This means the time is sent in the initial 'ok' response but
@@ -37,7 +37,7 @@ struct ControlCapture: ControlRequest {
         return failed("Image location not writable")
       }
       
-      return ControlResponseCaptureOk(videoControl.currentTime)
+      return ControlResponseCaptureOk(windowData.videoControl.currentTime)
     }
   }
   

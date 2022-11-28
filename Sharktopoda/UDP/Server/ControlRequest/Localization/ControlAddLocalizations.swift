@@ -14,21 +14,7 @@ struct ControlAddLocalizations: ControlRequest {
   
   func process() -> ControlResponse {
     withWindowData(id: uuid) { windowData in
-      let existingLocalizations = windowData.localizations
-      let fullSize = windowData.fullSize
-      let playerView = windowData.playerView
-      let videoControl = windowData.videoControl
-
-      localizations
-        .map { Localization(from: $0, size: fullSize) }
-        .forEach {
-          $0.resize(for: playerView.videoRect)
-          existingLocalizations.add($0)
-
-          guard videoControl.paused else { return }
-          
-          playerView.add(localization: $0)
-        }
+      windowData.add(localizations: localizations)
       return ok()
     }
   }

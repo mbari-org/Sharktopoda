@@ -56,20 +56,11 @@ extension PlayerView {
 }
 
 extension PlayerView {
-  func add(localization: Localization) {
+  func display(localization: Localization) {
     guard nsPlayerView.showLocalizations else { return }
-    
-    let localizations = windowData.localizations
-    
-    let currentFrameNumber = localizations.frameNumber(elapsedTime: currentTime)
-    let localizationFrameNumber = localizations.frameNumber(for: localization)
-    
-    guard currentFrameNumber == localizationFrameNumber else { return }
-    
+
     DispatchQueue.main.async {
       playerLayer.addSublayer(localization.layer)
     }
   }
-  
 }
-

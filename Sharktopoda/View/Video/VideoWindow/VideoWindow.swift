@@ -34,8 +34,6 @@ final class VideoWindow: NSWindow {
     isReleasedWhenClosed = false
     title = videoAsset.id
 
-
-//    let frame = NSMakeRect(0, 0, fullSize.width, fullSize.height)
     let frameDuration = videoAsset.frameDuration
     let playerItem = AVPlayerItem(asset: videoAsset.avAsset)
     

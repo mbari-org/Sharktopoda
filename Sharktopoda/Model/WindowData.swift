@@ -105,9 +105,29 @@ extension WindowData {
   func reverse() {
     play(rate: -1 * videoControl.previousRate)
   }
+  
+  var showLocalizations: Bool {
+    UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations)
+  }
 }
 
 extension WindowData {
+  func add(localizations controlLocalizations: [ControlLocalization]) {
+    let currentFrameNumber = localizations.frameNumber(elapsedTime: videoControl.currentTime)
+
+    controlLocalizations
+      .map { Localization(from: $0, size: fullSize) }
+      .forEach {
+        $0.resize(for: playerView.videoRect)
+        localizations.add($0)
+        
+        guard videoControl.paused else { return }
+        guard localizations.frameNumber(for: $0) == currentFrameNumber else { return }
+        
+        playerView.display(localization: $0)
+      }
+  }
+
   func pausedLocalizations() -> [Localization] {
     guard videoControl.paused else { return [] }
     return localizations.fetch(.paused, at: videoControl.currentTime)

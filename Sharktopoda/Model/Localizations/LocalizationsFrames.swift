@@ -18,6 +18,10 @@ extension Localizations {
     
     return (elapsedTime + frameDuration / 2) / frameDuration
   }
+  
+  func frameTime(elapsedTime: Int) -> Int {
+    frameNumber(elapsedTime: elapsedTime) * frameDuration
+  }
 }
 
 // MARK: Pause frames

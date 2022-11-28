@@ -22,7 +22,7 @@ struct ControlAdvance: ControlRequest {
       guard videoControl.canStep(direction) else {
         return failed("Cannot advance video in that direction")
       }
-
+      
       windowData.advance(steps: direction)
       
       return ok()

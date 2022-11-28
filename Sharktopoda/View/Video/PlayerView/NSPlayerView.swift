@@ -142,15 +142,16 @@ extension NSPlayerView {
 
   func clear() {
     let layers = localizationLayers()
-    DispatchQueue.main.async {
+    DispatchQueue.main.async { [weak self] in
       layers.forEach { $0.removeFromSuperlayer() }
-      self.conceptLayer?.removeFromSuperlayer()
+      self?.conceptLayer?.removeFromSuperlayer()
     }
   }
   
   func clear(localizations: [Localization]) {
-    DispatchQueue.main.async {
+    DispatchQueue.main.async { [weak self] in
       localizations.forEach { $0.layer.removeFromSuperlayer()}
+      self?.conceptLayer?.removeFromSuperlayer()
     }
   }
   

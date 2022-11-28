@@ -70,18 +70,10 @@ final class VideoControl: ObservableObject {
     get { player.rate }
   }
   
-  func seek(elapsed: Int, done: @escaping (Bool) -> Void) {
-    self.pause()
-    player.seek(to: CMTime.fromMillis(elapsed),
-                toleranceBefore: seekTolerance,
-                toleranceAfter: seekTolerance,
+  func seek(elapsedTime: Int, done: @escaping (Bool) -> Void) {
+    player.seek(to: CMTime.fromMillis(elapsedTime),
+                toleranceBefore: .zero,
+                toleranceAfter: .zero,
                 completionHandler: done)
   }
-  
-  func step(_ steps: Int) {
-    guard paused else { return }
-
-    currentItem?.step(byCount: steps)
-  }
 }
-

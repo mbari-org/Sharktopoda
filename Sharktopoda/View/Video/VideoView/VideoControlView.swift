@@ -8,16 +8,49 @@
 import SwiftUI
 
 struct VideoControlView: View {
-  @EnvironmentObject var videoControl: VideoControl
+  @EnvironmentObject var windowData: WindowData
+  
+  var videoControl: VideoControl {
+    windowData.videoControl
+  }
+  
+  var playerDirection: VideoControl.PlayerDirection {
+    videoControl.playerDirection
+  }
+  
+  var previousDirection: VideoControl.PlayerDirection {
+    videoControl.previousDirection
+  }
   
   var body: some View {
     HStack {
       Button(action: {
-        videoControl.paused ? videoControl.play() : videoControl.pause()
+        guard playerDirection != .reverse else { return }
+        previousDirection == .reverse ? videoControl.play() : videoControl.reverse()
       }) {
-        Image(systemName: videoControl.paused ? "play" : "pause")
+        Image(systemName: playerDirection == .reverse
+              ? "arrowtriangle.backward.circle.fill"
+              : "arrowtriangle.backward.circle")
       }
       .padding(.leading, 10)
+
+      Button(action: {
+        guard playerDirection != .paused else { return }
+        videoControl.pause()
+      }) {
+        Image(systemName: videoControl.paused
+              ? "pause.circle.fill"
+              : "pause.circle")
+      }
+
+      Button(action: {
+        guard playerDirection != .forward else { return }
+        previousDirection == .forward ? videoControl.play() : videoControl.reverse()
+      }) {
+        Image(systemName: playerDirection == .reverse
+              ? "play.circle.fill"
+              : "play.circle")
+      }
       .padding(.trailing, 10)
       
       Spacer()

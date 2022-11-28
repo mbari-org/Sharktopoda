@@ -9,15 +9,17 @@ import AVFoundation
 import SwiftUI
 
 struct VideoView: View {
-  @EnvironmentObject private var windowData: WindowData
-
+  @EnvironmentObject var windowData: WindowData
+  
   var body: some View {
     VStack {
       windowData.playerView
+//        .environmentObject(windowData)
         .padding(0)
       Divider()
       VideoControlView()
         .padding(0)
+        .environmentObject(windowData)
     }
   }
 }

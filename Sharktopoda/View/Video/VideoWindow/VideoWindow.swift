@@ -10,7 +10,7 @@ import AVKit
 import SwiftUI
 
 final class VideoWindow: NSWindow {
-  @StateObject private var windowData = WindowData()
+  private var windowData = WindowData()
   
   var keyInfo: KeyInfo
 
@@ -35,21 +35,25 @@ final class VideoWindow: NSWindow {
     title = videoAsset.id
 
 
-    let frame = NSMakeRect(0, 0, fullSize.width, fullSize.height)
+//    let frame = NSMakeRect(0, 0, fullSize.width, fullSize.height)
     let frameDuration = videoAsset.frameDuration
     let playerItem = AVPlayerItem(asset: videoAsset.avAsset)
     
     windowData.id = videoAsset.id
-    windowData.player = AVPlayer(playerItem: playerItem)
+
+    windowData.frameDuration = frameDuration
+    windowData.fullSize = videoAsset.fullSize
     windowData.localizations = Localizations(id: videoAsset.id,
                                              frameDuration: frameDuration.asMillis())
+    windowData.player = AVPlayer(playerItem: playerItem)
+    windowData.playerView = PlayerView()
+    windowData.videoAsset = videoAsset
     windowData.videoControl = VideoControl(windowData: windowData)
-    windowData.playerView = PlayerView(frame: frame)
     
-    let videoView = VideoView()
-      .environmentObject(windowData) as! VideoView
+    let _ = windowData.playerView.environmentObject(windowData)
+    
+    contentView = NSHostingView(rootView: VideoView().environmentObject(windowData))
 
-    contentView = NSHostingView(rootView: videoView)
     delegate = self
     
     let pollingInterval = CMTimeMultiplyByFloat64(videoAsset.frameDuration,

@@ -11,13 +11,10 @@ import SwiftUI
 struct PlayerView: NSViewRepresentable {
   @EnvironmentObject private var windowData: WindowData
   
-  let nsPlayerView: NSPlayerView
-  
-  init(frame: CGRect) {
-    nsPlayerView = NSPlayerView(frame: frame)
-  }
+  var nsPlayerView = NSPlayerView()
   
   func makeNSView(context: Context) -> some NSView {
+    nsPlayerView.windowData = windowData
     return nsPlayerView
   }
   

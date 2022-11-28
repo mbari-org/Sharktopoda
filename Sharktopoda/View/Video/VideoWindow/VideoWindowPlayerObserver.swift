@@ -18,7 +18,7 @@ extension VideoWindow {
             let playerView = self?.playerView else { return }
 
       let elapsedTime = time.asMillis()
-      let direction = videoControl.playDirection
+      let direction = videoControl.playerDirection
       let opposite = direction.opposite()
 
       playerView.display(localizations: localizations.fetch(direction, at: elapsedTime))

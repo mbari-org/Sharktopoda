@@ -33,36 +33,26 @@ final class NSPlayerView: NSView {
   
   var windowData: WindowData {
     get { _windowData! }
-    set { _windowData = newValue}
+    set { setup(newValue) }
   }
   
   private var _currentLocalization: Localization?
   
-  
-  // MARK: ctors
-  init(frame: CGRect, windowData: WindowData) {
-    _windowData = windowData
-    
-    let size = windowData.fullSize
-    super.init(frame: NSMakeRect(0, 0, size.width, size.height))
-
-    setup(windowData)
-  }
-  
   override public init(frame frameRect: NSRect) {
     super.init(frame: frameRect)
-    setup()
+//    setup()
   }
   
   required public init?(coder decoder: NSCoder) {
     super.init(coder: decoder)
-    setup()
+//    setup()
   }
   
   // MARK: setup
-  private func setup(_ windowData: WindowData? = nil) {
-    guard let windowData = windowData else { return }
-    
+  private func setup(_ windowData: WindowData) {
+    let size = windowData.fullSize
+    frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+
     wantsLayer = true
     layer = rootLayer
     
@@ -77,6 +67,8 @@ final class NSPlayerView: NSView {
     self.conceptLayer = conceptLayer
     
     rootLayer.addSublayer(playerLayer)
+    
+    _windowData = windowData
   }
 }
 

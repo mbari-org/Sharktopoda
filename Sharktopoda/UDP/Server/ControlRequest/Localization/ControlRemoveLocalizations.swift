@@ -14,8 +14,8 @@ struct ControlRemoveLocalizations: ControlRequest {
   var localizations: [String]
   
   func process() -> ControlResponse {
-    withLocalizations(id: uuid) { videoLocalizations in
-      videoLocalizations.remove(ids: localizations)
+    withWindowData(id: uuid) { windowData in
+      windowData.localizations.remove(ids: localizations)
       return ok()
     }
   }

@@ -13,20 +13,3 @@ extension VideoWindow {
     self.keyInfo = KeyInfo(keyTime: Date(), isKey: true)
   }
 }
-
-extension VideoWindow {
-  func advance(steps: Int) {
-    
-    DispatchQueue.main.async { [weak self] in
-      self?.localizations.clearSelected()
-      self?.playerView.clear()
-    }
-    
-    videoControl.step(steps)
-    
-    let pausedLocalizations = localizations.fetch(.paused, at: videoControl.currentTime)
-    DispatchQueue.main.async { [weak self] in
-      self?.playerView.display(localizations: pausedLocalizations)
-    }
-  }
-}

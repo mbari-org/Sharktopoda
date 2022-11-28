@@ -10,7 +10,7 @@ import AVKit
 import SwiftUI
 
 final class VideoWindow: NSWindow {
-  private var windowData = WindowData()
+  var windowData = WindowData()
   
   var keyInfo: KeyInfo
 
@@ -67,26 +67,3 @@ final class VideoWindow: NSWindow {
     windowData.id
   }
 }
-
-extension VideoWindow {
-  var fullSize: CGSize {
-    windowData.fullSize
-  }
-  
-  var localizations: Localizations {
-    windowData.localizations
-  }
-  
-  var playerView: PlayerView {
-    windowData.playerView
-  }
-
-  var videoAsset: VideoAsset {
-    windowData.videoAsset
-  }
-
-  var videoControl: VideoControl {
-    windowData.videoControl
-  }
-}
-

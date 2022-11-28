@@ -28,33 +28,33 @@ extension VideoWindow {
     
     /// Cmd-Delete:  Delete selected localizations
     if isCommand(event), event.keyCode == KeyCode.delete.rawValue {
-      localizations.deleteSelected()
-      playerView.clearConcept()
+      windowData.localizations.deleteSelected()
+      windowData.playerView.clearConcept()
       return
     }
     
     /// Space:  Toggle play/pause forward
     /// Ctrl-Space:  Toggle play/pause and direction
     if event.keyCode == KeyCode.space.rawValue {
-      if !videoControl.paused {
-        videoControl.pause()
+      if windowData.playerDirection != .paused {
+        windowData.pause()
         return
       }
       if isControl(event) {
-        videoControl.play(rate: -1 * videoControl.previousRate)
+        windowData.reverse()
         return
       }
-      videoControl.play()
+      windowData.play()
       return
     }
     
     if event.keyCode == KeyCode.leftArrow.rawValue {
-      advance(steps: -1)
+      windowData.advance(steps: -1)
       return
     }
 
     if event.keyCode == KeyCode.rightArrow.rawValue {
-      advance(steps: 1)
+      windowData.advance(steps: 1)
       return
     }
 

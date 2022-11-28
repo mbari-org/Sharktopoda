@@ -13,8 +13,8 @@ struct ControlAdvance: ControlRequest {
   var direction: Int
 
   func process() -> ControlResponse {
-    withVideoWindow(id: uuid) { videoWindow in
-      let videoControl = videoWindow.videoControl
+    withWindowData(id: uuid) { windowData in
+      let videoControl = windowData.videoControl
       
       guard videoControl.paused else {
         return failed("Can only advance while video paused")
@@ -23,7 +23,7 @@ struct ControlAdvance: ControlRequest {
         return failed("Cannot advance video in that direction")
       }
 
-      videoWindow.advance(steps: direction)
+      windowData.advance(steps: direction)
       
       return ok()
     }

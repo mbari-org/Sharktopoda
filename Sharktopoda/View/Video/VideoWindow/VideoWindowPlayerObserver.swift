@@ -9,23 +9,24 @@ import AVFoundation
 
 extension VideoWindow {
   func setLocalizationsObserver(_ pollingInterval: CMTime) {
-    videoControl.player.addPeriodicTimeObserver(forInterval: pollingInterval,
+    windowData.player.addPeriodicTimeObserver(forInterval: pollingInterval,
                                                  queue: queue) { [weak self] time in
-      guard self?.playerView.showLocalizations ?? false else { return }
+      guard let windowData = self?.windowData else { return }
       
-      guard let localizations = self?.localizations,
-            let videoControl = self?.videoControl,
-            let playerView = self?.playerView else { return }
+      guard windowData.playerView.showLocalizations else { return }
+      
+      let localizations = windowData.localizations
+      let playerView = windowData.playerView
 
       let elapsedTime = time.asMillis()
-      let direction = videoControl.playerDirection
+      let direction = windowData.playerDirection
       let opposite = direction.opposite()
 
       playerView.display(localizations: localizations.fetch(direction, at: elapsedTime))
       playerView.clear(localizations: localizations.fetch(opposite, at: elapsedTime))
       
       DispatchQueue.main.async {
-        videoControl.playerTime = elapsedTime
+        windowData.playerTime = elapsedTime
       }
     }
   }

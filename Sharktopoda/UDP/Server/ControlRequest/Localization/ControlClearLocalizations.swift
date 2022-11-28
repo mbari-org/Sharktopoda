@@ -12,9 +12,9 @@ struct ControlClearLocalizations: ControlRequest {
   var uuid: String
   
   func process() -> ControlResponse {
-    withVideoWindow(id: uuid) { videoWindow in
-      videoWindow.playerView.clear()
-      videoWindow.localizations.clear()
+    withWindowData(id: uuid) { windowData in
+      windowData.playerView.clear()
+      windowData.localizations.clear()
       
       return ok()
     }

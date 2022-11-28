@@ -14,11 +14,8 @@ struct ControlPlay: ControlRequest {
 
   func process() -> ControlResponse {
     withVideoWindow(id: uuid) { videoWindow in
-      let videoControl = videoWindow.videoControl
-      let playerView = videoWindow.playerView
-      
-      playerView.clear()
-      videoControl.play(rate: rate)
+      videoWindow.windowData.play(rate: rate)
+
       return ok()
     }
   }

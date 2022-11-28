@@ -13,10 +13,10 @@ struct ControlUpdateLocalizations: ControlRequest {
   var localizations: [ControlLocalization]
   
   func process() -> ControlResponse {
-    withLocalizations(id: uuid) { videoLocalizations in
+    withWindowData(id: uuid) { windowData in
       localizations
         .forEach { controlLocalization in
-          videoLocalizations.update(using: controlLocalization)
+          windowData.localizations.update(using: controlLocalization)
         }
       return ok()
     }

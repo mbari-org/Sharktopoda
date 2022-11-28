@@ -13,8 +13,8 @@ struct ControlSelectLocalizations: ControlRequest {
   var localizations: [String]
   
   func process() -> ControlResponse {
-    withLocalizations(id: uuid) { videoLocalizations in
-      videoLocalizations.select(ids: localizations, notifyClient: false)
+    withWindowData(id: uuid) { windowData in
+      windowData.localizations.select(ids: localizations, notifyClient: false)
       return ok()
     }
   }

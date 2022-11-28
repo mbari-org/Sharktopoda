@@ -17,6 +17,9 @@ final class WindowData: ObservableObject {
   var _playerView: PlayerView?
   var _videoAsset: VideoAsset?
   var _videoControl: VideoControl?
+  
+  @Published var playerTime: Int = 0
+  @Published var playerDirection: PlayerDirection = .paused
 
   var id: String {
     get { _id! }
@@ -56,5 +59,84 @@ final class WindowData: ObservableObject {
   var videoControl: VideoControl {
     get { _videoControl! }
     set { _videoControl = newValue }
+  }
+}
+
+extension WindowData {
+  func advance(steps: Int) {
+    
+    let pausedLocalizations = pausedLocalizations()
+    
+    DispatchQueue.main.async { [weak self] in
+      guard let self = self else { return }
+      
+      self.localizations.clearSelected()
+      self.playerView.clear()
+      self.videoControl.step(steps)
+      self.playerView.display(localizations: pausedLocalizations)
+    }
+  }
+
+  func pause() {
+    videoControl.pause()
+    DispatchQueue.main.async {
+      self.playerView.clear()
+      self.playerView.display(localizations: self.pausedLocalizations())
+    }
+  }
+  
+  func play() {
+    play(rate: videoControl.previousRate)
+  }
+  
+  func play(rate: Float) {
+    if videoControl.paused {
+      DispatchQueue.main.async {
+        self.playerView.clear(localizations: self.pausedLocalizations())
+        self.videoControl.play(rate: rate)
+        self.playerDirection = PlayerDirection.at(rate: rate)
+      }
+    }
+  }
+  
+  var previousDirection: PlayerDirection {
+    PlayerDirection.at(rate: videoControl.previousRate)
+  }
+  
+  func reverse() {
+    play(rate: -1 * videoControl.previousRate)
+  }
+}
+
+extension WindowData {
+  func pausedLocalizations() -> [Localization] {
+    guard videoControl.paused else { return [] }
+    return localizations.fetch(.paused, at: videoControl.currentTime)
+  }
+}
+
+extension WindowData {
+  enum PlayerDirection: Int {
+    case reverse = -1
+    case paused = 0
+    case forward =  1
+    
+    static func at(rate: Float) -> PlayerDirection {
+      if rate == 0.0 {
+        return .paused
+      } else if 0 < rate {
+        return .forward
+      } else {
+        return .reverse
+      }
+    }
+    
+    func opposite() -> PlayerDirection {
+      if self == .paused {
+        return .paused
+      } else {
+        return self == .reverse ? .forward : .reverse
+      }
+    }
   }
 }

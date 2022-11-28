@@ -8,15 +8,12 @@
 import AVFoundation
 import Foundation
 
-final class VideoControl: Identifiable, ObservableObject {
+final class VideoControl: ObservableObject {
   private var windowData: WindowData
 
   let seekTolerance: CMTime
   var previousRate: Float = 1.0
   
-  @Published var playerTime: Int = 0
-  @Published var playerDirection: PlayerDirection = .paused
-
   init (windowData: WindowData) {
     self.windowData = windowData
     
@@ -38,11 +35,6 @@ final class VideoControl: Identifiable, ObservableObject {
 
   func pause() {
     guard player.rate != 0 else { return }
-
-    DispatchQueue.main.async {
-      self.playerView.clear()
-      self.playerView.display(localizations: self.pausedLocalizations())
-    }
     
     DispatchQueue.main.async {
       self.player.rate = 0.0
@@ -50,7 +42,7 @@ final class VideoControl: Identifiable, ObservableObject {
   }
   
   var paused: Bool {
-    playerDirection == .paused
+    rate == 0.0
   }
 
   func play() {
@@ -60,15 +52,9 @@ final class VideoControl: Identifiable, ObservableObject {
   func play(rate: Float) {
     guard rate != 0.0 else { return pause() }
     
-    if playerDirection == .paused {
-      DispatchQueue.main.async {
-        self.playerView.clear(localizations: self.pausedLocalizations())
-      }
-    }
-
     previousRate = rate
     DispatchQueue.main.async {
-      self.rate = rate
+      self.player.rate = rate
     }
   }
   
@@ -79,27 +65,9 @@ final class VideoControl: Identifiable, ObservableObject {
   var playerView: PlayerView {
     windowData.playerView
   }
-  
-  var previousDirection: PlayerDirection {
-    PlayerDirection.direction(rate: previousRate)
-  }
-  
+
   var rate: Float {
     get { player.rate }
-    set {
-      if newValue == 0.0 {
-        playerDirection = .paused
-      } else if 0 < newValue {
-        playerDirection = .forward
-      } else {
-        playerDirection = .reverse
-      }
-      player.rate = newValue
-    }
-   }
-  
-  func reverse() {
-    play(rate: -1 * previousRate)
   }
   
   func seek(elapsed: Int, done: @escaping (Bool) -> Void) {
@@ -117,36 +85,3 @@ final class VideoControl: Identifiable, ObservableObject {
   }
 }
 
-extension VideoControl {
-  enum PlayerDirection: Int {
-    case reverse = -1
-    case paused = 0
-    case forward =  1
-    
-    static func direction(rate: Float) -> PlayerDirection {
-      if rate == 0.0 {
-        return .paused
-      } else if 0 < rate {
-        return .forward
-      } else {
-        return .reverse
-      }
-    }
-    
-    func opposite() -> PlayerDirection {
-      if self == .paused {
-        return .paused
-      } else {
-        return self == .reverse ? .forward : .reverse
-      }
-    }
-  }
-}
-
-extension VideoControl {
-  func pausedLocalizations() -> [Localization] {
-    guard paused else { return [] }
-    return windowData.localizations.fetch(.paused, at: currentTime)
-  }
-
-}

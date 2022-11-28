@@ -25,36 +25,28 @@ extension ControlRequest {
   func failed(_ cause: String) -> ControlResponse {
     ControlResponseFailed(response: command, cause: cause)
   }
-  
-  typealias LocalizationsFn = (_: Localizations) -> ControlResponse
-  func withLocalizations(id: String,
-                         fn: LocalizationsFn) -> ControlResponse {
-    withVideoWindow(id: id) { videoWindow in
-      fn(videoWindow.localizations)
-    }
-  }
-  
+
   typealias VideoControlFn = (_ videoControl: VideoControl) -> ControlResponse
   func withVideoControl(id: String,
                          fn: VideoControlFn) -> ControlResponse {
-    withVideoWindow(id: id) { videoWindow in
-      fn(videoWindow.videoControl)
+    withWindowData(id: id) { windowData in
+      fn(windowData.videoControl)
     }
   }
 
   typealias PlayerViewFn = (_ playerView: PlayerView) -> ControlResponse
   func withPlayerView(id: String,
                       fn: PlayerViewFn) -> ControlResponse {
-    withVideoWindow(id: id) { videoWindow in
-      fn(videoWindow.playerView)
+    withWindowData(id: id) { windowData in
+      fn(windowData.playerView)
     }
   }
 
   typealias VideoAssetFn = (_ videoAsset: VideoAsset) -> ControlResponse
   func withVideoAsset(id: String,
                       fn: VideoAssetFn) -> ControlResponse {
-    withVideoWindow(id: id) { videoWindow in
-      fn(videoWindow.videoAsset)
+    withWindowData(id: id) { windowData in
+      fn(windowData.videoAsset)
     }
   }
 
@@ -66,6 +58,14 @@ extension ControlRequest {
     }
     
     return fn(videoWindow)
+  }
+  
+  typealias WindowDataFn = (_ windowData: WindowData) -> ControlResponse
+  func withWindowData(id: String,
+                      fn: WindowDataFn) -> ControlResponse {
+    withVideoWindow(id: id) { videoWindow in
+      fn(videoWindow.windowData)
+    }
   }
   
 }

@@ -12,6 +12,7 @@ struct ControlPause: ControlRequest {
   var uuid: String
   
   func process() -> ControlResponse {
+    
     withVideoControl(id: uuid) { videoControl in
       videoControl.pause()
       return ok()

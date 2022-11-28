@@ -13,10 +13,10 @@ struct ControlSeek: ControlRequest {
   let elapsedTimeMillis: Int
   
   func process() -> ControlResponse {
-    withVideoWindow(id: uuid) { videoWindow in
-      let videoControl = videoWindow.videoControl
-      let playerView = videoWindow.playerView
-      let localizations = videoWindow.localizations
+    withWindowData(id: uuid) { windowData in
+      let videoControl = windowData.videoControl
+      let playerView = windowData.playerView
+      let localizations = windowData.localizations
 
       videoControl.pause()
       DispatchQueue.main.async {

@@ -56,7 +56,7 @@ final class VideoWindow: NSWindow {
     
     let pollingInterval = CMTimeMultiplyByFloat64(videoAsset.frameDuration,
                                                   multiplier: 0.66)
-    setLocalizationsObserver(pollingInterval)
+    setPlayerObserver(pollingInterval)
         
     makeKeyAndOrderFront(nil)
   }

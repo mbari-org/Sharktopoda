@@ -69,7 +69,6 @@ extension WindowData {
 
       self.pause(false)
       self.step(steps)
-//      self.playerView.display(localizations: self.pausedLocalizations())
     }
   }
   

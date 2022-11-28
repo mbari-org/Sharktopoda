@@ -19,7 +19,7 @@ extension NSPlayerView {
     guard let anchor = dragAnchor else { return }
     dragPurpose = purpose
     
-    localizations?.clearSelected()
+    localizations.clearSelected()
     currentLocalization = nil
     
     let layer = shapeLayer(anchor)
@@ -31,8 +31,8 @@ extension NSPlayerView {
   func dragPurpose(using dragPoint: CGPoint) {
     guard dragPurpose != nil else { return }
 
-    guard let layer = dragLayer else { return }
-    guard let anchor = dragAnchor else { return }
+    guard let layer = dragLayer,
+          let anchor = dragAnchor else { return }
     
     let frameRect = anchor.diagonalRect(using: dragPoint)
     CALayer.noAnimation {
@@ -40,27 +40,38 @@ extension NSPlayerView {
     }
   }
   
-  func endDragPurpose() {
-    dragAnchor = nil
-    
+  func endDragPurpose(at endPoint: CGPoint) {
     if let purpose = dragPurpose,
-       let layer = dragLayer {
+       let layer = dragLayer,
+       let anchor = dragAnchor {
 
-      // CxTBD Parameterize min size
-      guard (10 < layer.frame.width || 10 < layer.frame.height) else { return }
-      
-      switch purpose {
-        case .create:
-          localizations?.create(using: layer, at: currentTime, with: fullSize)
-        case .select:
-          localizations?.select(using: layer.frame, at: currentTime)
-          /// Remove the selection layer as it's purpose is complet
-          layer.removeFromSuperlayer()
+      // CxTBD Parameterize min drag
+      let totalDelta = anchor.delta(to: endPoint).abs()
+      if 10 < totalDelta.x, 10 < totalDelta.y {
+        switch purpose {
+          case .create:
+            let localization = Localization(at: currentTime,
+                                            with: region(from: layer),
+                                            layer: layer,
+                                            fullSize: fullSize)
+            localizations.add(localization)
+            localizations.sendLocalizationsMessage(.addLocalizations, ids: [localization.id])
+            localizations.select(id: localization.id)
+            // CxTBD Is an updated selected message necessary?
+            localizations.sendLocalizationsMessage(.selectLocalizations, ids: [localization.id])
+            displayConcept(localization)
+          case .select:
+            /// Remove the selection layer as it's purpose is complete
+            DispatchQueue.main.async {
+              layer.removeFromSuperlayer()
+            }
+            localizations.select(using: layer.frame, at: currentTime)
+        }
       }
     }
 
-    self.dragLayer = nil
-    self.dragPurpose = nil
+    dragLayer = nil
+    dragPurpose = nil
   }
   
   private func shapeLayer(_ origin: CGPoint) -> CAShapeLayer {

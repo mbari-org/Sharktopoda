@@ -14,9 +14,9 @@ struct ControlResponseInfo: ControlResponse {
     var durationMillis: Int
     var frameRate: Float
     var isKey: Bool
-    
+
     init(using videoWindow: VideoWindow) {
-      let videoAsset = videoWindow.videoAsset
+      let videoAsset = videoWindow.windowData.videoAsset
       self.uuid = videoAsset.id
       self.url = videoAsset.url.absoluteString
       self.durationMillis = videoAsset.durationMillis

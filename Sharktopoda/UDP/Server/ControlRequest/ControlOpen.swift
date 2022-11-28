@@ -18,10 +18,10 @@ struct ControlOpen: ControlRequest {
     guard let url = URL(string: url) else {
       return failed("Malformed URL")
     }
-    
-    if let error = VideoWindow.open(id: uuid, url: url) {
-      return failed(error.localizedDescription)
-    }
+
+    /// Load URL is async
+    VideoWindow.open(id: uuid, url: url)
+
     return ok()
   }
 }

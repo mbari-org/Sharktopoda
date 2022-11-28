@@ -26,8 +26,8 @@ struct MainUDPStatusView: View {
         .font(updStatusFont)
     }
     
-    let clientData = sharktopodaData.udpClient.clientData
-    if clientData.active {
+    if let clientData = UDP.sharktopodaData.udpClient?.clientData,
+       clientData.active {
       Text("UDP  →  port \(String(clientData.port)) on \(clientData.host)")
         .font(updStatusFont)
     } else {

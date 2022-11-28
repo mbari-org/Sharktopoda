@@ -12,7 +12,6 @@ struct UDP {
   private static var defaultServerPort = 8800
   
   static var server: UDPServer = UDPServer(port: UDP.startupServerPort())
-  static var client: UDPClient = UDPClient()
   
   static var sharktopodaData: SharktopodaData!
   

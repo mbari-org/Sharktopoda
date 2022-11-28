@@ -11,18 +11,21 @@ struct ControlAdvance: ControlRequest {
   var command: ControlCommand
   var uuid: String
   var direction: Int
-  
+
   func process() -> ControlResponse {
-    guard let videoWindow = UDP.sharktopodaData.videoWindows[uuid] else {
-      return failed("No video for uuid")
+    withWindowData(id: uuid) { windowData in
+      let videoControl = windowData.videoControl
+      
+      guard videoControl.paused else {
+        return failed("Can only advance while video paused")
+      }
+      guard videoControl.canStep(direction) else {
+        return failed("Cannot advance video in that direction")
+      }
+      
+      windowData.advance(steps: direction)
+      
+      return ok()
     }
-    
-    guard videoWindow.canStep(direction) else {
-      return failed("Video cannot step in that direction")
-    }
-    
-    videoWindow.step(direction)
-    
-    return ok()
   }
 }

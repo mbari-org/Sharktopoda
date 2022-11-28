@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct MainView: View {
+  @EnvironmentObject var sharktopodaData: SharktopodaData
+
   private static var ratio: CGFloat = 1.75
   private static var height: CGFloat = 425
   private static var width = CGFloat(MainView.height * MainView.ratio)
@@ -25,7 +27,7 @@ struct MainView: View {
         
         Spacer()
 
-        MainUDPStatusView()
+        MainUDPStatusView().environmentObject(sharktopodaData)
       }
       .padding(20)
       .padding(.top, 20)
@@ -37,7 +39,6 @@ struct MainView: View {
 
 struct Main_Previews: PreviewProvider {
   static var previews: some View {
-    MainView()
-      .environmentObject(SharktopodaData())
+    MainView().environmentObject(SharktopodaData())
   }
 }

@@ -12,12 +12,11 @@ struct ControlClearLocalizations: ControlRequest {
   var uuid: String
   
   func process() -> ControlResponse {
-    guard let videoWindow = UDP.sharktopodaData.videoWindows[uuid] else {
-      return failed("No video for uuid")
+    withWindowData(id: uuid) { windowData in
+      windowData.playerView.clear()
+      windowData.localizations.clear()
+      
+      return ok()
     }
-    
-    videoWindow.clearLocalizations()
-    
-    return ok()
   }
 }

@@ -13,10 +13,10 @@ struct ControlPlay: ControlRequest {
   @Default<Float.PlaybackRate> var rate: Float
 
   func process() -> ControlResponse {
-    guard let videoWindow = UDP.sharktopodaData.videoWindows[uuid] else {
-      return failed("No video for uuid")
+    withVideoWindow(id: uuid) { videoWindow in
+      videoWindow.windowData.play(rate: rate)
+
+      return ok()
     }
-    videoWindow.play(rate: rate)
-    return ok()
   }
 }

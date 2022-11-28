@@ -36,30 +36,33 @@ class UDPClient: ObservableObject {
     return TimeInterval(prefMillis) / 1000.0
   }
   
-  static func connect(using connectCommand: ControlConnect, completion: @escaping UDPClientConnectCompletion) {
-    let udpClient = UDPClient(using: connectCommand)
-    udpClient.connectCompletion = completion
-    udpClient.connection?.start(queue: UDPClient.queue)
+  static func connect(using controlConnect: ControlConnect, completion: @escaping UDPClientConnectCompletion) {
+    let host = controlConnect.host
+    let port = controlConnect.port
+    let clientData = ClientData(host: host, port: port)
+
+    if let client = UDP.sharktopodaData.udpClient {
+      if clientData.endpoint == client.clientData.endpoint {
+        return
+      } else if client.clientData.active {
+        client.stop()
+      }
+    }
+    
+    /// CxSmell This has an odor and needs to be tidied up
+    let _ = UDPClient(using: clientData, completion: completion)
   }
   
-  init() {
-    clientData = ClientData(host: "", port: 0)
-    self.timeout = UDPClient.clientTimeout()
-  }
-  
-  private
-  init(using connectCommand: ControlConnect) {
-    let host = connectCommand.host
-    let port = connectCommand.port
-    clientData = ClientData(host: host, port: port)
-    
-    self.timeout = UDPClient.clientTimeout()
-    
-    let connection = UDP.connection(host: host, port: port)
-    connection.stateUpdateHandler = self.stateUpdate(to:)
-    
-    self.connection = connection
-    
+  private init(using clientData: ClientData, completion: @escaping UDPClientConnectCompletion) {
+
+    self.clientData = clientData
+    timeout = UDPClient.clientTimeout()
+    connectCompletion = completion
+
+    connection = UDP.connection(host: clientData.host, port: clientData.port)
+    connection?.stateUpdateHandler = stateUpdate(to:)
+    connection?.start(queue: UDPClient.queue)
+
     log("connecting to \(clientData.endpoint)")
   }
   
@@ -69,7 +72,7 @@ class UDPClient: ObservableObject {
         return
 
       case .ready:
-        verifyConnection()
+        pingConnection()
 
       case .failed(let error):
         udpError(error: error)
@@ -77,7 +80,7 @@ class UDPClient: ObservableObject {
         connectCompletion?(self)
 
       case .cancelled:
-        udpActive(active: false)
+        udpActive(false)
         log("state \(update)")
         connectCompletion?(self)
 
@@ -86,40 +89,55 @@ class UDPClient: ObservableObject {
     }
   }
   
-  func verifyConnection() {
+  func pingConnection() {
     process(ClientPing()) { [weak self] data in
-      guard let data = data else {
-        self?.connectCompletion?(self!)
-        return
+      if let data = data {
+        self?.log("CxTBD Inspect ping response: \(String(decoding: data, as: UTF8.self))")
+        self?.udpActive(true)
       }
-      self?.log("Inspect ping response data: \(String(decoding: data, as: UTF8.self))")
-      self?.udpActive(active: true)
       self?.connectCompletion?(self!)
     }
   }
   
+  func process(_ message: ClientMessage) {
+    process(message, completion: completionOk(message.command))
+  }
+  
   func process(_ message: ClientMessage, completion: @escaping UDPClientMessageCompletion) {
-    let data = message.data()
+    guard let connection = connection else {
+      self.log("\(message.command) not processed. No client connection.")
+      return
+    }
     
+    let data = message.data()
     var receivedReply = false
+    
     
     UDPClient.queue.asyncAfter(deadline: .now() + timeout) {
       guard receivedReply == false else { return }
       completion(nil)
     }
-
-    if let connection = self.connection {
-      connection.send(content: data, completion: .contentProcessed({ _ in }))
-
-      connection.receiveMessage(completion: { [weak self] data, _, isComplete, error in
-        receivedReply = true
-        
-        if let error = error {
-          self?.udpError(error: error)
-          self?.log("ping error: \(error)")
-        }
+    
+    connection.send(content: data, completion: .contentProcessed({ _ in }))
+    connection.receiveMessage(completion: { [weak self] data, _, isComplete, error in
+      receivedReply = true
+      if let error = error {
+        self?.udpError(error: error)
+        self?.log("\(message) error: \(error)")
+      } else {
         completion(data)
-      })
+      }
+    })
+  }
+  
+  private func completionOk(_ command: ClientCommand) -> UDPClientMessageCompletion {
+    return { [weak self] data in
+      guard let data = data else {
+        self?.log("No response to \(command)")
+        return
+      }
+//      let response = String(decoding: data, as: UTF8.self?)
+      self?.log("command \(command) got response: \(data)")
     }
   }
   
@@ -135,11 +153,11 @@ class UDPClient: ObservableObject {
     connection?.send(content: data, completion: completion)
   }
   
-  func receive() {
+//  func receive() {
+//
+//  }
     
-  }
-    
-  func udpActive(active: Bool) {
+  func udpActive(_ active: Bool) {
     let host = clientData.host
     let port = clientData.port
     clientData = ClientData(host: host, port: port, active: active)

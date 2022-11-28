@@ -7,8 +7,6 @@
 
 import Foundation
 
-// CxInc add control localization commands
-
 enum ControlCommand: String, Codable {
   case addLocalizations = "add localizations"
   case advance = "frame advance"
@@ -51,7 +49,7 @@ enum ControlCommand: String, Codable {
       controlCommand = maybeControlCommand
     }
     catch let error {
-      print(error)
+      UDP.log("state update failed error \(error)")
       return ControlInvalid(cause: error.localizedDescription)
     }
     

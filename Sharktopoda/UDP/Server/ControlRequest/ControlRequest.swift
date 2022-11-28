@@ -21,8 +21,27 @@ extension ControlRequest {
   func ok() -> ControlResponse {
     ControlResponseOk(response: command)
   }
-
+  
   func failed(_ cause: String) -> ControlResponse {
     ControlResponseFailed(response: command, cause: cause)
   }
+
+  typealias VideoWindowFn = (_ videoWindow: VideoWindow) -> ControlResponse
+  func withVideoWindow(id: String,
+                       fn: VideoWindowFn) -> ControlResponse {
+    guard let videoWindow = UDP.sharktopodaData.videoWindows[id] else {
+      return failed("No video for uuid")
+    }
+    
+    return fn(videoWindow)
+  }
+  
+  typealias WindowDataFn = (_ windowData: WindowData) -> ControlResponse
+  func withWindowData(id: String,
+                      fn: WindowDataFn) -> ControlResponse {
+    withVideoWindow(id: id) { videoWindow in
+      fn(videoWindow.windowData)
+    }
+  }
+  
 }

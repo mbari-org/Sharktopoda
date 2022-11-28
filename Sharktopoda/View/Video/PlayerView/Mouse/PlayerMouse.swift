@@ -9,7 +9,8 @@ import AppKit
 
 extension NSPlayerView {
   override func mouseDown(with event: NSEvent) {
-    pause()
+    // CxInc
+//    videoControl.pause()
     
     let playerPoint = locationInPlayer(with: event)
     guard videoRect.contains(playerPoint) else { return }
@@ -17,7 +18,14 @@ extension NSPlayerView {
     dragAnchor = playerPoint
 
     if event.modifierFlags.intersection(.deviceIndependentFlagsMask) == .command {
-      if commandSelect(playerPoint) { return }
+      if let localization = currentLocalization {
+        currentLocalization = nil
+        localizations.select(id: localization.id)
+      }
+      
+      if commandSelect(at: playerPoint) { return }
+      
+      localizations.clearSelected()
       startDragPurpose(.select)
       return
     }
@@ -48,19 +56,28 @@ extension NSPlayerView {
     dragPurpose(using: playerPoint)
   }
   
-  override func mouseExited(with event: NSEvent) {
-    mouseUp(with: event)
-  }
-  
   override func mouseUp(with event: NSEvent) {
-    dragAnchor = nil
-    currentFrame = nil
+    let endPoint = locationInPlayer(with: event)
+    
+    if event.modifierFlags.intersection(.deviceIndependentFlagsMask) == .command {
+      endDragPurpose(at: endPoint)
+    }
     
     if currentLocalization != nil {
-      endDragCurrent()
+      endDragCurrent(at: endPoint)
     } else {
-      endDragPurpose()
+      currentLocalization = nil
+      endDragPurpose(at: endPoint)
     }
+    
+    dragAnchor = nil
+    
+    if let localization = currentLocalization {
+      displayConcept(localization)
+    } else {
+      conceptLayer?.removeFromSuperlayer()
+    }
+    
   }
   
   private func setCurrentLocation(_ location: CGRect.Location) {
@@ -87,9 +104,23 @@ extension NSPlayerView {
     return playerLayer.convert(windowPoint, from: windowLayer)
   }
   
-  func videoPoint(of playerPoint: CGPoint) -> CGPoint {
-    guard playerPoint != .infinity else { return .infinity }
+  func displayConcept(_ localization: Localization) {
+    guard let conceptLayer = conceptLayer else { return }
     
-    return playerPoint.delta(to: videoRect.origin)
-   }
+    conceptLayer.string = localization.concept
+    let layerFrame = localization.layer.frame
+    var conceptFrame = CGRect(x: layerFrame.minX, y: layerFrame.maxY, width: 100, height: 15)
+    
+    if videoRect.maxY < conceptFrame.maxY {
+      let deltaY = -(layerFrame.height + conceptFrame.height)
+      conceptFrame = conceptFrame.move(by: DeltaPoint(x: 0, y: deltaY))
+    }
+    DispatchQueue.main.async {
+      CALayer.noAnimation {
+        conceptLayer.frame = conceptFrame
+      }
+    }
+
+    playerLayer.addSublayer(conceptLayer)
+  }
 }

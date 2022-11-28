@@ -12,12 +12,11 @@ struct ControlShow: ControlRequest {
   var uuid: String
   
   func process() -> ControlResponse {
-    if let window = UDP.sharktopodaData.videoWindows[uuid] {
+    withVideoWindow(id: uuid) { videoWindow in
       DispatchQueue.main.async {
-        window.makeKeyAndOrderFront(nil)
+        videoWindow.makeKeyAndOrderFront(nil)
       }
-    return ok()
+      return ok()
     }
-    return failed("No video for uuid")
   }
 }

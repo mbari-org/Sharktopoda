@@ -12,10 +12,9 @@ struct ControlPause: ControlRequest {
   var uuid: String
   
   func process() -> ControlResponse {
-    guard let videoWindow = UDP.sharktopodaData.videoWindows[uuid] else {
-      return failed("No video for uuid")
+    withWindowData(id: uuid) { windowData in
+      windowData.pause()
+      return ok()
     }
-    videoWindow.pause()
-    return ok()
   }
 }

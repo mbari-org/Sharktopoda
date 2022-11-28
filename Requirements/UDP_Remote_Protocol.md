@@ -2,11 +2,10 @@
 
 ## <a name="overview">Overview
 
-### Incoming commands
+### <a name="control_commands"></a> Control Commands
 
-##### <a name="control_commands"></a> Control Commands
-
-`Sharktopoda 2` will support a remote protocol that will allow other applications to send commands to it via UDP. The protocol will support the following control commands:
+`Sharktopoda 2` will support a remote protocol that will allow other applications to send commands
+to it via UDP. The protocol will support the following control commands:
 
 - [Connect](#connect)
 - [Open](#open)
@@ -32,7 +31,7 @@ In addition to the control commands, the remote protocol will also support comma
 
 - [Add localizations](#add_localizations)
 - [Remove localizations](#remove_localizations)
-- [Update localizations](#modify_localizations)
+- [Update localizations](#update_localizations)
 - [Clear localizations](#clear_localizations)
 - [Select localizations](#select_localizations)
 
@@ -75,17 +74,15 @@ Invalid JSON message structure will be reported as:
 NOTE: Sharktopoda does not determine or report why the message structure was invalid. It is expected the developer of the control messaging app will consult these requirements to determine the actual cause.
 
 
-### <a name="outgoing_commands"></a>Outgoing commands
+### Client Commands
 
 Sharktopoda can also send certain commands to the Remote App. These commands are explicitly sent to the **host/port** established by a preceding [connect](#---connect) control command. The amount of time to wait for a response (i.e. timeout) will be set in the preferences UI. These commands are:
 
-- [Frame capture done](#---frame-capture)
-- [Add localizations](#---add-localizations)
-- [Remove localizations](#---localizatons-deleted)
-- [Update localizations](#---localizationss-modified)
-- [Clear localizations](#---clear-all-localizations)
-- [Select localizations](#---select-localizations)
-- [Ping](#---ping)
+- [Add localizations](#add_localizations)
+- [Remove localizations](#remove_localizations)
+- [Update localizations](#update_localizations)
+- [Select localizations](#select_localizations)
+- [Ping](#ping)
 
 ```mermaid
 sequenceDiagram
@@ -809,7 +806,7 @@ or a failure if the video with uuid does not exist:
 
 [Back](#localization_commands)
 
-### <a name="modify_localizations"></a> Update Localizationss
+### <a name="update_localizations"></a> Update Localizations
 
 Update existing localizations in Sharktopoda. If a matching localization's UUID does not already exist in Sharktopoda, ignore that localization. (i.e. do not add, do not update)
 

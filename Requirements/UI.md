@@ -75,31 +75,34 @@ The video window can be a standard AVKit window. Floating playback controls shou
 
 When a user clicks on the video (not the video controls) it begins a localization action. All localization actions initiate by the video player should immediately pause video playback. Localization actions [initiated by the remote app](UDP_Remote_Protocol.md#incoming-commands) should NOT pause video playback.
 
-### Selecting a localization
+### Selecting localizations
 
-If the user clicks on the border of an existing localization, that single localization should be [selected](UDP_Remote_Protocol.md#select-localizations) and become editable, allowing a user to resize or move the localization.
+If the user clicks anywhere within the bounding box of an existing localization, that single localization should be [selected](UDP_Remote_Protocol.md#select-localizations) and become editable, allowing a user to resize or move the localization.
 
-Additional localizations can be selected by holding down the command key and clicking on the localizations. If more than one localization is selected, they are not editable.
+If the user click is within the bounding box of several overlapping localizations, the selected localization is the one with the closest edge to the click point.
 
-Multiple localizations can be selected by holding down the command key followed by a single-click + drag. This action will draw a selection rectangle. Any localization that intersects with the selection rectangle when the mouse button is released is selected. 
+Only a single localization selected using this mouse click action is editable at any time.
+
+Multiple localizations may be selected in either of two ways. A Cmd-Click within the bounding box of an existing localization adds that localization to any previously selected localizations. Alternatively, a user Cmd-Click-Drag will display a temporary bounding box that, upon release of the Cmd-Click-Drag, will select all localizations that intersect the temporary bounding box. The start of the Cmd-Click-Drag action clears any currently selected localizations.
 
 Whenever a selection action completes a [select](UDP_Remote_Protocol.md#select-localizations) command is sent to the remote applications.
 
 ### Editing a localization
 
- The following events set the new coordianates of the localization and send an [update](UDP_Remote_Protocol.md#localizationss-modified) of the localization to the remote app:
+The region of a localization is editable via a click in the center of a localization's bounding box, followed by a drag action. Upon release of the Click-Drag action, an [update](UDP_Remote_Protocol.md#update_localizations) localization message is sent to the remote control app. If the bounding box of the final position for the localization extends beyond video boundary, the region is clipped to the video boundary and the size is appropriately adjusted.
 
-- The user hits enter or other definable key if enter can't be used. If we can't use enter, allow the key to be set in preferences. The key setting should be in another preferences pane (e.g. Keys, this is in addition to the Annotations and Network panes.)
-- The video leaves the paused state.
-- The user clicks on another localization.
-- The user single clicks on the video anywhere other than the border/control points of the editable localization.
+The size of a localization is editable via a click within the bounding box near a edge, followed by a drag action. There are eight separate click zones, four edges: top, right, bottom, left and four corners: top-right, bottom-right, bottom-left, top-left. Edge zones allow resizing either the width or height perpendicular to the edge. Corner zones resize both the width and height of the region. As with repositioning, an [update](UDP_Remote_Protocol.md#update_localizations) localization message is sent to the remote control app upon release of the Click-Drag action.
+
+The concept field of a localization is not editable via Sharktopoda.
 
 ### Creating a localization
 
-If the user single-clicks and drags on the video surface, begin drawing a rectangle. When the drag is released, [create a new localization using the caption defined in preferences and send it to the remote app](UDP_Remote_Protocol.md#add-localizations). It should then immediately select the localization and send a [select](UDP_Remote_Protocol.md#select-localizations) message to the remote app.
+If the user performs a Click-Drags action within the video boundary, with the intial click outside of any existing localization, Sharktopoda begins the drawing of a bounding box for a new localization. When the drag is released, an [add](UDP_Remote_Protocol.md#add_localizations) message is sent to the remote control app. The concept and color fields of the new localization are set using the current preferences settings.
 
-The caption of a localization does not need to be editable in the video player. Typically, it will be changed by a remote app.
+Newly created localizations are immediately editable (selected), hence a [select](UDP_Remote_Protocol.md#select_localizations) message is sent to the remote control app.
 
 ### Deleting a localization
 
-Pressing the delete or backspace key will delete the selected localizations. A [delete](UDP_Remote_Protocol.md#localizatons-deleted) command will be immediately be sent to the remote app.
+Localizations may be removed by first selecting one or more localizations, followed by a Cntl-Delete keystroke action.  A [delete](UDP_Remote_Protocol.md#elete_localizatons) message will be immediately be sent to the remote control app.
+
+Note the Cntl-Delete keystroke is used for two reasons. Since deleting localizations is destructive, a definitive two key action is desired. Furthermore, even though other Sharktopoda two key actions tend to use a Cmd-key combination, Cntl-Delete further ensures user intent of the destructive delete by changing the modifier (Cntl vs Cmd) key.

@@ -274,6 +274,7 @@
 		E2C22ED928D386AE003CD976 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		E2D03FFC29357FAE0063F38E /* ControlResponseOpenDone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseOpenDone.swift; sourceTree = "<group>"; };
 		E2D03FFE293580B70063F38E /* ControlResponseCaptureOk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseCaptureOk.swift; sourceTree = "<group>"; };
+		E2D040032936780C0063F38E /* Sharktopoda.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Sharktopoda.plist; sourceTree = "<group>"; };
 		E2D1C84D291302EF00961A0A /* LocalizationFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationFrame.swift; sourceTree = "<group>"; };
 		E2D1C84F29131E6E00961A0A /* LocalizationMouse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationMouse.swift; sourceTree = "<group>"; };
 		E2D1C85329132B1800961A0A /* CALayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CALayer.swift; sourceTree = "<group>"; };
@@ -571,9 +572,10 @@
 				E2BC08EE28EC7925007F4B5D /* Error */,
 				E2BC08E328EB7686007F4B5D /* Extension */,
 				E2C22E8828CFDC28003CD976 /* Assets.xcassets */,
-				E2C22E8D28CFDC28003CD976 /* Sharktopoda.entitlements */,
-				E2C22E8A28CFDC28003CD976 /* Preview Content */,
 				E295627D28D632EC00E88ED1 /* Credits.html */,
+				E2C22E8D28CFDC28003CD976 /* Sharktopoda.entitlements */,
+				E2D040032936780C0063F38E /* Sharktopoda.plist */,
+				E2C22E8A28CFDC28003CD976 /* Preview Content */,
 			);
 			path = Sharktopoda;
 			sourceTree = "<group>";
@@ -1084,10 +1086,12 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Sharktopoda/Sharktopoda.plist;
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_DEFINITION_PLIST = Sharktopoda/Sharktopoda.plist;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1139,9 +1143,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Sharktopoda/Sharktopoda.plist;
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				PRODUCT_DEFINITION_PLIST = Sharktopoda/Sharktopoda.plist;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -1165,6 +1171,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Sharktopoda/Sharktopoda.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Sharktopoda;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1197,6 +1204,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Sharktopoda/Sharktopoda.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Sharktopoda;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (

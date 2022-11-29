@@ -155,6 +155,14 @@ extension NSPlayerView {
     }
   }
   
+  func display(localization: Localization) {
+    guard showLocalizations else { return }
+    
+    DispatchQueue.main.async { [weak self] in
+      self?.playerLayer.addSublayer(localization.layer)
+    }
+  }
+
   func display(localizations: [Localization]) {
     guard showLocalizations else { return }
     

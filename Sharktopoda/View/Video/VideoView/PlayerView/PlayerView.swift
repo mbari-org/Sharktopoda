@@ -38,6 +38,10 @@ extension PlayerView {
     nsPlayerView.currentTime
   }
   
+  func display(localization: Localization) {
+    nsPlayerView.display(localization: localization)
+  }
+
   func display(localizations: [Localization]) {
     nsPlayerView.display(localizations: localizations)
   }
@@ -52,15 +56,5 @@ extension PlayerView {
   
   var videoRect: CGRect {
     nsPlayerView.videoRect
-  }
-}
-
-extension PlayerView {
-  func display(localization: Localization) {
-    guard nsPlayerView.showLocalizations else { return }
-
-    DispatchQueue.main.async {
-      playerLayer.addSublayer(localization.layer)
-    }
   }
 }

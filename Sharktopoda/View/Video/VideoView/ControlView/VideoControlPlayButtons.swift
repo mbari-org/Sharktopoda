@@ -1,5 +1,5 @@
 //
-//  VideoControlButtonsView.swift
+//  VideoControlPlayButtons.swift
 //  Created for Sharktopoda on 11/29/22.
 //
 //  Apache License 2.0 — See project LICENSE file
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct VideoControlButtonsView: View {
+struct VideoControlPlayButtons: View {
   @EnvironmentObject var windowData: WindowData
   
   var playerDirection: WindowData.PlayerDirection {
@@ -54,6 +54,6 @@ struct VideoControlButtonsView: View {
 
 struct VideoControlButtonsView_Previews: PreviewProvider {
   static var previews: some View {
-    VideoControlButtonsView()
+    VideoControlPlayButtons()
   }
 }

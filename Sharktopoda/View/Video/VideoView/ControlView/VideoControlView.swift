@@ -19,14 +19,9 @@ struct VideoControlView: View {
   }
   
   var body: some View {
-    HStack {
-      VideoControlButtonsView()
-      
-      Spacer()
-      Text("WTF")
-      Spacer()
-      
-      VideoControlElapsedTimeView()
+    VStack {
+      VideoControlTimeView()
+      VideoControlPlayButtons()
     }
     .padding(.bottom, 10)
   }

@@ -48,12 +48,12 @@ final class NSPlayerView: NSView {
   
   // MARK: setup
   private func attach(windowData: WindowData) {
-    let size = windowData.fullSize
-    frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
-
     wantsLayer = true
     layer = rootLayer
     
+    let size = windowData.fullSize
+    frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+
     playerLayer.player = windowData.player
     playerLayer.frame = bounds
     playerLayer.autoresizingMask = [.layerWidthSizable, .layerHeightSizable]

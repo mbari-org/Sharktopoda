@@ -11,6 +11,8 @@ import AVFoundation
 final class NSSliderView: NSView {
   // MARK: properties
   var _windowData: WindowData? = nil
+  
+  let syncLayer = AVSynchronizedLayer()
 
   var windowData: WindowData {
     get { _windowData! }
@@ -18,7 +20,14 @@ final class NSSliderView: NSView {
   }
   
   func attach(windowData: WindowData) {
+    syncLayer.playerItem = windowData.player.currentItem
     
+    wantsLayer = true
+    layer = syncLayer
+    
+    layer?.backgroundColor = NSColor.white.cgColor
+    
+    _windowData = windowData
   }
 
   

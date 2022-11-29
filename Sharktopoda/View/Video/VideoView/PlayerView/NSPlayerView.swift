@@ -33,23 +33,21 @@ final class NSPlayerView: NSView {
   
   var windowData: WindowData {
     get { _windowData! }
-    set { setup(newValue) }
+    set { attach(windowData: newValue) }
   }
   
   private var _currentLocalization: Localization?
   
   override public init(frame frameRect: NSRect) {
     super.init(frame: frameRect)
-//    setup()
   }
   
   required public init?(coder decoder: NSCoder) {
     super.init(coder: decoder)
-//    setup()
   }
   
   // MARK: setup
-  private func setup(_ windowData: WindowData) {
+  private func attach(windowData: WindowData) {
     let size = windowData.fullSize
     frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
 

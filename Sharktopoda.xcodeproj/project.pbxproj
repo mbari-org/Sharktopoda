@@ -134,6 +134,7 @@
 		E2F691F2293693BB00F7ADC3 /* VideoControlSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F691F1293693BB00F7ADC3 /* VideoControlSliderView.swift */; };
 		E2F691F4293694A200F7ADC3 /* VideoControlButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F691F3293694A200F7ADC3 /* VideoControlButtonsView.swift */; };
 		E2F691F62936955000F7ADC3 /* VideoControlElapsedTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F691F52936955000F7ADC3 /* VideoControlElapsedTimeView.swift */; };
+		E2F691F82936A04F00F7ADC3 /* NSSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F691F72936A04F00F7ADC3 /* NSSliderView.swift */; };
 		E2FA39AD292D88F800008CBD /* VideoWindowPlayerObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FA39AC292D88F800008CBD /* VideoWindowPlayerObserver.swift */; };
 		E2FAB21028E213A9006D2676 /* MainTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB20F28E213A9006D2676 /* MainTitleView.swift */; };
 		E2FAB21228E2157C006D2676 /* MainShortcutsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB21128E2157C006D2676 /* MainShortcutsView.swift */; };
@@ -297,6 +298,7 @@
 		E2F691F1293693BB00F7ADC3 /* VideoControlSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoControlSliderView.swift; sourceTree = "<group>"; };
 		E2F691F3293694A200F7ADC3 /* VideoControlButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoControlButtonsView.swift; sourceTree = "<group>"; };
 		E2F691F52936955000F7ADC3 /* VideoControlElapsedTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoControlElapsedTimeView.swift; sourceTree = "<group>"; };
+		E2F691F72936A04F00F7ADC3 /* NSSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSSliderView.swift; sourceTree = "<group>"; };
 		E2FA39AC292D88F800008CBD /* VideoWindowPlayerObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoWindowPlayerObserver.swift; sourceTree = "<group>"; };
 		E2FAB20F28E213A9006D2676 /* MainTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTitleView.swift; sourceTree = "<group>"; };
 		E2FAB21128E2157C006D2676 /* MainShortcutsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainShortcutsView.swift; sourceTree = "<group>"; };
@@ -651,8 +653,9 @@
 			children = (
 				E2020D76292834770090B60B /* VideoControlView.swift */,
 				E2F691F3293694A200F7ADC3 /* VideoControlButtonsView.swift */,
-				E2F691F1293693BB00F7ADC3 /* VideoControlSliderView.swift */,
 				E2F691F52936955000F7ADC3 /* VideoControlElapsedTimeView.swift */,
+				E2F691F1293693BB00F7ADC3 /* VideoControlSliderView.swift */,
+				E2F691F72936A04F00F7ADC3 /* NSSliderView.swift */,
 			);
 			path = ControlView;
 			sourceTree = "<group>";
@@ -959,6 +962,7 @@
 				E2989AB728D3B261009D2D65 /* NetworkPreferencesView.swift in Sources */,
 				E223C30C28F20D5D00274C3E /* ControlRemoveLocalizations.swift in Sources */,
 				E2675E1E28DAB65D00F5F114 /* ControlPing.swift in Sources */,
+				E2F691F82936A04F00F7ADC3 /* NSSliderView.swift in Sources */,
 				E2FAB21028E213A9006D2676 /* MainTitleView.swift in Sources */,
 				E223C31028F21D8500274C3E /* ControlClearLocalizations.swift in Sources */,
 				E2AAFC3328F8F35000BBC703 /* VideoPlayerError.swift in Sources */,

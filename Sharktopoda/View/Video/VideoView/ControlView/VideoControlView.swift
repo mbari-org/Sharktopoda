@@ -23,6 +23,8 @@ struct VideoControlView: View {
       VideoControlButtonsView()
       
       Spacer()
+      Text("WTF")
+      Spacer()
       
       VideoControlElapsedTimeView()
     }

@@ -9,16 +9,19 @@ import AVFoundation
 import SwiftUI
 
 struct VideoControlSliderView: NSViewRepresentable {
-  private let nsView = NSView()
+  @EnvironmentObject private var windowData: WindowData
   
-  var layer: CALayer? {
-    nsView.layer
-  }
+  let nsSliderView = NSSliderView()
+  
+//  var layer: CALayer? {
+//    nsView.layer
+//  }
   
   func makeNSView(context: Context) -> NSView {
-    nsView
+    nsSliderView.windowData = windowData
+    return nsSliderView
   }
   
   func updateNSView(_ nsView: NSViewType, context: Context) {}
-  
+
 }

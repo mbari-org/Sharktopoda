@@ -114,6 +114,8 @@
 		E2C22ED528D36832003CD976 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22ED428D36832003CD976 /* Localization.swift */; };
 		E2C22ED728D36888003CD976 /* VideoAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22ED628D36888003CD976 /* VideoAsset.swift */; };
 		E2C22EDA28D386AE003CD976 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22ED928D386AE003CD976 /* MainView.swift */; };
+		E2D03FFD29357FAE0063F38E /* ControlResponseOpenDone.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D03FFC29357FAE0063F38E /* ControlResponseOpenDone.swift */; };
+		E2D03FFF293580B70063F38E /* ControlResponseCaptureOk.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D03FFE293580B70063F38E /* ControlResponseCaptureOk.swift */; };
 		E2D1C84E291302EF00961A0A /* LocalizationFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1C84D291302EF00961A0A /* LocalizationFrame.swift */; };
 		E2D1C85029131E6E00961A0A /* LocalizationMouse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1C84F29131E6E00961A0A /* LocalizationMouse.swift */; };
 		E2D1C85429132B1800961A0A /* CALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1C85329132B1800961A0A /* CALayer.swift */; };
@@ -272,6 +274,8 @@
 		E2C22ED428D36832003CD976 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		E2C22ED628D36888003CD976 /* VideoAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAsset.swift; sourceTree = "<group>"; };
 		E2C22ED928D386AE003CD976 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		E2D03FFC29357FAE0063F38E /* ControlResponseOpenDone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseOpenDone.swift; sourceTree = "<group>"; };
+		E2D03FFE293580B70063F38E /* ControlResponseCaptureOk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseCaptureOk.swift; sourceTree = "<group>"; };
 		E2D1C84D291302EF00961A0A /* LocalizationFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationFrame.swift; sourceTree = "<group>"; };
 		E2D1C84F29131E6E00961A0A /* LocalizationMouse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationMouse.swift; sourceTree = "<group>"; };
 		E2D1C85329132B1800961A0A /* CALayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CALayer.swift; sourceTree = "<group>"; };
@@ -682,10 +686,12 @@
 				E22F72FC28DA5D9100253A48 /* ControlResponse.swift */,
 				E2FFE20F28E79AE000425F04 /* ControlResponseAllInfo.swift */,
 				E2BC08E128E8EC4F007F4B5D /* ControlResponseCaptureDone.swift */,
+				E2D03FFE293580B70063F38E /* ControlResponseCaptureOk.swift */,
 				E2FFE21128E7A8CA00425F04 /* ControlResponseElapsed.swift */,
 				E2FFE1FB28E37B8000425F04 /* ControlResponseFailed.swift */,
 				E2FFE20B28E7619900425F04 /* ControlResponseInfo.swift */,
 				E2FFE1FD28E37C5000425F04 /* ControlResponseOk.swift */,
+				E2D03FFC29357FAE0063F38E /* ControlResponseOpenDone.swift */,
 				E2FFE21328E8824100425F04 /* ControlResponseState.swift */,
 			);
 			path = ControlResponse;
@@ -991,6 +997,8 @@
 				E2D1C85429132B1800961A0A /* CALayer.swift in Sources */,
 				E28CEF0D291E9D37009E73B3 /* LocalizationsMessages.swift in Sources */,
 				E295627728D4FB8400E88ED1 /* AnnotationSelectionPreferencesView.swift in Sources */,
+				E2D03FFD29357FAE0063F38E /* ControlResponseOpenDone.swift in Sources */,
+				E2D03FFF293580B70063F38E /* ControlResponseCaptureOk.swift in Sources */,
 				E2020D77292834770090B60B /* VideoControlView.swift in Sources */,
 				E2FAB21428E215F6006D2676 /* MainUDPStatusView.swift in Sources */,
 			);

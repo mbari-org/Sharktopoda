@@ -112,7 +112,6 @@ class UDPClient: ObservableObject {
     let data = message.data()
     var receivedReply = false
     
-    
     UDPClient.queue.asyncAfter(deadline: .now() + timeout) {
       guard receivedReply == false else { return }
       completion(nil)

@@ -9,6 +9,7 @@ import Foundation
 
 enum ClientCommand: String, Codable {
   case captureDone
+  case openDone
   case addLocalizations
   case removeLocalizations
   case updateLocalizations

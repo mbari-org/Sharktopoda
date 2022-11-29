@@ -56,14 +56,3 @@ struct ControlCapture: ControlRequest {
     }
   }
 }
-
-struct ControlResponseCaptureOk : ControlResponse {
-  var response: ControlCommand = .capture
-  var status: ControlResponseStatus = .ok
-  var captureTime: Int
-
-  init(_ frameTime: Int) {
-    self.captureTime = frameTime
-  }
-}
-

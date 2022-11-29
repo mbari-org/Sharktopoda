@@ -38,7 +38,7 @@ extension VideoWindow {
       )
   }
   
-  @objc func playerHitEnd(note: NSNotification) {
+  @objc func playerHitEnd(_: NSNotification) {
     windowData.playerDirection = .paused
   }
 }

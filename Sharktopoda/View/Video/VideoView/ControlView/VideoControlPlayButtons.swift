@@ -28,7 +28,6 @@ struct VideoControlPlayButtons: View {
               ? "arrowtriangle.backward.circle.fill"
               : "arrowtriangle.backward.circle")
       }
-      .padding(.leading, 10)
       
       Button(action: {
         guard playerDirection != .paused else { return }
@@ -38,6 +37,8 @@ struct VideoControlPlayButtons: View {
               ? "pause.circle.fill"
               : "pause.circle")
       }
+      .padding(.leading, 15)
+      .padding(.trailing, 15)
       
       Button(action: {
         guard playerDirection != .forward else { return }
@@ -47,7 +48,6 @@ struct VideoControlPlayButtons: View {
               ? "play.circle.fill"
               : "play.circle")
       }
-      .padding(.trailing, 10)
     }
   }
 }

@@ -14,7 +14,6 @@ struct VideoView: View {
   var body: some View {
     VStack {
       windowData.playerView
-//        .environmentObject(windowData)
         .padding(0)
       Divider()
       VideoControlView()

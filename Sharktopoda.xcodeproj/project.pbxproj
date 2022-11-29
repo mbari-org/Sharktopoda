@@ -132,6 +132,8 @@
 		E2F3A2302925513B00F2551F /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F3A22F2925513B00F2551F /* VideoView.swift */; };
 		E2F3A2322925705A00F2551F /* SharktopodaAppDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F3A2312925705A00F2551F /* SharktopodaAppDefaults.swift */; };
 		E2F691F2293693BB00F7ADC3 /* VideoControlSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F691F1293693BB00F7ADC3 /* VideoControlSliderView.swift */; };
+		E2F691F4293694A200F7ADC3 /* VideoControlButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F691F3293694A200F7ADC3 /* VideoControlButtonsView.swift */; };
+		E2F691F62936955000F7ADC3 /* VideoControlElapsedTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F691F52936955000F7ADC3 /* VideoControlElapsedTimeView.swift */; };
 		E2FA39AD292D88F800008CBD /* VideoWindowPlayerObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FA39AC292D88F800008CBD /* VideoWindowPlayerObserver.swift */; };
 		E2FAB21028E213A9006D2676 /* MainTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB20F28E213A9006D2676 /* MainTitleView.swift */; };
 		E2FAB21228E2157C006D2676 /* MainShortcutsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB21128E2157C006D2676 /* MainShortcutsView.swift */; };
@@ -293,6 +295,8 @@
 		E2F3A22F2925513B00F2551F /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
 		E2F3A2312925705A00F2551F /* SharktopodaAppDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharktopodaAppDefaults.swift; sourceTree = "<group>"; };
 		E2F691F1293693BB00F7ADC3 /* VideoControlSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoControlSliderView.swift; sourceTree = "<group>"; };
+		E2F691F3293694A200F7ADC3 /* VideoControlButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoControlButtonsView.swift; sourceTree = "<group>"; };
+		E2F691F52936955000F7ADC3 /* VideoControlElapsedTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoControlElapsedTimeView.swift; sourceTree = "<group>"; };
 		E2FA39AC292D88F800008CBD /* VideoWindowPlayerObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoWindowPlayerObserver.swift; sourceTree = "<group>"; };
 		E2FAB20F28E213A9006D2676 /* MainTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTitleView.swift; sourceTree = "<group>"; };
 		E2FAB21128E2157C006D2676 /* MainShortcutsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainShortcutsView.swift; sourceTree = "<group>"; };
@@ -646,7 +650,9 @@
 			isa = PBXGroup;
 			children = (
 				E2020D76292834770090B60B /* VideoControlView.swift */,
+				E2F691F3293694A200F7ADC3 /* VideoControlButtonsView.swift */,
 				E2F691F1293693BB00F7ADC3 /* VideoControlSliderView.swift */,
+				E2F691F52936955000F7ADC3 /* VideoControlElapsedTimeView.swift */,
 			);
 			path = ControlView;
 			sourceTree = "<group>";
@@ -921,6 +927,7 @@
 				E2F3A2322925705A00F2551F /* SharktopodaAppDefaults.swift in Sources */,
 				E2F3A2302925513B00F2551F /* VideoView.swift in Sources */,
 				E295627C28D5325A00E88ED1 /* NetworkControlPreferencesView.swift in Sources */,
+				E2F691F62936955000F7ADC3 /* VideoControlElapsedTimeView.swift in Sources */,
 				E2675E2628DABF5600F5F114 /* ControlPlay.swift in Sources */,
 				E2448BFF292D6EAE00F2C2E2 /* LocalizationRegion.swift in Sources */,
 				E21DF7922910391A00038B41 /* PlayerMouse.swift in Sources */,
@@ -958,6 +965,7 @@
 				E2D1C85B291AC38000961A0A /* DragPurpose.swift in Sources */,
 				E2505D4F28EF22E10027F280 /* EnvironmentValues.swift in Sources */,
 				E2AAFC3128F8F28B00BBC703 /* OpenVideoError.swift in Sources */,
+				E2F691F4293694A200F7ADC3 /* VideoControlButtonsView.swift in Sources */,
 				E295628A28D67A6500E88ED1 /* SharktopodaCommands.swift in Sources */,
 				E2FFE20C28E7619900425F04 /* ControlResponseInfo.swift in Sources */,
 				E280384529284A380017E28C /* VideoWindowKeyInfo.swift in Sources */,

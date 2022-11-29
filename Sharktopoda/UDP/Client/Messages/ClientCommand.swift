@@ -8,8 +8,8 @@
 import Foundation
 
 enum ClientCommand: String, Codable {
-  case captureDone
-  case openDone
+  case captureDone = "frame capture done"
+  case openDone = "open"
   case addLocalizations
   case removeLocalizations
   case updateLocalizations

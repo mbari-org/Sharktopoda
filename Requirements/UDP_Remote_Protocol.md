@@ -207,9 +207,7 @@ sequenceDiagram
 }
 ```
 
-Either open command should respond with a success or failure message:
-
-##### Successfully opened video response
+Each form of the open command receives an immediate **ok** response.
 
 ```json
 {
@@ -218,13 +216,25 @@ Either open command should respond with a success or failure message:
 }
 ```
 
+Sharktopoda will proceed with processing the command on a background thread. Upon completion of background processing, Sharktopoda shall use the same connection as the prior **ok** message to send the response:
+
+##### Successfully opened video response
+
+```json
+{
+  "response": "open done",
+  "uuid": "b52cf7f1-e19c-40ba-b176-a7e479a3b170",
+  "status": "ok"
+}
+```
+
 ##### Failed to open video response
 
 ```json
 {
-  "response": "open",
-  "status": "failed",
-  "cause": <cause>
+  "cause": <cause>,
+  "response": "open done",
+  "status": "failed"
 }
 ```
 

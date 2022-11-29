@@ -18,29 +18,9 @@ final class SharktopodaData: ObservableObject {
   @Published var videoWindows = [String: VideoWindow]()
   
   init() {
-    // Needed for non-View related changes to sharktopodaData to notify observing Views
+    // Needed for notify observing Views of non-View related UDP messaging changes to sharktopodaData
     UDP.sharktopodaData = self
   }
-  
-//  func localizations(id: String) -> Localizations? {
-//    guard let videoWindow = videoWindows[id] else { return nil}
-//    return videoWindow.localizations
-//  }
-//  
-//  func videoControl(id: String) -> VideoControl? {
-//    guard let videoWindow = videoWindows[id] else { return nil}
-//    return videoWindow.videoControl
-//  }
-//
-//  func playerView(id: String) -> PlayerView? {
-//    guard let videoWindow = videoWindows[id] else { return nil}
-//    return videoWindow.playerView
-//  }
-//
-//  func videoAsset(id: String) -> VideoAsset? {
-//    guard let videoWindow = videoWindows[id] else { return nil}
-//    return videoWindow.videoAsset
-//  }
   
   func latestVideoWindow() -> VideoWindow? {
     guard !videoWindows.isEmpty else { return nil }

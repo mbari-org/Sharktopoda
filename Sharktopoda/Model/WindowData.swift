@@ -7,7 +7,7 @@
 
 import AVKit
 
-final class WindowData: ObservableObject {
+final class WindowData: Identifiable, ObservableObject {
   var _id: String?
   
   var _frameDuration: CMTime?

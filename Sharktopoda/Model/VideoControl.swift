@@ -8,7 +8,7 @@
 import AVFoundation
 import Foundation
 
-final class VideoControl: ObservableObject {
+final class VideoControl {
   private var windowData: WindowData
 
   let seekTolerance: CMTime

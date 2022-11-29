@@ -9,7 +9,7 @@ import AVFoundation
 
 // CxNote Binds to first AVAsset video track
 
-final class VideoAsset: Identifiable, ObservableObject {
+final class VideoAsset {
   static let timescaleMillis: Int32 = 1000
   
   let id: String

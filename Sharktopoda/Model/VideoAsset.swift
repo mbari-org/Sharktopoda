@@ -18,12 +18,16 @@ final class VideoAsset {
   var avAsset: AVURLAsset
 
   var avAssetTrack: AVAssetTrack
-  var durationMillis: Int
+  var duration: CMTime
   var frameDuration: CMTime
   var frameRate: Float
   var fullSize: NSSize
   var isPlayable: Bool
-
+  
+  var durationMillis: Int {
+    duration.asMillis()
+  }
+  
   init?(id: String, url: URL) async {
     self.id = id
     self.url = url
@@ -31,8 +35,7 @@ final class VideoAsset {
     avAsset = AVURLAsset(url: url)
     
     do {
-      let duration = try await avAsset.load(.duration)
-      durationMillis = duration.asMillis()
+      duration = try await avAsset.load(.duration)
       isPlayable = try await avAsset.load(.isPlayable)
       
       let tracks = try await avAsset.loadTracks(withMediaType: AVMediaType.video)

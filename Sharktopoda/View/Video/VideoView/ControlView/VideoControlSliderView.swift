@@ -19,11 +19,15 @@ struct VideoControlSliderView: NSViewRepresentable {
   
   func makeNSView(context: Context) -> NSView {
 //    nsSliderView.wantsLayer = true
-    nsSliderView.frame = NSRect(x: 0, y: 0, width: 0, height: 30)
+//    nsSliderView.frame = NSRect(x: 0, y: 0, width: 0, height: 30)
     nsSliderView.windowData = windowData
     return nsSliderView
   }
   
   func updateNSView(_ nsView: NSViewType, context: Context) {}
 
+  func wtf() -> some View {
+    print("WTF")
+    return self
+  }
 }

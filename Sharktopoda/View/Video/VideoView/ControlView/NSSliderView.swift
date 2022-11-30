@@ -22,31 +22,39 @@ final class NSSliderView: NSView {
   }
   
   func attach(windowData: WindowData) {
+    _windowData = windowData
+
     wantsLayer = true
+    layer?.addSublayer(syncLayer)
 
     syncLayer.playerItem = windowData.player.currentItem
     syncLayer.frame = frame
     
-    setupMarkerLayer()
+    setupLayers()
 
-    layer?.addSublayer(syncLayer)
-    
-    
-    _windowData = windowData
-    
   }
   
-  private func setupMarkerLayer() {
+  private func setupLayers() {
     let radius = NSHeight(bounds) / 2
     markerLayer.frame = NSRect(x: 0, y: 0, width: radius, height: radius)
     markerLayer.cornerRadius = radius / 2
-    markerLayer.backgroundColor = NSColor.white.cgColor
+    markerLayer.backgroundColor = NSColor.lightGray.cgColor
+    
     syncLayer.addSublayer(markerLayer)
+
+    
   }
   
-  private func setupTimeLineLayer() {
-    timeLineLayer.frame = syncLayer.bounds
+  func setupAnimations() {
+    let slideAnimation = CABasicAnimation(keyPath: "position.x")
+    slideAnimation.fromValue = markerLayer.position.x
+//    slideAnimation.toValue = NSWidth(bounds) - markerLayer.position.x
+    slideAnimation.toValue = 100 - markerLayer.position.x
+    slideAnimation.isRemovedOnCompletion = false
+    slideAnimation.beginTime = AVCoreAnimationBeginTimeAtZero
+    slideAnimation.duration = CFTimeInterval(windowData.videoAsset.durationMillis)
     
+    markerLayer.add(slideAnimation, forKey: nil)
   }
 
   

@@ -26,7 +26,7 @@ enum ControlCommand: String, Codable {
   case seek = "seek elapsed time"
   case selectLocalizations = "select localizations"
   case show
-  case state = "request state"
+  case state = "request player state"
   case unknown
   case updateLocalizations = "update localizations"
   

@@ -18,8 +18,9 @@ struct VideoControlSliderView: NSViewRepresentable {
 //  }
   
   func makeNSView(context: Context) -> NSView {
+//    nsSliderView.wantsLayer = true
+    nsSliderView.frame = NSRect(x: 0, y: 0, width: 0, height: 30)
     nsSliderView.windowData = windowData
-    nsSliderView.frame = NSRect(x: 0, y: 0, width: 30, height: 30)
     return nsSliderView
   }
   

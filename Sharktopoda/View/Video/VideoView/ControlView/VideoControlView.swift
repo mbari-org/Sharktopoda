@@ -23,7 +23,6 @@ struct VideoControlView: View {
       VideoControlTimeView()
       VideoControlPlayButtons()
     }
-    .padding(.bottom, 10)
   }
 }
 

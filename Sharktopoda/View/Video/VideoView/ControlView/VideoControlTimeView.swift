@@ -17,8 +17,8 @@ struct VideoControlTimeView: View {
         .frame(width: 80)
       
       VideoControlSliderView()
-        .background(Color.red)
         .frame(height: 15)
+
 
       Text(String(windowData.videoAsset.durationMillis - windowData.playerTime))
         .padding(.trailing, 5)

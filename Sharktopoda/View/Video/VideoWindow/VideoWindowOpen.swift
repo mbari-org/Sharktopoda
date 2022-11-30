@@ -29,7 +29,8 @@ extension VideoWindow {
   private static func window(id: String, url: URL, alert: Bool = false) {
     Task {
       if let videoAsset = await VideoAsset(id: id, url: url) {
-        window(for: videoAsset, alert: alert) 
+        window(for: videoAsset, alert: alert)
+        
         if let client = UDP.sharktopodaData.udpClient {
           let message = ControlResponseOpenDone(uuid: id)
           client.process(message)
@@ -51,6 +52,7 @@ extension VideoWindow {
       let videoWindow = VideoWindow(for: videoAsset, with: UDP.sharktopodaData)
       UDP.sharktopodaData.videoWindows[videoAsset.id] = videoWindow
       onMain {
+        videoWindow.windowData.sliderView.setupControlViewAnimation()
         videoWindow.makeKeyAndOrderFront(nil)
       }
     }

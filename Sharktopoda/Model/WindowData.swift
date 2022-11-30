@@ -15,6 +15,7 @@ final class WindowData: Identifiable, ObservableObject {
   var _localizations: Localizations?
   var _player: AVPlayer?
   var _playerView: PlayerView?
+  var _sliderView: NSSliderView?
   var _videoAsset: VideoAsset?
   var _videoControl: VideoControl?
   
@@ -49,6 +50,11 @@ final class WindowData: Identifiable, ObservableObject {
   var playerView: PlayerView {
     get { _playerView! }
     set { _playerView = newValue }
+  }
+  
+  var sliderView: NSSliderView {
+    get { _sliderView! }
+    set { _sliderView = newValue }
   }
   
   var videoAsset: VideoAsset {

@@ -32,7 +32,9 @@ extension VideoWindow: NSWindowDelegate {
     
     /// Resize paused localizations on main queue to see immediate effect
     let pausedLocalizations = windowData.pausedLocalizations()
-    DispatchQueue.main.async {
+    DispatchQueue.main.async { [weak self] in
+      self?.windowData.sliderView.setupControlViewAnimation()
+      
       for localization in pausedLocalizations {
         localization.resize(for: videoRect)
       }

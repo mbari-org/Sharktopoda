@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PlayerView: NSViewRepresentable {
-  @EnvironmentObject private var windowData: WindowData
+  @EnvironmentObject var windowData: WindowData
   
   let nsPlayerView = NSPlayerView()
   

@@ -73,14 +73,11 @@ final class NSPlayerView: NSView {
 // MARK: Computed properties
 extension NSPlayerView {
   var currentItem: AVPlayerItem? {
-    player.currentItem
+    windowData.videoControl.currentItem
   }
   
   var currentTime: Int {
-    get {
-      guard let currentTime = currentItem?.currentTime() else { return 0 }
-      return currentTime.asMillis()
-    }
+    windowData.videoControl.currentTime
   }
   
   var currentLocalization: Localization? {
@@ -105,11 +102,7 @@ extension NSPlayerView {
   var localizations: Localizations {
     windowData.localizations
   }
-  
-  var player: AVPlayer {
-    get { playerLayer.player! }
-  }
-  
+
   var scale: CGFloat {
     /// Player always maintains original aspect so either width or height work here
     get {

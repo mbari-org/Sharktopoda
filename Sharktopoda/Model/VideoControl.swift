@@ -58,14 +58,10 @@ final class VideoControl {
     }
   }
   
-  var player: AVPlayer {
+  private var player: AVPlayer {
     windowData.player
   }
   
-  var playerView: PlayerView {
-    windowData.playerView
-  }
-
   var rate: Float {
     get { player.rate }
   }

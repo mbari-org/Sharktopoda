@@ -21,7 +21,7 @@ extension PlayerView {
   }
   
   var currentTime: Int {
-    nsPlayerView.currentTime
+    windowData.videoControl.currentTime
   }
   
   func display(localization: Localization) {

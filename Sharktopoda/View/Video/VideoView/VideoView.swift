@@ -15,11 +15,10 @@ struct VideoView: View {
     VStack {
       windowData.playerView
         .padding(0)
-      Divider()
+
       VideoControlView()
-        .padding(0)
         .environmentObject(windowData)
-        .frame(maxHeight: 50)
+        .frame(height: 50)
         .padding(.bottom, 10)
     }
   }

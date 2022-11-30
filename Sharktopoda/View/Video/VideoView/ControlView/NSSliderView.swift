@@ -11,10 +11,6 @@ import AVFoundation
 final class NSSliderView: NSView {
   // MARK: properties
   var _windowData: WindowData? = nil
-  
-  let markerLayer = CALayer()
-  let syncLayer = AVSynchronizedLayer()
-  let timeLineLayer = CALayer()
 
   var windowData: WindowData {
     get { _windowData! }
@@ -23,40 +19,46 @@ final class NSSliderView: NSView {
   
   func attach(windowData: WindowData) {
     _windowData = windowData
-
+    
+    guard let playerItem = windowData.videoControl.currentItem else { return }
+    let syncLayer = AVSynchronizedLayer(playerItem: playerItem)
+    
     wantsLayer = true
     layer?.addSublayer(syncLayer)
 
-    syncLayer.playerItem = windowData.player.currentItem
-    syncLayer.frame = frame
+    // CxInc Initial width is wrong, but gets updated. How and when?
+    frame = NSRect(x: 0, y: 0, width: windowData.fullSize.width, height: 30)
+//    syncLayer.frame = frame
     
-    setupLayers()
-
+    addMarkerLayer(to: syncLayer)
   }
   
-  private func setupLayers() {
+  private func addMarkerLayer(to syncLayer: AVSynchronizedLayer) {
+    let markerLayer = CALayer()
+    
     let radius = NSHeight(bounds) / 2
     markerLayer.frame = NSRect(x: 0, y: 0, width: radius, height: radius)
     markerLayer.cornerRadius = radius / 2
-    markerLayer.backgroundColor = NSColor.lightGray.cgColor
+    markerLayer.backgroundColor = NSColor.white.cgColor
     
-    syncLayer.addSublayer(markerLayer)
-
-    
-  }
-  
-  func setupAnimations() {
     let slideAnimation = CABasicAnimation(keyPath: "position.x")
     slideAnimation.fromValue = markerLayer.position.x
-//    slideAnimation.toValue = NSWidth(bounds) - markerLayer.position.x
-    slideAnimation.toValue = 100 - markerLayer.position.x
+    //    slideAnimation.toValue = NSWidth(bounds) - markerLayer.position.x
+    slideAnimation.toValue = 500 - markerLayer.position.x
     slideAnimation.isRemovedOnCompletion = false
     slideAnimation.beginTime = AVCoreAnimationBeginTimeAtZero
-    slideAnimation.duration = CFTimeInterval(windowData.videoAsset.durationMillis)
+//    slideAnimation.duration = CFTimeInterval(windowData.videoAsset.durationMillis)
+    slideAnimation.duration = 2.145
     
     markerLayer.add(slideAnimation, forKey: nil)
-  }
 
+    
+    syncLayer.addSublayer(markerLayer)
+    
+    
+  }
   
+  func setupTest() {
+  }
   
 }

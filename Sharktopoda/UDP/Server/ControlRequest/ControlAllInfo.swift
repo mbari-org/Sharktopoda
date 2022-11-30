@@ -9,8 +9,6 @@ import Foundation
 
 struct ControlAllInfo: ControlRequest {
   var command: ControlCommand
-  var status: ControlResponseStatus
-  var videos: [ControlResponseInfo.VideoInfo]
   
   func process() -> ControlResponse {
     guard !UDP.sharktopodaData.videoWindows.isEmpty else {

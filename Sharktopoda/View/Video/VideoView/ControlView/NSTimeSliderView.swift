@@ -9,16 +9,22 @@ import AppKit
 import AVFoundation
 import SwiftUI
 
-final class NSSliderView: NSView {
+final class NSTimeSliderView: NSView {
   // MARK: properties
   var _windowData: WindowData? = nil
+
+  let markerLayer = CALayer()
+
+  var dragPoint: CGPoint? = nil
+  
+  var duration: Int {
+    windowData.videoAsset.durationMillis
+  }
   
   var windowData: WindowData {
     get { _windowData! }
     set { attach(windowData: newValue) }
   }
-  
-  let markerLayer = CALayer()
   
   func attach(windowData: WindowData) {
     _windowData = windowData
@@ -30,9 +36,6 @@ final class NSSliderView: NSView {
     
     wantsLayer = true
     layer?.addSublayer(syncLayer)
-
-    // CxInc Initial width is wrong, but gets updated. How and when?
-//    syncLayer.frame = frame
     
     addMarkerLayer(to: syncLayer)
   }
@@ -50,6 +53,7 @@ final class NSSliderView: NSView {
     horizontalLine.stroke()  // draw line
   }
 
+
   private func addMarkerLayer(to syncLayer: AVSynchronizedLayer) {
     markerLayer.frame = NSRect(x: 0, y: 0, width: radius, height: radius)
     markerLayer.cornerRadius = radius / 2
@@ -60,9 +64,11 @@ final class NSSliderView: NSView {
   func setupControlViewAnimation() {
     markerLayer.removeAllAnimations()
     
+    let halfWidth = markerLayer.bounds.width / 2
+    
     let slideAnimation = CABasicAnimation(keyPath: "position.x")
-    slideAnimation.fromValue = markerLayer.position.x
-    slideAnimation.toValue = NSWidth(bounds) - markerLayer.position.x
+    slideAnimation.fromValue = halfWidth
+    slideAnimation.toValue = layer!.bounds.width - halfWidth
     slideAnimation.isRemovedOnCompletion = false
     slideAnimation.beginTime = AVCoreAnimationBeginTimeAtZero
     slideAnimation.duration = CFTimeInterval(windowData.videoAsset.duration.seconds)

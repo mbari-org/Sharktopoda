@@ -91,10 +91,13 @@ class UDPClient: ObservableObject {
   
   func pingConnection() {
     process(ClientPing()) { [weak self] data in
-      if let data = data {
-        self?.log("CxTBD Inspect ping response: \(String(decoding: data, as: UTF8.self))")
+      if data != nil {
+        self?.log("Received ping")
         self?.udpActive(true)
+      } else {
+        self?.log("Missing ping")
       }
+      
       self?.connectCompletion?(self!)
     }
   }

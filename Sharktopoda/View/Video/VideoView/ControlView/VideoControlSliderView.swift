@@ -11,12 +11,12 @@ import SwiftUI
 struct VideoControlSliderView: NSViewRepresentable {
   @EnvironmentObject private var windowData: WindowData
   
-  let nsSliderView = NSSliderView()
+  let nsTimeSliderView = NSTimeSliderView()
   
   func makeNSView(context: Context) -> NSView {
-    nsSliderView.windowData = windowData
-    windowData.sliderView = nsSliderView
-    return nsSliderView
+    nsTimeSliderView.windowData = windowData
+    windowData.sliderView = nsTimeSliderView
+    return nsTimeSliderView
   }
   
   func updateNSView(_ nsView: NSViewType, context: Context) {}

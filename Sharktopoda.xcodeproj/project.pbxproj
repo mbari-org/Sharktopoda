@@ -100,6 +100,7 @@
 		E2BC08EB28EB781C007F4B5D /* CGImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC08EA28EB781C007F4B5D /* CGImage.swift */; };
 		E2BC08ED28EB7914007F4B5D /* AVAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC08EC28EB7914007F4B5D /* AVAsset.swift */; };
 		E2BC08F028EC797D007F4B5D /* FrameCaptureError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC08EF28EC797D007F4B5D /* FrameCaptureError.swift */; };
+		E2BDBB982938706B00BD16D8 /* TimeSliderMouse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BDBB972938706B00BD16D8 /* TimeSliderMouse.swift */; };
 		E2BDE212290CABC3001CC439 /* CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BDE211290CABC3001CC439 /* CGPoint.swift */; };
 		E2BDE214290D7FF5001CC439 /* CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BDE213290D7FF5001CC439 /* CGSize.swift */; };
 		E2C078CD28D7CF0E00C55EEC /* UDPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C078CC28D7CF0E00C55EEC /* UDPClient.swift */; };
@@ -135,7 +136,7 @@
 		E2F3A2322925705A00F2551F /* SharktopodaAppDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F3A2312925705A00F2551F /* SharktopodaAppDefaults.swift */; };
 		E2F691F2293693BB00F7ADC3 /* VideoControlSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F691F1293693BB00F7ADC3 /* VideoControlSliderView.swift */; };
 		E2F691F4293694A200F7ADC3 /* VideoControlPlayButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F691F3293694A200F7ADC3 /* VideoControlPlayButtons.swift */; };
-		E2F691F82936A04F00F7ADC3 /* NSSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F691F72936A04F00F7ADC3 /* NSSliderView.swift */; };
+		E2F691F82936A04F00F7ADC3 /* NSTimeSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F691F72936A04F00F7ADC3 /* NSTimeSliderView.swift */; };
 		E2FA39AD292D88F800008CBD /* VideoWindowPlayerObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FA39AC292D88F800008CBD /* VideoWindowPlayerObserver.swift */; };
 		E2FAB21028E213A9006D2676 /* MainTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB20F28E213A9006D2676 /* MainTitleView.swift */; };
 		E2FAB21228E2157C006D2676 /* MainShortcutsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAB21128E2157C006D2676 /* MainShortcutsView.swift */; };
@@ -260,6 +261,7 @@
 		E2BC08EA28EB781C007F4B5D /* CGImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGImage.swift; sourceTree = "<group>"; };
 		E2BC08EC28EB7914007F4B5D /* AVAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVAsset.swift; sourceTree = "<group>"; };
 		E2BC08EF28EC797D007F4B5D /* FrameCaptureError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameCaptureError.swift; sourceTree = "<group>"; };
+		E2BDBB972938706B00BD16D8 /* TimeSliderMouse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSliderMouse.swift; sourceTree = "<group>"; };
 		E2BDE211290CABC3001CC439 /* CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPoint.swift; sourceTree = "<group>"; };
 		E2BDE213290D7FF5001CC439 /* CGSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGSize.swift; sourceTree = "<group>"; };
 		E2C078CC28D7CF0E00C55EEC /* UDPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDPClient.swift; sourceTree = "<group>"; };
@@ -300,7 +302,7 @@
 		E2F3A2312925705A00F2551F /* SharktopodaAppDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharktopodaAppDefaults.swift; sourceTree = "<group>"; };
 		E2F691F1293693BB00F7ADC3 /* VideoControlSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoControlSliderView.swift; sourceTree = "<group>"; };
 		E2F691F3293694A200F7ADC3 /* VideoControlPlayButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoControlPlayButtons.swift; sourceTree = "<group>"; };
-		E2F691F72936A04F00F7ADC3 /* NSSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSSliderView.swift; sourceTree = "<group>"; };
+		E2F691F72936A04F00F7ADC3 /* NSTimeSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSTimeSliderView.swift; sourceTree = "<group>"; };
 		E2FA39AC292D88F800008CBD /* VideoWindowPlayerObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoWindowPlayerObserver.swift; sourceTree = "<group>"; };
 		E2FAB20F28E213A9006D2676 /* MainTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTitleView.swift; sourceTree = "<group>"; };
 		E2FAB21128E2157C006D2676 /* MainShortcutsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainShortcutsView.swift; sourceTree = "<group>"; };
@@ -657,8 +659,9 @@
 				E2020D76292834770090B60B /* VideoControlView.swift */,
 				E2F691F3293694A200F7ADC3 /* VideoControlPlayButtons.swift */,
 				E2F691F1293693BB00F7ADC3 /* VideoControlSliderView.swift */,
-				E2F691F72936A04F00F7ADC3 /* NSSliderView.swift */,
+				E2F691F72936A04F00F7ADC3 /* NSTimeSliderView.swift */,
 				E27E526E2936ACDD003CF785 /* VideoControlTimeView.swift */,
+				E2BDBB972938706B00BD16D8 /* TimeSliderMouse.swift */,
 			);
 			path = ControlView;
 			sourceTree = "<group>";
@@ -917,6 +920,7 @@
 				E237C0A828EE14B5002868D1 /* FloatingPanelModifier.swift in Sources */,
 				E2EE0E3C28DB9B3B00138A86 /* ControlSeek.swift in Sources */,
 				E2BC08F028EC797D007F4B5D /* FrameCaptureError.swift in Sources */,
+				E2BDBB982938706B00BD16D8 /* TimeSliderMouse.swift in Sources */,
 				E22F0EA428DA57800097A34E /* ControlRequest.swift in Sources */,
 				E2837B4629104BF700FC4CC2 /* PlayerView.swift in Sources */,
 				E2EE0E3E28DB9B9F00138A86 /* ControlCapture.swift in Sources */,
@@ -965,7 +969,7 @@
 				E2989AB728D3B261009D2D65 /* NetworkPreferencesView.swift in Sources */,
 				E223C30C28F20D5D00274C3E /* ControlRemoveLocalizations.swift in Sources */,
 				E2675E1E28DAB65D00F5F114 /* ControlPing.swift in Sources */,
-				E2F691F82936A04F00F7ADC3 /* NSSliderView.swift in Sources */,
+				E2F691F82936A04F00F7ADC3 /* NSTimeSliderView.swift in Sources */,
 				E2FAB21028E213A9006D2676 /* MainTitleView.swift in Sources */,
 				E223C31028F21D8500274C3E /* ControlClearLocalizations.swift in Sources */,
 				E2AAFC3328F8F35000BBC703 /* VideoPlayerError.swift in Sources */,

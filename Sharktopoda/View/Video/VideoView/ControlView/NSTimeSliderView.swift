@@ -9,16 +9,22 @@ import AppKit
 import AVFoundation
 import SwiftUI
 
-final class NSSliderView: NSView {
+final class NSTimeSliderView: NSView {
   // MARK: properties
   var _windowData: WindowData? = nil
+
+  let markerLayer = CALayer()
+
+  var minX: CGFloat = 0
+  var maxX: CGFloat = .infinity
+  var maxTime: Int = 0
   
+  var dragPoint: CGPoint? = nil
+
   var windowData: WindowData {
     get { _windowData! }
     set { attach(windowData: newValue) }
   }
-  
-  let markerLayer = CALayer()
   
   func attach(windowData: WindowData) {
     _windowData = windowData
@@ -50,6 +56,7 @@ final class NSSliderView: NSView {
     horizontalLine.stroke()  // draw line
   }
 
+
   private func addMarkerLayer(to syncLayer: AVSynchronizedLayer) {
     markerLayer.frame = NSRect(x: 0, y: 0, width: radius, height: radius)
     markerLayer.cornerRadius = radius / 2
@@ -60,12 +67,16 @@ final class NSSliderView: NSView {
   func setupControlViewAnimation() {
     markerLayer.removeAllAnimations()
     
+    minX = markerLayer.position.x
+    maxX = NSWidth(bounds) - minX
+    maxTime = Int(windowData.videoAsset.duration.seconds)
+    
     let slideAnimation = CABasicAnimation(keyPath: "position.x")
-    slideAnimation.fromValue = markerLayer.position.x
-    slideAnimation.toValue = NSWidth(bounds) - markerLayer.position.x
+    slideAnimation.fromValue = minX
+    slideAnimation.toValue = maxX
     slideAnimation.isRemovedOnCompletion = false
     slideAnimation.beginTime = AVCoreAnimationBeginTimeAtZero
-    slideAnimation.duration = CFTimeInterval(windowData.videoAsset.duration.seconds)
+    slideAnimation.duration = CFTimeInterval(maxTime)
     
     markerLayer.add(slideAnimation, forKey: windowData.id)
   }

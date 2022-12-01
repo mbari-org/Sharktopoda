@@ -24,7 +24,8 @@ struct ControlCapture: ControlRequest {
       // as possible. We put this time in the ControlResponse so it can be used later during
       // image capture processing. This means the time is sent in the initial 'ok' response but
       // the command contoller can just ignore it.
-      guard let fileUrl = URL(string: imageLocation) else {
+
+      guard let fileUrl = URL(string: fileUrlString(imageLocation)) else {
         return failed("Image location is malformed URL")
       }
 
@@ -48,11 +49,15 @@ struct ControlCapture: ControlRequest {
     
     let videoAsset = await videoWindow.windowData.videoAsset
 
-    switch await videoAsset.frameGrab(at: captureTime, destination: imageLocation) {
+    switch await videoAsset.frameGrab(at: captureTime, destination: fileUrlString(imageLocation)) {
       case .success(let grabTime):
         return ControlResponseCaptureDone(for: self, grabTime: grabTime)
       case .failure(let error):
         return ControlResponseCaptureDone(for: self, cause: error.localizedDescription)
     }
+  }
+  
+  private func fileUrlString(_ imageLocation: String) -> String {
+    imageLocation.starts(with: "file:") ? imageLocation : "file:\(imageLocation)"
   }
 }

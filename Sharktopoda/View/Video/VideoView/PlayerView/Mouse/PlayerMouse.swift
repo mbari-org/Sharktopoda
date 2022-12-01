@@ -12,7 +12,7 @@ extension NSPlayerView {
     // CxInc
 //    videoControl.pause()
     
-    let playerPoint = locationInPlayer(with: event)
+    let playerPoint = location(in: playerLayer, of: event)
     guard videoRect.contains(playerPoint) else { return }
     
     dragAnchor = playerPoint
@@ -44,7 +44,7 @@ extension NSPlayerView {
   }
   
   override func mouseDragged(with event: NSEvent) {
-    let playerPoint = locationInPlayer(with: event)
+    let playerPoint = location(in: playerLayer, of: event)
     
     if currentLocation != nil {
       /// If there is a current localization, drag it
@@ -57,7 +57,7 @@ extension NSPlayerView {
   }
   
   override func mouseUp(with event: NSEvent) {
-    let endPoint = locationInPlayer(with: event)
+    let endPoint = location(in: playerLayer, of: event)
     
     if event.modifierFlags.intersection(.deviceIndependentFlagsMask) == .command {
       endDragPurpose(at: endPoint)
@@ -97,11 +97,12 @@ extension NSPlayerView {
     addTrackingArea(trackingArea)
   }
 
-  private func locationInPlayer(with event: NSEvent) -> CGPoint {
+  private func location(in layer: CALayer, of event: NSEvent) -> CGPoint {
+    // CxTBD Investigate
     guard let windowLayer = rootLayer.superlayer?.superlayer?.superlayer else { return .infinity }
-    
+
     let windowPoint = event.locationInWindow
-    return playerLayer.convert(windowPoint, from: windowLayer)
+    return layer.convert(windowPoint, from: windowLayer)
   }
   
   func displayConcept(_ localization: Localization) {

@@ -15,12 +15,12 @@ final class NSTimeSliderView: NSView {
 
   let markerLayer = CALayer()
 
-  var minX: CGFloat = 0
-  var maxX: CGFloat = .infinity
-  var maxTime: Int = 0
-  
   var dragPoint: CGPoint? = nil
-
+  
+  var duration: Int {
+    windowData.videoAsset.durationMillis
+  }
+  
   var windowData: WindowData {
     get { _windowData! }
     set { attach(windowData: newValue) }
@@ -36,9 +36,6 @@ final class NSTimeSliderView: NSView {
     
     wantsLayer = true
     layer?.addSublayer(syncLayer)
-
-    // CxInc Initial width is wrong, but gets updated. How and when?
-//    syncLayer.frame = frame
     
     addMarkerLayer(to: syncLayer)
   }
@@ -67,16 +64,14 @@ final class NSTimeSliderView: NSView {
   func setupControlViewAnimation() {
     markerLayer.removeAllAnimations()
     
-    minX = markerLayer.position.x
-    maxX = NSWidth(bounds) - minX
-    maxTime = Int(windowData.videoAsset.duration.seconds)
+    let halfWidth = markerLayer.bounds.width / 2
     
     let slideAnimation = CABasicAnimation(keyPath: "position.x")
-    slideAnimation.fromValue = minX
-    slideAnimation.toValue = maxX
+    slideAnimation.fromValue = halfWidth
+    slideAnimation.toValue = layer!.bounds.width - halfWidth
     slideAnimation.isRemovedOnCompletion = false
     slideAnimation.beginTime = AVCoreAnimationBeginTimeAtZero
-    slideAnimation.duration = CFTimeInterval(maxTime)
+    slideAnimation.duration = CFTimeInterval(windowData.videoAsset.duration.seconds)
     
     markerLayer.add(slideAnimation, forKey: windowData.id)
   }

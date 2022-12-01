@@ -68,8 +68,8 @@ final class VideoControl {
   
   func seek(elapsedTime: Int, done: @escaping (Bool) -> Void) {
     player.seek(to: CMTime.fromMillis(elapsedTime),
-                toleranceBefore: .zero,
-                toleranceAfter: .zero,
+                toleranceBefore: seekTolerance,
+                toleranceAfter: seekTolerance,
                 completionHandler: done)
   }
 }

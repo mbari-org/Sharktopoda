@@ -19,12 +19,4 @@ struct SharktopodaCommands: Commands {
         .keyboardShortcut("O", modifiers: [.shift, .command])
     }
   }
-  
-  var videoWindow: VideoWindow? {
-    get {
-      // CxInc
-//      UDP.sharktopodaData.latestVideoWindow()
-      return nil
-    }
-  }
 }

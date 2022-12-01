@@ -14,7 +14,7 @@ struct ControlShow: ControlRequest {
   func process() -> ControlResponse {
     withVideoWindow(id: uuid) { videoWindow in
       DispatchQueue.main.async {
-        videoWindow.makeKeyAndOrderFront(nil)
+        videoWindow.bringToFront()
       }
       return ok()
     }

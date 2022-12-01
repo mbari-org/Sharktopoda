@@ -12,14 +12,11 @@ import SwiftUI
 final class VideoWindow: NSWindow {
   var windowData = WindowData()
   
-  var keyInfo: KeyInfo
-
   /// Queue on which off-main work is done
   let queue: DispatchQueue
 
   //
   init(for videoAsset: VideoAsset, with sharktopodaData: SharktopodaData) {
-    keyInfo = KeyInfo(keyTime: Date())
     queue = DispatchQueue(label: "Sharktopoda Video Queue: \(videoAsset.id)")
 
     let fullSize = videoAsset.fullSize
@@ -61,10 +58,14 @@ final class VideoWindow: NSWindow {
                                                   multiplier: 0.66)
     setPlayerObserver(pollingInterval)
         
-    makeKeyAndOrderFront(nil)
+    bringToFront()
   }
   
   var id: String {
     windowData.id
+  }
+  
+  func bringToFront() {
+    makeKeyAndOrderFront(nil)
   }
 }

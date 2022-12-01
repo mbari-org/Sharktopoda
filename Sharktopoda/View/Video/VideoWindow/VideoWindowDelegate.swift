@@ -18,11 +18,11 @@ extension VideoWindow: NSWindowDelegate {
   }
   
   func windowDidBecomeKey(_ notification: Notification) {
-    keyInfo = KeyInfo(keyTime: Date(), isKey: true)
+    windowData.windowKeyInfo = WindowData.WindowKeyInfo(isKey: true)
   }
   
   func windowDidResignKey(_ notification: Notification) {
-    keyInfo = KeyInfo(keyTime: keyInfo.keyTime, isKey: false)
+    windowData.windowKeyInfo = WindowData.WindowKeyInfo(isKey: false)
   }
   
   func windowDidResize(_ notification: Notification) {

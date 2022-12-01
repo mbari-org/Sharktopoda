@@ -15,7 +15,7 @@ extension VideoWindow {
   static func open(id: String, url: URL, alert: Bool = false) {
     if let videoWindow = UDP.sharktopodaData.videoWindows[id] {
       onMain {
-        videoWindow.makeKeyAndOrderFront(nil)
+        videoWindow.bringToFront()
       }
     } else {
       window(id: id, url: url, alert: alert)
@@ -53,7 +53,7 @@ extension VideoWindow {
       UDP.sharktopodaData.videoWindows[videoAsset.id] = videoWindow
       onMain {
         videoWindow.windowData.sliderView.setupControlViewAnimation()
-        videoWindow.makeKeyAndOrderFront(nil)
+        videoWindow.bringToFront()
       }
     }
   }

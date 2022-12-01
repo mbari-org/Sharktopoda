@@ -10,6 +10,8 @@ import AVKit
 final class WindowData: Identifiable, ObservableObject {
   var _id: String?
   
+  var windowKeyInfo: WindowKeyInfo = WindowKeyInfo()
+  
   var _frameDuration: CMTime?
   var _fullSize: CGSize?
   var _localizations: Localizations?

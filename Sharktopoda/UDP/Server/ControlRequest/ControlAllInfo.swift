@@ -16,7 +16,7 @@ struct ControlAllInfo: ControlRequest {
     }
     
     let videos = UDP.sharktopodaData.videoWindows.values.map {
-      ControlResponseInfo.VideoInfo(using: $0)
+      VideoInfo(using: $0)
     }
 
     return ControlResponseAllInfo(with: videos)

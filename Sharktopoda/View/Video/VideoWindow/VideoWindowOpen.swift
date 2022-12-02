@@ -32,8 +32,8 @@ extension VideoWindow {
         window(for: videoAsset, alert: alert)
         
         if let client = UDP.sharktopodaData.udpClient {
-          let message = ControlResponseOpenDone(uuid: id)
-          client.process(message)
+          let openDoneMessage = ClientMessageOpenDone(uuid: id)
+          client.process(openDoneMessage)
         }
       } else {
         report(path: url.absoluteString,

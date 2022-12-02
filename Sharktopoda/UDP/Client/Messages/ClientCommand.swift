@@ -10,10 +10,10 @@ import Foundation
 enum ClientCommand: String, Codable {
   case captureDone = "frame capture done"
   case openDone = "open done"
-  case addLocalizations
-  case removeLocalizations
-  case updateLocalizations
-  case clearLocalizations
-  case selectLocalizations
-  case ping
+  case addLocalizations = "add localizations"
+  case removeLocalizations = "remove localizations"
+  case updateLocalizations = "update localizations"
+  case clearLocalizations = "clear localizations"
+  case selectLocalizations = "select localizations"
+  case ping = "ping"
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ClientPing: ClientMessage {
+struct ClientMessagePing: ClientMessage {
   var command: ClientCommand
 
   init() {

@@ -9,8 +9,8 @@ import Foundation
 import Network
 
 class UDPMessage {
-  private static let messageQueue = DispatchQueue(label: "Sharktopoda UDP Message Queue")
-  private static let captureQueue = DispatchQueue(label: "Sharktopoda UDP Capture Queue")
+  static let messageQueue = DispatchQueue(label: "Sharktopoda UDP Message Queue")
+  static let captureQueue = DispatchQueue(label: "Sharktopoda UDP Capture Queue")
 
   typealias ProcessCompletion = (_ response: ControlResponse) -> Void
   
@@ -73,22 +73,21 @@ class UDPMessage {
       self?.completion(controlResponse)
 
       // If frame capture, send a second response re: async frame grab
-      if controlMessage.command == .capture,
+      if let client = UDP.sharktopodaData.udpClient,
+         controlMessage.command == .capture,
          controlResponse.status == .ok,
          let controlCapture = controlMessage as? ControlCapture,
-         let connection = self?.connection,
          let controlResponseOk = controlResponse as? ControlResponseCaptureOk {
-        UDPMessage.captureQueue.async {
+        let captureTime = controlResponseOk.captureTime
+
+        UDPClient.messageQueue.async {
           Task {
-            let captureTime = controlResponseOk.captureTime
-            let controlCaptureDone = await controlCapture.doCapture(captureTime: captureTime)
-            connection.send(content: controlCaptureDone.data(), completion: .contentProcessed({ _ in
-//              connection.cancel()
-//              connection.stateUpdateHandler = nil
-            }))
+            let captureDoneMessage = await controlCapture.doCapture(captureTime: captureTime)
+            client.process(captureDoneMessage)
           }
         }
       } else {
+        // CxTBD
 //        self?.stop()
       }
     }

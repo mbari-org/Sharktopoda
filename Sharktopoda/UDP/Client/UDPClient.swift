@@ -22,7 +22,8 @@ class UDPClient: ObservableObject {
   typealias UDPClientConnectCompletion = (UDPClient) -> Void
   typealias UDPClientMessageCompletion = (Data?) -> Void
   
-  private static let queue = DispatchQueue(label: "Sharktopoda UDP Client Queue")
+  static let messageQueue = DispatchQueue(label: "Sharktopoda UDP Client Queue")
+  private static let timeoutQueue = DispatchQueue(label: "Sharktopoda UDP Timeout Queue")
   
   var connection: NWConnection?
   
@@ -61,7 +62,7 @@ class UDPClient: ObservableObject {
 
     connection = UDP.connection(host: clientData.host, port: clientData.port)
     connection?.stateUpdateHandler = stateUpdate(to:)
-    connection?.start(queue: UDPClient.queue)
+    connection?.start(queue: UDPClient.messageQueue)
 
     log("connecting to \(clientData.endpoint)")
   }
@@ -90,7 +91,7 @@ class UDPClient: ObservableObject {
   }
   
   func pingConnection() {
-    process(ClientPing()) { [weak self] data in
+    process(ClientMessagePing()) { [weak self] data in
       if data != nil {
         self?.log("Received ping")
         self?.udpActive(true)
@@ -115,7 +116,7 @@ class UDPClient: ObservableObject {
     let data = message.data()
     var receivedReply = false
     
-    UDPClient.queue.asyncAfter(deadline: .now() + timeout) {
+    UDPClient.timeoutQueue.asyncAfter(deadline: .now() + timeout) {
       guard receivedReply == false else { return }
       completion(nil)
     }

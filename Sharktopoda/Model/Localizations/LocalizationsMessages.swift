@@ -10,7 +10,7 @@ import Foundation
 extension Localizations {
   func sendIdsMessage(_ command: ClientCommand, ids: [String]) {
     if let client = UDP.sharktopodaData.udpClient {
-      let message = ClientCommandLocalizationIds(command,
+      let message = ClientMessageLocalizationIds(command,
                                                  videoId: id,
                                                  ids: ids)
       client.process(message)
@@ -19,7 +19,7 @@ extension Localizations {
   
   func sendLocalizationsMessage(_ command: ClientCommand, ids: [String]) {
     if let client = UDP.sharktopodaData.udpClient {
-      let message = ClientCommandLocalizations(command,
+      let message = ClientMessageLocalizations(command,
                                                videoId: id,
                                                localizations: ids.map { storage[$0]! })
       client.process(message)

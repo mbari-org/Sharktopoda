@@ -42,18 +42,18 @@ struct ControlCapture: ControlRequest {
     }
   }
   
-  func doCapture(captureTime: Int) async -> ControlResponse {
+  func doCapture(captureTime: Int) async -> ClientMessage {
     guard let videoWindow = UDP.sharktopodaData.videoWindows[uuid] else {
-      return ControlResponseCaptureDone(for: self, cause: "Video for uuid was closed")
+      return ClientMessageCaptureDone(for: self, cause: "Video for uuid was closed")
     }
     
     let videoAsset = await videoWindow.windowData.videoAsset
 
     switch await videoAsset.frameGrab(at: captureTime, destination: fileUrlString(imageLocation)) {
       case .success(let grabTime):
-        return ControlResponseCaptureDone(for: self, grabTime: grabTime)
+        return ClientMessageCaptureDone(for: self, grabTime: grabTime)
       case .failure(let error):
-        return ControlResponseCaptureDone(for: self, cause: error.localizedDescription)
+        return ClientMessageCaptureDone(for: self, cause: error.localizedDescription)
     }
   }
   

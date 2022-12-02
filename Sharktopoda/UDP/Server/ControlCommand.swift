@@ -12,7 +12,6 @@ enum ControlCommand: String, Codable {
   case advance = "frame advance"
   case all = "request all information"
   case capture = "frame capture"
-  case captureDone = "frame capture done"
   case clearLocalizations = "clear localizations"
   case close
   case connect
@@ -67,9 +66,6 @@ enum ControlCommand: String, Codable {
           
         case .capture:
           controlMessageType = ControlCapture.self
-
-        case .captureDone:
-          controlMessageType = ControlUnknown.self
 
         case .clearLocalizations:
           controlMessageType = ControlClearLocalizations.self

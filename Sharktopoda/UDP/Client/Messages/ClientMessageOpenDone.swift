@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ControlResponseOpenDone: ClientMessage {
+struct ClientMessageOpenDone: ClientMessage {
   var command: ClientCommand
   var status: ControlResponseStatus
   var uuid: String

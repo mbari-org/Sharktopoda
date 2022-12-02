@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ClientCommandLocalizations: ClientMessage {
+struct ClientMessageLocalizations: ClientMessage {
   var command: ClientCommand
   let uuid: String
   let localizations: [ClientLocalization]

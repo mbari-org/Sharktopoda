@@ -16,14 +16,11 @@ struct ControlCapture: ControlRequest {
   var imageLocation: String
   var imageReferenceUuid: String
   
-  static let saveImageQueue = DispatchQueue(label: "save image queue")
-  
   func process() -> ControlResponse {
     withWindowData(id: uuid) { windowData in
       // CxNote Immediately capture current time to get frame as close to command request
-      // as possible. We put this time in the ControlResponse so it can be used later during
-      // image capture processing. This means the time is sent in the initial 'ok' response but
-      // the command contoller can just ignore it.
+      // as possible.
+      let captureTime = windowData.playerTime
 
       guard let fileUrl = URL(string: fileUrlString(imageLocation)) else {
         return failed("Image location is malformed URL")
@@ -36,6 +33,15 @@ struct ControlCapture: ControlRequest {
       let dirPath = fileUrl.deletingLastPathComponent().path
       guard FileManager.default.isWritableFile(atPath: dirPath) else {
         return failed("Image location not writable")
+      }
+      
+      UDPMessage.captureQueue.async {
+        Task {
+          let captureDoneMessage = await doCapture(captureTime: captureTime)
+          if let client = UDP.sharktopodaData.udpClient {
+            client.process(captureDoneMessage)
+          }
+        }
       }
       
       return ControlResponseCaptureOk(windowData.videoControl.currentTime)

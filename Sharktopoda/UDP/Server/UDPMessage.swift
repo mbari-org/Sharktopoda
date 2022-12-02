@@ -71,25 +71,6 @@ class UDPMessage {
 
       let controlResponse = controlMessage.process()
       self?.completion(controlResponse)
-
-      // If frame capture, send a second response re: async frame grab
-      if controlMessage.command == .capture,
-         controlResponse.status == .ok,
-         let controlCapture = controlMessage as? ControlCapture,
-         let controlResponseOk = controlResponse as? ControlResponseCaptureOk {
-        let captureTime = controlResponseOk.captureTime
-
-        let client = UDP.sharktopodaData.udpClient
-        UDPClient.messageQueue.async {
-          Task {
-            let captureDoneMessage = await controlCapture.doCapture(captureTime: captureTime)
-            client?.process(captureDoneMessage)
-          }
-        }
-      } else {
-        // CxTBD
-//        self?.stop()
-      }
     }
   }
 

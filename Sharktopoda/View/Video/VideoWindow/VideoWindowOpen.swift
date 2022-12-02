@@ -12,33 +12,29 @@ extension VideoWindow {
     DispatchQueue.main.async { fn() }
   }
   
+  static func open(url: URL) {
+    open(id: url.path, url: url, alert: true)
+  }
+  
   static func open(id: String, url: URL, alert: Bool = false) {
     if let videoWindow = UDP.sharktopodaData.videoWindows[id] {
       onMain {
         videoWindow.bringToFront()
       }
     } else {
-      window(id: id, url: url, alert: alert)
-    }
-  }
-  
-  static func open(url: URL) {
-    open(id: url.path, url: url, alert: true)
-  }
-  
-  private static func window(id: String, url: URL, alert: Bool = false) {
-    Task {
-      if let videoAsset = await VideoAsset(id: id, url: url) {
-        window(for: videoAsset, alert: alert)
-        
-        if let client = UDP.sharktopodaData.udpClient {
-          let openDoneMessage = ClientMessageOpenDone(uuid: id)
-          client.process(openDoneMessage)
+      Task {
+        if let videoAsset = await VideoAsset(id: id, url: url) {
+          window(for: videoAsset, alert: alert)
+          
+          if let client = UDP.sharktopodaData.udpClient {
+            let openDoneMessage = ClientMessageOpenDone(uuid: id)
+            client.process(openDoneMessage)
+          }
+        } else {
+          report(path: url.absoluteString,
+                 error: OpenVideoError.notLoaded(url),
+                 alert: alert)
         }
-      } else {
-        report(path: url.absoluteString,
-               error: OpenVideoError.notLoaded(url),
-               alert: alert)
       }
     }
   }

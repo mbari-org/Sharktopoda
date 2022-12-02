@@ -35,15 +35,13 @@ struct ControlCapture: ControlRequest {
         return failed("Image location not writable")
       }
       
-      UDPMessage.captureQueue.async {
-        Task {
-          let captureDoneMessage = await doCapture(captureTime: captureTime)
-          if let client = UDP.sharktopodaData.udpClient {
-            client.process(captureDoneMessage)
-          }
+      Task.detached(priority: .background) {
+        let captureDoneMessage = await doCapture(captureTime: captureTime)
+        if let client = UDP.sharktopodaData.udpClient {
+          client.process(captureDoneMessage)
         }
       }
-      
+
       return ControlResponseCaptureOk(windowData.videoControl.currentTime)
     }
   }

@@ -10,7 +10,6 @@ import Network
 
 class UDPMessage {
   static let messageQueue = DispatchQueue(label: "Sharktopoda UDP Message Queue")
-  static let captureQueue = DispatchQueue(label: "Sharktopoda UDP Capture Queue")
 
   typealias ProcessCompletion = (_ response: ControlResponse) -> Void
   

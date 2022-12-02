@@ -56,6 +56,7 @@ extension NSTimeSliderView {
   
   private func jump(toPoint mousePoint: CGPoint) {
     let markerTime = Int(Double(duration) * (mousePoint.x / bounds.width))
+    windowData.playerView.clear()
     windowData.videoControl.seek(elapsedTime: markerTime) { _ in }
   }
   

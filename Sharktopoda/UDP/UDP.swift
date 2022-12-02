@@ -41,6 +41,8 @@ struct UDP {
   }
   
   static func log(_ msg: String) {
+    #if DEBUG
     NSLog("UDP \(msg)")
+    #endif
   }
 }

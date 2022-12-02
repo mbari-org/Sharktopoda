@@ -104,6 +104,7 @@ extension WindowData {
   func play(rate: Float) {
     DispatchQueue.main.async { [weak self] in
       guard let self = self else { return }
+      self.localizations.clearSelected()
       self.playerDirection = PlayerDirection.at(rate: rate)
       self.playerView.clear(localizations: self.pausedLocalizations())
       self.videoControl.play(rate: rate)

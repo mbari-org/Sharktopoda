@@ -66,7 +66,7 @@ class UDPMessage {
         return
       }
 
-      let controlMessage = ControlCommand.controlMessage(from: data)
+      let controlMessage = UDP.controlMessage(from: data)
       self.log("\(controlMessage)")
 
       let responseData = controlMessage.process().data()

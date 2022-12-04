@@ -25,7 +25,9 @@ extension ControlMessage {
   func failed(_ cause: String) -> ControlResponse {
     ControlResponseFailed(response: command, cause: cause)
   }
+}
 
+extension ControlMessage {
   typealias VideoWindowFn = (_ videoWindow: VideoWindow) -> ControlResponse
   func withVideoWindow(id: String,
                        fn: VideoWindowFn) -> ControlResponse {
@@ -43,5 +45,4 @@ extension ControlMessage {
       fn(videoWindow.windowData)
     }
   }
-  
 }

@@ -42,7 +42,7 @@ struct ControlCapture: ControlRequest {
         }
       }
 
-      return ControlResponseCaptureOk(windowData.videoControl.currentTime)
+      return ok()
     }
   }
   

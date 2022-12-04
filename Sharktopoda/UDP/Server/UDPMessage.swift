@@ -9,25 +9,26 @@ import Foundation
 import Network
 
 class UDPMessage {
+  typealias MessageResult = (_ result: Data) -> Void
+
   static let messageQueue = DispatchQueue(label: "Sharktopoda UDP Message Queue")
 
-  typealias ProcessCompletion = (_ response: ControlResponse) -> Void
-  
   let connection: NWConnection
-  let completion: ProcessCompletion
-
-  static func process(on connection: NWConnection) {
-    let _ = UDPMessage(using: connection, completion: { response in
-      connection.send(content: response.data(), completion: .contentProcessed({ _ in }))
-    })
-    connection.start(queue: UDPMessage.messageQueue)
-  }
+  let completion: MessageResult
 
   private
-  init(using connection: NWConnection, completion: @escaping ProcessCompletion) {
+  init(for connection: NWConnection, completion: @escaping MessageResult) {
     self.connection = connection
     self.completion = completion
-    connection.stateUpdateHandler = self.stateUpdate(to:)
+    connection.stateUpdateHandler = stateUpdate(to:)
+  }
+  
+  static func handle(connection: NWConnection) {
+    let handler = UDPMessage(for: connection) { data in
+      connection.send(content: data, completion: .contentProcessed({ _ in }))
+    }
+    connection.stateUpdateHandler = handler.stateUpdate(to:)
+    connection.start(queue: UDPMessage.messageQueue)
   }
   
   func stateUpdate(to update: NWConnection.State) {
@@ -60,26 +61,29 @@ class UDPMessage {
 
       // CxTBD guard may not be necessary: Preliminary futzing shows empty data never gets here
       guard let data = data, !data.isEmpty else {
-        self?.completion(ControlUnknown.failed("empty message"))
-        self?.log("empty message")
+        self?.failed("empty message")
         return
       }
 
       let controlMessage = ControlCommand.controlMessage(from: data)
       self?.log("\(controlMessage)")
 
-      let controlResponse = controlMessage.process()
-      self?.completion(controlResponse)
+      let responseData = controlMessage.process().data()
+      self?.completion(responseData)
     }
   }
 
   func connectionDidFail(error: Error) {
     let msg = error.localizedDescription
-    completion(ControlUnknown.failed(msg))
-    log(msg)
+    failed(msg)
     stop()
   }
   
+  func failed(_ cause: String) {
+    log("Message failed: \(cause)")
+    completion(ControlUnknown.failed("empty message").data())
+  }
+
   func stop() {
     connection.cancel()
     connection.stateUpdateHandler = nil

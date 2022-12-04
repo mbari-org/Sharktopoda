@@ -12,23 +12,18 @@ class UDPServer: ObservableObject {
   private static var defaultPort = 8800
   
   var listener: NWListener
-  var queue: DispatchQueue
+  let queue: DispatchQueue = DispatchQueue(label: "Sharktopoda UDP Server Queue")
   var port: Int
   
   init(port: Int) {
     self.port = port
     UserDefaults.standard.setValue(port, forKey: PrefKeys.port)
     
-    if let _ = UDP.sharktopodaData?.udpServerError {
-      UDP.sharktopodaData.udpServerError = nil
-    }
-    
-    queue = DispatchQueue(label: "Sharktopoda UDP Server Queue")
+    UDP.sharktopodaData?.udpServerError = nil
     
     listener = try! UDP.listener(port: port)
     listener.stateUpdateHandler = stateUpdate(to:)
-    listener.newConnectionHandler = UDPMessage.process(on:)
-    
+    listener.newConnectionHandler = UDPMessage.handle(connection:)
     listener.start(queue: queue)
     
     log("started on port \(port)")

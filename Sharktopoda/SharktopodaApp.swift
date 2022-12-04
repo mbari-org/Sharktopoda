@@ -14,7 +14,7 @@ struct SharktopodaApp: App {
   @NSApplicationDelegateAdaptor private var appDelegate: SharktopodaAppDelegate
 
   init() {
-    setAppDefaults()
+    establishUserDefaults()
   }
   
   var body: some Scene {

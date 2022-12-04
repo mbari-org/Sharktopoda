@@ -9,8 +9,6 @@ import Foundation
 import Network
 
 class UDPServer: ObservableObject {
-  private static var defaultPort = 8800
-  
   let queue: DispatchQueue = DispatchQueue(label: "Sharktopoda UDP Server Queue",
                                            qos: .userInteractive)
 

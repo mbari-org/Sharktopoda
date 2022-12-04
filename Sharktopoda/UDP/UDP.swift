@@ -9,19 +9,8 @@ import Foundation
 import Network
 
 struct UDP {
-  private static var defaultServerPort = 8800
-  
-  static var server: UDPServer = UDPServer(port: UDP.startupServerPort())
+  static var server: UDPServer = UDPServer(port: UserDefaults.standard.integer(forKey: PrefKeys.port))
   static var sharktopodaData: SharktopodaData!
-  
-  private static func startupServerPort() -> Int {
-    var port: Int = UserDefaults.standard.integer(forKey: PrefKeys.port)
-    if port == 0 || UInt16.max < port {
-      port = UDP.defaultServerPort
-      UserDefaults.standard.setValue(port, forKey: PrefKeys.port)
-    }
-    return port
-  }
 }
 
 // MARK: Convenience
@@ -43,6 +32,7 @@ extension UDP {
   }
 }
 
+// MARK: Bind control message
 extension UDP {
   static func controlMessage(from data: Data) -> ControlMessage {
     // Ensure control command is valid

@@ -8,12 +8,13 @@
 import Foundation
 
 struct DefaultPreferences {
+  let borderSize = 6
   let caption = "Object"
   let colorHex = "#00ffff"
   let cursorSize = 5
   let displayTimeWindow = 30
   let fontColorHex = "#000000"
   let fontSize = 12
+  let serverPort = 8800
   let showAnnotations = true
-  let borderSize = 6
 }

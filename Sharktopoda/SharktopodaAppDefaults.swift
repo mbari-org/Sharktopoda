@@ -8,8 +8,13 @@
 import Foundation
 
 extension SharktopodaApp {
-  func setAppDefaults() {
+  func establishUserDefaults() {
     let appDefault = DefaultPreferences()
+
+    /// UPD Server Port
+    if UserDefaults.standard.integer(forKey: PrefKeys.port) == 0 {
+      UserDefaults.standard.setValue(appDefault.serverPort, forKey: PrefKeys.port)
+    }
     
     /// Annotation Creation
     if UserDefaults.standard.color(forKey: PrefKeys.creationCursorColor) == .black {

@@ -15,12 +15,10 @@ class UDPMessage {
                                           qos: .userInitiated)
 
   let connection: NWConnection
-  let completion: MessageResult
 
   private
   init(for connection: NWConnection, completion: @escaping MessageResult) {
     self.connection = connection
-    self.completion = completion
     connection.stateUpdateHandler = stateUpdate(to:)
   }
   
@@ -59,30 +57,29 @@ class UDPMessage {
       guard isComplete else {
         return
       }
+      
+      guard let self = self else { return }
 
       // CxTBD guard may not be necessary: Preliminary futzing shows empty data never gets here
       guard let data = data, !data.isEmpty else {
-        self?.failed("empty message")
+        self.log("empty message")
         return
       }
 
       let controlMessage = ControlCommand.controlMessage(from: data)
-      self?.log("\(controlMessage)")
+      self.log("\(controlMessage)")
 
       let responseData = controlMessage.process().data()
-      self?.completion(responseData)
+      self.connection.send(content: responseData, completion: .contentProcessed({ _ in
+        self.stop()
+      }))
     }
   }
 
   func connectionDidFail(error: Error) {
-    let msg = error.localizedDescription
-    failed(msg)
-    stop()
-  }
-  
-  func failed(_ cause: String) {
+    let cause = error.localizedDescription
     log("Message failed: \(cause)")
-    completion(ControlUnknown.failed("empty message").data())
+    stop()
   }
 
   func stop() {
@@ -92,9 +89,5 @@ class UDPMessage {
   
   func log(_ msg: String) {
     UDP.log("<- \(msg)")
-  }
-  
-  deinit {
-    stop()
   }
 }

@@ -17,7 +17,7 @@ final class VideoControl {
   init (windowData: WindowData) {
     self.windowData = windowData
     
-    seekTolerance = CMTimeMultiplyByFloat64(windowData.frameDuration, multiplier: 0.25)
+    seekTolerance = CMTimeMultiplyByFloat64(windowData.frameDuration, multiplier: 0.45)
   }
   
   func canStep(_ steps: Int) -> Bool {

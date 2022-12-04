@@ -84,6 +84,7 @@
 		E295627E28D632EC00E88ED1 /* Credits.html in Resources */ = {isa = PBXBuildFile; fileRef = E295627D28D632EC00E88ED1 /* Credits.html */; };
 		E295628A28D67A6500E88ED1 /* SharktopodaCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295628928D67A6500E88ED1 /* SharktopodaCommands.swift */; };
 		E296BA8F293D24D100FDB2E7 /* MessageCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = E296BA8E293D24D100FDB2E7 /* MessageCommand.swift */; };
+		E296BA91293D2A9B00FDB2E7 /* UDPClientData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E296BA90293D2A9B00FDB2E7 /* UDPClientData.swift */; };
 		E2989AB728D3B261009D2D65 /* NetworkPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2989AB628D3B261009D2D65 /* NetworkPreferencesView.swift */; };
 		E2989AB928D3B87E009D2D65 /* AnnotationPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2989AB828D3B87E009D2D65 /* AnnotationPreferencesView.swift */; };
 		E2989ABD28D3C7F7009D2D65 /* PrefKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2989ABC28D3C7F7009D2D65 /* PrefKeys.swift */; };
@@ -245,6 +246,7 @@
 		E295627D28D632EC00E88ED1 /* Credits.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = Credits.html; sourceTree = "<group>"; };
 		E295628928D67A6500E88ED1 /* SharktopodaCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharktopodaCommands.swift; sourceTree = "<group>"; };
 		E296BA8E293D24D100FDB2E7 /* MessageCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCommand.swift; sourceTree = "<group>"; };
+		E296BA90293D2A9B00FDB2E7 /* UDPClientData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDPClientData.swift; sourceTree = "<group>"; };
 		E2989AB628D3B261009D2D65 /* NetworkPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkPreferencesView.swift; sourceTree = "<group>"; };
 		E2989AB828D3B87E009D2D65 /* AnnotationPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationPreferencesView.swift; sourceTree = "<group>"; };
 		E2989ABC28D3C7F7009D2D65 /* PrefKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefKeys.swift; sourceTree = "<group>"; };
@@ -681,6 +683,7 @@
 			isa = PBXGroup;
 			children = (
 				E2C078CC28D7CF0E00C55EEC /* UDPClient.swift */,
+				E296BA90293D2A9B00FDB2E7 /* UDPClientData.swift */,
 				E28CEF03291E9929009E73B3 /* ClientLocalization.swift */,
 				E2D47E9828D8C16E0068B192 /* Messages */,
 			);
@@ -900,6 +903,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E296BA91293D2A9B00FDB2E7 /* UDPClientData.swift in Sources */,
 				E28CEF0F291E9D79009E73B3 /* LocalizationsSelect.swift in Sources */,
 				E237C0A628EE108B002868D1 /* FloatingPanel.swift in Sources */,
 				E2BC08E528EB76D6007F4B5D /* UserDefaults.swift in Sources */,

@@ -9,7 +9,7 @@ import Foundation
 
 extension SharktopodaApp {
   func establishUserDefaults() {
-    let appDefault = DefaultPreferences()
+    let appDefault = AppDefaults()
 
     /// UPD Server Port
     if UserDefaults.standard.integer(forKey: PrefKeys.port) == 0 {

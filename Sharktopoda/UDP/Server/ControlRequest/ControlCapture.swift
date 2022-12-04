@@ -10,7 +10,7 @@ import Network
 
 typealias FrameGrabResult = Result<Int, Error>
 
-struct ControlCapture: ControlRequest {
+struct ControlCapture: ControlMessage {
   var command: ControlCommand
   var uuid: String
   var imageLocation: String

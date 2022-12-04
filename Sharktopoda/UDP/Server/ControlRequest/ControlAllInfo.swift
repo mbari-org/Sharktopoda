@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ControlAllInfo: ControlRequest {
+struct ControlAllInfo: ControlMessage {
   var command: ControlCommand
   
   func process() -> ControlResponse {

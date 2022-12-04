@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ControlElapsed: ControlRequest {
+struct ControlElapsed: ControlMessage {
   var command: ControlCommand
   var uuid: String
   

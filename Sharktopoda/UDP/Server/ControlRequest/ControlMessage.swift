@@ -7,13 +7,13 @@
 
 import Foundation
 
-protocol ControlRequest: Decodable, CustomStringConvertible {
+protocol ControlMessage: Decodable, CustomStringConvertible {
   var command: ControlCommand { get set }
   
   func process() -> ControlResponse
 }
 
-extension ControlRequest {
+extension ControlMessage {
   var description: String {
     command.rawValue
   }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ControlPing: ControlRequest {
+struct ControlPing: ControlMessage {
   var command: ControlCommand
 
   func process() -> ControlResponse {

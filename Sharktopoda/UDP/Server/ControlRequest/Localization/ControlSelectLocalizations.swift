@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ControlSelectLocalizations: ControlRequest {
+struct ControlSelectLocalizations: ControlMessage {
   var command: ControlCommand
   var uuid: String
   var localizations: [String]

@@ -8,7 +8,7 @@
 import AVFoundation
 import Foundation
 
-struct ControlRemoveLocalizations: ControlRequest {
+struct ControlRemoveLocalizations: ControlMessage {
   var command: ControlCommand
   var uuid: String
   var localizations: [String]

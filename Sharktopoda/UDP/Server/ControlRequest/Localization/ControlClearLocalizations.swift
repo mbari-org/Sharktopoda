@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ControlClearLocalizations: ControlRequest {
+struct ControlClearLocalizations: ControlMessage {
   var command: ControlCommand
   var uuid: String
   

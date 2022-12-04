@@ -33,7 +33,7 @@ enum ControlCommand: String, Codable {
     var command: String
   }
   
-  static func controlMessage(from data: Data) -> ControlRequest {
+  static func controlMessage(from data: Data) -> ControlMessage {
     // Ensure control command is valid
     var controlCommand: ControlCommand
     do {
@@ -53,7 +53,7 @@ enum ControlCommand: String, Codable {
     }
     
     do {
-      var controlMessageType: ControlRequest.Type
+      var controlMessageType: ControlMessage.Type
       switch controlCommand {
         case .addLocalizations:
           controlMessageType = ControlAddLocalizations.self

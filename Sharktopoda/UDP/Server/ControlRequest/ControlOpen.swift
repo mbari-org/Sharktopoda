@@ -9,7 +9,7 @@ import Foundation
 import AppKit
 import AVFoundation
 
-struct ControlOpen: ControlRequest {
+struct ControlOpen: ControlMessage {
   var command: ControlCommand
   var uuid: String
   var url: String

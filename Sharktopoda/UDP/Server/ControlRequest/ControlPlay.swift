@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ControlPlay: ControlRequest {
+struct ControlPlay: ControlMessage {
   var command: ControlCommand
   let uuid: String
   @Default<Float.PlaybackRate> var rate: Float

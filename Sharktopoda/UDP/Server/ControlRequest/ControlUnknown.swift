@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ControlUnknown: ControlRequest {
+struct ControlUnknown: ControlMessage {
   var command: ControlCommand = .unknown
   var cause: String
   

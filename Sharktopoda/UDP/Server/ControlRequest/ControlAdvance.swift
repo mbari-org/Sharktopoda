@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ControlAdvance: ControlRequest {
+struct ControlAdvance: ControlMessage {
   var command: ControlCommand
   var uuid: String
   var direction: Int

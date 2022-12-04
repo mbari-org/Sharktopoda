@@ -7,7 +7,7 @@
 
 import AVFoundation
 
-struct ControlInfo: ControlRequest {
+struct ControlInfo: ControlMessage {
   var command: ControlCommand
   
   func process() -> ControlResponse {

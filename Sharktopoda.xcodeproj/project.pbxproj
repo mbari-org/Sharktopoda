@@ -21,7 +21,7 @@
 		E223C31228F2207300274C3E /* ControlSelectLocalizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E223C31128F2207300274C3E /* ControlSelectLocalizations.swift */; };
 		E223D5A82936A4B500740ADF /* PlayerViewProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E223D5A72936A4B500740ADF /* PlayerViewProxy.swift */; };
 		E229F4C228D9150A001F220E /* ControlConnect.swift in Sources */ = {isa = PBXBuildFile; fileRef = E229F4C128D9150A001F220E /* ControlConnect.swift */; };
-		E22F0EA428DA57800097A34E /* ControlRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22F0EA328DA57800097A34E /* ControlRequest.swift */; };
+		E22F0EA428DA57800097A34E /* ControlMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22F0EA328DA57800097A34E /* ControlMessage.swift */; };
 		E22F72FD28DA5D9100253A48 /* ControlResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22F72FC28DA5D9100253A48 /* ControlResponse.swift */; };
 		E237C09228ECA9F5002868D1 /* REQUIREMENTS.md in Resources */ = {isa = PBXBuildFile; fileRef = E237C08528ECA9F5002868D1 /* REQUIREMENTS.md */; };
 		E237C09328ECA9F5002868D1 /* UDP_Remote_Protocol.md in Resources */ = {isa = PBXBuildFile; fileRef = E237C08628ECA9F5002868D1 /* UDP_Remote_Protocol.md */; };
@@ -181,7 +181,7 @@
 		E223C31128F2207300274C3E /* ControlSelectLocalizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlSelectLocalizations.swift; sourceTree = "<group>"; };
 		E223D5A72936A4B500740ADF /* PlayerViewProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewProxy.swift; sourceTree = "<group>"; };
 		E229F4C128D9150A001F220E /* ControlConnect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlConnect.swift; sourceTree = "<group>"; };
-		E22F0EA328DA57800097A34E /* ControlRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlRequest.swift; sourceTree = "<group>"; };
+		E22F0EA328DA57800097A34E /* ControlMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlMessage.swift; sourceTree = "<group>"; };
 		E22F72FC28DA5D9100253A48 /* ControlResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponse.swift; sourceTree = "<group>"; };
 		E237C08528ECA9F5002868D1 /* REQUIREMENTS.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = REQUIREMENTS.md; sourceTree = "<group>"; };
 		E237C08628ECA9F5002868D1 /* UDP_Remote_Protocol.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = UDP_Remote_Protocol.md; sourceTree = "<group>"; };
@@ -437,7 +437,7 @@
 		E2675E2D28DB707500F5F114 /* ControlRequest */ = {
 			isa = PBXGroup;
 			children = (
-				E22F0EA328DA57800097A34E /* ControlRequest.swift */,
+				E22F0EA328DA57800097A34E /* ControlMessage.swift */,
 				E2675E3328DB7A4000F5F114 /* ControlAdvance.swift */,
 				E2EE0E3F28DB9DD200138A86 /* ControlAllInfo.swift */,
 				E2EE0E3D28DB9B9F00138A86 /* ControlCapture.swift */,
@@ -919,7 +919,7 @@
 				E2EE0E3C28DB9B3B00138A86 /* ControlSeek.swift in Sources */,
 				E2BC08F028EC797D007F4B5D /* FrameCaptureError.swift in Sources */,
 				E2BDBB982938706B00BD16D8 /* TimeSliderMouse.swift in Sources */,
-				E22F0EA428DA57800097A34E /* ControlRequest.swift in Sources */,
+				E22F0EA428DA57800097A34E /* ControlMessage.swift in Sources */,
 				E2837B4629104BF700FC4CC2 /* PlayerView.swift in Sources */,
 				E2EE0E3E28DB9B9F00138A86 /* ControlCapture.swift in Sources */,
 				E223C31228F2207300274C3E /* ControlSelectLocalizations.swift in Sources */,

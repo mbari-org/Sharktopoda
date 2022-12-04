@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ControlClose: ControlRequest {
+struct ControlClose: ControlMessage {
   var command: ControlCommand
   var uuid: String
   

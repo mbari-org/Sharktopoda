@@ -11,7 +11,8 @@ import Network
 class UDPMessage {
   typealias MessageResult = (_ result: Data) -> Void
 
-  static let messageQueue = DispatchQueue(label: "Sharktopoda UDP Message Queue")
+  static let messageQueue = DispatchQueue(label: "Sharktopoda UDP Message Queue",
+                                          qos: .userInitiated)
 
   let connection: NWConnection
   let completion: MessageResult

@@ -35,7 +35,7 @@ struct ControlCapture: ControlMessage {
         return failed("Image location not writable")
       }
       
-      Task.detached(priority: .background) {
+      Task {
         let captureDoneMessage = await doCapture(captureTime: captureTime)
         if let client = UDP.sharktopodaData.udpClient {
           client.process(captureDoneMessage)

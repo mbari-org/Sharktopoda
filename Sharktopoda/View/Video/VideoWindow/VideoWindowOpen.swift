@@ -23,42 +23,28 @@ extension VideoWindow {
       }
     } else {
       Task {
-        if let videoAsset = await VideoAsset(id: id, url: url) {
-          window(for: videoAsset, alert: alert)
+        do {
+          let videoAsset = try await VideoAsset(id: id, url: url)
+          let videoWindow = VideoWindow(for: videoAsset, with: UDP.sharktopodaData)
+          UDP.sharktopodaData.videoWindows[videoAsset.id] = videoWindow
+          onMain {
+            videoWindow.windowData.sliderView.setupControlViewAnimation()
+            videoWindow.bringToFront()
+          }
           
           if let client = UDP.sharktopodaData.udpClient {
             let openDoneMessage = ClientMessageOpenDone(uuid: id)
             client.process(openDoneMessage)
           }
-        } else {
-          report(path: url.absoluteString,
-                 error: OpenVideoError.notLoaded(url),
-                 alert: alert)
+        } catch {
+          guard let openVideoError = error as? OpenVideoError else {
+            UDP.log(error.localizedDescription)
+            return
+          }
+          UDP.log(openVideoError.description)
+          onMain { OpenAlert(path: url.absoluteString, error: openVideoError).show() }
         }
       }
     }
-  }
-  
-  private static func window(for videoAsset: VideoAsset, alert: Bool) {
-    if !videoAsset.isPlayable {
-      report(path: videoAsset.url.absoluteString,
-             error: OpenVideoError.notPlayable(videoAsset.url),
-             alert: alert)
-    } else {
-      let videoWindow = VideoWindow(for: videoAsset, with: UDP.sharktopodaData)
-      UDP.sharktopodaData.videoWindows[videoAsset.id] = videoWindow
-      onMain {
-        videoWindow.windowData.sliderView.setupControlViewAnimation()
-        videoWindow.bringToFront()
-      }
-    }
-  }
-  
-  private static func report(path: String, error: OpenVideoError, alert: Bool) {
-    if alert {
-      let openAlert = OpenAlert(path: path, error: error)
-      onMain { openAlert.show() }
-    }
-    UDP.log(error.description)
   }
 }

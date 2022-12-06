@@ -399,7 +399,6 @@
 				E237C0A328EDFAA3002868D1 /* OpenUrlView.swift */,
 				E2505D5028EF2A8F0027F280 /* OpenUrlPanel.swift */,
 				E2505D5228EF38B60027F280 /* OpenAlert.swift */,
-				E2AAFC3028F8F28B00BBC703 /* OpenVideoError.swift */,
 			);
 			path = Open;
 			sourceTree = "<group>";
@@ -534,6 +533,7 @@
 			isa = PBXGroup;
 			children = (
 				E2BC08EF28EC797D007F4B5D /* FrameCaptureError.swift */,
+				E2AAFC3028F8F28B00BBC703 /* OpenVideoError.swift */,
 			);
 			path = Error;
 			sourceTree = "<group>";

@@ -29,4 +29,3 @@ enum FrameCaptureError: Error {
     }
   }
 }
-

@@ -47,7 +47,7 @@ struct ControlCapture: ControlMessage {
   }
   
   func doCapture(captureTime: Int) async -> ClientMessage {
-    guard let videoWindow = UDP.sharktopodaData.videoWindows[uuid] else {
+    guard let videoWindow = UDP.sharktopodaData.window(for: uuid) else {
       return ClientMessageCaptureDone(for: self, cause: "Video for uuid was closed")
     }
     

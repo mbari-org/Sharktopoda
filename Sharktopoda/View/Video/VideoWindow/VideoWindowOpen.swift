@@ -8,43 +8,66 @@
 import Foundation
 
 extension VideoWindow {
-  static func onMain(_ fn: @escaping () -> Void) {
-    DispatchQueue.main.async { fn() }
-  }
-  
   static func open(url: URL) {
     open(id: url.path, url: url, alert: true)
   }
   
   static func open(id: String, url: URL, alert: Bool = false) {
-    if let videoWindow = UDP.sharktopodaData.videoWindows[id] {
-      onMain {
-        videoWindow.bringToFront()
-      }
-    } else {
-      Task {
-        do {
-          let videoAsset = try await VideoAsset(id: id, url: url)
-          let videoWindow = VideoWindow(for: videoAsset, with: UDP.sharktopodaData)
-          UDP.sharktopodaData.videoWindows[videoAsset.id] = videoWindow
-          onMain {
-            videoWindow.windowData.sliderView.setupControlViewAnimation()
-            videoWindow.bringToFront()
-          }
+    Task {
+      let videoState = await UDP.sharktopodaData.openVideoState(id: id)
+      
+      switch videoState {
+        case .loading:
+          return
           
-          if let client = UDP.sharktopodaData.udpClient {
-            let openDoneMessage = ClientMessageOpenDone(uuid: id)
-            client.process(openDoneMessage)
+        case .loaded:
+          let videoWindow = UDP.sharktopodaData.window(for: id)
+          onMain {
+            videoWindow!.bringToFront()
           }
-        } catch {
-          guard let openVideoError = error as? OpenVideoError else {
-            UDP.log(error.localizedDescription)
-            return
-          }
-          UDP.log(openVideoError.description)
-          onMain { OpenAlert(path: url.absoluteString, error: openVideoError).show() }
-        }
+          openDoneMessage(id: id)
+        
+        case .notOpen:
+          await openVideo(id: id, url: url, alert: alert)
       }
     }
+  }
+  
+  private static func openVideo(id: String, url: URL, alert: Bool) async {
+    do {
+      await UDP.sharktopodaData.openingVideo(id: id)
+
+      let videoAsset = try await VideoAsset(id: id, url: url)
+      let videoWindow = VideoWindow(for: videoAsset, with: UDP.sharktopodaData)
+      await UDP.sharktopodaData.windowOpened(videoWindow: videoWindow)
+      onMain {
+        videoWindow.windowData.sliderView.setupControlViewAnimation()
+        videoWindow.bringToFront()
+      }
+      
+      openDoneMessage(id: id)
+    } catch {
+      await UDP.sharktopodaData.closeVideo(id: id)
+      
+      guard let openVideoError = error as? OpenVideoError else {
+        UDP.log(error.localizedDescription)
+        return
+      }
+      UDP.log(openVideoError.description)
+      if alert {
+        onMain { OpenAlert(path: url.absoluteString, error: openVideoError).show() }
+      }
+    }
+  }
+  
+  static func openDoneMessage(id: String) {
+    guard let client = UDP.sharktopodaData.udpClient else { return }
+    
+    let openDoneMessage = ClientMessageOpenDone(uuid: id)
+    client.process(openDoneMessage)
+  }
+  
+  static func onMain(_ fn: @escaping () -> Void) {
+    DispatchQueue.main.async { fn() }
   }
 }

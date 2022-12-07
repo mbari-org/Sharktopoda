@@ -31,7 +31,7 @@ extension ControlMessage {
   typealias VideoWindowFn = (_ videoWindow: VideoWindow) -> ControlResponse
   func withVideoWindow(id: String,
                        fn: VideoWindowFn) -> ControlResponse {
-    guard let videoWindow = UDP.sharktopodaData.videoWindows[id] else {
+    guard let videoWindow = UDP.sharktopodaData.window(for: id) else {
       return failed("No video for uuid")
     }
     

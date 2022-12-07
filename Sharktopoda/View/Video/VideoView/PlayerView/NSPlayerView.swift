@@ -21,9 +21,6 @@ final class NSPlayerView: NSView {
   /// Frame of current selected localization
   var currentFrame: CGRect?
   
-  /// Layer for displaying current location concept
-  var conceptLayer: CATextLayer?
-  
   /// Layer for either creating localization or selecting multiple localizations
   var dragLayer: CAShapeLayer?
   var dragPurpose: NSPlayerView.DragPurpose?
@@ -58,12 +55,6 @@ final class NSPlayerView: NSView {
     playerLayer.frame = bounds
     playerLayer.autoresizingMask = [.layerWidthSizable, .layerHeightSizable]
     
-    let conceptLayer = CATextLayer()
-    conceptLayer.fontSize = CGFloat(UserDefaults.standard.integer(forKey: PrefKeys.captionFontSize))
-    conceptLayer.foregroundColor = UserDefaults.standard.color(forKey: PrefKeys.captionFontColor).cgColor
-    conceptLayer.alignmentMode = .left
-    self.conceptLayer = conceptLayer
-    
     rootLayer.addSublayer(playerLayer)
     
     _windowData = windowData
@@ -89,7 +80,6 @@ extension NSPlayerView {
       _currentLocalization = newValue
       if newValue == nil {
         currentLocation = nil
-        conceptLayer?.removeFromSuperlayer()
       }
     }
   }
@@ -126,25 +116,43 @@ extension NSPlayerView {
       }
     } ?? []
   }
+  
+  func conceptLayers() -> [CATextLayer] {
+    return playerLayer.sublayers?.reduce(into: [CATextLayer]()) { acc, layer in
+      if let layer = layer as? CATextLayer {
+        acc.append(layer)
+      }
+    } ?? []
+  }
 }
 
 // MARK: Display and Clear
 extension NSPlayerView {
 
   func clear() {
-    let layers = localizationLayers()
     DispatchQueue.main.async { [weak self] in
-      layers.forEach { $0.removeFromSuperlayer() }
-      self?.conceptLayer?.removeFromSuperlayer()
+      self?.localizationLayers().forEach { $0.removeFromSuperlayer() }
+      self?.conceptLayers().forEach { $0.removeFromSuperlayer() }
     }
   }
   
   func clear(localizations: [Localization]) {
-    DispatchQueue.main.async { [weak self] in
+    DispatchQueue.main.async { 
       localizations.forEach {
         $0.layer.removeFromSuperlayer()
+        $0.conceptLayer?.removeFromSuperlayer()
       }
-      self?.conceptLayer?.removeFromSuperlayer()
+    }
+  }
+  
+  func displayConcept(for localization: Localization) {
+    guard showLocalizations else { return }
+    
+    if let conceptLayer = localization.conceptLayer {
+      localization.positionConcept(for: videoRect)
+      DispatchQueue.main.async { [weak self] in
+        self?.playerLayer.addSublayer(conceptLayer)
+      }
     }
   }
   

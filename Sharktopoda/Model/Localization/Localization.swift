@@ -16,7 +16,9 @@ class Localization {
   var hexColor: String
   var layer: CAShapeLayer
   var region: CGRect
+
   var fullSize: CGSize
+  var conceptLayer: CATextLayer?
   
   init(at elapsedTime: Int, with region: CGRect, layer: CAShapeLayer, fullSize: CGSize) {
     id = UUID().uuidString

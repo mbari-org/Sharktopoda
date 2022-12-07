@@ -11,9 +11,12 @@ extension NSPlayerView {
   /// Drag the current selected Localization
   func dragCurrent(by delta: DeltaPoint) {
     guard delta != .zero else { return }
+    guard let localization = currentLocalization else { return }
     
-    conceptLayer?.removeFromSuperlayer()
-    
+    if let conceptLayer = localization.conceptLayer {
+      conceptLayer.removeFromSuperlayer()
+    }
+
     switch dragAction(for: delta) {
       case .adjust:
         adjust(by: delta)
@@ -26,16 +29,13 @@ extension NSPlayerView {
   
   func endDragCurrent(at endPoint: CGPoint) {
     guard let localization = currentLocalization else { return }
-    guard let anchor = dragAnchor else { return }
-    
-    let totalDelta = anchor.delta(to: endPoint).abs()
-    guard 1 < totalDelta.x && 1 < totalDelta.y else { return }
-    
+
     localization.region = region(from: localization.layer)
-    
     localizations.sendLocalizationsMessage(.updateLocalizations,
                                             ids: [localization.id])
 
+    displayConcept(for: localization)
+    
     currentLocation = nil
   }
 

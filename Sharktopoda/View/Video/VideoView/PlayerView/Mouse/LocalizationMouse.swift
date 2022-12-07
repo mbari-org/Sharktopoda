@@ -33,7 +33,11 @@ extension NSPlayerView {
       return false
     }
     
-    localizations.select(id: mouseLocalization.id, clear: false)
+    if localizations.select(id: mouseLocalization.id, clear: false),
+       let conceptLayer = mouseLocalization.conceptLayer {
+      mouseLocalization.positionConcept(for: videoRect)
+      playerLayer.addSublayer(conceptLayer)
+    }
     return true
   }
   
@@ -45,11 +49,16 @@ extension NSPlayerView {
       return nil
     }
     
-    localizations.select(id: mouseLocalization.id)
-    let layer = mouseLocalization.layer
-    let layerPoint = layer.convertSuperPoint(mousePoint)
-    currentLocalization = mouseLocalization
-    return layer.location(of: layerPoint)
+    if localizations.select(id: mouseLocalization.id) {
+      let layer = mouseLocalization.layer
+      let layerPoint = layer.convertSuperPoint(mousePoint)
+      currentLocalization = mouseLocalization
+  
+      displayConcept(for: mouseLocalization)
+
+      return layer.location(of: layerPoint)
+    }
+    return nil
   }
   
   func region(from layer: CAShapeLayer) -> CGRect {

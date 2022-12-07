@@ -16,10 +16,6 @@ extension PlayerView {
     nsPlayerView.clear(localizations: localizations)
   }
   
-  func clearConcept() {
-    nsPlayerView.conceptLayer?.removeFromSuperlayer()
-  }
-  
   var currentTime: Int {
     windowData.videoControl.currentTime
   }

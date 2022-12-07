@@ -56,16 +56,30 @@ extension NSPlayerView {
                                             fullSize: fullSize)
             localizations.add(localization)
             localizations.sendLocalizationsMessage(.addLocalizations, ids: [localization.id])
-            localizations.select(id: localization.id)
+
+            if localizations.select(id: localization.id),
+               let conceptLayer = localization.conceptLayer {
+              localization.positionConcept(for: videoRect)
+              playerLayer.addSublayer(conceptLayer)
+            }
+            
             // CxTBD Is an updated selected message necessary?
             localizations.sendLocalizationsMessage(.selectLocalizations, ids: [localization.id])
-            displayConcept(localization)
+
           case .select:
             /// Remove the selection layer as it's purpose is complete
             DispatchQueue.main.async {
               layer.removeFromSuperlayer()
             }
+            
             localizations.select(using: layer.frame, at: currentTime)
+            localizations.selectedLocalizations().forEach {
+              displayConcept(for: $0)
+            }
+        }
+      } else {
+        DispatchQueue.main.async {
+          layer.removeFromSuperlayer()
         }
       }
     }

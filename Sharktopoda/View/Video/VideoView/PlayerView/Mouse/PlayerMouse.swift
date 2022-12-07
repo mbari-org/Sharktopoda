@@ -19,7 +19,11 @@ extension NSPlayerView {
     if event.modifierFlags.intersection(.deviceIndependentFlagsMask) == .command {
       if let localization = currentLocalization {
         currentLocalization = nil
-        localizations.select(id: localization.id)
+        if localizations.select(id: localization.id),
+           let conceptLayer = localization.conceptLayer {
+          localization.positionConcept(for: videoRect)
+          playerLayer.addSublayer(conceptLayer)
+        }
       }
       
       if commandSelect(at: playerPoint) { return }
@@ -45,8 +49,8 @@ extension NSPlayerView {
   override func mouseDragged(with event: NSEvent) {
     let playerPoint = location(in: playerLayer, of: event)
     
+    /// If there is a current localization, drag it
     if currentLocation != nil {
-      /// If there is a current localization, drag it
       let delta = DeltaPoint(x: event.deltaX, y: event.deltaY)
       dragCurrent(by: delta)
       return
@@ -62,21 +66,16 @@ extension NSPlayerView {
       endDragPurpose(at: endPoint)
     }
     
-    if currentLocalization != nil {
-      endDragCurrent(at: endPoint)
-    } else {
-      currentLocalization = nil
-      endDragPurpose(at: endPoint)
-    }
+    currentLocalization != nil ? endDragCurrent(at: endPoint) : endDragPurpose(at: endPoint)
+    
+//    if let localization = currentLocalization,
+//       localizations.select(id: localization.id),
+//       let conceptLayer = localization.conceptLayer {
+//      localization.positionConcept(for: videoRect)
+//      playerLayer.addSublayer(conceptLayer)
+//    }
     
     dragAnchor = nil
-    
-    if let localization = currentLocalization {
-      displayConcept(localization)
-    } else {
-      conceptLayer?.removeFromSuperlayer()
-    }
-    
   }
   
   private func setCurrentLocation(_ location: CGRect.Location) {
@@ -104,25 +103,25 @@ extension NSPlayerView {
     return layer.convert(windowPoint, from: windowLayer)
   }
   
-  func displayConcept(_ localization: Localization) {
-    guard let conceptLayer = conceptLayer else { return }
-    
-    let lineWidth = localization.layer.lineWidth
-    
-    conceptLayer.string = localization.concept
-    let layerFrame = localization.layer.frame
-    var conceptFrame = CGRect(x: layerFrame.minX, y: layerFrame.maxY + lineWidth, width: 100, height: 15)
-    
-    if videoRect.maxY < conceptFrame.maxY {
-      let deltaY = -(layerFrame.height + conceptFrame.height + lineWidth)
-      conceptFrame = conceptFrame.move(by: DeltaPoint(x: 0, y: deltaY))
-    }
-    DispatchQueue.main.async {
-      CALayer.noAnimation {
-        conceptLayer.frame = conceptFrame
-      }
-    }
-
-    playerLayer.addSublayer(conceptLayer)
-  }
+//  func displayConcept(_ localization: Localization) {
+//    guard let conceptLayer = conceptLayer else { return }
+//    
+//    let lineWidth = localization.layer.lineWidth
+//    
+//    conceptLayer.string = localization.concept
+//    let layerFrame = localization.layer.frame
+//    var conceptFrame = CGRect(x: layerFrame.minX, y: layerFrame.maxY + lineWidth, width: 100, height: 15)
+//
+//    if videoRect.maxY < conceptFrame.maxY {
+//      let deltaY = -(layerFrame.height + conceptFrame.height + lineWidth)
+//      conceptFrame = conceptFrame.move(by: DeltaPoint(x: 0, y: deltaY))
+//    }
+//    DispatchQueue.main.async {
+//      CALayer.noAnimation {
+//        conceptLayer.frame = conceptFrame
+//      }
+//    }
+//
+//    playerLayer.addSublayer(conceptLayer)
+//  }
 }

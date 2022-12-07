@@ -10,8 +10,8 @@ import Foundation
 extension LocalizationData {
   func clearSelected() {
     guard !selected.isEmpty else { return }
-    
-    selected.forEach { storage[$0]?.select(false) }
+  
+    selected.forEach { storage[$0]?.unselect() }
     selected.removeAll()
     sendIdsMessage(.selectLocalizations, ids: [])
   }
@@ -28,17 +28,20 @@ extension LocalizationData {
     sendIdsMessage(.selectLocalizations, ids: selectedIds())
   }
   
-  func select(id: String, clear: Bool = true) {
-    guard let localization = storage[id] else { return }
+  func select(id: String, clear: Bool = true) -> Bool {
+    guard !selected.contains(id) else { return false }
+    guard let localization = storage[id] else { return false }
     
     if clear {
       clearSelected()
     }
     
+    localization.select()
     selected.insert(id)
-    localization.select(true)
     
     sendIdsMessage(.selectLocalizations, ids: selectedIds())
+    
+    return true
   }
   
   func select(ids: [String], notifyClient: Bool = true) {
@@ -46,8 +49,8 @@ extension LocalizationData {
     
     ids.forEach { id in
       guard let localization = storage[id] else { return }
+      localization.select()
       selected.insert(id)
-      localization.select(true)
     }
     if notifyClient {
       sendIdsMessage(.selectLocalizations, ids: selectedIds())
@@ -68,11 +71,15 @@ extension LocalizationData {
     selected.map { $0 }
   }
   
+  func selectedLocalizations() -> [Localization] {
+    selected.map { storage[$0]! }
+  }
+  
   func unselect(id: String) {
     guard let localization = storage[id] else { return }
-    
+
+    localization.unselect()
     selected.remove(localization.id)
-    localization.select(false)
     
     sendIdsMessage(.selectLocalizations, ids: selectedIds())
   }

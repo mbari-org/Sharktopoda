@@ -21,6 +21,7 @@
 		E223C31228F2207300274C3E /* ControlSelectLocalizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E223C31128F2207300274C3E /* ControlSelectLocalizations.swift */; };
 		E223D5A82936A4B500740ADF /* PlayerViewProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E223D5A72936A4B500740ADF /* PlayerViewProxy.swift */; };
 		E229F4C228D9150A001F220E /* ControlConnect.swift in Sources */ = {isa = PBXBuildFile; fileRef = E229F4C128D9150A001F220E /* ControlConnect.swift */; };
+		E22B6A7E2940EE7500ABB22D /* LocalizationSelect.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B6A7D2940EE7500ABB22D /* LocalizationSelect.swift */; };
 		E22F0EA428DA57800097A34E /* ControlMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22F0EA328DA57800097A34E /* ControlMessage.swift */; };
 		E22F72FD28DA5D9100253A48 /* ControlResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22F72FC28DA5D9100253A48 /* ControlResponse.swift */; };
 		E237C09228ECA9F5002868D1 /* REQUIREMENTS.md in Resources */ = {isa = PBXBuildFile; fileRef = E237C08528ECA9F5002868D1 /* REQUIREMENTS.md */; };
@@ -184,6 +185,7 @@
 		E223C31128F2207300274C3E /* ControlSelectLocalizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlSelectLocalizations.swift; sourceTree = "<group>"; };
 		E223D5A72936A4B500740ADF /* PlayerViewProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewProxy.swift; sourceTree = "<group>"; };
 		E229F4C128D9150A001F220E /* ControlConnect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlConnect.swift; sourceTree = "<group>"; };
+		E22B6A7D2940EE7500ABB22D /* LocalizationSelect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationSelect.swift; sourceTree = "<group>"; };
 		E22F0EA328DA57800097A34E /* ControlMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlMessage.swift; sourceTree = "<group>"; };
 		E22F72FC28DA5D9100253A48 /* ControlResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponse.swift; sourceTree = "<group>"; };
 		E237C08528ECA9F5002868D1 /* REQUIREMENTS.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = REQUIREMENTS.md; sourceTree = "<group>"; };
@@ -729,6 +731,7 @@
 				E2D1C84D291302EF00961A0A /* LocalizationFrame.swift */,
 				E2448C02292D6FC300F2C2E2 /* LocalizationMisc.swift */,
 				E2448BFE292D6EAE00F2C2E2 /* LocalizationRegion.swift */,
+				E22B6A7D2940EE7500ABB22D /* LocalizationSelect.swift */,
 				E2448C00292D6F5D00F2C2E2 /* LocalizationUpdate.swift */,
 			);
 			path = Localization;
@@ -934,6 +937,7 @@
 				E2EE0E3E28DB9B9F00138A86 /* ControlCapture.swift in Sources */,
 				E223C31228F2207300274C3E /* ControlSelectLocalizations.swift in Sources */,
 				E2FFE1FE28E37C5000425F04 /* ControlResponseOk.swift in Sources */,
+				E22B6A7E2940EE7500ABB22D /* LocalizationSelect.swift in Sources */,
 				E213252128F722F900D6BFF6 /* NSPlayerView.swift in Sources */,
 				E2E5962D28DA63700058D054 /* ControlOpen.swift in Sources */,
 				E2D1C856291AC13900961A0A /* DragCurrent.swift in Sources */,

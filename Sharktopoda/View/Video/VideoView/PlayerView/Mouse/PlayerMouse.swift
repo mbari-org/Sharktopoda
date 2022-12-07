@@ -107,12 +107,14 @@ extension NSPlayerView {
   func displayConcept(_ localization: Localization) {
     guard let conceptLayer = conceptLayer else { return }
     
+    let lineWidth = localization.layer.lineWidth
+    
     conceptLayer.string = localization.concept
     let layerFrame = localization.layer.frame
-    var conceptFrame = CGRect(x: layerFrame.minX, y: layerFrame.maxY, width: 100, height: 15)
+    var conceptFrame = CGRect(x: layerFrame.minX, y: layerFrame.maxY + lineWidth, width: 100, height: 15)
     
     if videoRect.maxY < conceptFrame.maxY {
-      let deltaY = -(layerFrame.height + conceptFrame.height)
+      let deltaY = -(layerFrame.height + conceptFrame.height + lineWidth)
       conceptFrame = conceptFrame.move(by: DeltaPoint(x: 0, y: deltaY))
     }
     DispatchQueue.main.async {

@@ -51,7 +51,7 @@
 		E2505D5328EF38B60027F280 /* OpenAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2505D5228EF38B60027F280 /* OpenAlert.swift */; };
 		E2505D5628EF7D600027F280 /* ControlAddLocalizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2505D5528EF7D600027F280 /* ControlAddLocalizations.swift */; };
 		E2505D5828EF7D950027F280 /* ControlLocalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2505D5728EF7D950027F280 /* ControlLocalization.swift */; };
-		E2505D5A28EF91960027F280 /* Localizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2505D5928EF91960027F280 /* Localizations.swift */; };
+		E2505D5A28EF91960027F280 /* LocalizationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2505D5928EF91960027F280 /* LocalizationData.swift */; };
 		E2675E1E28DAB65D00F5F114 /* ControlPing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E1D28DAB65D00F5F114 /* ControlPing.swift */; };
 		E2675E2228DABE4900F5F114 /* ControlClose.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2128DABE4900F5F114 /* ControlClose.swift */; };
 		E2675E2428DABEAC00F5F114 /* ControlShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2328DABEAC00F5F114 /* ControlShow.swift */; };
@@ -214,7 +214,7 @@
 		E2505D5228EF38B60027F280 /* OpenAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAlert.swift; sourceTree = "<group>"; };
 		E2505D5528EF7D600027F280 /* ControlAddLocalizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlAddLocalizations.swift; sourceTree = "<group>"; };
 		E2505D5728EF7D950027F280 /* ControlLocalization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlLocalization.swift; sourceTree = "<group>"; };
-		E2505D5928EF91960027F280 /* Localizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizations.swift; sourceTree = "<group>"; };
+		E2505D5928EF91960027F280 /* LocalizationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationData.swift; sourceTree = "<group>"; };
 		E2675E1D28DAB65D00F5F114 /* ControlPing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlPing.swift; sourceTree = "<group>"; };
 		E2675E2128DABE4900F5F114 /* ControlClose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlClose.swift; sourceTree = "<group>"; };
 		E2675E2328DABEAC00F5F114 /* ControlShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlShow.swift; sourceTree = "<group>"; };
@@ -466,7 +466,7 @@
 		E28CEF05291E9BCC009E73B3 /* Localizations */ = {
 			isa = PBXGroup;
 			children = (
-				E2505D5928EF91960027F280 /* Localizations.swift */,
+				E2505D5928EF91960027F280 /* LocalizationData.swift */,
 				E28CEF0A291E9CCF009E73B3 /* LocalizationsFrames.swift */,
 				E28CEF0C291E9D37009E73B3 /* LocalizationsMessages.swift */,
 				E28CEF08291E9C82009E73B3 /* LocalizationsRetrieve.swift */,
@@ -917,7 +917,7 @@
 				E2020D732926E8AE0090B60B /* SharktopodaAppDelegate.swift in Sources */,
 				E28CEF0B291E9CCF009E73B3 /* LocalizationsFrames.swift in Sources */,
 				E2C22EDA28D386AE003CD976 /* MainView.swift in Sources */,
-				E2505D5A28EF91960027F280 /* Localizations.swift in Sources */,
+				E2505D5A28EF91960027F280 /* LocalizationData.swift in Sources */,
 				E2BC08E928EB7795007F4B5D /* NSImage.swift in Sources */,
 				E295627928D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift in Sources */,
 				E2448C01292D6F5D00F2C2E2 /* LocalizationUpdate.swift in Sources */,

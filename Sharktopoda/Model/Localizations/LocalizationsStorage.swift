@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Localizations {
+extension LocalizationData {
   func add(_ localization: Localization) {
     guard storage[localization.id] == nil else { return }
     

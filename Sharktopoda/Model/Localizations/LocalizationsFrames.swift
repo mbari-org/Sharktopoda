@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: Frame number
-extension Localizations {
+extension LocalizationData {
   func frameNumber(for localization: Localization) -> Int {
     frameNumber(elapsedTime: localization.elapsedTime)
   }
@@ -25,7 +25,7 @@ extension Localizations {
 }
 
 // MARK: Pause frames
-extension Localizations {
+extension LocalizationData {
   func pauseFrameInsert(_ localization: Localization) {
     let insertTime = localization.elapsedTime
     let (frame, action, index) = frame(for: localization,
@@ -56,7 +56,7 @@ extension Localizations {
 }
 
 // MARK: Forward frames
-extension Localizations {
+extension LocalizationData {
   func forwardFrameInsert(_ localization: Localization) {
     let useDuration = UserDefaults.standard.bool(forKey: PrefKeys.displayUseDuration)
     let timeWindow = UserDefaults.standard.integer(forKey: PrefKeys.displayTimeWindow)
@@ -97,7 +97,7 @@ extension Localizations {
 }
 
 // MARK: Reverse frames
-extension Localizations {
+extension LocalizationData {
   func reverseFrameInsert(_ localization: Localization) {
     let useDuration = UserDefaults.standard.bool(forKey: PrefKeys.displayUseDuration)
     let timeWindow = UserDefaults.standard.integer(forKey: PrefKeys.displayTimeWindow)
@@ -140,7 +140,7 @@ extension Localizations {
 }
 
 // MARK: Abstract frame processing
-extension Localizations {
+extension LocalizationData {
   func frameIndex(for frames: [LocalizationFrame], at elapsedTime: Int) -> Int {
     var left = 0
     var right = frames.count - 1

@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Localizations {
+extension LocalizationData {
   func clearSelected() {
     guard !selected.isEmpty else { return }
     

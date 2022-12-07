@@ -99,7 +99,7 @@ extension NSPlayerView {
   }
   
   // CxTBD This doesn't seem right
-  var localizations: Localizations {
+  var localizations: LocalizationData {
     windowData.localizations
   }
 
@@ -141,7 +141,9 @@ extension NSPlayerView {
   
   func clear(localizations: [Localization]) {
     DispatchQueue.main.async { [weak self] in
-      localizations.forEach { $0.layer.removeFromSuperlayer()}
+      localizations.forEach {
+        $0.layer.removeFromSuperlayer()
+      }
       self?.conceptLayer?.removeFromSuperlayer()
     }
   }

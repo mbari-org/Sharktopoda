@@ -14,7 +14,7 @@ final class WindowData: Identifiable, ObservableObject {
   
   var _frameDuration: CMTime?
   var _fullSize: CGSize?
-  var _localizations: Localizations?
+  var _localizations: LocalizationData?
   var _player: AVPlayer?
   var _playerView: PlayerView?
   var _sliderView: NSTimeSliderView?
@@ -39,7 +39,7 @@ final class WindowData: Identifiable, ObservableObject {
     set { _fullSize = newValue }
   }
   
-  var localizations: Localizations {
+  var localizations: LocalizationData {
     get { _localizations! }
     set { _localizations = newValue }
   }

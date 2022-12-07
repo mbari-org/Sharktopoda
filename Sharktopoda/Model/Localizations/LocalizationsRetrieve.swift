@@ -8,7 +8,7 @@
 import Foundation
 
 // Retrieve Localizations for some time value
-extension Localizations {
+extension LocalizationData {
   func fetch(ids: [String]) -> [Localization] {
     ids.reduce(into: [Localization]()) { acc, id in
       if let localization = storage[id] {

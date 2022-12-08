@@ -76,8 +76,10 @@ final class VideoControl {
   }
 
   func frameSeek(to time: CMTime, done: @escaping (Bool) -> Void) {
+    let frameMillis = windowData.localizations.frameTime(of: time.asMillis())
+    let frameTime = CMTime.fromMillis(frameMillis)
     
-    player.seek(to: time,
+    player.seek(to: frameTime,
                 toleranceBefore: frameTolerance,
                 toleranceAfter: frameTolerance,
                 completionHandler: done)

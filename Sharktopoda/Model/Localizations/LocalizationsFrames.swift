@@ -10,17 +10,17 @@ import Foundation
 // MARK: Frame number
 extension LocalizationData {
   func frameNumber(for localization: Localization) -> Int {
-    frameNumber(elapsedTime: localization.elapsedTime)
+    frameNumber(of: localization.elapsedTime)
   }
   
-  func frameNumber(elapsedTime: Int) -> Int {
+  func frameNumber(of elapsedTime: Int) -> Int {
     guard 0 < elapsedTime else { return 0 }
     
     return (elapsedTime + frameDuration / 2) / frameDuration
   }
   
-  func frameTime(elapsedTime: Int) -> Int {
-    frameNumber(elapsedTime: elapsedTime) * frameDuration
+  func frameTime(of elapsedTime: Int) -> Int {
+    frameNumber(of: elapsedTime) * frameDuration
   }
 }
 
@@ -148,7 +148,7 @@ extension LocalizationData {
     var index = 0
     var found = 0
     
-    let frameNumber = frameNumber(elapsedTime: elapsedTime)
+    let frameNumber = frameNumber(of: elapsedTime)
     
     while left <= right {
       index = (left + right) / 2
@@ -170,7 +170,7 @@ extension LocalizationData {
              into frames: [LocalizationFrame],
              at insertTime: Int) -> PutInfo {
     
-    let frameNumber = frameNumber(elapsedTime: insertTime)
+    let frameNumber = frameNumber(of: insertTime)
     
     var frame: LocalizationFrame
     var action: PutAction

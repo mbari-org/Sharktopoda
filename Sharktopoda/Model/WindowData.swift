@@ -81,7 +81,7 @@ extension WindowData {
   }
   
   var currentFrameTime: Int {
-    localizations.frameTime(elapsedTime: videoControl.currentTime)
+    localizations.frameTime(of: videoControl.currentTime)
   }
 
   func pause(_ withDisplay: Bool = true) {
@@ -120,7 +120,7 @@ extension WindowData {
   }
   
   func seek(elapsedTime: Int) {
-    let frameTime = localizations.frameTime(elapsedTime: elapsedTime)
+    let frameTime = localizations.frameTime(of: elapsedTime)
     videoControl.seek(elapsedTime: frameTime) { [weak self] done in
       DispatchQueue.main.async {
         self?.displayPaused()
@@ -140,7 +140,7 @@ extension WindowData {
 
 extension WindowData {
   func add(localizations controlLocalizations: [ControlLocalization]) {
-    let currentFrameNumber = localizations.frameNumber(elapsedTime: videoControl.currentTime)
+    let currentFrameNumber = localizations.frameNumber(of: videoControl.currentTime)
 
     controlLocalizations
       .map { Localization(from: $0, size: fullSize) }

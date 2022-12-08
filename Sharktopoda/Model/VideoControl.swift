@@ -76,6 +76,7 @@ final class VideoControl {
   }
 
   func frameSeek(to time: CMTime, done: @escaping (Bool) -> Void) {
+    
     player.seek(to: time,
                 toleranceBefore: frameTolerance,
                 toleranceAfter: frameTolerance,

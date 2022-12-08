@@ -23,8 +23,6 @@ extension VideoWindow: NSWindowDelegate {
   }
   
   func windowDidResize(_ notification: Notification) {
-    windowData.pause(true)
-    
     let videoRect = windowData.playerView.videoRect
     
     let pausedLocalizations = windowData.pausedLocalizations()
@@ -38,9 +36,10 @@ extension VideoWindow: NSWindowDelegate {
       
       for localization in pausedLocalizations {
         localization.resize(for: videoRect)
-        windowData.playerView.display(localization: localization)
       }
-      
+      windowData.displayPaused()
+      windowData.playerDirection = .paused
+
       windowData.sliderView.setupControlViewAnimation()
     }
     
@@ -49,12 +48,6 @@ extension VideoWindow: NSWindowDelegate {
     resizingTask?.cancel()
     resizingTask = Task(priority: .background) { [weak windowData] in
       guard let windowData = windowData else { return }
-
-//      do {
-//        try await Task.sleep(for: .milliseconds(333))
-//      } catch {
-//        // no-op.
-//      }
 
       let pausedIds = pausedLocalizations.map(\.id)
       for (id, localization) in windowData.localizations.storage {

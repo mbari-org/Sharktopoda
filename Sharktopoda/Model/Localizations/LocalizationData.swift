@@ -38,8 +38,9 @@ extension LocalizationData {
                        index: Int)
 }
 
-// MARK: Resize all
+// MARK: Resize all non-paused Localizations
 extension LocalizationData {
+  
   func resize(for videoRect: CGRect) {
     for localization in storage.values {
       localization.resize(for: videoRect)

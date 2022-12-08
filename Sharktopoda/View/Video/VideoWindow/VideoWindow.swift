@@ -12,12 +12,14 @@ import SwiftUI
 final class VideoWindow: NSWindow {
   var windowData = WindowData()
   
-  /// Queue on which off-main work is done
-  let queue: DispatchQueue
+  /// Queue for playerTime observation
+  let playerTimeQueue: DispatchQueue
+  
+  /// Background Task for resizing localizations
+  var resizingTask: Task<(), Never>?
 
-  //
   init(for videoAsset: VideoAsset, with sharktopodaData: SharktopodaData) {
-    queue = DispatchQueue(label: "Sharktopoda Video Queue: \(videoAsset.id)")
+    playerTimeQueue = DispatchQueue(label: "Sharktopoda Player Time Queue: \(videoAsset.id)")
 
     let fullSize = videoAsset.fullSize
 

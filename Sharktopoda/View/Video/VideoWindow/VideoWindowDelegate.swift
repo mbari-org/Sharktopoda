@@ -26,9 +26,10 @@ extension VideoWindow: NSWindowDelegate {
     let videoRect = windowData.playerView.videoRect
     
     let pausedLocalizations = windowData.pausedLocalizations()
+
     DispatchQueue.main.async { [weak self] in
       guard let windowData = self?.windowData else { return }
-
+      
       windowData.videoControl.play(rate: 0.0)
       windowData.playerView.clear()
       windowData.localizations.clearSelected()
@@ -37,13 +38,27 @@ extension VideoWindow: NSWindowDelegate {
         localization.resize(for: videoRect)
         windowData.playerView.display(localization: localization)
       }
-
+      
       windowData.sliderView.setupControlViewAnimation()
+    }
+    
+    /// Resize all non-paused localizations on background queue. Paused localizations are resized on the main
+    /// thread. If resized again here, the paused Location display is clunky.
+    resizingTask?.cancel()
+    resizingTask = Task(priority: .background) { [weak windowData] in
+      guard let windowData = windowData else { return }
 
-      /// Resize all localizations on background queue. Although paused localizations are resized again,
-      /// preventing that would be more overhead than re-resizing.
-      self?.queue.async {
-        windowData.localizations.resize(for: videoRect)
+//      do {
+//        try await Task.sleep(for: .milliseconds(333))
+//      } catch {
+//        // no-op.
+//      }
+
+      let pausedIds = pausedLocalizations.map(\.id)
+      for (id, localization) in windowData.localizations.storage {
+        if !pausedIds.contains(id) {
+          localization.resize(for: videoRect)
+        }
       }
     }
   }

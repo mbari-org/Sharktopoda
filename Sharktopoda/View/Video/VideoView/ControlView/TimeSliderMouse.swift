@@ -26,11 +26,13 @@ extension NSTimeSliderView {
   }
   
   override func mouseDragged(with event: NSEvent) {
-    slide(for: event)
+    let quickTime = sliderTime(for: event)
+    windowData.videoControl.quickSeek(to: quickTime)
   }
   
   override func mouseUp(with event: NSEvent) {
-    slide(for: event)
+    let frameTime = sliderTime(for: event)
+    windowData.videoControl.frameSeek(to: frameTime) { _ in }
   }
 
   private func location(in layer: CALayer, of event: NSEvent) -> CGPoint {
@@ -38,15 +40,7 @@ extension NSTimeSliderView {
     let windowPoint = event.locationInWindow
     return layer.convert(windowPoint, from: windowLayer)
   }
-  
-  private func slide(for event: NSEvent) {
-    slide(to: sliderTime(for: event))
-  }
-  
-  private func slide(to time: CMTime) {
-    windowData.videoControl.seek(to: time) { _ in }
-  }
-  
+
   private func onMarker(_ mousePoint: CGPoint) -> Bool {
     let markerWidth = markerLayer.bounds.width
     let delta = abs(markerX - mousePoint.x)

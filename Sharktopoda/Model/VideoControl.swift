@@ -11,13 +11,16 @@ import Foundation
 final class VideoControl {
   private var windowData: WindowData
 
-  let seekTolerance: CMTime
+  let quickTolerance: CMTime
+  let frameTolerance: CMTime
   var previousRate: Float = 1.0
   
   init (windowData: WindowData) {
     self.windowData = windowData
-    
-    seekTolerance = CMTimeMultiplyByFloat64(windowData.frameDuration, multiplier: 0.45)
+
+    let quickMillis = min(windowData.videoAsset.duration.asMillis() / 500, 500)
+    quickTolerance = CMTime.fromMillis(quickMillis)
+    frameTolerance = CMTimeMultiplyByFloat64(windowData.frameDuration, multiplier: 0.45)
   }
   
   func canStep(_ steps: Int) -> Bool {
@@ -65,15 +68,21 @@ final class VideoControl {
   var rate: Float {
     get { player.rate }
   }
-
-  func seek(to time: CMTime, done: @escaping (Bool) -> Void) {
+  
+  func quickSeek(to time: CMTime) {
     player.seek(to: time,
-                toleranceBefore: seekTolerance,
-                toleranceAfter: seekTolerance,
+                toleranceBefore: quickTolerance,
+                toleranceAfter: quickTolerance)
+  }
+
+  func frameSeek(to time: CMTime, done: @escaping (Bool) -> Void) {
+    player.seek(to: time,
+                toleranceBefore: frameTolerance,
+                toleranceAfter: frameTolerance,
                 completionHandler: done)
   }
 
   func seek(elapsedTime: Int, done: @escaping (Bool) -> Void) {
-    seek(to: CMTime.fromMillis(elapsedTime), done: done)
+    frameSeek(to: CMTime.fromMillis(elapsedTime), done: done)
   }
 }

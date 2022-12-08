@@ -65,11 +65,15 @@ final class VideoControl {
   var rate: Float {
     get { player.rate }
   }
-  
-  func seek(elapsedTime: Int, done: @escaping (Bool) -> Void) {
-    player.seek(to: CMTime.fromMillis(elapsedTime),
+
+  func seek(time: CMTime, done: @escaping (Bool) -> Void) {
+    player.seek(to: time,
                 toleranceBefore: seekTolerance,
                 toleranceAfter: seekTolerance,
                 completionHandler: done)
+  }
+
+  func seek(elapsedTime: Int, done: @escaping (Bool) -> Void) {
+    seek(time: CMTime.fromMillis(elapsedTime), done: done)
   }
 }

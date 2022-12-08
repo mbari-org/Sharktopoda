@@ -12,6 +12,10 @@ extension CMTime {
     Int(self.seconds * Double(VideoAsset.timescaleMillis))
   }
   
+  static func fromMillis(_ time: Double) -> CMTime {
+    fromMillis(Int(time))
+  }
+  
   static func fromMillis(_ time: Int) -> CMTime {
     CMTimeMake(value: Int64(time), timescale: VideoAsset.timescaleMillis)
   }

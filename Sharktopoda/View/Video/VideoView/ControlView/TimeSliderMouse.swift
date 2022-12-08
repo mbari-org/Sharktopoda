@@ -44,7 +44,7 @@ extension NSTimeSliderView {
   }
   
   private func slide(to time: CMTime) {
-    windowData.videoControl.seek(time: time) { _ in }
+    windowData.videoControl.seek(to: time) { _ in }
   }
   
   private func onMarker(_ mousePoint: CGPoint) -> Bool {

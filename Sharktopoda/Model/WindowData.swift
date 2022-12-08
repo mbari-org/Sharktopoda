@@ -92,7 +92,7 @@ extension WindowData {
       self.localizations.clearSelected()
 
       if withDisplay {
-        self.playerView.display(localizations: self.pausedLocalizations())
+        self.displayPaused()
       }
     }
   }
@@ -122,9 +122,8 @@ extension WindowData {
   func seek(elapsedTime: Int) {
     let frameTime = localizations.frameTime(elapsedTime: elapsedTime)
     videoControl.seek(elapsedTime: frameTime) { [weak self] done in
-      let pausedLocalizations = self?.pausedLocalizations() ?? []
       DispatchQueue.main.async {
-        self?.playerView.display(localizations: pausedLocalizations)
+        self?.displayPaused()
       }
     }
   }
@@ -155,10 +154,14 @@ extension WindowData {
         playerView.display(localization: $0)
       }
   }
+  
+  func displayPaused() {
+    let localizations = pausedLocalizations()
+    playerView.display(localizations: localizations)
+  }
 
   func pausedLocalizations() -> [Localization] {
-    guard videoControl.paused else { return [] }
-    return localizations.fetch(.paused, at: videoControl.currentTime)
+    localizations.fetch(.paused, at: videoControl.currentTime)
   }
 }
 

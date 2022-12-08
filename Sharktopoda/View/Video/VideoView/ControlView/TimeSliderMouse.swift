@@ -21,13 +21,7 @@ extension NSTimeSliderView {
   // CxNote The animated markerLayer position value is not reflected in markerLayer.position itself,
   // so we have to calculate where the marker actually is using playerTime and duration.
   override func mouseDown(with event: NSEvent) {
-    guard windowData.videoControl.paused else {
-      return
-    }
-    
-    let mousePoint = location(in: layer!, of: event)
-    if onMarker(mousePoint) {
-    }
+    windowData.playerView.clear()
   }
   
   override func mouseDragged(with event: NSEvent) {
@@ -49,7 +43,6 @@ extension NSTimeSliderView {
   
   private func jump(toPoint mousePoint: CGPoint) {
     let markerTime = Int(Double(duration) * (mousePoint.x / bounds.width))
-    windowData.playerView.clear()
     windowData.videoControl.seek(elapsedTime: markerTime) { _ in }
   }
   

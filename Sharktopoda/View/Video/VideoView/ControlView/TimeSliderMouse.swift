@@ -22,13 +22,11 @@ extension NSTimeSliderView {
   // so we have to calculate where the marker actually is using playerTime and duration.
   override func mouseDown(with event: NSEvent) {
     guard windowData.videoControl.paused else {
-      dragPoint = nil
       return
     }
     
     let mousePoint = location(in: layer!, of: event)
     if onMarker(mousePoint) {
-      dragPoint = CGPoint(x: markerX, y: bounds.height / 2)
     }
   }
   
@@ -39,11 +37,6 @@ extension NSTimeSliderView {
   
   override func mouseUp(with event: NSEvent) {
     let mousePoint = location(in: layer!, of: event)
-    
-    guard !onMarker(mousePoint) else {
-      dragPoint = nil
-      return
-    }
     
     jump(toPoint: mousePoint)
   }

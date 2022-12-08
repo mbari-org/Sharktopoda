@@ -15,8 +15,6 @@ final class NSTimeSliderView: NSView {
 
   let markerLayer = CALayer()
 
-  var dragPoint: CGPoint? = nil
-  
   var duration: Int {
     windowData.videoAsset.durationMillis
   }

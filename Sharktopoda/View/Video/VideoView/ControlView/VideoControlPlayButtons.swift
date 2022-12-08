@@ -15,16 +15,17 @@ struct VideoControlPlayButtons: View {
   }
   
   var previousDirection: WindowData.PlayerDirection {
-    windowData.previousDirection
+    windowData.videoControl.previousDirection
   }
   
   var body: some View {
     HStack {
       Button(action: {
-        guard playerDirection != .reverse else { return }
-        previousDirection == .reverse ? windowData.play() : windowData.reverse()
+        guard playerDirection != .backward else { return }
+        windowData.playBackward()
+//        previousDirection == .backward ? windowData.play() : windowData.reverse()
       }) {
-        Image(systemName: playerDirection == .reverse
+        Image(systemName: playerDirection == .backward
               ? "arrowtriangle.backward.circle.fill"
               : "arrowtriangle.backward.circle")
       }
@@ -42,7 +43,8 @@ struct VideoControlPlayButtons: View {
       
       Button(action: {
         guard playerDirection != .forward else { return }
-        previousDirection == .forward ? windowData.play() : windowData.reverse()
+        windowData.playForward()
+//        previousDirection == .forward ? windowData.play() : windowData.reverse()
       }) {
         Image(systemName: playerDirection == .forward
               ? "play.circle.fill"

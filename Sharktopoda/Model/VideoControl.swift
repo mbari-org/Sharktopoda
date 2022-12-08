@@ -13,7 +13,9 @@ final class VideoControl {
 
   let quickTolerance: CMTime
   let frameTolerance: CMTime
-  var previousRate: Float = 1.0
+
+  var previousDirection: WindowData.PlayerDirection = .paused
+  var previousSpeed: Float = 1.0
   
   init (windowData: WindowData) {
     self.windowData = windowData
@@ -49,13 +51,15 @@ final class VideoControl {
   }
 
   func play() {
-    play(rate: previousRate)
+    play(rate: previousSpeed)
   }
   
   func play(rate: Float) {
     guard rate != 0.0 else { return pause() }
     
-    previousRate = rate
+    previousSpeed = abs(rate)
+    previousDirection = 0 < rate ? .forward : .backward
+    
     DispatchQueue.main.async {
       self.player.rate = rate
     }
@@ -67,6 +71,10 @@ final class VideoControl {
   
   var rate: Float {
     get { player.rate }
+  }
+  
+  func reverse() {
+    play(rate: -1 * previousSpeed)
   }
   
   func quickSeek(to time: CMTime) {

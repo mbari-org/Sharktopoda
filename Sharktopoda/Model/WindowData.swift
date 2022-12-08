@@ -83,7 +83,7 @@ extension WindowData {
   var currentFrameTime: Int {
     localizations.frameTime(of: videoControl.currentTime)
   }
-
+  
   func pause(_ withDisplay: Bool = true) {
     DispatchQueue.main.async { [weak self] in
       guard let self = self else { return }
@@ -97,13 +97,10 @@ extension WindowData {
     }
   }
   
-  func play() {
-    play(rate: videoControl.previousRate)
-  }
-  
   func play(rate: Float) {
     DispatchQueue.main.async { [weak self] in
       guard let self = self else { return }
+      
       self.localizations.clearSelected()
       self.playerDirection = PlayerDirection.at(rate: rate)
       self.playerView.clear(localizations: self.pausedLocalizations())
@@ -111,14 +108,22 @@ extension WindowData {
     }
   }
   
-  var previousDirection: PlayerDirection {
-    PlayerDirection.at(rate: videoControl.previousRate)
+  func playBackward() {
+    play(rate: -1 * videoControl.previousSpeed)
   }
   
-  func reverse() {
-    play(rate: -1 * videoControl.previousRate)
+  func playForward() {
+    play(rate: videoControl.previousSpeed)
   }
   
+  func playerResume() {
+    if videoControl.previousDirection == .paused {
+      displayPaused()
+    } else {
+      play(rate: videoControl.previousDirection.rawValue * videoControl.previousSpeed)
+    }
+  }
+
   func seek(elapsedTime: Int) {
     let frameTime = localizations.frameTime(of: elapsedTime)
     videoControl.seek(elapsedTime: frameTime) { [weak self] done in
@@ -166,10 +171,10 @@ extension WindowData {
 }
 
 extension WindowData {
-  enum PlayerDirection: Int {
-    case reverse = -1
-    case paused = 0
-    case forward =  1
+  enum PlayerDirection: Float {
+    case backward = -1.0
+    case paused = 0.0
+    case forward =  1.0
     
     static func at(rate: Float) -> PlayerDirection {
       if rate == 0.0 {
@@ -177,7 +182,7 @@ extension WindowData {
       } else if 0 < rate {
         return .forward
       } else {
-        return .reverse
+        return .backward
       }
     }
     
@@ -185,7 +190,7 @@ extension WindowData {
       if self == .paused {
         return .paused
       } else {
-        return self == .reverse ? .forward : .reverse
+        return self == .backward ? .forward : .backward
       }
     }
   }

@@ -15,7 +15,7 @@ struct VideoControlView: View {
   }
   
   var previousDirection: WindowData.PlayerDirection {
-    windowData.previousDirection
+    windowData.videoControl.previousDirection
   }
   
   var body: some View {

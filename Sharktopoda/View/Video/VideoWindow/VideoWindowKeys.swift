@@ -32,17 +32,17 @@ extension VideoWindow {
     }
     
     /// Space:  Toggle play/pause forward
-    /// Ctrl-Space:  Toggle play/pause and direction
+    /// Ctrl-Space:  Toggle play/pause backward
     if event.keyCode == KeyCode.space.rawValue {
       if windowData.playerDirection != .paused {
         windowData.pause()
         return
       }
       if isControl(event) {
-        windowData.reverse()
+        windowData.playBackward()
         return
       }
-      windowData.play()
+      windowData.playForward()
       return
     }
     

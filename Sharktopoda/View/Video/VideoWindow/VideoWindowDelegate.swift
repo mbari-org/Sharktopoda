@@ -37,17 +37,29 @@ extension VideoWindow: NSWindowDelegate {
       for localization in pausedLocalizations {
         localization.resize(for: videoRect)
       }
+
       windowData.displayPaused()
       windowData.playerDirection = .paused
 
       windowData.sliderView.setupControlViewAnimation()
+
+      // CxTBD This is a bit wonky. Investigate
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.33) { [weak windowData] in
+        windowData?.playerResume()
+      }
     }
     
     /// Resize all non-paused localizations on background queue. Paused localizations are resized on the main
     /// thread. If resized again here, the paused Location display is clunky.
     resizingTask?.cancel()
-    resizingTask = Task(priority: .background) { [weak windowData] in
+    resizingTask = Task.detached(priority: .background) { [weak windowData] in
       guard let windowData = windowData else { return }
+
+      do {
+        try await Task.sleep(for: .milliseconds(333))
+      } catch {
+        // no-op
+      }
 
       let pausedIds = pausedLocalizations.map(\.id)
       for (id, localization) in windowData.localizations.storage {

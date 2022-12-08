@@ -27,7 +27,7 @@ extension LocalizationData {
         return forwardFrames
       case .paused:
         return pauseFrames
-      case .reverse:
+      case .backward:
         return reverseFrames
     }
   }

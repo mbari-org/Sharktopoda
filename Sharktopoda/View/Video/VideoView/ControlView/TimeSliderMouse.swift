@@ -6,6 +6,7 @@
 //
 
 import AppKit
+import AVFoundation
 
 extension NSTimeSliderView {
   
@@ -25,14 +26,11 @@ extension NSTimeSliderView {
   }
   
   override func mouseDragged(with event: NSEvent) {
-    let mousePoint = location(in: layer!, of: event)
-    jump(toPoint: mousePoint)
+    slide(for: event)
   }
   
   override func mouseUp(with event: NSEvent) {
-    let mousePoint = location(in: layer!, of: event)
-    
-    jump(toPoint: mousePoint)
+    slide(for: event)
   }
 
   private func location(in layer: CALayer, of event: NSEvent) -> CGPoint {
@@ -41,14 +39,22 @@ extension NSTimeSliderView {
     return layer.convert(windowPoint, from: windowLayer)
   }
   
-  private func jump(toPoint mousePoint: CGPoint) {
-    let markerTime = Int(Double(duration) * (mousePoint.x / bounds.width))
-    windowData.videoControl.seek(elapsedTime: markerTime) { _ in }
+  private func slide(for event: NSEvent) {
+    slide(to: sliderTime(for: event))
+  }
+  
+  private func slide(to time: CMTime) {
+    windowData.videoControl.seek(time: time) { _ in }
   }
   
   private func onMarker(_ mousePoint: CGPoint) -> Bool {
     let markerWidth = markerLayer.bounds.width
     let delta = abs(markerX - mousePoint.x)
     return delta < markerWidth / 2
+  }
+  
+  private func sliderTime(for event: NSEvent) -> CMTime {
+    let sliderPoint = location(in: layer!, of: event)
+    return CMTime.fromMillis(Double(duration) * (sliderPoint.x / bounds.width))
   }
 }

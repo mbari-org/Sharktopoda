@@ -32,7 +32,10 @@ extension NSTimeSliderView {
   
   override func mouseUp(with event: NSEvent) {
     let frameTime = sliderTime(for: event)
-    windowData.videoControl.frameSeek(to: frameTime) { _ in }
+    windowData.videoControl.frameSeek(to: frameTime) { [weak windowData] done in
+      guard done else { return }
+      windowData?.displayPaused()
+    }
   }
 
   private func location(in layer: CALayer, of event: NSEvent) -> CGPoint {

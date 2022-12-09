@@ -36,6 +36,8 @@ extension VideoWindow: NSWindowDelegate {
         windowData.videoControl.play(rate: 0.0)
         windowData.playerView.clear()
         windowData.localizations.clearSelected()
+      } else {
+        windowData.localizations.clearSelected()
       }
       
       for localization in pausedLocalizations {

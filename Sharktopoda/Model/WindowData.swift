@@ -116,9 +116,9 @@ extension WindowData {
     play(rate: videoControl.previousSpeed)
   }
   
-  func playerResume() {
-    if videoControl.previousDirection == .paused {
-      displayPaused()
+  func playerResume(_ direction: WindowData.PlayerDirection) {
+    if direction == .paused {
+       displayPaused()
     } else {
       play(rate: videoControl.previousDirection.rawValue * videoControl.previousSpeed)
     }

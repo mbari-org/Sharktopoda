@@ -27,25 +27,29 @@ extension VideoWindow: NSWindowDelegate {
     
     let pausedLocalizations = windowData.pausedLocalizations()
 
+    playerDirection = windowData.playerDirection
+
     DispatchQueue.main.async { [weak self] in
       guard let windowData = self?.windowData else { return }
-      
-      windowData.videoControl.play(rate: 0.0)
-      windowData.playerView.clear()
-      windowData.localizations.clearSelected()
+
+      if windowData.playerDirection != .paused {
+        windowData.videoControl.play(rate: 0.0)
+        windowData.playerView.clear()
+        windowData.localizations.clearSelected()
+      }
       
       for localization in pausedLocalizations {
         localization.resize(for: videoRect)
       }
 
-      windowData.displayPaused()
-      windowData.playerDirection = .paused
-
       windowData.sliderView.setupControlViewAnimation()
 
       // CxTBD This is a bit wonky. Investigate
-      DispatchQueue.main.asyncAfter(deadline: .now() + 0.33) { [weak windowData] in
-        windowData?.playerResume()
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.33) { [weak self] in
+        guard let self = self else { return }
+        guard let playerDirection = self.playerDirection else { return }
+        
+        self.windowData.playerResume(playerDirection)
       }
     }
     

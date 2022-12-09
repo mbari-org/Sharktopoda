@@ -19,6 +19,9 @@ final class NSTimeSliderView: NSView {
     windowData.videoAsset.durationMillis
   }
   
+  /// Hold current player direction during slider scrubbing
+  var playerDirection: WindowData.PlayerDirection?
+  
   var windowData: WindowData {
     get { _windowData! }
     set { attach(windowData: newValue) }

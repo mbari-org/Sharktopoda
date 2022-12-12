@@ -19,13 +19,13 @@ extension LocalizationData {
   func deleteSelected() {
     guard !selected.isEmpty else { return }
     
-    let ids = selectedIds()
+    let ids = selectedIds
 
     sendIdsMessage(.removeLocalizations, ids: ids)
     remove(ids: ids)
     
     // CxTBD Is an updated selected message necessary?
-    sendIdsMessage(.selectLocalizations, ids: selectedIds())
+    sendIdsMessage(.selectLocalizations, ids: ids)
   }
   
   func select(id: String, clear: Bool = true) -> Bool {
@@ -39,7 +39,7 @@ extension LocalizationData {
     localization.select()
     selected.insert(id)
     
-    sendIdsMessage(.selectLocalizations, ids: selectedIds())
+    sendIdsMessage(.selectLocalizations, ids: selectedIds)
     
     return true
   }
@@ -53,7 +53,7 @@ extension LocalizationData {
       selected.insert(id)
     }
     if notifyClient {
-      sendIdsMessage(.selectLocalizations, ids: selectedIds())
+      sendIdsMessage(.selectLocalizations, ids: selectedIds)
     }
   }
   
@@ -67,11 +67,11 @@ extension LocalizationData {
     select(ids: ids)
   }
   
-  func selectedIds() -> [String] {
+  var selectedIds: [String] {
     selected.map { $0 }
   }
   
-  func selectedLocalizations() -> [Localization] {
+  var selectedLocalizations: [Localization] {
     selected.map { storage[$0]! }
   }
   
@@ -81,6 +81,6 @@ extension LocalizationData {
     localization.unselect()
     selected.remove(localization.id)
     
-    sendIdsMessage(.selectLocalizations, ids: selectedIds())
+    sendIdsMessage(.selectLocalizations, ids: selectedIds)
   }
 }

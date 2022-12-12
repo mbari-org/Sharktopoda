@@ -73,7 +73,7 @@ extension NSPlayerView {
             }
             
             localizations.select(using: layer.frame, at: currentTime)
-            localizations.selectedLocalizations().forEach {
+            localizations.selectedLocalizations.forEach {
               displayConcept(for: $0)
             }
         }

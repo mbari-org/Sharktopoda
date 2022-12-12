@@ -168,24 +168,6 @@ extension WindowData {
   func pausedLocalizations() -> [Localization] {
     localizationData.fetch(.paused, at: videoControl.currentTime)
   }
-  
-  func select(localizationIds ids: [String]) {
-    localizationData.select(ids: ids, notifyClient: false)
-    
-    localizationData.selectedLocalizations.forEach {
-      playerView.displayConcept(for: $0)
-    }
-//    playerView.playerLayer.setNeedsDisplay()
-//    playerView.playerLayer.setNeedsLayout()
-//    playerView.rootLayer.setNeedsLayout()
-    
-//    let selectedLocalizations = localizationData.selectedLocalizations
-//    playerView.clear(localizations: selectedLocalizations)
-//    playerView.display(localizations: selectedLocalizations)
-//    selectedLocalizations.forEach {
-//      playerView.displayConcept(for: $0)
-//    }
-  }
 }
 
 extension WindowData {

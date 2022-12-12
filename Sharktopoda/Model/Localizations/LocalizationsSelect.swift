@@ -8,12 +8,10 @@
 import Foundation
 
 extension LocalizationData {
-  func clearSelected() {
+  func clearSelected(notifyClient: Bool = true) {
     guard !selected.isEmpty else { return }
-  
-    selected.forEach { storage[$0]?.unselect() }
-    selected.removeAll()
-    sendIdsMessage(.selectLocalizations, ids: [])
+
+    unselect(ids: selectedIds, notifyClient: notifyClient)
   }
   
   func deleteSelected() {
@@ -21,37 +19,20 @@ extension LocalizationData {
     
     let ids = selectedIds
 
-    sendIdsMessage(.removeLocalizations, ids: ids)
     remove(ids: ids)
-    
-    // CxTBD Is an updated selected message necessary?
-    sendIdsMessage(.selectLocalizations, ids: ids)
-  }
-  
-  func select(id: String, clear: Bool = true) -> Bool {
-    guard !selected.contains(id) else { return false }
-    guard let localization = storage[id] else { return false }
-    
-    if clear {
-      clearSelected()
-    }
-    
-    localization.select()
-    selected.insert(id)
-    
-    sendIdsMessage(.selectLocalizations, ids: selectedIds)
-    
-    return true
+
+    sendIdsMessage(.removeLocalizations, ids: ids)
   }
   
   func select(ids: [String], notifyClient: Bool = true) {
-    clearSelected()
-    
     ids.forEach { id in
+      guard !selected.contains(id) else { return }
       guard let localization = storage[id] else { return }
-      localization.select()
+      
       selected.insert(id)
+      localization.select()
     }
+
     if notifyClient {
       sendIdsMessage(.selectLocalizations, ids: selectedIds)
     }
@@ -64,7 +45,7 @@ extension LocalizationData {
       .filter { rect.intersects($0.layer.frame) }
       .map(\.id)
     
-    select(ids: ids)
+    select(ids: ids, notifyClient: true)
   }
   
   var selectedIds: [String] {
@@ -75,12 +56,16 @@ extension LocalizationData {
     selected.map { storage[$0]! }
   }
   
-  func unselect(id: String) {
-    guard let localization = storage[id] else { return }
+  func unselect(ids: [String], notifyClient: Bool = true) {
+    ids.forEach { id in
+      guard let localization = storage[id] else { return }
 
-    localization.unselect()
-    selected.remove(localization.id)
-    
-    sendIdsMessage(.selectLocalizations, ids: selectedIds)
+      localization.unselect()
+      selected.remove(id)
+    }
+
+    if notifyClient {
+      sendIdsMessage(.selectLocalizations, ids: selectedIds)
+    }
   }
 }

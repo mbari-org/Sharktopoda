@@ -25,32 +25,16 @@ extension Localization {
   }
   
   func select() {
-    conceptLayer?.removeFromSuperlayer()
-    
     layer.strokeColor = selectedColor
+    
     let conceptLayer = CATextLayer()
     conceptLayer.fontSize = captionSize
     conceptLayer.foregroundColor = captionColor
     conceptLayer.alignmentMode = .left
     conceptLayer.string = concept
     conceptLayer.frame = CGRect(origin: .zero, size: CGSize(width: 100, height: 12))
+
     self.conceptLayer = conceptLayer
-  }
-  
-  func positionConcept(for videoRect: CGRect) {
-    guard let conceptLayer = conceptLayer else { return }
-    
-    let frame = layer.frame
-    
-    var y = frame.maxY + layer.lineWidth
-    if videoRect.maxY < y + conceptLayer.frame.height {
-      y = frame.minY - layer.lineWidth - conceptLayer.frame.height
-    }
-    let origin = CGPoint(x: frame.minX, y: y)
-    
-    CALayer.noAnimation {
-      conceptLayer.frame = CGRect(origin: origin, size: conceptLayer.frame.size)
-    }
   }
 
   func unselect() {
@@ -58,5 +42,4 @@ extension Localization {
     conceptLayer?.removeFromSuperlayer()
     conceptLayer = nil
   }
-
 }

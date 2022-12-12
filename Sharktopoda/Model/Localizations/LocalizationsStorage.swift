@@ -43,7 +43,7 @@ extension LocalizationData {
     DispatchQueue.main.async {
       removed.forEach {
         $0.layer.removeFromSuperlayer()
-        $0.conceptLayer?.removeFromSuperlayer()
+        $0.unselect()
       }
     }
   }

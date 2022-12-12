@@ -19,16 +19,14 @@ extension NSPlayerView {
     if event.modifierFlags.intersection(.deviceIndependentFlagsMask) == .command {
       if let localization = currentLocalization {
         currentLocalization = nil
-        if localizations.select(id: localization.id),
-           let conceptLayer = localization.conceptLayer {
-          localization.positionConcept(for: videoRect)
-          playerLayer.addSublayer(conceptLayer)
-        }
+
+        localizationData.select(ids: [localization.id])
+        displayConcept(for: localization)
       }
       
       if commandSelect(at: playerPoint) { return }
       
-      localizations.clearSelected()
+      localizationData.clearSelected()
       startDragPurpose(.select)
       return
     }
@@ -102,26 +100,4 @@ extension NSPlayerView {
     let windowPoint = event.locationInWindow
     return layer.convert(windowPoint, from: windowLayer)
   }
-  
-//  func displayConcept(_ localization: Localization) {
-//    guard let conceptLayer = conceptLayer else { return }
-//    
-//    let lineWidth = localization.layer.lineWidth
-//    
-//    conceptLayer.string = localization.concept
-//    let layerFrame = localization.layer.frame
-//    var conceptFrame = CGRect(x: layerFrame.minX, y: layerFrame.maxY + lineWidth, width: 100, height: 15)
-//
-//    if videoRect.maxY < conceptFrame.maxY {
-//      let deltaY = -(layerFrame.height + conceptFrame.height + lineWidth)
-//      conceptFrame = conceptFrame.move(by: DeltaPoint(x: 0, y: deltaY))
-//    }
-//    DispatchQueue.main.async {
-//      CALayer.noAnimation {
-//        conceptLayer.frame = conceptFrame
-//      }
-//    }
-//
-//    playerLayer.addSublayer(conceptLayer)
-//  }
 }

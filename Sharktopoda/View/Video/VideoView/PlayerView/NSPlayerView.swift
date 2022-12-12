@@ -75,7 +75,7 @@ extension NSPlayerView {
     get { _currentLocalization }
     set {
       if _currentLocalization != nil {
-        localizations.clearSelected()
+        localizationData.clearSelected(notifyClient: false)
       }
       _currentLocalization = newValue
       if newValue == nil {
@@ -89,7 +89,7 @@ extension NSPlayerView {
   }
   
   // CxTBD This doesn't seem right
-  var localizations: LocalizationData {
+  var localizationData: LocalizationData {
     windowData.localizationData
   }
 
@@ -145,23 +145,6 @@ extension NSPlayerView {
     }
   }
   
-  func displayConcept(for localization: Localization) {
-    guard showLocalizations else { return }
-    
-    if let conceptLayer = localization.conceptLayer {
-      localization.positionConcept(for: videoRect)
-
-      DispatchQueue.main.async { [weak self] in
-        self?.playerLayer.addSublayer(conceptLayer)
-//        self?.playerLayer.setNeedsDisplay()
-      }
-      
-      DispatchQueue.main.async { [weak self] in
-        self?.playerLayer.setNeedsDisplay()
-      }
-    }
-  }
-  
   func display(localization: Localization) {
     guard showLocalizations else { return }
     
@@ -179,7 +162,29 @@ extension NSPlayerView {
       }
     }
   }
+  
+  func displayConcept(for localization: Localization) {
+    guard showLocalizations else { return }
+    guard let conceptLayer = localization.conceptLayer else { return }
 
+    let layer = localization.layer
+    let frame = layer.frame
+    
+    var y = frame.maxY + layer.lineWidth
+    if videoRect.maxY < y + conceptLayer.frame.height {
+      y = frame.minY - layer.lineWidth - conceptLayer.frame.height
+    }
+    let origin = CGPoint(x: frame.minX, y: y)
+
+    DispatchQueue.main.async { [weak conceptLayer, weak playerLayer] in
+      CALayer.noAnimation { [weak conceptLayer, weak playerLayer] in
+        guard let conceptLayer = conceptLayer else { return }
+        conceptLayer.frame = CGRect(origin: origin, size: conceptLayer.frame.size)
+        playerLayer?.addSublayer(conceptLayer)
+      }
+    }
+  }
+  
   var showLocalizations: Bool {
     UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations)
   }

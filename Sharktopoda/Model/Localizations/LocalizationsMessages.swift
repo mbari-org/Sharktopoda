@@ -17,11 +17,11 @@ extension LocalizationData {
     }
   }
   
-  func sendLocalizationsMessage(_ command: ClientCommand, ids: [String]) {
+  func sendLocalizationsMessage(_ command: ClientCommand, localization: Localization) {
     if let client = UDP.sharktopodaData.udpClient {
       let message = ClientMessageLocalizations(command,
                                                videoId: id,
-                                               localizations: ids.map { storage[$0]! })
+                                               localizations: [localization])
       client.process(message)
     }
   }

@@ -27,7 +27,7 @@ extension PlayerView {
   func display(localizations: [Localization]) {
     nsPlayerView.display(localizations: localizations)
   }
-  
+
   func displayConcept(for localization: Localization) {
     nsPlayerView.displayConcept(for: localization)
   }

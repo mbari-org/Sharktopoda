@@ -29,10 +29,13 @@ extension NSPlayerView {
   
   func endDragCurrent(at endPoint: CGPoint) {
     guard let localization = currentLocalization else { return }
+    guard let dragAnchor = dragAnchor else { return }
+    
+    let dragDelta = dragAnchor.delta(to: endPoint)
+    guard 0.5 < abs(dragDelta.x) || 0.5 < abs(dragDelta.y) else { return }
 
     localization.region = region(from: localization.layer)
-    localizations.sendLocalizationsMessage(.updateLocalizations,
-                                            ids: [localization.id])
+    localizationData.sendLocalizationsMessage(.updateLocalizations, localization: localization)
 
     displayConcept(for: localization)
     

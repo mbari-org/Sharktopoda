@@ -35,9 +35,9 @@ extension VideoWindow: NSWindowDelegate {
       if windowData.playerDirection != .paused {
         windowData.videoControl.play(rate: 0.0)
         windowData.playerView.clear()
-        windowData.localizations.clearSelected()
+        windowData.localizationData.clearSelected()
       } else {
-        windowData.localizations.clearSelected()
+        windowData.localizationData.clearSelected()
       }
       
       for localization in pausedLocalizations {
@@ -68,7 +68,7 @@ extension VideoWindow: NSWindowDelegate {
       }
 
       let pausedIds = pausedLocalizations.map(\.id)
-      for (id, localization) in windowData.localizations.storage {
+      for (id, localization) in windowData.localizationData.storage {
         if !pausedIds.contains(id) {
           localization.resize(for: videoRect)
         }

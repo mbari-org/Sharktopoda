@@ -15,7 +15,7 @@ struct ControlRemoveLocalizations: ControlMessage {
   
   func process() -> ControlResponse {
     withWindowData(id: uuid) { windowData in
-      windowData.localizations.remove(ids: localizations)
+      windowData.localizationData.remove(ids: localizations)
       return ok()
     }
   }

@@ -16,7 +16,7 @@ struct ControlUpdateLocalizations: ControlMessage {
     withWindowData(id: uuid) { windowData in
       localizations
         .forEach { controlLocalization in
-          windowData.localizations.update(using: controlLocalization)
+          windowData.localizationData.update(using: controlLocalization)
         }
       return ok()
     }

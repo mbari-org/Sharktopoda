@@ -14,7 +14,7 @@ struct ControlClearLocalizations: ControlMessage {
   func process() -> ControlResponse {
     withWindowData(id: uuid) { windowData in
       windowData.playerView.clear()
-      windowData.localizations.clear()
+      windowData.localizationData.clear()
       
       return ok()
     }

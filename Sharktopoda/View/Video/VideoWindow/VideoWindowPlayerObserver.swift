@@ -15,7 +15,7 @@ extension VideoWindow {
       
       guard windowData.playerView.showLocalizations else { return }
       
-      let localizations = windowData.localizations
+      let localizations = windowData.localizationData
       let playerView = windowData.playerView
       
       let elapsedTime = time.asMillis()

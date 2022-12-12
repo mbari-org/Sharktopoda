@@ -90,7 +90,7 @@ extension NSPlayerView {
   
   // CxTBD This doesn't seem right
   var localizations: LocalizationData {
-    windowData.localizations
+    windowData.localizationData
   }
 
   var scale: CGFloat {

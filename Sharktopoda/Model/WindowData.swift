@@ -14,7 +14,7 @@ final class WindowData: Identifiable, ObservableObject {
   
   var _frameDuration: CMTime?
   var _fullSize: CGSize?
-  var _localizations: LocalizationData?
+  var _localizationData: LocalizationData?
   var _player: AVPlayer?
   var _playerView: PlayerView?
   var _sliderView: NSTimeSliderView?
@@ -39,9 +39,9 @@ final class WindowData: Identifiable, ObservableObject {
     set { _fullSize = newValue }
   }
   
-  var localizations: LocalizationData {
-    get { _localizations! }
-    set { _localizations = newValue }
+  var localizationData: LocalizationData {
+    get { _localizationData! }
+    set { _localizationData = newValue }
   }
   
   var player: AVPlayer {
@@ -81,7 +81,7 @@ extension WindowData {
   }
   
   var currentFrameTime: Int {
-    localizations.frameTime(of: videoControl.currentTime)
+    localizationData.frameTime(of: videoControl.currentTime)
   }
   
   func pause(_ withDisplay: Bool = true) {
@@ -89,7 +89,7 @@ extension WindowData {
       guard let self = self else { return }
       self.play(rate: 0.0)
       self.playerView.clear()
-      self.localizations.clearSelected()
+      self.localizationData.clearSelected()
 
       if withDisplay {
         self.displayPaused()
@@ -101,7 +101,7 @@ extension WindowData {
     DispatchQueue.main.async { [weak self] in
       guard let self = self else { return }
       
-      self.localizations.clearSelected()
+      self.localizationData.clearSelected()
       self.playerDirection = PlayerDirection.at(rate: rate)
       self.playerView.clear(localizations: self.pausedLocalizations())
       self.videoControl.play(rate: rate)
@@ -125,7 +125,7 @@ extension WindowData {
   }
 
   func seek(elapsedTime: Int) {
-    let frameTime = localizations.frameTime(of: elapsedTime)
+    let frameTime = localizationData.frameTime(of: elapsedTime)
     videoControl.seek(elapsedTime: frameTime) { [weak self] done in
       DispatchQueue.main.async {
         self?.displayPaused()
@@ -134,7 +134,7 @@ extension WindowData {
   }
   
   func step(_ steps: Int) {
-    let stepTime = currentFrameTime + steps * localizations.frameDuration
+    let stepTime = currentFrameTime + steps * localizationData.frameDuration
     seek(elapsedTime: stepTime)
   }
   
@@ -145,16 +145,16 @@ extension WindowData {
 
 extension WindowData {
   func add(localizations controlLocalizations: [ControlLocalization]) {
-    let currentFrameNumber = localizations.frameNumber(of: videoControl.currentTime)
+    let currentFrameNumber = localizationData.frameNumber(of: videoControl.currentTime)
 
     controlLocalizations
       .map { Localization(from: $0, size: fullSize) }
       .forEach {
         $0.resize(for: playerView.videoRect)
-        localizations.add($0)
+        localizationData.add($0)
         
         guard videoControl.paused else { return }
-        guard localizations.frameNumber(for: $0) == currentFrameNumber else { return }
+        guard localizationData.frameNumber(for: $0) == currentFrameNumber else { return }
         
         playerView.display(localization: $0)
       }
@@ -166,7 +166,15 @@ extension WindowData {
   }
 
   func pausedLocalizations() -> [Localization] {
-    localizations.fetch(.paused, at: videoControl.currentTime)
+    localizationData.fetch(.paused, at: videoControl.currentTime)
+  }
+  
+  func select(localizationIds ids: [String]) {
+    localizationData.select(ids: ids, notifyClient: false)
+    
+    localizationData.selectedLocalizations.forEach {
+      playerView.displayConcept(for: $0)
+    }
   }
 }
 

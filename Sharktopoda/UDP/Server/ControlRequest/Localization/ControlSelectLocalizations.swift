@@ -14,7 +14,8 @@ struct ControlSelectLocalizations: ControlMessage {
   
   func process() -> ControlResponse {
     withWindowData(id: uuid) { windowData in
-      windowData.localizations.select(ids: localizations, notifyClient: false)
+      windowData.select(localizationIds: localizations)
+      
       return ok()
     }
   }

@@ -26,7 +26,7 @@ extension VideoWindow {
     
     /// Cmd-Delete:  Delete selected localizations
     if isCommand(event), event.keyCode == KeyCode.delete.rawValue {
-      windowData.localizations.deleteSelected()
+      windowData.localizationData.deleteSelected()
       // CxInc Concept layers?
       return
     }

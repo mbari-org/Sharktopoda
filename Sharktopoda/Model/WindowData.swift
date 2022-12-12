@@ -175,6 +175,16 @@ extension WindowData {
     localizationData.selectedLocalizations.forEach {
       playerView.displayConcept(for: $0)
     }
+//    playerView.playerLayer.setNeedsDisplay()
+//    playerView.playerLayer.setNeedsLayout()
+//    playerView.rootLayer.setNeedsLayout()
+    
+//    let selectedLocalizations = localizationData.selectedLocalizations
+//    playerView.clear(localizations: selectedLocalizations)
+//    playerView.display(localizations: selectedLocalizations)
+//    selectedLocalizations.forEach {
+//      playerView.displayConcept(for: $0)
+//    }
   }
 }
 

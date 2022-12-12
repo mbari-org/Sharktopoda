@@ -25,6 +25,8 @@ extension Localization {
   }
   
   func select() {
+    conceptLayer?.removeFromSuperlayer()
+    
     layer.strokeColor = selectedColor
     let conceptLayer = CATextLayer()
     conceptLayer.fontSize = captionSize

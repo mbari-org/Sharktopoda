@@ -150,8 +150,14 @@ extension NSPlayerView {
     
     if let conceptLayer = localization.conceptLayer {
       localization.positionConcept(for: videoRect)
+
       DispatchQueue.main.async { [weak self] in
         self?.playerLayer.addSublayer(conceptLayer)
+//        self?.playerLayer.setNeedsDisplay()
+      }
+      
+      DispatchQueue.main.async { [weak self] in
+        self?.playerLayer.setNeedsDisplay()
       }
     }
   }
@@ -167,8 +173,10 @@ extension NSPlayerView {
   func display(localizations: [Localization]) {
     guard showLocalizations else { return }
     
-    DispatchQueue.main.async { [weak self] in
-      localizations.forEach { self?.playerLayer.addSublayer($0.layer) }
+    DispatchQueue.main.async { [weak playerLayer] in
+      localizations.forEach {
+        playerLayer?.addSublayer($0.layer)
+      }
     }
   }
 

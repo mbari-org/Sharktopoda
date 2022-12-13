@@ -22,9 +22,7 @@ struct ControlCapture: ControlMessage {
       // as possible.
       let captureTime = windowData.playerTime
 
-      guard let fileUrl = URL(string: fileUrlString(imageLocation)) else {
-        return failed("Image location is malformed URL")
-      }
+      let fileUrl = URL(fileURLWithPath: imageLocation)
 
       guard !FileManager.default.fileExists(atPath: fileUrl.path) else {
         return failed("Image exists at location")
@@ -53,15 +51,12 @@ struct ControlCapture: ControlMessage {
     
     let videoAsset = await videoWindow.windowData.videoAsset
 
-    switch await videoAsset.frameGrab(at: captureTime, destination: fileUrlString(imageLocation)) {
+    switch await videoAsset.frameGrab(at: captureTime, destination: imageLocation) {
       case .success(let grabTime):
         return ClientMessageCaptureDone(for: self, grabTime: grabTime)
+
       case .failure(let error):
         return ClientMessageCaptureDone(for: self, cause: error.localizedDescription)
     }
-  }
-  
-  private func fileUrlString(_ imageLocation: String) -> String {
-    imageLocation.starts(with: "file:") ? imageLocation : "file:\(imageLocation)"
   }
 }

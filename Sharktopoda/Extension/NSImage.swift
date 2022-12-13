@@ -16,9 +16,7 @@ extension NSImage {
   
   func writePng(to destination: String) -> Error? {
     do {
-      guard let fileUrl = URL(string: destination) else {
-        return FrameCaptureError.notFileUrl
-      }
+      let fileUrl = URL(fileURLWithPath: destination)
 
       guard !FileManager.default.fileExists(atPath: fileUrl.path) else {
         return FrameCaptureError.exists
@@ -28,7 +26,6 @@ extension NSImage {
       guard FileManager.default.isWritableFile(atPath: dirPath) else {
         return FrameCaptureError.notWritable
       }
-      
       
       guard let data = pngData else {
         return FrameCaptureError.pngRepresentation

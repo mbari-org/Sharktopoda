@@ -68,6 +68,34 @@ extension SharktopodaData {
 // MARK: Latest Video Window
 /// Based on KeyInfo time
 extension SharktopodaData {
+  func close(id: String) {
+    guard let videoWindow = videoWindows[id] else { return }
+    
+    videoWindow.bringToFront()
+    
+    if let nextVideoWindow = closeLatest() {
+      nextVideoWindow.bringToFront()
+    }
+  }
+  
+  func closeLatest() -> VideoWindow? {
+    guard !videoWindows.isEmpty else { return nil }
+    let beforeCount = videoWindows.count
+
+    guard let latest = latestVideoWindow() else { return nil }
+    latest.close()
+
+    if beforeCount == 1 {
+      return nil
+    }
+    
+    let windows: [VideoWindow] = Array(videoWindows.values).filter { videoWindow in
+      videoWindow.id != latest.id
+    }
+    
+    return windows.sorted(by: { $0.windowData < $1.windowData }).last
+  }
+  
   func latestVideoWindow() -> VideoWindow? {
     guard !videoWindows.isEmpty else { return nil }
     
@@ -78,6 +106,18 @@ extension SharktopodaData {
     }
     
     return windows.sorted(by: { $0.windowData < $1.windowData }).last
+  }
+  
+  var videoWindowsState: VideoWindowsState {
+    if videoWindows.isEmpty {
+      return .noneOpen
+    }
+    
+    if latestVideoWindow()?.isKeyWindow ?? false {
+      return videoWindows.count == 1 ? .soloKey : .multiKey
+    }
+    
+    return .noKey
   }
 }
 

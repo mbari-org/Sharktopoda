@@ -12,11 +12,10 @@ struct ControlClose: ControlMessage {
   var uuid: String
   
   func process() -> ControlResponse {
-    withVideoWindow(id: uuid) { videoWindow in
-      DispatchQueue.main.async {
-        videoWindow.close()
-      }
-      return ok()
+    DispatchQueue.main.async {
+      UDP.sharktopodaData.close(id: uuid)
     }
+
+    return ok()
   }
 }

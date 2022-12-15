@@ -8,13 +8,24 @@ import AppKit
 
 class SharktopodaAppDelegate: NSObject, NSApplicationDelegate {
   func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
-    if UDP.sharktopodaData.hasOpenVideos {
-      if let latestWindow = UDP.sharktopodaData.latestVideoWindow() {
-        latestWindow.bringToFront()
-      }
-      return .terminateCancel
-    } else {
-      return .terminateNow
+    guard let sharktopodaData = UDP.sharktopodaData else { return .terminateNow }
+
+    switch sharktopodaData.videoWindowsState {
+      case .noneOpen:
+        return .terminateNow
+        
+      case .soloKey:
+        return .terminateNow
+
+      case .noKey:
+        sharktopodaData.latestVideoWindow()?.bringToFront()
+        return .terminateCancel
+
+      case .multiKey:
+        if let nextVideoWindow = sharktopodaData.closeLatest() {
+          nextVideoWindow.bringToFront()
+        }
+        return .terminateCancel
     }
   }
 }

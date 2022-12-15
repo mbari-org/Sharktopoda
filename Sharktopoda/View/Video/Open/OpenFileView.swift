@@ -11,7 +11,7 @@ struct OpenFileView: View {
 
   var body: some View {
     Button("Open file...") {
-      let dialog = NSOpenPanel()
+      let dialog = OpenFileView.openFileDialog()
       
       dialog.showsResizeIndicator    = true
       dialog.showsHiddenFiles        = false
@@ -24,6 +24,18 @@ struct OpenFileView: View {
       
       VideoWindow.open(url: fileUrl)
     }
+  }
+  
+  static func openFileDialog() -> NSOpenPanel {
+    let dialog = NSOpenPanel()
+    
+    dialog.showsResizeIndicator    = true
+    dialog.showsHiddenFiles        = false
+    dialog.allowsMultipleSelection = false
+    dialog.canChooseDirectories    = false
+    dialog.isFloatingPanel         = true
+    
+    return dialog
   }
 }
 

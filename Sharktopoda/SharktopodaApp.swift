@@ -25,7 +25,8 @@ struct SharktopodaApp: App {
     .commands { SharktopodaCommands() }
 
     Settings {
-      Preferences().environmentObject(sharktopodaData)
+      Preferences()
+        .environmentObject(sharktopodaData)
     }
   }
 }

@@ -7,6 +7,11 @@
 import AppKit
 
 class SharktopodaAppDelegate: NSObject, NSApplicationDelegate {
+//  func applicationDidFinishLaunching(_ notification: Notification) {
+//    NSApp.windows.last?.makeMain()
+//    NSApp.windows.last?.makeKeyAndOrderFront(nil)
+//  }
+  
   func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
     guard let sharktopodaData = UDP.sharktopodaData else { return .terminateNow }
 

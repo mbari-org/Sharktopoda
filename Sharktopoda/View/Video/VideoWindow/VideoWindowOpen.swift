@@ -21,9 +21,9 @@ extension VideoWindow {
           return
           
         case .loaded:
-          let videoWindow = UDP.sharktopodaData.window(for: id)
+          guard let videoWindow = UDP.sharktopodaData.window(for: id) else { return }
           onMain {
-            videoWindow!.bringToFront()
+            videoWindow.bringToFront()
           }
           openDoneMessage(id: id)
         

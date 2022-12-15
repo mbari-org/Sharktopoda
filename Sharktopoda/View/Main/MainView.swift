@@ -33,7 +33,7 @@ struct MainView: View {
       .padding(.top, 20)
       .frame(maxWidth: .infinity)
     }
-    .frame(maxWidth: MainView.width, maxHeight: MainView.height)
+    .frame(width: MainView.width, height: MainView.height)
   }
 }
 

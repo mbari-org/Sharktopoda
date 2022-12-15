@@ -82,7 +82,10 @@ extension SharktopodaData {
     guard let latest = latestVideoWindow() else { return }
     latest.windowData.player.replaceCurrentItem(with: nil)
     videoWindows.removeValue(forKey: latest.id)
-    latest.close()
+
+    Task {
+      await closeVideo(id: latest.id)
+    }
 
     if beforeCount == 1 {
       return

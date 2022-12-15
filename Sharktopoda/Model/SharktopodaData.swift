@@ -17,6 +17,8 @@ final class SharktopodaData: ObservableObject {
   private var videoWindows = [String: VideoWindow]()
   private var openVideos = OpenedVideos()
   
+  var mainViewWindow: NSWindow?
+  
   init() {
     // Needed for notify observing Views of non-View related UDP messaging changes to sharktopodaData
     UDP.sharktopodaData = self

@@ -25,7 +25,7 @@ extension VideoWindow {
           onMain {
             videoWindow.bringToFront()
           }
-          openDoneMessage(id: id)
+          openDone(id: id)
         
         case .notOpen:
           await openVideo(id: id, url: url, alert: alert)
@@ -45,7 +45,7 @@ extension VideoWindow {
         videoWindow.bringToFront()
       }
       
-      openDoneMessage(id: id)
+      openDone(id: id)
     } catch {
       await UDP.sharktopodaData.closeVideo(id: id)
       
@@ -60,7 +60,9 @@ extension VideoWindow {
     }
   }
   
-  static func openDoneMessage(id: String) {
+  static func openDone(id: String) {
+    UDP.sharktopodaData.mainViewWindow?.miniaturize(nil)
+    
     guard let client = UDP.sharktopodaData.udpClient else { return }
     
     let openDoneMessage = ClientMessageOpenDone(uuid: id)

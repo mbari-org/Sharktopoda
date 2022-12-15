@@ -10,13 +10,12 @@ import SwiftUI
 
 extension VideoWindow: NSWindowDelegate {
   func windowWillClose(_ notification: Notification) {
-    UDP.sharktopodaData.close(id: id)
+    guard let sharktopodaData = UDP.sharktopodaData else { return }
     
-    if !UDP.sharktopodaData.hasOpenVideos {
-//      NSApp.mainWindow?.makeKeyAndOrderFront(nil)
-//      NSApp.windows.last?.makeMain()
-//      NSApp.windows.last?.makeKeyAndOrderFront(nil)
-      print("CxInc need to show Main View")
+    sharktopodaData.close(id: id)
+    
+    if !sharktopodaData.hasOpenVideos {
+            sharktopodaData.mainViewWindow?.deminiaturize(nil)
     }
   }
   

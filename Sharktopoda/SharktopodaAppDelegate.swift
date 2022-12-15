@@ -7,10 +7,10 @@
 import AppKit
 
 class SharktopodaAppDelegate: NSObject, NSApplicationDelegate {
-//  func applicationDidFinishLaunching(_ notification: Notification) {
-//    NSApp.windows.last?.makeMain()
-//    NSApp.windows.last?.makeKeyAndOrderFront(nil)
-//  }
+  func applicationDidFinishLaunching(_ notification: Notification) {
+    // CxTBD This seems fragile
+    UDP.sharktopodaData.mainViewWindow = NSApp.windows.last
+  }
   
   func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
     guard let sharktopodaData = UDP.sharktopodaData else { return .terminateNow }
@@ -20,7 +20,8 @@ class SharktopodaAppDelegate: NSObject, NSApplicationDelegate {
         return .terminateNow
         
       case .soloKey:
-        return .terminateNow
+        sharktopodaData.latestVideoWindow()?.performClose(nil)
+        return .terminateCancel
 
       case .noKey:
         sharktopodaData.latestVideoWindow()?.bringToFront()

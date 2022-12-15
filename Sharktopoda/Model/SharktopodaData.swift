@@ -72,28 +72,28 @@ extension SharktopodaData {
     guard let videoWindow = videoWindows[id] else { return }
     
     videoWindow.bringToFront()
-    
-    if let nextVideoWindow = closeLatest() {
-      nextVideoWindow.bringToFront()
-    }
+    closeLatest()
   }
   
-  func closeLatest() -> VideoWindow? {
-    guard !videoWindows.isEmpty else { return nil }
+  func closeLatest() {
+    guard !videoWindows.isEmpty else { return }
     let beforeCount = videoWindows.count
 
-    guard let latest = latestVideoWindow() else { return nil }
+    guard let latest = latestVideoWindow() else { return }
+    latest.windowData.player.replaceCurrentItem(with: nil)
+    videoWindows.removeValue(forKey: latest.id)
     latest.close()
 
     if beforeCount == 1 {
-      return nil
+      return
     }
     
     let windows: [VideoWindow] = Array(videoWindows.values).filter { videoWindow in
       videoWindow.id != latest.id
     }
     
-    return windows.sorted(by: { $0.windowData < $1.windowData }).last
+    let nextVideoWindow = windows.sorted(by: { $0.windowData < $1.windowData }).last
+    nextVideoWindow?.bringToFront()
   }
   
   func latestVideoWindow() -> VideoWindow? {

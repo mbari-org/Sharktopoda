@@ -22,9 +22,7 @@ class SharktopodaAppDelegate: NSObject, NSApplicationDelegate {
         return .terminateCancel
 
       case .multiKey:
-        if let nextVideoWindow = sharktopodaData.closeLatest() {
-          nextVideoWindow.bringToFront()
-        }
+        sharktopodaData.closeLatest()
         return .terminateCancel
     }
   }

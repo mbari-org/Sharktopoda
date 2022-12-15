@@ -50,6 +50,10 @@ extension SharktopodaData {
 
 // MARK: Misc
 extension SharktopodaData {
+  var hasOpenVideos: Bool {
+    !videoWindows.isEmpty
+  }
+  
   func videoInfos() -> [VideoInfo] {
     videoWindows.values.map {
       VideoInfo(using: $0)

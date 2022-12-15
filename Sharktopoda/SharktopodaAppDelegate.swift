@@ -6,5 +6,12 @@
 //
 import AppKit
 
-class SharktopodaAppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
+class SharktopodaAppDelegate: NSObject, NSApplicationDelegate {
+  func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
+    if UDP.sharktopodaData.hasOpenVideos {
+      return .terminateCancel
+    } else {
+      return .terminateNow
+    }
+  }
 }

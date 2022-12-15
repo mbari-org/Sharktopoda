@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E200F269294B7EFA004AEBF9 /* OpenMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200F268294B7EFA004AEBF9 /* OpenMainView.swift */; };
 		E2020D732926E8AE0090B60B /* SharktopodaAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2020D722926E8AE0090B60B /* SharktopodaAppDelegate.swift */; };
 		E2020D77292834770090B60B /* VideoControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2020D76292834770090B60B /* VideoControlView.swift */; };
 		E213252128F722F900D6BFF6 /* NSPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E213252028F722F900D6BFF6 /* NSPlayerView.swift */; };
@@ -171,6 +172,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E200F268294B7EFA004AEBF9 /* OpenMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMainView.swift; sourceTree = "<group>"; };
 		E2020D722926E8AE0090B60B /* SharktopodaAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharktopodaAppDelegate.swift; sourceTree = "<group>"; };
 		E2020D76292834770090B60B /* VideoControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoControlView.swift; sourceTree = "<group>"; };
 		E213252028F722F900D6BFF6 /* NSPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSPlayerView.swift; sourceTree = "<group>"; };
@@ -399,6 +401,7 @@
 		E237C0A028ECFB2E002868D1 /* Open */ = {
 			isa = PBXGroup;
 			children = (
+				E200F268294B7EFA004AEBF9 /* OpenMainView.swift */,
 				E237C09E28ECF9C2002868D1 /* OpenFileView.swift */,
 				E237C0A328EDFAA3002868D1 /* OpenUrlView.swift */,
 				E2505D5028EF2A8F0027F280 /* OpenUrlPanel.swift */,
@@ -982,6 +985,7 @@
 				E2989AB728D3B261009D2D65 /* NetworkPreferencesView.swift in Sources */,
 				E223C30C28F20D5D00274C3E /* ControlRemoveLocalizations.swift in Sources */,
 				E2675E1E28DAB65D00F5F114 /* ControlPing.swift in Sources */,
+				E200F269294B7EFA004AEBF9 /* OpenMainView.swift in Sources */,
 				E2F691F82936A04F00F7ADC3 /* NSTimeSliderView.swift in Sources */,
 				E2FAB21028E213A9006D2676 /* MainTitleView.swift in Sources */,
 				E223C31028F21D8500274C3E /* ControlClearLocalizations.swift in Sources */,

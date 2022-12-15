@@ -9,6 +9,11 @@ import SwiftUI
 
 struct SharktopodaCommands: Commands {
   var body: some Commands {
+    CommandGroup(replacing: .newItem, addition: {
+      OpenMainView()
+        .keyboardShortcut("N", modifiers: [.command])
+    })
+    
     CommandGroup(after: CommandGroupPlacement.newItem) {
       Divider()
 

@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct ControlResponseCaptureDone: ControlResponse {
-  var response: ControlCommand
+struct ClientMessageCaptureDone: ClientMessage {
+  var command: ClientCommand
   var status: ControlResponseStatus
 
   var uuid: String
@@ -18,7 +18,7 @@ struct ControlResponseCaptureDone: ControlResponse {
   var cause: String?
   
   init(for controlCapture: ControlCapture) {
-    response = .captureDone
+    command = .captureDone
     status = .ok
     
     uuid = controlCapture.uuid
@@ -35,5 +35,9 @@ struct ControlResponseCaptureDone: ControlResponse {
     self.init(for: controlCapture)
     status = .failed
     self.cause = cause
+  }
+  
+  func data() -> Data {
+    try! UDPMessageCoder.encode(self)
   }
 }

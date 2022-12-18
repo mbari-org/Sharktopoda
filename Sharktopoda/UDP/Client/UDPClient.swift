@@ -8,25 +8,15 @@ import Foundation
 import Network
 
 class UDPClient: ObservableObject {
-  struct ClientData {
-    let host: String
-    let port: Int
-    var active: Bool = false
-    var error: String? = nil
-    
-    var endpoint: String {
-      "\(host):\(port)"
-    }
-  }
-  
   typealias UDPClientConnectCompletion = (UDPClient) -> Void
   typealias UDPClientMessageCompletion = (Data?) -> Void
   
-  private static let queue = DispatchQueue(label: "Sharktopoda UDP Client Queue")
+  static let messageQueue = DispatchQueue(label: "Sharktopoda UDP Client Queue")
+  private static let timeoutQueue = DispatchQueue(label: "Sharktopoda UDP Timeout Queue")
   
   var connection: NWConnection?
   
-  var clientData: ClientData
+  var clientData: UDPClientData
   var connectCompletion: UDPClientConnectCompletion?
   var timeout: TimeInterval
   
@@ -39,7 +29,7 @@ class UDPClient: ObservableObject {
   static func connect(using controlConnect: ControlConnect, completion: @escaping UDPClientConnectCompletion) {
     let host = controlConnect.host
     let port = controlConnect.port
-    let clientData = ClientData(host: host, port: port)
+    let clientData = UDPClientData(host: host, port: port)
 
     if let client = UDP.sharktopodaData.udpClient {
       if clientData.endpoint == client.clientData.endpoint {
@@ -53,15 +43,15 @@ class UDPClient: ObservableObject {
     let _ = UDPClient(using: clientData, completion: completion)
   }
   
-  private init(using clientData: ClientData, completion: @escaping UDPClientConnectCompletion) {
+  private init(using clientData: UDPClientData, completion: @escaping UDPClientConnectCompletion) {
 
     self.clientData = clientData
     timeout = UDPClient.clientTimeout()
     connectCompletion = completion
 
-    connection = UDP.connection(host: clientData.host, port: clientData.port)
+    connection = UDP.connect(clientData)
     connection?.stateUpdateHandler = stateUpdate(to:)
-    connection?.start(queue: UDPClient.queue)
+    connection?.start(queue: UDPClient.messageQueue)
 
     log("connecting to \(clientData.endpoint)")
   }
@@ -90,11 +80,14 @@ class UDPClient: ObservableObject {
   }
   
   func pingConnection() {
-    process(ClientPing()) { [weak self] data in
-      if let data = data {
-        self?.log("CxTBD Inspect ping response: \(String(decoding: data, as: UTF8.self))")
+    process(ClientMessagePing()) { [weak self] data in
+      if data != nil {
+        self?.log("Received ping")
         self?.udpActive(true)
+      } else {
+        self?.log("Missing ping")
       }
+      
       self?.connectCompletion?(self!)
     }
   }
@@ -112,8 +105,7 @@ class UDPClient: ObservableObject {
     let data = message.data()
     var receivedReply = false
     
-    
-    UDPClient.queue.asyncAfter(deadline: .now() + timeout) {
+    UDPClient.timeoutQueue.asyncAfter(deadline: .now() + timeout) {
       guard receivedReply == false else { return }
       completion(nil)
     }
@@ -160,7 +152,7 @@ class UDPClient: ObservableObject {
   func udpActive(_ active: Bool) {
     let host = clientData.host
     let port = clientData.port
-    clientData = ClientData(host: host, port: port, active: active)
+    clientData = UDPClientData(host: host, port: port, active: active)
     
     let activeState = (clientData.active ? "" : "in") + "active"
     log("\(clientData.endpoint) \(activeState)")
@@ -169,7 +161,7 @@ class UDPClient: ObservableObject {
   func udpError(message: String) {
     let host = clientData.host
     let port = clientData.port
-    clientData = ClientData(host: host, port: port, error: message)
+    clientData = UDPClientData(host: host, port: port, error: message)
   }
   
   func udpError(error: Error) {
@@ -182,7 +174,7 @@ class UDPClient: ObservableObject {
       connection.cancel()
       
       let endpoint = clientData.endpoint
-      clientData = ClientData(host: "", port: 0)
+      clientData = UDPClientData(host: "", port: 0)
       
       log("stopped \(endpoint)")
     }

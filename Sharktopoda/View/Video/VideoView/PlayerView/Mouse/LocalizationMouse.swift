@@ -17,7 +17,7 @@ extension NSPlayerView {
     /// If did not click in current location mouse layer, unselect any potentially selected locatizations
     guard currentLayer.contains(layerPoint) else {
       if let id = currentLocalization?.id {
-        localizations.unselect(id: id)
+        localizationData.unselect(ids: [id])
         currentLocalization = nil
       }
       return nil
@@ -32,8 +32,10 @@ extension NSPlayerView {
     guard let mouseLocalization = mousedLocalization(at: playerPoint) else {
       return false
     }
-    
-    localizations.select(id: mouseLocalization.id, clear: false)
+
+    windowData.localizationData.select(ids: [mouseLocalization.id])
+    displayConcept(for: mouseLocalization)
+
     return true
   }
   
@@ -41,14 +43,18 @@ extension NSPlayerView {
   func currentSelect(_ mousePoint: CGPoint) -> CGRect.Location? {
     guard let mouseLocalization = mousedLocalization(at: mousePoint) else {
       currentLocalization = nil
-      localizations.clearSelected()
+      localizationData.clearSelected()
       return nil
     }
     
-    localizations.select(id: mouseLocalization.id)
+    localizationData.clearSelected(notifyClient: false)
+
+    currentLocalization = mouseLocalization
+    localizationData.select(ids: [mouseLocalization.id])
+    displayConcept(for: mouseLocalization)
+
     let layer = mouseLocalization.layer
     let layerPoint = layer.convertSuperPoint(mousePoint)
-    currentLocalization = mouseLocalization
     return layer.location(of: layerPoint)
   }
   
@@ -77,7 +83,7 @@ extension NSPlayerView {
     guard windowData.videoControl.paused else { return nil }
     guard showLocalizations else { return nil }
 
-    let mousedLocalizations = localizations
+    let mousedLocalizations = localizationData
       .fetch(.paused, at: currentTime)
       .filter { $0.layer.containsSuperPoint(point) }
     

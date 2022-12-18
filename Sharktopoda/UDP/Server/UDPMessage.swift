@@ -9,26 +9,25 @@ import Foundation
 import Network
 
 class UDPMessage {
-  private static let messageQueue = DispatchQueue(label: "Sharktopoda UDP Message Queue")
-  private static let captureQueue = DispatchQueue(label: "Sharktopoda UDP Capture Queue")
+  typealias MessageResult = (_ result: Data) -> Void
 
-  typealias ProcessCompletion = (_ response: ControlResponse) -> Void
-  
+  static let messageQueue = DispatchQueue(label: "Sharktopoda UDP Message Queue",
+                                          qos: .userInitiated)
+
   let connection: NWConnection
-  let completion: ProcessCompletion
-
-  static func process(on connection: NWConnection) {
-    let _ = UDPMessage(using: connection, completion: { response in
-      connection.send(content: response.data(), completion: .contentProcessed({ _ in }))
-    })
-    connection.start(queue: UDPMessage.messageQueue)
-  }
 
   private
-  init(using connection: NWConnection, completion: @escaping ProcessCompletion) {
+  init(for connection: NWConnection, completion: @escaping MessageResult) {
     self.connection = connection
-    self.completion = completion
-    connection.stateUpdateHandler = self.stateUpdate(to:)
+    connection.stateUpdateHandler = stateUpdate(to:)
+  }
+  
+  static func handle(connection: NWConnection) {
+    let handler = UDPMessage(for: connection) { data in
+      connection.send(content: data, completion: .contentProcessed({ _ in }))
+    }
+    connection.stateUpdateHandler = handler.stateUpdate(to:)
+    connection.start(queue: UDPMessage.messageQueue)
   }
   
   func stateUpdate(to update: NWConnection.State) {
@@ -58,49 +57,31 @@ class UDPMessage {
       guard isComplete else {
         return
       }
+      
+      guard let self = self else { return }
 
       // CxTBD guard may not be necessary: Preliminary futzing shows empty data never gets here
       guard let data = data, !data.isEmpty else {
-        self?.completion(ControlUnknown.failed("empty message"))
-        self?.log("empty message")
+        self.log("empty message")
         return
       }
 
-      let controlMessage = ControlCommand.controlMessage(from: data)
-      self?.log("\(controlMessage)")
+      let controlMessage = UDP.controlMessage(from: data)
+      self.log("\(controlMessage)")
 
-      let controlResponse = controlMessage.process()
-      self?.completion(controlResponse)
-
-      // If frame capture, send a second response re: async frame grab
-      if controlMessage.command == .capture,
-         controlResponse.status == .ok,
-         let controlCapture = controlMessage as? ControlCapture,
-         let connection = self?.connection,
-         let controlResponseOk = controlResponse as? ControlResponseCaptureOk {
-        UDPMessage.captureQueue.async {
-          Task {
-            let captureTime = controlResponseOk.captureTime
-            let controlCaptureDone = await controlCapture.doCapture(captureTime: captureTime)
-            connection.send(content: controlCaptureDone.data(), completion: .contentProcessed({ _ in
-//              connection.cancel()
-//              connection.stateUpdateHandler = nil
-            }))
-          }
-        }
-      } else {
-//        self?.stop()
-      }
+      let responseData = controlMessage.process().data()
+      self.connection.send(content: responseData, completion: .contentProcessed({ _ in
+        self.stop()
+      }))
     }
   }
 
   func connectionDidFail(error: Error) {
-    let msg = error.localizedDescription
-    completion(ControlUnknown.failed(msg))
-    log(msg)
+    let cause = error.localizedDescription
+    log("Message failed: \(cause)")
     stop()
   }
-  
+
   func stop() {
     connection.cancel()
     connection.stateUpdateHandler = nil
@@ -108,9 +89,5 @@ class UDPMessage {
   
   func log(_ msg: String) {
     UDP.log("<- \(msg)")
-  }
-  
-  deinit {
-    stop()
   }
 }

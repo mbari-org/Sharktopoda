@@ -128,7 +128,7 @@ sequenceDiagram
     end
  ```
 
- There are 2 forms of this message. The first form omits the "host" field; Sharktopoda assumes that the host is "localhost".
+ There are 2 forms of this message. The first form omits the `host` field; Sharktopoda assumes that the host is **localhost**.
 
 ```json
 {
@@ -137,7 +137,7 @@ sequenceDiagram
 }
 ```
 
-The second form explicitly specifies the host:
+The second form explicitly specifies the `host`:
 
 ```json
 {
@@ -147,7 +147,7 @@ The second form explicitly specifies the host:
 }
 ```
 
-It should respond with an ok:
+For both message formats, it should always respond with an `ok` message:
 
 ```json
 {
@@ -156,15 +156,13 @@ It should respond with an ok:
 }
 ```
 
-Note, the response is always "ok".
-
 [Back](#control_commands)
 
 ### <a name="open"></a> Open
 
-Opens the specified video in a new window. The application should associate the URL and UUID with the window. (More on that later). If a new window is opened, the video should be immediately paused. (We don't want the video to autoplay when it is first opened)
+Opens the specified video in a new window. The application should associate the `url` and `uuid` with the window. (More on that later). If a new window is opened, the video should be immediately paused. (We don't want the video to autoplay when it is first opened)
 
-If a window with the UUID already exits, treat the open command as "show" command below, and a success response returned.
+If a window with the `uuid` already exits, treat the open command as `show` command below, and a success response returned.
 
 ```mermaid
 sequenceDiagram
@@ -207,13 +205,23 @@ sequenceDiagram
 }
 ```
 
-Either open command should respond with a success or failure message:
+Each form of the `open` command receives an immediate an `ok` message response.
+
+```json
+{
+  "response": "open",
+  "status": "ok"
+}
+```
+
+Sharktopoda will proceed with processing the command on a background thread. Upon completion of background processing, Sharktopoda shall send an `open done` message to the **host/port** established via a `connect` command:
 
 ##### Successfully opened video response
 
 ```json
 {
-  "response": "open",
+  "response": "open done",
+  "uuid": "b52cf7f1-e19c-40ba-b176-a7e479a3b170",
   "status": "ok"
 }
 ```
@@ -222,9 +230,9 @@ Either open command should respond with a success or failure message:
 
 ```json
 {
-  "response": "open",
-  "status": "failed",
-  "cause": <cause>
+  "cause": <cause>,
+  "response": "open done",
+  "status": "failed"
 }
 ```
 
@@ -232,7 +240,7 @@ Either open command should respond with a success or failure message:
 
 ### <a name="close"></a> Close
 
-It should close the window with the corresponding UUID:
+It should close the window with the corresponding `uuid`:
 
 ```json
 {
@@ -241,12 +249,13 @@ It should close the window with the corresponding UUID:
 }
 ```
 
-Close should respond with an ack even if no window with a matching UUID is found
+Close should respond with an `status` **failewd"" if no window with a matching `uuid` is found:
 
 ```json
 {
+  "cause":"No video for uuid",
   "response": "close",
-  "status": "ok"
+  "status": "failed"
 }
 ```
 
@@ -254,7 +263,7 @@ Close should respond with an ack even if no window with a matching UUID is found
 
 ### <a name="show"></a> Show
 
-Focuses the window containing the video with the given UUID and brings it to the front of all open Sharktopoda windows. Some UI toolkits do not grab focus if the app is not already focused. In that case, simply bring the window to the front of the other open Sharktopoda windows.
+Focuses the window containing the video with the given `uuid` and brings it to the front of all open Sharktopoda windows. Some UI toolkits do not grab focus if the app is not already focused. In that case, simply bring the window to the front of the other open Sharktopoda windows.
 
 ```json
 {
@@ -272,13 +281,13 @@ Show should respond with an ack:
 }
 ```
 
-If the window with UUID does not exist it should respond with
+If the window with `uuid` does not exist it should respond with
 
 ```json
 {
   "response": "show",
   "status": "failed",
-  "cause": <cause>
+  "cause": ""No video for uuid"
 }
 ```
 
@@ -290,7 +299,7 @@ If the window with UUID does not exist it should respond with
 {"command": "request information"}
 ```
 
-It should return the UUID and URL of the current or last focused window as well as the length of the video in milliseconds (named as `durationMillis`) and the frame_rate of the mov. The `isKey` field indicates if the window is currently handling user keyboard input.
+It should return the `uuid` and `url` of the current or last focused window as well as the length of the video in milliseconds (named as `durationMillis`) and the `frameRate` of the video file. The `isKey` field indicates if the window is currently handling user keyboard input.
 
 ```json
 {
@@ -304,12 +313,12 @@ It should return the UUID and URL of the current or last focused window as well 
 }
 ```
 
-If no video windows are currently available (i.e., either no successful **open** commands or all previously opened videos have been closed), it should respond with
+If no video windows are currently available (i.e., either no successful `open` commands or all previously opened videos have been closed), it should respond with
 
 ```json
 {
   "response": "request information",
-  "status": "ok",
+  "status": "failed",
   "cause": "No open videos"
 }
 ```
@@ -347,13 +356,13 @@ It should return info for all open videos like the following:
 }
 ```
 
-If no currently available video windows, it should respond the same as **request information**.
+If no currently available video windows, it should respond the same as `request information`.
 
 [Back](#control_commands)
 
 ### <a name="play"></a> Play
 
-Play the video associated with the UUID. The play rate will be 1.0 which is normal playback speed.
+Play the video associated with the `uuid`. The `play` rate will be **1.0** which is normal playback speed.
 
 ```json
 {
@@ -362,8 +371,8 @@ Play the video associated with the UUID. The play rate will be 1.0 which is norm
 }
 ```
 
-Optionally the play command can contain a rate for the playback. A positive rate is forward, negative is reverse. 1.0 is normal speed, 2.0
-is twice normal speed. -0.5 is half speed in reverse.
+Optionally the `play` command can contain a `rate` for the playback. A positive rate is forward,
+negative is reverse. 1.0 is normal speed, 2.0 is twice normal speed. -0.5 is half speed in reverse.
 
 ```json
 {
@@ -396,7 +405,7 @@ or
 
 ### <a name="pause"></a> Pause
 
-Pauses the playback for the video specified by the UUID
+Pauses the playback for the video specified by the `uuid`:
 
 ```json
 {
@@ -414,7 +423,7 @@ It should respond with:
 }
 ```
 
-or, in the case of failure, such as the requested video UUID does not exist:
+or, in the case of failure, such as the requested video `uuid` does not exist:
 
 ```json
 {
@@ -447,7 +456,7 @@ It should respond with:
 }
 ```
 
-or the following in the UUID does not exist:
+or the following in the `uuid` does not exist:
 
 ```json
 {
@@ -461,7 +470,7 @@ or the following in the UUID does not exist:
 
 ### <a name="player_state"></a> Request Player State
 
-Return the current playback state of the video (by UUID) and the actual rate that the video is playing. Possible states are: `shuttling forward`, `shuttling reverse`, `paused`, `playing`.
+Return the current playback state of the video (by `uuid`) and the actual rate that the video is playing. Possible states are: `shuttling forward`, `shuttling reverse`, `paused`, `playing`.
 
 - _playing_ is when the video is playing at a rate of 1.0
 - _shuttling forward_ is when the video is playing with a positive rate that is not equal to 1.0
@@ -485,7 +494,7 @@ An example response is:
 }
 ```
 
-or a failed response if the UUID does not exist:
+or a failed response if the `uuid` does not exist:
 
 ```json
 {
@@ -509,7 +518,7 @@ Seek to the provided elapsed time (which will be in milliseconds)
 }
 ```
 
-Seek should respond with an ok:
+Seek should respond with an `ok` message:
 
 ```json
 {
@@ -518,7 +527,7 @@ Seek should respond with an ok:
 }
 ```
 
-or the following in the UUID does not exist or the elapsedTimeMillis is before/after the videos start/end:
+or the following in the `uuid` does not exist or the `elapsedTimeMillis` is before/after the videos start/end:
 
 ```json
 {
@@ -532,7 +541,7 @@ or the following in the UUID does not exist or the elapsedTimeMillis is before/a
 
 ### <a name="frame_advance"></a> Frame advance
 
-Advance or regress one frame for the given video. If the `direction` field is positive (i.e. 1) the the video should be advance one frame. If the `direction` is negative (-1), then the video should go back one frame. This is supported using [AVPlayerItem.step](https://developer.apple.com/documentation/avfoundation/avplayeritem/1387968-step) The UDP/JSON command is
+Advance or regress one frame for the given video. If the `direction` field is positive (i.e. 1) the the video should be advance one frame. If the `direction` is negative (-1), then the video should go back one frame. The command is:
 
 ```json
 {
@@ -542,7 +551,7 @@ Advance or regress one frame for the given video. If the `direction` field is po
 }
 ```
 
-Frame advance should respond with an ack:
+Frame advance should respond with an `ok` message:
 
 ```json
 {
@@ -551,13 +560,13 @@ Frame advance should respond with an ack:
 }
 ```
 
-or the following in the UUID does not exist:
+or the following in the `uuid` does not exist:
 
 ```json
 {
   "response": "frame advance",
   "status": "failed",
-  "cause": <cause>
+  "cause": "No video for uuid"
 }
 ```
 
@@ -581,12 +590,9 @@ Sharktopoda should grab the current elapsed time for the specified **uuid** and 
 ```json
 {
   "response": "frame capture",
-  "status": "ok",
-  "captureTime": 12354
+  "status": "ok"
 }
 ```
-
-The returned **captureTime** is used by Sharktopoda in further processing of the command.
 
 A frame capture request shall report errors as:
 
@@ -606,9 +612,9 @@ Errors include:
 - Specified image location is a malformed file path
 - Process fails to create a PNG image from capture
 
-Upon sending an **ok** response, Sharktopoda will proceed with frame capture processing on a background thread.
+Upon sending an `ok` response message, Sharktopoda will proceed with frame capture processing on a background thread.
 
-Upon completion of background frame capture processing, Sharktopoda shall use the same connection as the prior **ok** message to send the response:
+Upon completion of background frame capture processing, Sharktopoda shall use the **host/port** established with a prior `connect` command to send the response:
 
 ```json
 {
@@ -621,9 +627,7 @@ Upon completion of background frame capture processing, Sharktopoda shall use th
 }
 ```
 
-Note that **elapsedTimeMillis** may be slightly different than the prior reported **captureTime** due to AVFoundation image capture processing.
-
-If an error occurres in frame capture processing, Sharktopoda shall send the response:
+If an error occurres in frame capture processing, Sharktopoda shall send a `frame capture done` response:
 
 ```json
 {
@@ -631,12 +635,12 @@ If an error occurres in frame capture processing, Sharktopoda shall send the res
   "command": "frame capture done",
   "imageReferenceUuid": "aa4cf7f1-e19c-40ba-b176-a7e479a3cdef",
   "imageLocation": "/Some/path/to/save/image.png",
-  "status": "ok",
+  "status": "failed",
   "uuid": "b52cf7f1-e19c-40ba-b176-a7e479a3b170"
 }
 ```
 
-The frame capture processing flow is as follows:
+The `frame capture` processing flow is as follows:
 
 ```mermaid
 sequenceDiagram 
@@ -670,23 +674,11 @@ sequenceDiagram
     end
 ```
 
-Finally, the remote app will respond with an ok:
-
-```json
-{
-  "response": "frame capture done",
-  "status": "ok"
-}
-```
-
-CxTBD This message is superfluous as Sharktopoda has neither a reference as to what frame capture the message refers to (there could be multiple background frame capture processes) nor does Sharktopoda have any conditional processing branches based on the message itself.
-
-
 [Back](#control_commands)
 
 ### <a name="ping"></a> Ping
 
-This command simple checks that the port can be reached and the application responds. It should timeout if no response is received within the timeout specified in the Preferences dialog. Ping is both and incoming and outgoing command (i.e. Sharktopoda should be able to send and receive ping commands)
+This command checks the Sharktopoda server is responding on the Preferences specfied **port**:
 
 ```json
 {
@@ -703,7 +695,7 @@ This command simple checks that the port can be reached and the application resp
 
 ## <a name="localizations"></a> Localizations
 
-A localization defines a rectangular region of interest on the video. Users should be able to draw these regions directly on a video window in sharktopoda. Sharktopoda will, in turn, notify the remote app that a new localization has been created. Sharktopoda needs to be able to handle 10,000s of localizations in a video and have them drawn on the correct frames as the video is playing, shuttling, etc. A Localization is also called an `Annotation` and has the following properties:
+A localization defines a rectangular region of interest on the video. Users should be able to draw these regions directly on a video window of the Sharktopoda app. Sharktopoda will, in turn, notify the remote app that a new localization has been created. Sharktopoda needs to be able to handle 10,000s of localizations in a video and have them drawn on the correct frames as the video is playing, shuttling, etc. A Localization is also called an `Annotation` and has the following properties:
 
 - `uuid` - The unique identifier for an annotation. UUID v4 (random) is recommended.
 - `concept` - The label associated with a localization that identifies the object in the region of interest. In theory, the concept can be up to 256 characters long, but in practice it is much shorter.
@@ -715,11 +707,11 @@ A localization defines a rectangular region of interest on the video. Users shou
 - `height` - The height of the localization in pixels.
 - `color` - The color used to draw the localization.
 
-`x`, `y`, `width`, and `height` are in the same coordinates as the unscaled video. Localizations use this image coordinate system where origin is the upper-left, +X is right, +Y is down:
+`x`, `y`, `width`, and `height` are in the same coordinates as the unscaled video. Localizations use an "ocean" coordinate system where origin is the upper-left, +X is right, +Y is down:
 
 ![Image Coordinate System](assets/ImageCoordinateSystem.png)
 
-Localizations can be added, selected, deleted, or modified from either a remote app __or__ from sharktopoda. If a localization is created/mutated in Sharktopoda, it will notify the remote app using UDP via the port defined by the connect command.
+Localizations can be added, selected, deleted, or modified from either a remote app __or__ from Sharktopoda. If a localization is created/mutated in Sharktopoda, it will notify the remote app using UDP via the port defined by the `connect` command.
 
 Incoming messages will be no larger than 4096 bytes. In practice, the remote application will not send more than 10 localizations to Sharktopoda in a single Add or Update message.
 
@@ -749,7 +741,7 @@ The initiating app (both sharktopoda and the remote app can create localizations
 }
 ```
 
-The receiving app should respond with an ack:
+The receiving app should respond with an `ok` message:
 
 ```json
 {
@@ -758,7 +750,7 @@ The receiving app should respond with an ack:
 }
 ```
 
-or a failure if the video with uuid does not exist:
+or a failure if the video with `uuid` does not exist:
 
 ```json
 {
@@ -785,7 +777,7 @@ The initiating app will send a notification of localizations to be deleted.
 }
 ```
 
-The receiving app will respond with an ok:
+The receiving app will respond with an `ok` message:
 
 ```json
 {
@@ -794,7 +786,7 @@ The receiving app will respond with an ok:
 }
 ```
 
-or a failure if the video with uuid does not exist:
+or a failure if the video with `uuid` does not exist:
 
 ```json
 {
@@ -808,7 +800,9 @@ or a failure if the video with uuid does not exist:
 
 ### <a name="update_localizations"></a> Update Localizations
 
-Update existing localizations in Sharktopoda. If a matching localization's UUID does not already exist in Sharktopoda, ignore that localization. (i.e. do not add, do not update)
+Update existing localizations in Sharktopoda. If a matching localization's `uuid` does not already exist in Sharktopoda, ignore that localization. (i.e. do not add, do not update).
+
+NOTE: The Sharktopoda app provides for modification to localization `x`, `y`, `width`, and `height` values via mouse dragging of a localization region (to either move or resize the region). All other fields may be updated from the Remote App with the exception of the localization `uuid` value, which is used to identify the localization itself and is therefore immutable.
 
 ```json
 {
@@ -830,7 +824,7 @@ Update existing localizations in Sharktopoda. If a matching localization's UUID 
 }
 ```
 
-The receiving app will respond with an ack:
+The receiving app will respond with an `ok` message:
 
 ```json
 {
@@ -839,7 +833,7 @@ The receiving app will respond with an ack:
 }
 ```
 
-or a failure if the video with uuid does not exist:
+or a failure if the video with `uuid` does not exist:
 
 ```json
 {
@@ -862,7 +856,7 @@ This will only be sent from the remote app to Sharktopoda (not vice versa). Shar
 }
 ```
 
-Sharktopoda will respond with an ok:
+Sharktopoda will respond with an `ok` message:
 
 ```json
 {
@@ -871,7 +865,7 @@ Sharktopoda will respond with an ok:
 }
 ```
 
-or a failure if the video with uuid does not exist:
+or a failure if the video with `uuid` does not exist:
 
 ```json
 {
@@ -885,7 +879,7 @@ or a failure if the video with uuid does not exist:
 
 ### <a name="select_localizations"></a> Select Localizations
 
-This indicates which localizations are _selected_. Selected localizations should be drawn in the selected color specified in the UI preferences.  If only a single localization is selected, that localization should become editable and be able to be moved and resized. When a select command is received, all previously selected annotations should no longer be selected and should be drawn using their original or default color. Any localization UUIDs that do not exist in Sharktopoda should be ignored.
+This indicates which localizations are _selected_. Selected localizations should be drawn in the selected color specified in app Preferences and display the corresponding `concept` field of the localiztion.  If only a single localization is selected, that localization should become editable and be able to be moved and resized. When a `select` command is received, all previously selected annotations should no longer be selected and should be drawn using their original or default color. Any localization `uuid`s that do not exist in Sharktopoda should be ignored.
 
 ```json
 {
@@ -905,7 +899,7 @@ This indicates which localizations are _selected_. Selected localizations should
 }
 ```
 
-or a failure if the video with uuid does not exist:
+or a failure if the video with `uuid` does not exist:
 
 ```json
 {

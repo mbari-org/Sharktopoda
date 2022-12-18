@@ -19,7 +19,7 @@ extension NSPlayerView {
     guard let anchor = dragAnchor else { return }
     dragPurpose = purpose
     
-    localizations.clearSelected()
+    localizationData.clearSelected()
     currentLocalization = nil
     
     let layer = shapeLayer(anchor)
@@ -54,18 +54,26 @@ extension NSPlayerView {
                                             with: region(from: layer),
                                             layer: layer,
                                             fullSize: fullSize)
-            localizations.add(localization)
-            localizations.sendLocalizationsMessage(.addLocalizations, ids: [localization.id])
-            localizations.select(id: localization.id)
-            // CxTBD Is an updated selected message necessary?
-            localizations.sendLocalizationsMessage(.selectLocalizations, ids: [localization.id])
-            displayConcept(localization)
+            localizationData.add(localization)
+            localizationData.sendLocalizationsMessage(.addLocalizations, localization: localization)
+            
+            localizationData.select(ids: [localization.id])
+            displayConcept(for: localization)
+
           case .select:
             /// Remove the selection layer as it's purpose is complete
             DispatchQueue.main.async {
               layer.removeFromSuperlayer()
             }
-            localizations.select(using: layer.frame, at: currentTime)
+            
+            localizationData.select(using: layer.frame, at: currentTime)
+            localizationData.selectedLocalizations.forEach {
+              displayConcept(for: $0)
+            }
+        }
+      } else {
+        DispatchQueue.main.async {
+          layer.removeFromSuperlayer()
         }
       }
     }

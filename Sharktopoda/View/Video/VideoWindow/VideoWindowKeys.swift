@@ -16,8 +16,6 @@ extension VideoWindow {
       case space = 49
     }
     
-//    print("CxDebug keyCode: \(event.keyCode)")
-    
     func isCommand(_ event: NSEvent) -> Bool {
       event.modifierFlags.intersection(.deviceIndependentFlagsMask) == .command
     }
@@ -28,23 +26,23 @@ extension VideoWindow {
     
     /// Cmd-Delete:  Delete selected localizations
     if isCommand(event), event.keyCode == KeyCode.delete.rawValue {
-      windowData.localizations.deleteSelected()
-      windowData.playerView.clearConcept()
+      windowData.localizationData.deleteSelected()
+      // CxInc Concept layers?
       return
     }
     
     /// Space:  Toggle play/pause forward
-    /// Ctrl-Space:  Toggle play/pause and direction
+    /// Ctrl-Space:  Toggle play/pause backward
     if event.keyCode == KeyCode.space.rawValue {
       if windowData.playerDirection != .paused {
         windowData.pause()
         return
       }
       if isControl(event) {
-        windowData.reverse()
+        windowData.playBackward()
         return
       }
-      windowData.play()
+      windowData.playForward()
       return
     }
     

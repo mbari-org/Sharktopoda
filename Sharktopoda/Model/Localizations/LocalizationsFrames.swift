@@ -8,24 +8,24 @@
 import Foundation
 
 // MARK: Frame number
-extension Localizations {
+extension LocalizationData {
   func frameNumber(for localization: Localization) -> Int {
-    frameNumber(elapsedTime: localization.elapsedTime)
+    frameNumber(of: localization.elapsedTime)
   }
   
-  func frameNumber(elapsedTime: Int) -> Int {
+  func frameNumber(of elapsedTime: Int) -> Int {
     guard 0 < elapsedTime else { return 0 }
     
     return (elapsedTime + frameDuration / 2) / frameDuration
   }
   
-  func frameTime(elapsedTime: Int) -> Int {
-    frameNumber(elapsedTime: elapsedTime) * frameDuration
+  func frameTime(of elapsedTime: Int) -> Int {
+    frameNumber(of: elapsedTime) * frameDuration
   }
 }
 
 // MARK: Pause frames
-extension Localizations {
+extension LocalizationData {
   func pauseFrameInsert(_ localization: Localization) {
     let insertTime = localization.elapsedTime
     let (frame, action, index) = frame(for: localization,
@@ -56,7 +56,7 @@ extension Localizations {
 }
 
 // MARK: Forward frames
-extension Localizations {
+extension LocalizationData {
   func forwardFrameInsert(_ localization: Localization) {
     let useDuration = UserDefaults.standard.bool(forKey: PrefKeys.displayUseDuration)
     let timeWindow = UserDefaults.standard.integer(forKey: PrefKeys.displayTimeWindow)
@@ -97,7 +97,7 @@ extension Localizations {
 }
 
 // MARK: Reverse frames
-extension Localizations {
+extension LocalizationData {
   func reverseFrameInsert(_ localization: Localization) {
     let useDuration = UserDefaults.standard.bool(forKey: PrefKeys.displayUseDuration)
     let timeWindow = UserDefaults.standard.integer(forKey: PrefKeys.displayTimeWindow)
@@ -140,7 +140,7 @@ extension Localizations {
 }
 
 // MARK: Abstract frame processing
-extension Localizations {
+extension LocalizationData {
   func frameIndex(for frames: [LocalizationFrame], at elapsedTime: Int) -> Int {
     var left = 0
     var right = frames.count - 1
@@ -148,7 +148,7 @@ extension Localizations {
     var index = 0
     var found = 0
     
-    let frameNumber = frameNumber(elapsedTime: elapsedTime)
+    let frameNumber = frameNumber(of: elapsedTime)
     
     while left <= right {
       index = (left + right) / 2
@@ -170,7 +170,7 @@ extension Localizations {
              into frames: [LocalizationFrame],
              at insertTime: Int) -> PutInfo {
     
-    let frameNumber = frameNumber(elapsedTime: insertTime)
+    let frameNumber = frameNumber(of: insertTime)
     
     var frame: LocalizationFrame
     var action: PutAction

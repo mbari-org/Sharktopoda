@@ -9,6 +9,11 @@ import SwiftUI
 
 struct SharktopodaCommands: Commands {
   var body: some Commands {
+    CommandGroup(replacing: .newItem, addition: {
+      OpenMainView()
+        .keyboardShortcut("N", modifiers: [.command])
+    })
+    
     CommandGroup(after: CommandGroupPlacement.newItem) {
       Divider()
 
@@ -17,14 +22,6 @@ struct SharktopodaCommands: Commands {
 
       OpenUrlView()
         .keyboardShortcut("O", modifiers: [.shift, .command])
-    }
-  }
-  
-  var videoWindow: VideoWindow? {
-    get {
-      // CxInc
-//      UDP.sharktopodaData.latestVideoWindow()
-      return nil
     }
   }
 }

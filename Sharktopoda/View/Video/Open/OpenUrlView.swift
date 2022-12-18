@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct OpenUrlView: View {
+  static let panelRect = CGRect(x: 0, y: 0, width: 600, height: 180)
+
   @State private var showingPanel = false
 
-  private let panelRect = CGRect(x: 0, y: 0, width: 600, height: 180)
-  
   var body: some View {
     Button("Open URL...") {
       showingPanel.toggle()
     }
-    .floatingPanel(isPresented: $showingPanel, contentRect: panelRect) {
+    .floatingPanel(isPresented: $showingPanel, contentRect: OpenUrlView.panelRect) {
       OpenUrlPanel(showPanel: $showingPanel)
     }
   }

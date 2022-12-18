@@ -7,15 +7,6 @@
 
 import SwiftUI
 
-// MARK: Select
-extension Localization {
-  func select(_ isSelected: Bool) {
-    layer.strokeColor = isSelected
-    ? UserDefaults.standard.color(forKey: PrefKeys.selectionBorderColor).cgColor
-    : Color(hex: hexColor)?.cgColor
-  }
-}
-
 // MARK: Hashable
 extension Localization: Hashable {
   func hash(into hasher: inout Hasher) {

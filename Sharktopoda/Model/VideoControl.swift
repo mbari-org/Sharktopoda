@@ -8,16 +8,21 @@
 import AVFoundation
 import Foundation
 
-final class VideoControl: ObservableObject {
+final class VideoControl {
   private var windowData: WindowData
 
-  let seekTolerance: CMTime
-  var previousRate: Float = 1.0
+  let quickTolerance: CMTime
+  let frameTolerance: CMTime
+
+  var previousDirection: WindowData.PlayerDirection = .paused
+  var previousSpeed: Float = 1.0
   
   init (windowData: WindowData) {
     self.windowData = windowData
-    
-    seekTolerance = CMTimeMultiplyByFloat64(windowData.frameDuration, multiplier: 0.25)
+
+    let quickMillis = min(windowData.videoAsset.duration.asMillis() / 500, 500)
+    quickTolerance = CMTime.fromMillis(quickMillis)
+    frameTolerance = CMTimeMultiplyByFloat64(windowData.frameDuration, multiplier: 0.45)
   }
   
   func canStep(_ steps: Int) -> Bool {
@@ -46,34 +51,49 @@ final class VideoControl: ObservableObject {
   }
 
   func play() {
-    play(rate: previousRate)
+    play(rate: previousSpeed)
   }
   
   func play(rate: Float) {
     guard rate != 0.0 else { return pause() }
     
-    previousRate = rate
+    previousSpeed = abs(rate)
+    previousDirection = 0 < rate ? .forward : .backward
+    
     DispatchQueue.main.async {
       self.player.rate = rate
     }
   }
   
-  var player: AVPlayer {
+  private var player: AVPlayer {
     windowData.player
   }
   
-  var playerView: PlayerView {
-    windowData.playerView
-  }
-
   var rate: Float {
     get { player.rate }
   }
   
-  func seek(elapsedTime: Int, done: @escaping (Bool) -> Void) {
-    player.seek(to: CMTime.fromMillis(elapsedTime),
-                toleranceBefore: .zero,
-                toleranceAfter: .zero,
+  func reverse() {
+    play(rate: -1 * previousSpeed)
+  }
+  
+  func quickSeek(to time: CMTime) {
+    player.seek(to: time,
+                toleranceBefore: quickTolerance,
+                toleranceAfter: quickTolerance)
+  }
+
+  func frameSeek(to time: CMTime, done: @escaping (Bool) -> Void) {
+    let frameMillis = windowData.localizationData.frameTime(of: time.asMillis())
+    let frameTime = CMTime.fromMillis(frameMillis)
+    
+    player.seek(to: frameTime,
+                toleranceBefore: frameTolerance,
+                toleranceAfter: frameTolerance,
                 completionHandler: done)
+  }
+
+  func seek(elapsedTime: Int, done: @escaping (Bool) -> Void) {
+    frameSeek(to: CMTime.fromMillis(elapsedTime), done: done)
   }
 }

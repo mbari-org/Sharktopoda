@@ -12,7 +12,6 @@ enum ControlCommand: String, Codable {
   case advance = "frame advance"
   case all = "request all information"
   case capture = "frame capture"
-  case captureDone = "frame capture done"
   case clearLocalizations = "clear localizations"
   case close
   case connect
@@ -26,103 +25,7 @@ enum ControlCommand: String, Codable {
   case seek = "seek elapsed time"
   case selectLocalizations = "select localizations"
   case show
-  case state = "request state"
+  case state = "request player state"
   case unknown
   case updateLocalizations = "update localizations"
-  
-  struct ControlMessageCommand: Decodable {
-    var command: String
-  }
-  
-  static func controlMessage(from data: Data) -> ControlRequest {
-    // Ensure control command is valid
-    var controlCommand: ControlCommand
-    do {
-      // Ensure message has command field
-      let controlMessageCommand = try UDPMessageCoder.decode(ControlMessageCommand.self, from: data)
-
-      // Ensure command is known
-      let rawCommand = controlMessageCommand.command
-      guard let maybeControlCommand = ControlCommand(rawValue: rawCommand) else {
-        return ControlUnknown("unknown command: \(rawCommand)")
-      }
-      controlCommand = maybeControlCommand
-    }
-    catch let error {
-      UDP.log("state update failed error \(error)")
-      return ControlInvalid(cause: error.localizedDescription)
-    }
-    
-    do {
-      var controlMessageType: ControlRequest.Type
-      switch controlCommand {
-        case .addLocalizations:
-          controlMessageType = ControlAddLocalizations.self
-          
-        case .advance:
-          controlMessageType = ControlAdvance.self
-
-        case .all:
-          controlMessageType = ControlAllInfo.self
-          
-        case .capture:
-          controlMessageType = ControlCapture.self
-
-        case .captureDone:
-          controlMessageType = ControlUnknown.self
-
-        case .clearLocalizations:
-          controlMessageType = ControlClearLocalizations.self
-          
-        case .close:
-          controlMessageType = ControlClose.self
-          
-        case .connect:
-          controlMessageType = ControlConnect.self
-
-        case .elapsed:
-          controlMessageType = ControlElapsed.self
-          
-        case .info:
-          controlMessageType = ControlInfo.self
-
-        case .open:
-          controlMessageType = ControlOpen.self
-          
-        case .pause:
-          controlMessageType = ControlPause.self
-          
-        case .play:
-          controlMessageType = ControlPlay.self
-          
-        case .ping:
-          controlMessageType = ControlPing.self
-
-        case .removeLocalizations:
-          controlMessageType = ControlRemoveLocalizations.self
-
-        case .seek:
-          controlMessageType = ControlSeek.self
-
-        case .selectLocalizations:
-          controlMessageType = ControlSelectLocalizations.self
-          
-        case .show:
-          controlMessageType = ControlShow.self
-
-        case .state:
-          controlMessageType = ControlState.self
-
-        case .unknown:
-          controlMessageType = ControlUnknown.self
-          
-        case .updateLocalizations:
-          controlMessageType = ControlUpdateLocalizations.self
-      }
-      
-      return try UDPMessageCoder.decode(controlMessageType, from: data)
-    } catch let error {
-      return ControlInvalid(command: controlCommand, cause: error.localizedDescription)
-    }
-  }
 }

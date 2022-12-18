@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Localizations {
+extension LocalizationData {
   func add(_ localization: Localization) {
     guard storage[localization.id] == nil else { return }
     
@@ -41,7 +41,10 @@ extension Localizations {
     }
 
     DispatchQueue.main.async {
-      removed.forEach { $0.layer.removeFromSuperlayer() }
+      removed.forEach {
+        $0.layer.removeFromSuperlayer()
+        $0.unselect()
+      }
     }
   }
   

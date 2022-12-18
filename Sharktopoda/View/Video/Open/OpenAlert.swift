@@ -13,7 +13,7 @@ struct OpenAlert {
   init(path: String, error: OpenVideoError) {
     let alert = NSAlert()
     alert.alertStyle = .warning
-    alert.messageText = error.description
+    alert.messageText = error.alertMessage
     alert.informativeText = path
     
     self.alert = alert

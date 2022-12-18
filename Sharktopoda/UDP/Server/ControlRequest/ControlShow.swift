@@ -7,14 +7,14 @@
 
 import Foundation
 
-struct ControlShow: ControlRequest {
+struct ControlShow: ControlMessage {
   var command: ControlCommand
   var uuid: String
   
   func process() -> ControlResponse {
     withVideoWindow(id: uuid) { videoWindow in
       DispatchQueue.main.async {
-        videoWindow.makeKeyAndOrderFront(nil)
+        videoWindow.bringToFront()
       }
       return ok()
     }

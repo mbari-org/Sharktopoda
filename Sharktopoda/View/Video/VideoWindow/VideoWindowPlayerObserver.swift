@@ -10,12 +10,12 @@ import AVFoundation
 extension VideoWindow {
   func setPlayerObserver(_ pollingInterval: CMTime) {
     windowData.player.addPeriodicTimeObserver(forInterval: pollingInterval,
-                                              queue: queue) { [weak self] time in
+                                              queue: playerTimeQueue) { [weak self] time in
       guard let windowData = self?.windowData else { return }
       
       guard windowData.playerView.showLocalizations else { return }
       
-      let localizations = windowData.localizations
+      let localizations = windowData.localizationData
       let playerView = windowData.playerView
       
       let elapsedTime = time.asMillis()
@@ -38,7 +38,7 @@ extension VideoWindow {
       )
   }
   
-  @objc func playerHitEnd(note: NSNotification) {
+  @objc func playerHitEnd(_: NSNotification) {
     windowData.playerDirection = .paused
   }
 }

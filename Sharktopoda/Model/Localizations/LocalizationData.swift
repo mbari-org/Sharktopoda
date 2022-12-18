@@ -1,5 +1,5 @@
 //
-//  LocalizationSet.swift
+//  LocalizationData.swift
 //  Created for Sharktopoda on 10/6/22.
 //
 //  Apache License 2.0 — See project LICENSE file
@@ -8,7 +8,7 @@
 import AVFoundation
 import SwiftUI
 
-class Localizations {
+class LocalizationData {
   var storage = [String: Localization]()
   
   var pauseFrames = [LocalizationFrame]()
@@ -27,7 +27,7 @@ class Localizations {
 }
 
 // MARK: Enums
-extension Localizations {
+extension LocalizationData {
   enum PutAction {
     case add
     case insert
@@ -38,8 +38,9 @@ extension Localizations {
                        index: Int)
 }
 
-// MARK: Resize all
-extension Localizations {
+// MARK: Resize all non-paused Localizations
+extension LocalizationData {
+  
   func resize(for videoRect: CGRect) {
     for localization in storage.values {
       localization.resize(for: videoRect)

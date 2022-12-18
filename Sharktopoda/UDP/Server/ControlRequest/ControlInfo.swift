@@ -7,12 +7,12 @@
 
 import AVFoundation
 
-struct ControlInfo: ControlRequest {
+struct ControlInfo: ControlMessage {
   var command: ControlCommand
   
   func process() -> ControlResponse {
     guard let videoWindow = UDP.sharktopodaData.latestVideoWindow() else {
-      return failed("No open video for uuid")
+      return failed("No open videos")
     }
 
     return ControlResponseInfo(using: videoWindow)

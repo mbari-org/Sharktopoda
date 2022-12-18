@@ -9,10 +9,9 @@ import AppKit
 
 extension NSPlayerView {
   override func mouseDown(with event: NSEvent) {
-    // CxInc
-//    videoControl.pause()
+    guard windowData.videoControl.paused else { return }
     
-    let playerPoint = locationInPlayer(with: event)
+    let playerPoint = location(in: playerLayer, of: event)
     guard videoRect.contains(playerPoint) else { return }
     
     dragAnchor = playerPoint
@@ -20,12 +19,14 @@ extension NSPlayerView {
     if event.modifierFlags.intersection(.deviceIndependentFlagsMask) == .command {
       if let localization = currentLocalization {
         currentLocalization = nil
-        localizations.select(id: localization.id)
+
+        localizationData.select(ids: [localization.id])
+        displayConcept(for: localization)
       }
       
       if commandSelect(at: playerPoint) { return }
       
-      localizations.clearSelected()
+      localizationData.clearSelected()
       startDragPurpose(.select)
       return
     }
@@ -44,10 +45,10 @@ extension NSPlayerView {
   }
   
   override func mouseDragged(with event: NSEvent) {
-    let playerPoint = locationInPlayer(with: event)
+    let playerPoint = location(in: playerLayer, of: event)
     
+    /// If there is a current localization, drag it
     if currentLocation != nil {
-      /// If there is a current localization, drag it
       let delta = DeltaPoint(x: event.deltaX, y: event.deltaY)
       dragCurrent(by: delta)
       return
@@ -57,27 +58,22 @@ extension NSPlayerView {
   }
   
   override func mouseUp(with event: NSEvent) {
-    let endPoint = locationInPlayer(with: event)
+    let endPoint = location(in: playerLayer, of: event)
     
     if event.modifierFlags.intersection(.deviceIndependentFlagsMask) == .command {
       endDragPurpose(at: endPoint)
     }
     
-    if currentLocalization != nil {
-      endDragCurrent(at: endPoint)
-    } else {
-      currentLocalization = nil
-      endDragPurpose(at: endPoint)
-    }
+    currentLocalization != nil ? endDragCurrent(at: endPoint) : endDragPurpose(at: endPoint)
+    
+//    if let localization = currentLocalization,
+//       localizations.select(id: localization.id),
+//       let conceptLayer = localization.conceptLayer {
+//      localization.positionConcept(for: videoRect)
+//      playerLayer.addSublayer(conceptLayer)
+//    }
     
     dragAnchor = nil
-    
-    if let localization = currentLocalization {
-      displayConcept(localization)
-    } else {
-      conceptLayer?.removeFromSuperlayer()
-    }
-    
   }
   
   private func setCurrentLocation(_ location: CGRect.Location) {
@@ -97,30 +93,11 @@ extension NSPlayerView {
     addTrackingArea(trackingArea)
   }
 
-  private func locationInPlayer(with event: NSEvent) -> CGPoint {
+  private func location(in layer: CALayer, of event: NSEvent) -> CGPoint {
+    // CxTBD Investigate
     guard let windowLayer = rootLayer.superlayer?.superlayer?.superlayer else { return .infinity }
-    
-    let windowPoint = event.locationInWindow
-    return playerLayer.convert(windowPoint, from: windowLayer)
-  }
-  
-  func displayConcept(_ localization: Localization) {
-    guard let conceptLayer = conceptLayer else { return }
-    
-    conceptLayer.string = localization.concept
-    let layerFrame = localization.layer.frame
-    var conceptFrame = CGRect(x: layerFrame.minX, y: layerFrame.maxY, width: 100, height: 15)
-    
-    if videoRect.maxY < conceptFrame.maxY {
-      let deltaY = -(layerFrame.height + conceptFrame.height)
-      conceptFrame = conceptFrame.move(by: DeltaPoint(x: 0, y: deltaY))
-    }
-    DispatchQueue.main.async {
-      CALayer.noAnimation {
-        conceptLayer.frame = conceptFrame
-      }
-    }
 
-    playerLayer.addSublayer(conceptLayer)
+    let windowPoint = event.locationInWindow
+    return layer.convert(windowPoint, from: windowLayer)
   }
 }

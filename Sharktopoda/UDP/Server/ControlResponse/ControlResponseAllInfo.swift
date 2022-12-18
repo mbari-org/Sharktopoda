@@ -10,9 +10,9 @@ import Foundation
 struct ControlResponseAllInfo: ControlResponse {
   var response: ControlCommand
   var status: ControlResponseStatus
-  var videos: [ControlResponseInfo.VideoInfo]
+  var videos: [VideoInfo]
   
-  init(with videos: [ControlResponseInfo.VideoInfo]) {
+  init(with videos: [VideoInfo]) {
     response = .all
     status = .ok
     self.videos = videos

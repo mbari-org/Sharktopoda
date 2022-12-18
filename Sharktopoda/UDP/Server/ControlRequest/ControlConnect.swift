@@ -8,7 +8,7 @@
 import Foundation
 import Network
 
-struct ControlConnect: ControlRequest {
+struct ControlConnect: ControlMessage {
   var command: ControlCommand
   @Default<String.Localhost> var host: String
   let port: Int

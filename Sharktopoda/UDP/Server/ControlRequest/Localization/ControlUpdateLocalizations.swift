@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ControlUpdateLocalizations: ControlRequest {
+struct ControlUpdateLocalizations: ControlMessage {
   var command: ControlCommand
   var uuid: String
   var localizations: [ControlLocalization]
@@ -16,7 +16,7 @@ struct ControlUpdateLocalizations: ControlRequest {
     withWindowData(id: uuid) { windowData in
       localizations
         .forEach { controlLocalization in
-          windowData.localizations.update(using: controlLocalization)
+          windowData.localizationData.update(using: controlLocalization)
         }
       return ok()
     }

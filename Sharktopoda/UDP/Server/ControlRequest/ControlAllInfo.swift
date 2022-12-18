@@ -7,20 +7,10 @@
 
 import Foundation
 
-struct ControlAllInfo: ControlRequest {
+struct ControlAllInfo: ControlMessage {
   var command: ControlCommand
-  var status: ControlResponseStatus
-  var videos: [ControlResponseInfo.VideoInfo]
   
   func process() -> ControlResponse {
-    guard !UDP.sharktopodaData.videoWindows.isEmpty else {
-      return failed("No open videos")
-    }
-    
-    let videos = UDP.sharktopodaData.videoWindows.values.map {
-      ControlResponseInfo.VideoInfo(using: $0)
-    }
-
-    return ControlResponseAllInfo(with: videos)
+    ControlResponseAllInfo(with: UDP.sharktopodaData.videoInfos())
   }
 }

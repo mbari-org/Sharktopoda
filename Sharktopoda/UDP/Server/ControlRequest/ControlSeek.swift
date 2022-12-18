@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ControlSeek: ControlRequest {
+struct ControlSeek: ControlMessage {
   var command: ControlCommand
   let uuid: String
   let elapsedTimeMillis: Int

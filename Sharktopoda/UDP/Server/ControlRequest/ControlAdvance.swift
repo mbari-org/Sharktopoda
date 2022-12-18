@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ControlAdvance: ControlRequest {
+struct ControlAdvance: ControlMessage {
   var command: ControlCommand
   var uuid: String
   var direction: Int
@@ -16,9 +16,8 @@ struct ControlAdvance: ControlRequest {
     withWindowData(id: uuid) { windowData in
       let videoControl = windowData.videoControl
       
-      guard videoControl.paused else {
-        return failed("Can only advance while video paused")
-      }
+      videoControl.pause()
+      
       guard videoControl.canStep(direction) else {
         return failed("Cannot advance video in that direction")
       }

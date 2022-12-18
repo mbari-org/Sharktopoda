@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ControlAddLocalizations: ControlRequest {
+struct ControlAddLocalizations: ControlMessage {
   var command: ControlCommand
   var uuid: String
   var localizations: [ControlLocalization]
@@ -15,6 +15,7 @@ struct ControlAddLocalizations: ControlRequest {
   func process() -> ControlResponse {
     withWindowData(id: uuid) { windowData in
       windowData.add(localizations: localizations)
+       
       return ok()
     }
   }

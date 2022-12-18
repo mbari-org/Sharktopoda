@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ControlState: ControlRequest {
+struct ControlState: ControlMessage {
   var command: ControlCommand
   var uuid: String
   

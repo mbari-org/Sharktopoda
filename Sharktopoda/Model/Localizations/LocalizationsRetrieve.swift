@@ -8,7 +8,7 @@
 import Foundation
 
 // Retrieve Localizations for some time value
-extension Localizations {
+extension LocalizationData {
   func fetch(ids: [String]) -> [Localization] {
     ids.reduce(into: [Localization]()) { acc, id in
       if let localization = storage[id] {
@@ -27,7 +27,7 @@ extension Localizations {
         return forwardFrames
       case .paused:
         return pauseFrames
-      case .reverse:
+      case .backward:
         return reverseFrames
     }
   }
@@ -40,7 +40,7 @@ extension Localizations {
     guard index != frames.count else { return [] }
     
     let frame = frames[index]
-    guard frame.frameNumber == frameNumber(elapsedTime: elapsedTime) else { return [] }
+    guard frame.frameNumber == frameNumber(of: elapsedTime) else { return [] }
     
     return frame.ids
   }

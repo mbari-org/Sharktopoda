@@ -7,14 +7,14 @@
 
 import Foundation
 
-struct ControlClearLocalizations: ControlRequest {
+struct ControlClearLocalizations: ControlMessage {
   var command: ControlCommand
   var uuid: String
   
   func process() -> ControlResponse {
     withWindowData(id: uuid) { windowData in
       windowData.playerView.clear()
-      windowData.localizations.clear()
+      windowData.localizationData.clear()
       
       return ok()
     }

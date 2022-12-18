@@ -7,13 +7,13 @@
 
 import Foundation
 
-protocol ControlRequest: Decodable, CustomStringConvertible {
+protocol ControlMessage: Decodable, CustomStringConvertible {
   var command: ControlCommand { get set }
   
   func process() -> ControlResponse
 }
 
-extension ControlRequest {
+extension ControlMessage {
   var description: String {
     command.rawValue
   }
@@ -25,11 +25,13 @@ extension ControlRequest {
   func failed(_ cause: String) -> ControlResponse {
     ControlResponseFailed(response: command, cause: cause)
   }
+}
 
+extension ControlMessage {
   typealias VideoWindowFn = (_ videoWindow: VideoWindow) -> ControlResponse
   func withVideoWindow(id: String,
                        fn: VideoWindowFn) -> ControlResponse {
-    guard let videoWindow = UDP.sharktopodaData.videoWindows[id] else {
+    guard let videoWindow = UDP.sharktopodaData.window(for: id) else {
       return failed("No video for uuid")
     }
     
@@ -43,5 +45,4 @@ extension ControlRequest {
       fn(videoWindow.windowData)
     }
   }
-  
 }

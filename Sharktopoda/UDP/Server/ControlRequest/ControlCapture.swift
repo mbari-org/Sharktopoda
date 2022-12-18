@@ -10,23 +10,19 @@ import Network
 
 typealias FrameGrabResult = Result<Int, Error>
 
-struct ControlCapture: ControlRequest {
+struct ControlCapture: ControlMessage {
   var command: ControlCommand
   var uuid: String
   var imageLocation: String
   var imageReferenceUuid: String
   
-  static let saveImageQueue = DispatchQueue(label: "save image queue")
-  
   func process() -> ControlResponse {
     withWindowData(id: uuid) { windowData in
       // CxNote Immediately capture current time to get frame as close to command request
-      // as possible. We put this time in the ControlResponse so it can be used later during
-      // image capture processing. This means the time is sent in the initial 'ok' response but
-      // the command contoller can just ignore it.
-      guard let fileUrl = URL(string: imageLocation) else {
-        return failed("Image location is malformed URL")
-      }
+      // as possible.
+      let captureTime = windowData.playerTime
+
+      let fileUrl = URL(fileURLWithPath: imageLocation)
 
       guard !FileManager.default.fileExists(atPath: fileUrl.path) else {
         return failed("Image exists at location")
@@ -37,33 +33,30 @@ struct ControlCapture: ControlRequest {
         return failed("Image location not writable")
       }
       
-      return ControlResponseCaptureOk(windowData.videoControl.currentTime)
+      Task {
+        let captureDoneMessage = await doCapture(captureTime: captureTime)
+        if let client = UDP.sharktopodaData.udpClient {
+          client.process(captureDoneMessage)
+        }
+      }
+
+      return ok()
     }
   }
   
-  func doCapture(captureTime: Int) async -> ControlResponse {
-    guard let videoWindow = UDP.sharktopodaData.videoWindows[uuid] else {
-      return ControlResponseCaptureDone(for: self, cause: "Video for uuid was closed")
+  func doCapture(captureTime: Int) async -> ClientMessage {
+    guard let videoWindow = UDP.sharktopodaData.window(for: uuid) else {
+      return ClientMessageCaptureDone(for: self, cause: "Video for uuid was closed")
     }
     
     let videoAsset = await videoWindow.windowData.videoAsset
 
     switch await videoAsset.frameGrab(at: captureTime, destination: imageLocation) {
       case .success(let grabTime):
-        return ControlResponseCaptureDone(for: self, grabTime: grabTime)
+        return ClientMessageCaptureDone(for: self, grabTime: grabTime)
+
       case .failure(let error):
-        return ControlResponseCaptureDone(for: self, cause: error.localizedDescription)
+        return ClientMessageCaptureDone(for: self, cause: error.localizedDescription)
     }
   }
 }
-
-struct ControlResponseCaptureOk : ControlResponse {
-  var response: ControlCommand = .capture
-  var status: ControlResponseStatus = .ok
-  var captureTime: Int
-
-  init(_ frameTime: Int) {
-    self.captureTime = frameTime
-  }
-}
-

@@ -21,9 +21,6 @@ final class NSPlayerView: NSView {
   /// Frame of current selected localization
   var currentFrame: CGRect?
   
-  /// Layer for displaying current location concept
-  var conceptLayer: CATextLayer?
-  
   /// Layer for either creating localization or selecting multiple localizations
   var dragLayer: CAShapeLayer?
   var dragPurpose: NSPlayerView.DragPurpose?
@@ -33,38 +30,30 @@ final class NSPlayerView: NSView {
   
   var windowData: WindowData {
     get { _windowData! }
-    set { setup(newValue) }
+    set { attach(windowData: newValue) }
   }
   
   private var _currentLocalization: Localization?
   
   override public init(frame frameRect: NSRect) {
     super.init(frame: frameRect)
-//    setup()
   }
   
   required public init?(coder decoder: NSCoder) {
     super.init(coder: decoder)
-//    setup()
   }
   
   // MARK: setup
-  private func setup(_ windowData: WindowData) {
-    let size = windowData.fullSize
-    frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
-
+  private func attach(windowData: WindowData) {
     wantsLayer = true
     layer = rootLayer
     
+    let size = windowData.fullSize
+    frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+
     playerLayer.player = windowData.player
     playerLayer.frame = bounds
     playerLayer.autoresizingMask = [.layerWidthSizable, .layerHeightSizable]
-    
-    let conceptLayer = CATextLayer()
-    conceptLayer.fontSize = CGFloat(UserDefaults.standard.integer(forKey: PrefKeys.captionFontSize))
-    conceptLayer.foregroundColor = UserDefaults.standard.color(forKey: PrefKeys.captionFontColor).cgColor
-    conceptLayer.alignmentMode = .left
-    self.conceptLayer = conceptLayer
     
     rootLayer.addSublayer(playerLayer)
     
@@ -75,26 +64,22 @@ final class NSPlayerView: NSView {
 // MARK: Computed properties
 extension NSPlayerView {
   var currentItem: AVPlayerItem? {
-    player.currentItem
+    windowData.videoControl.currentItem
   }
   
   var currentTime: Int {
-    get {
-      guard let currentTime = currentItem?.currentTime() else { return 0 }
-      return currentTime.asMillis()
-    }
+    windowData.videoControl.currentTime
   }
   
   var currentLocalization: Localization? {
     get { _currentLocalization }
     set {
       if _currentLocalization != nil {
-        localizations.clearSelected()
+        localizationData.clearSelected(notifyClient: false)
       }
       _currentLocalization = newValue
       if newValue == nil {
         currentLocation = nil
-        conceptLayer?.removeFromSuperlayer()
       }
     }
   }
@@ -104,14 +89,10 @@ extension NSPlayerView {
   }
   
   // CxTBD This doesn't seem right
-  var localizations: Localizations {
-    windowData.localizations
+  var localizationData: LocalizationData {
+    windowData.localizationData
   }
-  
-  var player: AVPlayer {
-    get { playerLayer.player! }
-  }
-  
+
   var scale: CGFloat {
     /// Player always maintains original aspect so either width or height work here
     get {
@@ -135,34 +116,75 @@ extension NSPlayerView {
       }
     } ?? []
   }
+  
+  func conceptLayers() -> [CATextLayer] {
+    return playerLayer.sublayers?.reduce(into: [CATextLayer]()) { acc, layer in
+      if let layer = layer as? CATextLayer {
+        acc.append(layer)
+      }
+    } ?? []
+  }
 }
 
 // MARK: Display and Clear
 extension NSPlayerView {
 
   func clear() {
-    let layers = localizationLayers()
     DispatchQueue.main.async { [weak self] in
-      layers.forEach { $0.removeFromSuperlayer() }
-      self?.conceptLayer?.removeFromSuperlayer()
+      self?.localizationLayers().forEach { $0.removeFromSuperlayer() }
+      self?.conceptLayers().forEach { $0.removeFromSuperlayer() }
     }
   }
   
   func clear(localizations: [Localization]) {
-    DispatchQueue.main.async { [weak self] in
-      localizations.forEach { $0.layer.removeFromSuperlayer()}
-      self?.conceptLayer?.removeFromSuperlayer()
+    DispatchQueue.main.async { 
+      localizations.forEach {
+        $0.layer.removeFromSuperlayer()
+        $0.conceptLayer?.removeFromSuperlayer()
+      }
     }
   }
   
-  func display(localizations: [Localization]) {
+  func display(localization: Localization) {
     guard showLocalizations else { return }
     
     DispatchQueue.main.async { [weak self] in
-      localizations.forEach { self?.playerLayer.addSublayer($0.layer) }
+      self?.playerLayer.addSublayer(localization.layer)
     }
   }
 
+  func display(localizations: [Localization]) {
+    guard showLocalizations else { return }
+    
+    DispatchQueue.main.async { [weak playerLayer] in
+      localizations.forEach {
+        playerLayer?.addSublayer($0.layer)
+      }
+    }
+  }
+  
+  func displayConcept(for localization: Localization) {
+    guard showLocalizations else { return }
+    guard let conceptLayer = localization.conceptLayer else { return }
+
+    let layer = localization.layer
+    let frame = layer.frame
+    
+    var y = frame.maxY + layer.lineWidth
+    if videoRect.maxY < y + conceptLayer.frame.height {
+      y = frame.minY - layer.lineWidth - conceptLayer.frame.height
+    }
+    let origin = CGPoint(x: frame.minX, y: y)
+
+    DispatchQueue.main.async { [weak conceptLayer, weak playerLayer] in
+      CALayer.noAnimation { [weak conceptLayer, weak playerLayer] in
+        guard let conceptLayer = conceptLayer else { return }
+        conceptLayer.frame = CGRect(origin: origin, size: conceptLayer.frame.size)
+        playerLayer?.addSublayer(conceptLayer)
+      }
+    }
+  }
+  
   var showLocalizations: Bool {
     UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations)
   }

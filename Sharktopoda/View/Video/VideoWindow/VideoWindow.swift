@@ -12,20 +12,25 @@ import SwiftUI
 final class VideoWindow: NSWindow {
   var windowData = WindowData()
   
-  var keyInfo: KeyInfo
+  /// Queue for playerTime observation
+  let playerTimeQueue: DispatchQueue
+  
+  /// Background Task for resizing localizations
+  var resizingTask: Task<(), Never>?
 
-  /// Queue on which off-main work is done
-  let queue: DispatchQueue
+  /// Hold current player direction during window resize
+  var playerDirection: WindowData.PlayerDirection?
 
-  //
   init(for videoAsset: VideoAsset, with sharktopodaData: SharktopodaData) {
-    keyInfo = KeyInfo(keyTime: Date())
-    queue = DispatchQueue(label: "Sharktopoda Video Queue: \(videoAsset.id)")
+    playerTimeQueue = DispatchQueue(label: "Sharktopoda Player Time Queue: \(videoAsset.id)")
 
     let fullSize = videoAsset.fullSize
 
+    // CxTBD The explicit sizing of the window (via width - 120) and the VideoControlView
+    // frame (via height: 50) needs to be investigated
+    
     super.init(
-      contentRect: NSMakeRect(0, 0, fullSize.width, fullSize.height),
+      contentRect: NSMakeRect(0, 0, fullSize.width - 120, fullSize.height),
       styleMask: [.titled, .closable, .miniaturizable, .resizable],
       backing: .buffered,
       defer: false)
@@ -41,7 +46,7 @@ final class VideoWindow: NSWindow {
 
     windowData.frameDuration = frameDuration
     windowData.fullSize = videoAsset.fullSize
-    windowData.localizations = Localizations(id: videoAsset.id,
+    windowData.localizationData = LocalizationData(id: videoAsset.id,
                                              frameDuration: frameDuration.asMillis())
     windowData.player = AVPlayer(playerItem: playerItem)
     windowData.playerView = PlayerView()
@@ -58,10 +63,14 @@ final class VideoWindow: NSWindow {
                                                   multiplier: 0.66)
     setPlayerObserver(pollingInterval)
         
-    makeKeyAndOrderFront(nil)
+    bringToFront()
   }
   
   var id: String {
     windowData.id
+  }
+  
+  func bringToFront() {
+    makeKeyAndOrderFront(nil)
   }
 }

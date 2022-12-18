@@ -1,13 +1,13 @@
 //
-//  VideoControlView.swift
-//  Created for Sharktopoda on 11/18/22.
+//  VideoControlPlayButtons.swift
+//  Created for Sharktopoda on 11/29/22.
 //
 //  Apache License 2.0 — See project LICENSE file
 //
 
 import SwiftUI
 
-struct VideoControlView: View {
+struct VideoControlPlayButtons: View {
   @EnvironmentObject var windowData: WindowData
   
   var playerDirection: WindowData.PlayerDirection {
@@ -15,21 +15,21 @@ struct VideoControlView: View {
   }
   
   var previousDirection: WindowData.PlayerDirection {
-    windowData.previousDirection
+    windowData.videoControl.previousDirection
   }
   
   var body: some View {
     HStack {
       Button(action: {
-        guard playerDirection != .reverse else { return }
-        previousDirection == .reverse ? windowData.play() : windowData.reverse()
+        guard playerDirection != .backward else { return }
+        windowData.playBackward()
+//        previousDirection == .backward ? windowData.play() : windowData.reverse()
       }) {
-        Image(systemName: playerDirection == .reverse
+        Image(systemName: playerDirection == .backward
               ? "arrowtriangle.backward.circle.fill"
               : "arrowtriangle.backward.circle")
       }
-      .padding(.leading, 10)
-
+      
       Button(action: {
         guard playerDirection != .paused else { return }
         windowData.pause()
@@ -38,29 +38,24 @@ struct VideoControlView: View {
               ? "pause.circle.fill"
               : "pause.circle")
       }
-
+      .padding(.leading, 15)
+      .padding(.trailing, 15)
+      
       Button(action: {
         guard playerDirection != .forward else { return }
-        previousDirection == .forward ? windowData.play() : windowData.reverse()
+        windowData.playForward()
+//        previousDirection == .forward ? windowData.play() : windowData.reverse()
       }) {
         Image(systemName: playerDirection == .forward
               ? "play.circle.fill"
               : "play.circle")
       }
-      .padding(.trailing, 10)
-      
-      Spacer()
-      
-      Text(String(windowData.playerTime))
-        .padding(.leading, 10)
-        .padding(.trailing, 10)
     }
-    .padding(.bottom, 10)
   }
 }
 
-//struct VideoControlView_Previews: PreviewProvider {
-//  static var previews: some View {
-//    VideoControlView().environmentObject(VideoControl())
-//  }
-//}
+struct VideoControlButtonsView_Previews: PreviewProvider {
+  static var previews: some View {
+    VideoControlPlayButtons()
+  }
+}

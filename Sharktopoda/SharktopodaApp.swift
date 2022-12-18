@@ -14,17 +14,19 @@ struct SharktopodaApp: App {
   @NSApplicationDelegateAdaptor private var appDelegate: SharktopodaAppDelegate
 
   init() {
-    setAppDefaults()
+    establishUserDefaults()
   }
   
   var body: some Scene {
-    Window("Sharktopoda", id: "SharktopodaApp") {
-      MainView().environmentObject(sharktopodaData)
+    Window("Sharktopoda", id: "main") {
+      MainView()
+        .environmentObject(sharktopodaData)
     }
     .commands { SharktopodaCommands() }
 
     Settings {
-      Preferences().environmentObject(sharktopodaData)
+      Preferences()
+        .environmentObject(sharktopodaData)
     }
   }
 }

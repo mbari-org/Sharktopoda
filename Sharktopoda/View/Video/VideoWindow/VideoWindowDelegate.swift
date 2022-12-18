@@ -6,39 +6,78 @@
 //
 
 import AppKit
+import SwiftUI
 
 extension VideoWindow: NSWindowDelegate {
   func windowWillClose(_ notification: Notification) {
-    DispatchQueue.main.async {
-      UDP.sharktopodaData.videoWindows.removeValue(forKey: self.id)
+    guard let sharktopodaData = UDP.sharktopodaData else { return }
+    
+    sharktopodaData.close(id: id)
+    
+    if !sharktopodaData.hasOpenVideos {
+            sharktopodaData.mainViewWindow?.deminiaturize(nil)
     }
   }
   
   func windowDidBecomeKey(_ notification: Notification) {
-    keyInfo = KeyInfo(keyTime: Date(), isKey: true)
+    windowData.windowKeyInfo = WindowData.WindowKeyInfo(isKey: true)
   }
   
   func windowDidResignKey(_ notification: Notification) {
-    keyInfo = KeyInfo(keyTime: keyInfo.keyTime, isKey: false)
+    windowData.windowKeyInfo = WindowData.WindowKeyInfo(isKey: false)
   }
   
   func windowDidResize(_ notification: Notification) {
-    windowData.pause()
-    
     let videoRect = windowData.playerView.videoRect
     
-    /// Resize paused localizations on main queue to see immediate effect
     let pausedLocalizations = windowData.pausedLocalizations()
-    DispatchQueue.main.async {
+
+    playerDirection = windowData.playerDirection
+
+    DispatchQueue.main.async { [weak self] in
+      guard let windowData = self?.windowData else { return }
+
+      if windowData.playerDirection != .paused {
+        windowData.videoControl.play(rate: 0.0)
+        windowData.playerView.clear()
+        windowData.localizationData.clearSelected()
+      } else {
+        windowData.localizationData.clearSelected()
+      }
+      
       for localization in pausedLocalizations {
         localization.resize(for: videoRect)
       }
+
+      windowData.sliderView.setupControlViewAnimation()
+
+      // CxTBD This is a bit wonky. Investigate
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.33) { [weak self] in
+        guard let self = self else { return }
+        guard let playerDirection = self.playerDirection else { return }
+        
+        self.windowData.playerResume(playerDirection)
+      }
     }
     
-    /// Resize all localizations on background queue. Although paused localizations are resized again,
-    /// preventing that would be more overhead than re-resizing.
-    queue.async { [weak self] in
-      self?.windowData.localizations.resize(for: videoRect)
+    /// Resize all non-paused localizations on background queue. Paused localizations are resized on the main
+    /// thread. If resized again here, the paused Location display is clunky.
+    resizingTask?.cancel()
+    resizingTask = Task.detached(priority: .background) { [weak windowData] in
+      guard let windowData = windowData else { return }
+
+      do {
+        try await Task.sleep(for: .milliseconds(333))
+      } catch {
+        // no-op
+      }
+
+      let pausedIds = pausedLocalizations.map(\.id)
+      for (id, localization) in windowData.localizationData.storage {
+        if !pausedIds.contains(id) {
+          localization.resize(for: videoRect)
+        }
+      }
     }
   }
 }

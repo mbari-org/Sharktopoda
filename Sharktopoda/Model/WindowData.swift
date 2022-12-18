@@ -7,14 +7,17 @@
 
 import AVKit
 
-final class WindowData: ObservableObject {
+final class WindowData: Identifiable, ObservableObject {
   var _id: String?
+  
+  var windowKeyInfo: WindowKeyInfo = WindowKeyInfo()
   
   var _frameDuration: CMTime?
   var _fullSize: CGSize?
-  var _localizations: Localizations?
+  var _localizationData: LocalizationData?
   var _player: AVPlayer?
   var _playerView: PlayerView?
+  var _sliderView: NSTimeSliderView?
   var _videoAsset: VideoAsset?
   var _videoControl: VideoControl?
   
@@ -36,9 +39,9 @@ final class WindowData: ObservableObject {
     set { _fullSize = newValue }
   }
   
-  var localizations: Localizations {
-    get { _localizations! }
-    set { _localizations = newValue }
+  var localizationData: LocalizationData {
+    get { _localizationData! }
+    set { _localizationData = newValue }
   }
   
   var player: AVPlayer {
@@ -49,6 +52,11 @@ final class WindowData: ObservableObject {
   var playerView: PlayerView {
     get { _playerView! }
     set { _playerView = newValue }
+  }
+  
+  var sliderView: NSTimeSliderView {
+    get { _sliderView! }
+    set { _sliderView = newValue }
   }
   
   var videoAsset: VideoAsset {
@@ -73,55 +81,60 @@ extension WindowData {
   }
   
   var currentFrameTime: Int {
-    localizations.frameTime(elapsedTime: videoControl.currentTime)
+    localizationData.frameTime(of: videoControl.currentTime)
   }
-
+  
   func pause(_ withDisplay: Bool = true) {
     DispatchQueue.main.async { [weak self] in
       guard let self = self else { return }
       self.play(rate: 0.0)
       self.playerView.clear()
-      self.localizations.clearSelected()
+      self.localizationData.clearSelected()
 
       if withDisplay {
-        self.playerView.display(localizations: self.pausedLocalizations())
+        self.displayPaused()
       }
     }
-  }
-  
-  func play() {
-    play(rate: videoControl.previousRate)
   }
   
   func play(rate: Float) {
     DispatchQueue.main.async { [weak self] in
       guard let self = self else { return }
+      
+      self.localizationData.clearSelected()
       self.playerDirection = PlayerDirection.at(rate: rate)
       self.playerView.clear(localizations: self.pausedLocalizations())
       self.videoControl.play(rate: rate)
     }
   }
   
-  var previousDirection: PlayerDirection {
-    PlayerDirection.at(rate: videoControl.previousRate)
+  func playBackward() {
+    play(rate: -1 * videoControl.previousSpeed)
   }
   
-  func reverse() {
-    play(rate: -1 * videoControl.previousRate)
+  func playForward() {
+    play(rate: videoControl.previousSpeed)
   }
   
+  func playerResume(_ direction: WindowData.PlayerDirection) {
+    if direction == .paused {
+       displayPaused()
+    } else {
+      play(rate: videoControl.previousDirection.rawValue * videoControl.previousSpeed)
+    }
+  }
+
   func seek(elapsedTime: Int) {
-    let frameTime = localizations.frameTime(elapsedTime: elapsedTime)
+    let frameTime = localizationData.frameTime(of: elapsedTime)
     videoControl.seek(elapsedTime: frameTime) { [weak self] done in
-      let pausedLocalizations = self?.pausedLocalizations() ?? []
       DispatchQueue.main.async {
-        self?.playerView.display(localizations: pausedLocalizations)
+        self?.displayPaused()
       }
     }
   }
   
   func step(_ steps: Int) {
-    let stepTime = currentFrameTime + steps * localizations.frameDuration
+    let stepTime = currentFrameTime + steps * localizationData.frameDuration
     seek(elapsedTime: stepTime)
   }
   
@@ -132,32 +145,36 @@ extension WindowData {
 
 extension WindowData {
   func add(localizations controlLocalizations: [ControlLocalization]) {
-    let currentFrameNumber = localizations.frameNumber(elapsedTime: videoControl.currentTime)
+    let currentFrameNumber = localizationData.frameNumber(of: videoControl.currentTime)
 
     controlLocalizations
       .map { Localization(from: $0, size: fullSize) }
       .forEach {
         $0.resize(for: playerView.videoRect)
-        localizations.add($0)
+        localizationData.add($0)
         
         guard videoControl.paused else { return }
-        guard localizations.frameNumber(for: $0) == currentFrameNumber else { return }
+        guard localizationData.frameNumber(for: $0) == currentFrameNumber else { return }
         
         playerView.display(localization: $0)
       }
   }
+  
+  func displayPaused() {
+    let localizations = pausedLocalizations()
+    playerView.display(localizations: localizations)
+  }
 
   func pausedLocalizations() -> [Localization] {
-    guard videoControl.paused else { return [] }
-    return localizations.fetch(.paused, at: videoControl.currentTime)
+    localizationData.fetch(.paused, at: videoControl.currentTime)
   }
 }
 
 extension WindowData {
-  enum PlayerDirection: Int {
-    case reverse = -1
-    case paused = 0
-    case forward =  1
+  enum PlayerDirection: Float {
+    case backward = -1.0
+    case paused = 0.0
+    case forward =  1.0
     
     static func at(rate: Float) -> PlayerDirection {
       if rate == 0.0 {
@@ -165,7 +182,7 @@ extension WindowData {
       } else if 0 < rate {
         return .forward
       } else {
-        return .reverse
+        return .backward
       }
     }
     
@@ -173,7 +190,7 @@ extension WindowData {
       if self == .paused {
         return .paused
       } else {
-        return self == .reverse ? .forward : .reverse
+        return self == .backward ? .forward : .backward
       }
     }
   }

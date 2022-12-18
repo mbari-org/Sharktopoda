@@ -9,7 +9,7 @@ import AVFoundation
 
 // CxNote Binds to first AVAsset video track
 
-final class VideoAsset: Identifiable, ObservableObject {
+final class VideoAsset {
   static let timescaleMillis: Int32 = 1000
   
   let id: String
@@ -18,25 +18,34 @@ final class VideoAsset: Identifiable, ObservableObject {
   var avAsset: AVURLAsset
 
   var avAssetTrack: AVAssetTrack
-  var durationMillis: Int
+  var duration: CMTime
   var frameDuration: CMTime
   var frameRate: Float
   var fullSize: NSSize
   var isPlayable: Bool
-
-  init?(id: String, url: URL) async {
+  
+  var durationMillis: Int {
+    duration.asMillis()
+  }
+  
+  init(id: String, url: URL) async throws {
     self.id = id
     self.url = url
 
     avAsset = AVURLAsset(url: url)
     
     do {
-      let duration = try await avAsset.load(.duration)
-      durationMillis = duration.asMillis()
       isPlayable = try await avAsset.load(.isPlayable)
+      guard isPlayable else {
+        throw OpenVideoError.notPlayable(url)
+      }
+
+      duration = try await avAsset.load(.duration)
       
       let tracks = try await avAsset.loadTracks(withMediaType: AVMediaType.video)
-      guard let track = tracks.first else { return nil }
+      guard let track = tracks.first else {
+        throw OpenVideoError.noTrack(url)
+      }
       avAssetTrack = track
       
       frameDuration = try await track.load(.minFrameDuration)
@@ -47,8 +56,7 @@ final class VideoAsset: Identifiable, ObservableObject {
       let size = trackSize.applying(trackTransform)
       fullSize = NSMakeSize(abs(size.width), abs(size.height))
     } catch let error {
-      UDP.log("VideoAsset error: \(error)")
-      return nil
+      throw OpenVideoError.loadProperty(url, error: error)
     }
   }
   

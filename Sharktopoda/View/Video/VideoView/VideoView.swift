@@ -14,12 +14,12 @@ struct VideoView: View {
   var body: some View {
     VStack {
       windowData.playerView
-//        .environmentObject(windowData)
         .padding(0)
-      Divider()
+
       VideoControlView()
-        .padding(0)
         .environmentObject(windowData)
+        .frame(height: 50)
+        .padding(.bottom, 10)
     }
   }
 }

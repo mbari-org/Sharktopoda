@@ -27,6 +27,10 @@ extension LocalizationData {
     storage.removeAll()
   }
   
+  func exists(id: String) -> Bool {
+    return storage[id] != nil
+  }
+  
   func remove(ids: [String]) {
     let removed = ids.reduce(into: [Localization]()) { acc, id in
       guard let localization = storage[id] else { return }
@@ -47,23 +51,4 @@ extension LocalizationData {
       }
     }
   }
-  
-  func update(using control: ControlLocalization) {
-    guard let localization = storage[control.uuid] else { return }
-    
-    if localization.sameTime(as: control) {
-      pauseFrameRemove(localization)
-      forwardFrameRemove(localization)
-      reverseFrameRemove(localization)
-      
-      localization.update(using: control)
-      
-      pauseFrameInsert(localization)
-      forwardFrameInsert(localization)
-      reverseFrameInsert(localization)
-    } else {
-      localization.update(using: control)
-    }
-  }
 }
-

@@ -15,7 +15,7 @@ extension VideoWindow: NSWindowDelegate {
     sharktopodaData.close(id: id)
     
     if !sharktopodaData.hasOpenVideos {
-            sharktopodaData.mainViewWindow?.deminiaturize(nil)
+      sharktopodaData.mainViewWindow?.deminiaturize(nil)
     }
   }
   

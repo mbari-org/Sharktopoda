@@ -112,18 +112,6 @@ extension SharktopodaData {
     
     return windows.sorted(by: { $0.windowData < $1.windowData }).last
   }
-  
-  var videoWindowsState: VideoWindowsState {
-    if videoWindows.isEmpty {
-      return .noneOpen
-    }
-    
-    if latestVideoWindow()?.isKeyWindow ?? false {
-      return videoWindows.count == 1 ? .soloKey : .multiKey
-    }
-    
-    return .noKey
-  }
 }
 
 // MARK: Open Video State

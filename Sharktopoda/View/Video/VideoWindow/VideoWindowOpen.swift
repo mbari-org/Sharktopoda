@@ -47,7 +47,7 @@ extension VideoWindow {
       
       openDone(id: id)
     } catch {
-      await UDP.sharktopodaData.closeVideo(id: id)
+      await UDP.sharktopodaData.releaseVideo(id: id)
       
       guard let openVideoError = error as? OpenVideoError else {
         UDP.log(error.localizedDescription)

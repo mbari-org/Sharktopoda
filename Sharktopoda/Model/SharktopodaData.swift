@@ -41,10 +41,11 @@ extension SharktopodaData {
     videoWindows[id] = videoWindow
   }
   
-  func closeVideo(id: String) async {
+  func releaseVideo(id: String) async {
     await openVideos.close(id: id)
     
     guard let videoWindow = videoWindows[id] else { return }
+    
     await videoWindow.windowData.player.replaceCurrentItem(with: nil)
     await videoWindows.removeValue(forKey: videoWindow.id)
   }
@@ -73,32 +74,24 @@ extension SharktopodaData {
   func close(id: String) {
     guard let videoWindow = videoWindows[id] else { return }
     
-    videoWindow.bringToFront()
-    closeLatest()
+    videoWindow.close()
   }
   
-  func closeLatest() {
-    guard !videoWindows.isEmpty else { return }
-    let beforeCount = videoWindows.count
-
-    guard let latest = latestVideoWindow() else { return }
-    latest.windowData.player.replaceCurrentItem(with: nil)
-    videoWindows.removeValue(forKey: latest.id)
-
+  func releaseWindow(_ videoWindow: VideoWindow) {
+    videoWindow.windowData.player.replaceCurrentItem(with: nil)
+    videoWindows.removeValue(forKey: videoWindow.id)
+    
+    let nextLatest = latestVideoWindow()
+    
     Task {
-      await closeVideo(id: latest.id)
+      await releaseVideo(id: videoWindow.id)
+      
+      if let latestVideoWindow = nextLatest {
+        await latestVideoWindow.bringToFront()
+      } else {
+        await mainViewWindow?.deminiaturize(nil)
+      }
     }
-
-    if beforeCount == 1 {
-      return
-    }
-    
-    let windows: [VideoWindow] = Array(videoWindows.values).filter { videoWindow in
-      videoWindow.id != latest.id
-    }
-    
-    let nextVideoWindow = windows.sorted(by: { $0.windowData < $1.windowData }).last
-    nextVideoWindow?.bringToFront()
   }
   
   func latestVideoWindow() -> VideoWindow? {
@@ -111,18 +104,6 @@ extension SharktopodaData {
     }
     
     return windows.sorted(by: { $0.windowData < $1.windowData }).last
-  }
-  
-  var videoWindowsState: VideoWindowsState {
-    if videoWindows.isEmpty {
-      return .noneOpen
-    }
-    
-    if latestVideoWindow()?.isKeyWindow ?? false {
-      return videoWindows.count == 1 ? .soloKey : .multiKey
-    }
-    
-    return .noKey
   }
 }
 

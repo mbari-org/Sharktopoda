@@ -12,11 +12,7 @@ extension VideoWindow: NSWindowDelegate {
   func windowWillClose(_ notification: Notification) {
     guard let sharktopodaData = UDP.sharktopodaData else { return }
     
-    sharktopodaData.close(id: id)
-    
-    if !sharktopodaData.hasOpenVideos {
-            sharktopodaData.mainViewWindow?.deminiaturize(nil)
-    }
+    sharktopodaData.releaseWindow(self)
   }
   
   func windowDidBecomeKey(_ notification: Notification) {

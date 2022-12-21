@@ -24,11 +24,13 @@ extension VideoWindow: NSWindowDelegate {
   }
   
   func windowDidResize(_ notification: Notification) {
-    let videoRect = windowData.playerView.videoRect
-    
-    let pausedLocalizations = windowData.pausedLocalizations()
+    if !isResizing {
+      playerDirection = windowData.playerDirection
+      isResizing = true
+    }
 
-    playerDirection = windowData.playerDirection
+    let videoRect = windowData.playerView.videoRect
+    let pausedLocalizations = windowData.pausedLocalizations()
 
     DispatchQueue.main.async { [weak self] in
       guard let windowData = self?.windowData else { return }
@@ -48,10 +50,11 @@ extension VideoWindow: NSWindowDelegate {
       windowData.sliderView.setupControlViewAnimation()
 
       // CxTBD This is a bit wonky. Investigate
-      DispatchQueue.main.asyncAfter(deadline: .now() + 0.33) { [weak self] in
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.666) { [weak self] in
         guard let self = self else { return }
         guard let playerDirection = self.playerDirection else { return }
-        
+
+        self.isResizing = false
         self.windowData.playerResume(playerDirection)
       }
     }
@@ -63,7 +66,7 @@ extension VideoWindow: NSWindowDelegate {
       guard let windowData = windowData else { return }
 
       do {
-        try await Task.sleep(for: .milliseconds(333))
+        try await Task.sleep(for: .milliseconds(500))
       } catch {
         // no-op
       }

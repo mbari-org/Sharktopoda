@@ -18,8 +18,9 @@ final class VideoWindow: NSWindow {
   /// Background Task for resizing localizations
   var resizingTask: Task<(), Never>?
 
-  /// Hold current player direction during window resize
+  /// Vars to pause/resume playback after resizing
   var playerDirection: WindowData.PlayerDirection?
+  var isResizing: Bool = false
 
   init(for videoAsset: VideoAsset, with sharktopodaData: SharktopodaData) {
     playerTimeQueue = DispatchQueue(label: "Sharktopoda Player Time Queue: \(videoAsset.id)")

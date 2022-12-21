@@ -121,6 +121,7 @@
 		E2C22ED528D36832003CD976 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22ED428D36832003CD976 /* Localization.swift */; };
 		E2C22ED728D36888003CD976 /* VideoAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22ED628D36888003CD976 /* VideoAsset.swift */; };
 		E2C22EDA28D386AE003CD976 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22ED928D386AE003CD976 /* MainView.swift */; };
+		E2CF66182953797C0062DB8F /* LocalizationConcept.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CF66172953797C0062DB8F /* LocalizationConcept.swift */; };
 		E2D03FFD29357FAE0063F38E /* ClientMessageOpenDone.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D03FFC29357FAE0063F38E /* ClientMessageOpenDone.swift */; };
 		E2D1C84E291302EF00961A0A /* LocalizationFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1C84D291302EF00961A0A /* LocalizationFrame.swift */; };
 		E2D1C85029131E6E00961A0A /* LocalizationMouse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1C84F29131E6E00961A0A /* LocalizationMouse.swift */; };
@@ -290,6 +291,7 @@
 		E2C22ED428D36832003CD976 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		E2C22ED628D36888003CD976 /* VideoAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAsset.swift; sourceTree = "<group>"; };
 		E2C22ED928D386AE003CD976 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		E2CF66172953797C0062DB8F /* LocalizationConcept.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationConcept.swift; sourceTree = "<group>"; };
 		E2D03FFC29357FAE0063F38E /* ClientMessageOpenDone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientMessageOpenDone.swift; sourceTree = "<group>"; };
 		E2D040032936780C0063F38E /* Sharktopoda.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Sharktopoda.plist; sourceTree = "<group>"; };
 		E2D1C84D291302EF00961A0A /* LocalizationFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationFrame.swift; sourceTree = "<group>"; };
@@ -736,6 +738,7 @@
 				E2448BFE292D6EAE00F2C2E2 /* LocalizationRegion.swift */,
 				E22B6A7D2940EE7500ABB22D /* LocalizationSelect.swift */,
 				E2448C00292D6F5D00F2C2E2 /* LocalizationUpdate.swift */,
+				E2CF66172953797C0062DB8F /* LocalizationConcept.swift */,
 			);
 			path = Localization;
 			sourceTree = "<group>";
@@ -953,6 +956,7 @@
 				E2F3A2302925513B00F2551F /* VideoView.swift in Sources */,
 				E295627C28D5325A00E88ED1 /* NetworkControlPreferencesView.swift in Sources */,
 				E2675E2628DABF5600F5F114 /* ControlPlay.swift in Sources */,
+				E2CF66182953797C0062DB8F /* LocalizationConcept.swift in Sources */,
 				E2448BFF292D6EAE00F2C2E2 /* LocalizationRegion.swift in Sources */,
 				E21DF7922910391A00038B41 /* PlayerMouse.swift in Sources */,
 				E28C6821290C714D00987828 /* CAShapeLayer.swift in Sources */,

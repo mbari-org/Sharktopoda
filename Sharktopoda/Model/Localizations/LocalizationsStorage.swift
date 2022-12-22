@@ -44,11 +44,10 @@ extension LocalizationData {
       acc.append(localization)
     }
 
-    DispatchQueue.main.async {
-      removed.forEach {
-        $0.layer.removeFromSuperlayer()
-        $0.unselect()
-      }
+    removed.forEach {
+      $0.layer.removeFromSuperlayer()
+      $0.conceptLayer.removeFromSuperlayer()
+      $0.unselect()
     }
   }
 }

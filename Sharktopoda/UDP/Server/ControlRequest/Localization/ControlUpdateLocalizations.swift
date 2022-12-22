@@ -14,11 +14,13 @@ struct ControlUpdateLocalizations: ControlMessage {
   
   func process() -> ControlResponse {
     withWindowData(id: uuid) { windowData in
-      let localizationData = windowData.localizationData
-      let validUpdates = localizations.filter { localizationData.exists(id: $0.uuid) }
-
-      localizationData.remove(ids: validUpdates.map { $0.uuid })
-      windowData.add(localizations: validUpdates)
+      DispatchQueue.main.async { [weak windowData] in
+        guard let localizationData = windowData?.localizationData else { return }
+        
+        let validUpdates = localizations.filter { localizationData.exists(id: $0.uuid) }
+        localizationData.remove(ids: validUpdates.map { $0.uuid })
+        windowData?.add(localizations: validUpdates)
+      }
 
       return ok()
     }

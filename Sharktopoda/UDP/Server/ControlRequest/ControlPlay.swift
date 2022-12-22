@@ -14,7 +14,9 @@ struct ControlPlay: ControlMessage {
 
   func process() -> ControlResponse {
     withVideoWindow(id: uuid) { videoWindow in
-      videoWindow.windowData.play(rate: rate)
+      DispatchQueue.main.async { [weak videoWindow] in
+        videoWindow?.windowData.play(rate: rate)
+      }
 
       return ok()
     }

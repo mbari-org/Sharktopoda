@@ -14,16 +14,15 @@ struct ControlAdvance: ControlMessage {
 
   func process() -> ControlResponse {
     withWindowData(id: uuid) { windowData in
-      let videoControl = windowData.videoControl
-      
-      videoControl.pause()
-      
-      guard videoControl.canStep(direction) else {
+      windowData.pause(false)
+      guard windowData.videoControl.canStep(direction) else {
         return failed("Cannot advance video in that direction")
       }
       
-      windowData.advance(steps: direction)
-      
+      DispatchQueue.main.async { [weak windowData] in
+        windowData?.advance(steps: direction)
+      }
+
       return ok()
     }
   }

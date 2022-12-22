@@ -13,7 +13,10 @@ struct ControlPause: ControlMessage {
   
   func process() -> ControlResponse {
     withWindowData(id: uuid) { windowData in
-      windowData.pause()
+      DispatchQueue.main.async { [weak windowData] in
+        windowData?.pause()
+      }
+
       return ok()
     }
   }

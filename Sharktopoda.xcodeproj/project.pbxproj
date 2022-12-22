@@ -733,12 +733,12 @@
 			isa = PBXGroup;
 			children = (
 				E2C22ED428D36832003CD976 /* Localization.swift */,
+				E2CF66172953797C0062DB8F /* LocalizationConcept.swift */,
 				E2D1C84D291302EF00961A0A /* LocalizationFrame.swift */,
 				E2448C02292D6FC300F2C2E2 /* LocalizationMisc.swift */,
 				E2448BFE292D6EAE00F2C2E2 /* LocalizationRegion.swift */,
 				E22B6A7D2940EE7500ABB22D /* LocalizationSelect.swift */,
 				E2448C00292D6F5D00F2C2E2 /* LocalizationUpdate.swift */,
-				E2CF66172953797C0062DB8F /* LocalizationConcept.swift */,
 			);
 			path = Localization;
 			sourceTree = "<group>";

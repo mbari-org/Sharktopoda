@@ -20,9 +20,6 @@ struct ControlSelectLocalizations: ControlMessage {
         windowData.playerView.nsPlayerView.currentLocalization = nil
         windowData.localizationData.clearSelected(notifyClient: false)
         windowData.localizationData.select(ids: localizations, notifyClient: false)
-        windowData.localizationData.selectedLocalizations.forEach { localization in
-          windowData.playerView.displayConcept(for: localization)
-        }
       }
 
       return ok()

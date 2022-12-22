@@ -53,6 +53,7 @@ extension Localization {
   func resize(for videoRect: CGRect) {
     CALayer.noAnimation {
       layer.shapeFrame(frame(for: videoRect))
+      positionConceptLayer(for: videoRect)
     }
   }
 }

@@ -40,10 +40,7 @@ final class VideoControl {
 
   func pause() {
     guard player.rate != 0 else { return }
-    
-    DispatchQueue.main.async {
-      self.player.rate = 0.0
-    }
+    player.rate = 0.0
   }
   
   var paused: Bool {
@@ -59,10 +56,7 @@ final class VideoControl {
     
     previousSpeed = abs(rate)
     previousDirection = 0 < rate ? .forward : .backward
-    
-    DispatchQueue.main.async {
-      self.player.rate = rate
-    }
+    player.rate = rate
   }
   
   private var player: AVPlayer {

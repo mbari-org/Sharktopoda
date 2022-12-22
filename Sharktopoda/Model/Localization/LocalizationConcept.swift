@@ -7,33 +7,47 @@
 
 import SwiftUI
 
-struct LocalizationConcept {
-  let layer: CATextLayer
-  
-  var conceptFontSize: CGFloat {
+extension Localization {
+
+  static var conceptColor: CGColor {
+    UserDefaults.standard.color(forKey: PrefKeys.captionFontColor).cgColor!
+  }
+
+  static var conceptFontSize: CGFloat {
     CGFloat(UserDefaults.standard.integer(forKey: PrefKeys.captionFontSize))
   }
   
-  var conceptColor: CGColor {
-    UserDefaults.standard.color(forKey: PrefKeys.captionFontColor).cgColor!
-  }
-  
-  init(_ localization: Localization) {
-    layer = CATextLayer()
+  static func createConceptLayer(_ concept: String) -> CATextLayer {
+    let textLayer = CATextLayer()
     
     let conceptFont = NSFont.systemFont(ofSize: conceptFontSize)
-    let maxSize = NSSize(width: localization.layer.frame.width, height: 50)
-    let textRect = localization.concept.boundingRect(with: maxSize,
-                                                     options: .usesLineFragmentOrigin,
-                                                     attributes: [NSAttributedString.Key.font: conceptFont],
-                                                     context: nil)
+    let maxSize = NSSize(width: CGFloat.infinity, height: 50)
+    let textRect = concept.boundingRect(with: maxSize,
+                                     options: .usesLineFragmentOrigin,
+                                     attributes: [NSAttributedString.Key.font: conceptFont],
+                                     context: nil)
+    
+    textLayer.allowsFontSubpixelQuantization = true
+    textLayer.font = conceptFont
+    textLayer.fontSize = Localization.conceptFontSize
+    textLayer.foregroundColor = Localization.conceptColor
+    textLayer.alignmentMode = .left
+    textLayer.string = concept
+    textLayer.frame = CGRect(origin: .zero, size: textRect.size)
 
-    layer.allowsFontSubpixelQuantization = true
-    layer.font = conceptFont
-    layer.fontSize = conceptFontSize
-    layer.foregroundColor = conceptColor
-    layer.alignmentMode = .left
-    layer.string = localization.concept
-    layer.frame = CGRect(origin: .zero, size: textRect.size)
+    return textLayer
+  }
+  
+  func positionConceptLayer(for videoRect: CGRect) {
+    let frame = layer.frame
+    let halfLine = layer.lineWidth / 2
+    
+    var y = frame.maxY + halfLine
+    if videoRect.maxY < y + conceptLayer.frame.height {
+      y = frame.minY - halfLine - conceptLayer.frame.height
+    }
+    let origin = CGPoint(x: frame.minX, y: y)
+    
+    conceptLayer.frame = CGRect(origin: origin, size: conceptLayer.frame.size)
   }
 }

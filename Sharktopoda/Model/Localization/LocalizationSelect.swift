@@ -8,6 +8,10 @@
 import SwiftUI
 
 extension Localization {
+  var localizationColor: CGColor {
+    (Color(hex: hexColor)?.cgColor)!
+  }
+  
   var localizationLineWidth: CGFloat {
     CGFloat(UserDefaults.standard.integer(forKey: PrefKeys.displayBorderSize))
   }
@@ -20,21 +24,13 @@ extension Localization {
     CGFloat(UserDefaults.standard.integer(forKey: PrefKeys.selectionBorderSize))
   }
 
-  
-  var localizationColor: CGColor {
-    (Color(hex: hexColor)?.cgColor)!
-  }
-
   func select() {
     layer.strokeColor = selectedColor
     layer.lineWidth = selectedLineWidth
-    conceptLayer = LocalizationConcept(self).layer
   }
 
   func unselect() {
     layer.strokeColor = localizationColor
     layer.lineWidth = localizationLineWidth
-    conceptLayer?.removeFromSuperlayer()
-    conceptLayer = nil
   }
 }

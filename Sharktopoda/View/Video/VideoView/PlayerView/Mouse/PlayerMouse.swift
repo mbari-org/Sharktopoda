@@ -21,7 +21,6 @@ extension NSPlayerView {
         currentLocalization = nil
 
         localizationData.select(ids: [localization.id])
-        displayConcept(for: localization)
       }
       
       if commandSelect(at: playerPoint) { return }
@@ -51,6 +50,7 @@ extension NSPlayerView {
     if currentLocation != nil {
       let delta = DeltaPoint(x: event.deltaX, y: event.deltaY)
       dragCurrent(by: delta)
+      // CxTBD reposition conceptLayer?
       return
     }
 

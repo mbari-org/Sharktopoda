@@ -24,8 +24,8 @@ extension VideoWindow {
           
         case .loaded:
           guard let videoWindow = UDP.sharktopodaData.window(for: id) else { return }
-          onMain {
-            videoWindow.bringToFront()
+          onMain { [weak videoWindow] in
+            videoWindow?.bringToFront()
           }
           openDone(id: id)
         
@@ -42,9 +42,9 @@ extension VideoWindow {
       let videoAsset = try await VideoAsset(id: id, url: url)
       let videoWindow = VideoWindow(for: videoAsset, with: UDP.sharktopodaData)
       await UDP.sharktopodaData.windowOpened(videoWindow: videoWindow)
-      onMain {
-        videoWindow.windowData.sliderView.setupControlViewAnimation()
-        videoWindow.bringToFront()
+      onMain { [weak videoWindow] in
+        videoWindow?.windowData.sliderView.setupControlViewAnimation()
+        videoWindow?.bringToFront()
       }
       
       openDone(id: id)

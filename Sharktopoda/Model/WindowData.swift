@@ -119,6 +119,7 @@ extension WindowData {
 
     pause(false)
     playerView.clear()
+    localizationData.clearSelected()
     videoControl.seek(elapsedTime: frameTime) { [weak self] done in
       self?.displayPaused()
     }

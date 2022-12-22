@@ -34,7 +34,7 @@ extension NSPlayerView {
     }
 
     windowData.localizationData.select(ids: [mouseLocalization.id])
-    displayConcept(for: mouseLocalization)
+//    displayConcept(for: mouseLocalization)
 
     return true
   }
@@ -51,7 +51,7 @@ extension NSPlayerView {
 
     currentLocalization = mouseLocalization
     localizationData.select(ids: [mouseLocalization.id])
-    displayConcept(for: mouseLocalization)
+//    displayConcept(for: mouseLocalization)
 
     let layer = mouseLocalization.layer
     let layerPoint = layer.convertSuperPoint(mousePoint)

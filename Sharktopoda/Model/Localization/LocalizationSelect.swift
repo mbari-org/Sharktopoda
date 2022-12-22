@@ -8,38 +8,29 @@
 import SwiftUI
 
 extension Localization {
+  var localizationColor: CGColor {
+    (Color(hex: hexColor)?.cgColor)!
+  }
+  
+  var localizationLineWidth: CGFloat {
+    CGFloat(UserDefaults.standard.integer(forKey: PrefKeys.displayBorderSize))
+  }
+  
   var selectedColor: CGColor {
     UserDefaults.standard.color(forKey: PrefKeys.selectionBorderColor).cgColor!
   }
   
-  var localizationColor: CGColor {
-    (Color(hex: hexColor)?.cgColor)!
+  var selectedLineWidth: CGFloat {
+    CGFloat(UserDefaults.standard.integer(forKey: PrefKeys.selectionBorderSize))
   }
 
-  var captionSize: CGFloat {
-    CGFloat(UserDefaults.standard.integer(forKey: PrefKeys.captionFontSize))
-  }
-  
-  var captionColor: CGColor {
-    UserDefaults.standard.color(forKey: PrefKeys.captionFontColor).cgColor!
-  }
-  
   func select() {
     layer.strokeColor = selectedColor
-    
-    let conceptLayer = CATextLayer()
-    conceptLayer.fontSize = captionSize
-    conceptLayer.foregroundColor = captionColor
-    conceptLayer.alignmentMode = .left
-    conceptLayer.string = concept
-    conceptLayer.frame = CGRect(origin: .zero, size: CGSize(width: 100, height: 12))
-
-    self.conceptLayer = conceptLayer
+    layer.lineWidth = selectedLineWidth
   }
 
   func unselect() {
     layer.strokeColor = localizationColor
-    conceptLayer?.removeFromSuperlayer()
-    conceptLayer = nil
+    layer.lineWidth = localizationLineWidth
   }
 }

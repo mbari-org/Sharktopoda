@@ -25,7 +25,8 @@ extension LocalizationData {
   }
   
   func select(ids: [String], notifyClient: Bool = true) {
-    ids.forEach { id in
+    ids.forEach { uuid in
+      let id = SharktopodaData.normalizedId(uuid)
       guard !selected.contains(id) else { return }
       guard let localization = storage[id] else { return }
       

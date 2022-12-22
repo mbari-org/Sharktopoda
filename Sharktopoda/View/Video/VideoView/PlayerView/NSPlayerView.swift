@@ -130,58 +130,30 @@ extension NSPlayerView {
 extension NSPlayerView {
 
   func clear() {
-    DispatchQueue.main.async { [weak self] in
-      self?.localizationLayers().forEach { $0.removeFromSuperlayer() }
-      self?.conceptLayers().forEach { $0.removeFromSuperlayer() }
-    }
+    localizationLayers().forEach { $0.removeFromSuperlayer() }
+    conceptLayers().forEach { $0.removeFromSuperlayer() }
   }
   
   func clear(localizations: [Localization]) {
-    DispatchQueue.main.async { 
-      localizations.forEach {
-        $0.layer.removeFromSuperlayer()
-        $0.conceptLayer?.removeFromSuperlayer()
-      }
+    localizations.forEach {
+      $0.layer.removeFromSuperlayer()
+      $0.conceptLayer.removeFromSuperlayer()
     }
   }
   
   func display(localization: Localization) {
     guard showLocalizations else { return }
     
-    DispatchQueue.main.async { [weak self] in
-      self?.playerLayer.addSublayer(localization.layer)
-    }
+    playerLayer.addSublayer(localization.layer)
+    playerLayer.addSublayer(localization.conceptLayer)
   }
 
   func display(localizations: [Localization]) {
     guard showLocalizations else { return }
     
-    DispatchQueue.main.async { [weak playerLayer] in
-      localizations.forEach {
-        playerLayer?.addSublayer($0.layer)
-      }
-    }
-  }
-  
-  func displayConcept(for localization: Localization) {
-    guard showLocalizations else { return }
-    guard let conceptLayer = localization.conceptLayer else { return }
-
-    let layer = localization.layer
-    let frame = layer.frame
-    
-    var y = frame.maxY + layer.lineWidth
-    if videoRect.maxY < y + conceptLayer.frame.height {
-      y = frame.minY - layer.lineWidth - conceptLayer.frame.height
-    }
-    let origin = CGPoint(x: frame.minX, y: y)
-
-    DispatchQueue.main.async { [weak conceptLayer, weak playerLayer] in
-      CALayer.noAnimation { [weak conceptLayer, weak playerLayer] in
-        guard let conceptLayer = conceptLayer else { return }
-        conceptLayer.frame = CGRect(origin: origin, size: conceptLayer.frame.size)
-        playerLayer?.addSublayer(conceptLayer)
-      }
+    localizations.forEach {
+      playerLayer.addSublayer($0.layer)
+      playerLayer.addSublayer($0.conceptLayer)
     }
   }
   

@@ -28,10 +28,6 @@ extension PlayerView {
     nsPlayerView.display(localizations: localizations)
   }
 
-  func displayConcept(for localization: Localization) {
-    nsPlayerView.displayConcept(for: localization)
-  }
-  
   var playerLayer: AVPlayerLayer {
     nsPlayerView.playerLayer
   }

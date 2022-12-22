@@ -14,8 +14,9 @@ struct ControlAddLocalizations: ControlMessage {
   
   func process() -> ControlResponse {
     withWindowData(id: uuid) { windowData in
-      windowData.add(localizations: localizations)
-       
+      DispatchQueue.main.async { [weak windowData] in
+        windowData?.add(localizations: localizations)
+      }
       return ok()
     }
   }

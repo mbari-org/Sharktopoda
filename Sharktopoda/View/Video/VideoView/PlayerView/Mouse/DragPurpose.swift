@@ -22,27 +22,25 @@ extension NSPlayerView {
     localizationData.clearSelected()
     currentLocalization = nil
     
-    let layer = shapeLayer(anchor)
-    playerLayer.addSublayer(layer)
-    
-    dragLayer = layer
+    dragLayer = shapeLayer(anchor)
+    playerLayer.addSublayer(dragLayer!)
   }
   
   func dragPurpose(using dragPoint: CGPoint) {
     guard dragPurpose != nil else { return }
 
-    guard let layer = dragLayer,
-          let anchor = dragAnchor else { return }
+    guard let dragLayer = dragLayer,
+          let dragAnchor = dragAnchor else { return }
     
-    let frameRect = anchor.diagonalRect(using: dragPoint)
+    let frameRect = dragAnchor.diagonalRect(using: dragPoint)
     CALayer.noAnimation {
-      layer.shapeFrame(frameRect)
+      dragLayer.shapeFrame(frameRect)
     }
   }
   
   func endDragPurpose(at endPoint: CGPoint) {
     if let purpose = dragPurpose,
-       let layer = dragLayer,
+       let dragLayer = dragLayer,
        let anchor = dragAnchor {
 
       // CxTBD Parameterize min drag
@@ -51,30 +49,24 @@ extension NSPlayerView {
         switch purpose {
           case .create:
             let localization = Localization(at: currentTime,
-                                            with: region(from: layer),
-                                            layer: layer,
+                                            with: region(from: dragLayer),
+                                            layer: dragLayer,
                                             fullSize: fullSize)
+            localization.positionConceptLayer(for: videoRect)
+            playerLayer.addSublayer(localization.conceptLayer)
+
             localizationData.add(localization)
             localizationData.sendLocalizationsMessage(.addLocalizations, localization: localization)
-            
             localizationData.select(ids: [localization.id])
-            displayConcept(for: localization)
-
+            
           case .select:
             /// Remove the selection layer as it's purpose is complete
-            DispatchQueue.main.async {
-              layer.removeFromSuperlayer()
-            }
+            dragLayer.removeFromSuperlayer()
             
-            localizationData.select(using: layer.frame, at: currentTime)
-            localizationData.selectedLocalizations.forEach {
-              displayConcept(for: $0)
-            }
+            localizationData.select(using: dragLayer.frame, at: currentTime)
         }
       } else {
-        DispatchQueue.main.async {
-          layer.removeFromSuperlayer()
-        }
+        dragLayer.removeFromSuperlayer()
       }
     }
 

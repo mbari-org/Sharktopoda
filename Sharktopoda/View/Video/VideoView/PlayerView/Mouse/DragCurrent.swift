@@ -13,10 +13,9 @@ extension NSPlayerView {
     guard delta != .zero else { return }
     guard let localization = currentLocalization else { return }
     
-    if let conceptLayer = localization.conceptLayer {
-      conceptLayer.removeFromSuperlayer()
-    }
-
+    // Hide conceptLayer during drag
+    localization.conceptLayer.removeFromSuperlayer()
+    
     switch dragAction(for: delta) {
       case .adjust:
         adjust(by: delta)
@@ -37,7 +36,11 @@ extension NSPlayerView {
     localization.region = region(from: localization.layer)
     localizationData.sendLocalizationsMessage(.updateLocalizations, localization: localization)
 
-    displayConcept(for: localization)
+    // Reposition and show conceptLayer after drag
+    CALayer.noAnimation {
+      localization.positionConceptLayer(for: videoRect)
+      playerLayer.addSublayer(localization.conceptLayer)
+    }
     
     currentLocation = nil
   }

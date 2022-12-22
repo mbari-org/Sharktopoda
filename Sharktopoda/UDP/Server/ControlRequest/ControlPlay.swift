@@ -13,9 +13,11 @@ struct ControlPlay: ControlMessage {
   @Default<Float.PlaybackRate> var rate: Float
 
   func process() -> ControlResponse {
-    withVideoWindow(id: uuid) { videoWindow in
-      videoWindow.windowData.play(rate: rate)
-
+    withWindowData(id: uuid) { windowData in
+      DispatchQueue.main.async { [weak windowData] in
+        windowData?.play(rate: rate)
+      }
+      
       return ok()
     }
   }

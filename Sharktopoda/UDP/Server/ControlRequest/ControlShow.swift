@@ -13,9 +13,10 @@ struct ControlShow: ControlMessage {
   
   func process() -> ControlResponse {
     withVideoWindow(id: uuid) { videoWindow in
-      DispatchQueue.main.async {
-        videoWindow.bringToFront()
+      DispatchQueue.main.async { [weak videoWindow] in
+        videoWindow?.bringToFront()
       }
+      
       return ok()
     }
   }

@@ -18,10 +18,10 @@ class Localization {
   var region: CGRect
 
   var fullSize: CGSize
-  var conceptLayer: CATextLayer?
+  var conceptLayer: CATextLayer
   
   init(at elapsedTime: Int, with region: CGRect, layer: CAShapeLayer, fullSize: CGSize) {
-    id = UUID().uuidString
+    id = SharktopodaData.normalizedId()
     concept = UserDefaults.standard.string(forKey: PrefKeys.captionDefault)!
     duration = 0
     hexColor = UserDefaults.standard.hexColor(forKey: PrefKeys.displayBorderColor)
@@ -30,28 +30,31 @@ class Localization {
     self.region = region
     self.fullSize = fullSize
     self.layer = layer
+
+    conceptLayer = Localization.createConceptLayer(concept)
   }
 
   init(from controlLocalization: ControlLocalization, size: CGSize) {
-    id = controlLocalization.uuid
+    id = SharktopodaData.normalizedId(controlLocalization.uuid)
     concept = controlLocalization.concept
     duration = controlLocalization.durationMillis
     elapsedTime = controlLocalization.elapsedTimeMillis
+    fullSize = size
     hexColor = controlLocalization.color
     region = CGRect(x: CGFloat(controlLocalization.x),
                     y: CGFloat(controlLocalization.y),
                     width: CGFloat(controlLocalization.width),
                     height: CGFloat(controlLocalization.height))
 
-    self.fullSize = size
-
     let origin = CGPoint(x: region.minX,
                          y: size.height - (region.minY + region.height))
     let layerFrame = CGRect(origin: origin, size: region.size)
     let cgColor = Color(hex: hexColor)?.cgColor
     layer = CAShapeLayer(frame: layerFrame, cgColor: cgColor!)
+    
+    conceptLayer = Localization.createConceptLayer(concept)
   }
-
+  
   var debugDescription: String {
     "id: \(id), concept: \(concept), time: \(elapsedTime), duration: \(duration), color: \(hexColor)"
   }

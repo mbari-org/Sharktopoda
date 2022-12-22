@@ -13,6 +13,8 @@ extension VideoWindow {
   }
   
   static func open(id: String, url: URL, alert: Bool = false) {
+    let id = SharktopodaData.normalizedId(id)
+    
     Task {
       let videoState = await UDP.sharktopodaData.openVideoState(id: id)
       
@@ -60,7 +62,7 @@ extension VideoWindow {
     }
   }
   
-  static func openDone(id: String) {
+  private static func openDone(id: String) {
     UDP.sharktopodaData.mainViewWindow?.miniaturize(nil)
     
     guard let client = UDP.sharktopodaData.udpClient else { return }

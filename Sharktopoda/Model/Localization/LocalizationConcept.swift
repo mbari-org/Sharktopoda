@@ -27,7 +27,6 @@ extension Localization {
                                      attributes: [NSAttributedString.Key.font: conceptFont],
                                      context: nil)
     
-    textLayer.allowsFontSubpixelQuantization = true
     textLayer.font = conceptFont
     textLayer.fontSize = Localization.conceptFontSize
     textLayer.foregroundColor = Localization.conceptColor

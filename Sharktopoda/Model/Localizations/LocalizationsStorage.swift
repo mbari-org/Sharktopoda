@@ -28,18 +28,20 @@ extension LocalizationData {
   }
   
   func exists(id: String) -> Bool {
-    return storage[id] != nil
+    let normalizedId = SharktopodaData.normalizedId(id)
+    return storage[normalizedId] != nil
   }
   
   func remove(ids: [String]) {
     let removed = ids.reduce(into: [Localization]()) { acc, id in
-      guard let localization = storage[id] else { return }
+      let normalizedId = SharktopodaData.normalizedId(id)
+      guard let localization = storage[normalizedId] else { return }
 
       pauseFrameRemove(localization)
       forwardFrameRemove(localization)
       reverseFrameRemove(localization)
       selected.remove(id)
-      storage[id] = nil
+      storage[normalizedId] = nil
       
       acc.append(localization)
     }

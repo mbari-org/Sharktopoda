@@ -27,6 +27,12 @@ final class SharktopodaData: ObservableObject {
 
 // MARK: Misc
 extension SharktopodaData {
+  static func normalizedId() -> String {
+    normalizedId(UUID().uuidString)
+  }
+  
+  static func normalizedId(_ id: String) -> String {
+    id.lowercased()
   }
   
   func videoInfos() -> [VideoInfo] {
@@ -35,5 +41,8 @@ extension SharktopodaData {
     }
   }
   
+  func window(for uuid: String) -> VideoWindow? {
+    let id = SharktopodaData.normalizedId(uuid)
+    return videoWindows[id]
   }
 }

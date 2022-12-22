@@ -21,7 +21,7 @@ class Localization {
   var conceptLayer: CATextLayer
   
   init(at elapsedTime: Int, with region: CGRect, layer: CAShapeLayer, fullSize: CGSize) {
-    id = UUID().uuidString
+    id = SharktopodaData.normalizedId()
     concept = UserDefaults.standard.string(forKey: PrefKeys.captionDefault)!
     duration = 0
     hexColor = UserDefaults.standard.hexColor(forKey: PrefKeys.displayBorderColor)
@@ -35,7 +35,7 @@ class Localization {
   }
 
   init(from controlLocalization: ControlLocalization, size: CGSize) {
-    id = controlLocalization.uuid
+    id = SharktopodaData.normalizedId(controlLocalization.uuid)
     concept = controlLocalization.concept
     duration = controlLocalization.durationMillis
     elapsedTime = controlLocalization.elapsedTimeMillis

@@ -122,6 +122,8 @@
 		E2C22ED728D36888003CD976 /* VideoAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22ED628D36888003CD976 /* VideoAsset.swift */; };
 		E2C22EDA28D386AE003CD976 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C22ED928D386AE003CD976 /* MainView.swift */; };
 		E2CF66182953797C0062DB8F /* LocalizationConcept.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CF66172953797C0062DB8F /* LocalizationConcept.swift */; };
+		E2CF661A2954B05A0062DB8F /* SharktopodaDataOpenVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CF66192954B05A0062DB8F /* SharktopodaDataOpenVideo.swift */; };
+		E2CF661C2954B1260062DB8F /* SharktopodaDataLatestVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CF661B2954B1260062DB8F /* SharktopodaDataLatestVideo.swift */; };
 		E2D03FFD29357FAE0063F38E /* ClientMessageOpenDone.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D03FFC29357FAE0063F38E /* ClientMessageOpenDone.swift */; };
 		E2D1C84E291302EF00961A0A /* LocalizationFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1C84D291302EF00961A0A /* LocalizationFrame.swift */; };
 		E2D1C85029131E6E00961A0A /* LocalizationMouse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1C84F29131E6E00961A0A /* LocalizationMouse.swift */; };
@@ -292,6 +294,8 @@
 		E2C22ED628D36888003CD976 /* VideoAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAsset.swift; sourceTree = "<group>"; };
 		E2C22ED928D386AE003CD976 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		E2CF66172953797C0062DB8F /* LocalizationConcept.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationConcept.swift; sourceTree = "<group>"; };
+		E2CF66192954B05A0062DB8F /* SharktopodaDataOpenVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharktopodaDataOpenVideo.swift; sourceTree = "<group>"; };
+		E2CF661B2954B1260062DB8F /* SharktopodaDataLatestVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharktopodaDataLatestVideo.swift; sourceTree = "<group>"; };
 		E2D03FFC29357FAE0063F38E /* ClientMessageOpenDone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientMessageOpenDone.swift; sourceTree = "<group>"; };
 		E2D040032936780C0063F38E /* Sharktopoda.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Sharktopoda.plist; sourceTree = "<group>"; };
 		E2D1C84D291302EF00961A0A /* LocalizationFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationFrame.swift; sourceTree = "<group>"; };
@@ -632,6 +636,8 @@
 			isa = PBXGroup;
 			children = (
 				E2C22EC428D144B0003CD976 /* SharktopodaData.swift */,
+				E2CF661B2954B1260062DB8F /* SharktopodaDataLatestVideo.swift */,
+				E2CF66192954B05A0062DB8F /* SharktopodaDataOpenVideo.swift */,
 				E27471062931273800EDDAD6 /* WindowData.swift */,
 				E280384429284A380017E28C /* WindowDataKeyInfo.swift */,
 				E2803846292931E60017E28C /* VideoControl.swift */,
@@ -922,6 +928,7 @@
 				E2675E2828DAC08D00F5F114 /* ControlPause.swift in Sources */,
 				E22F72FD28DA5D9100253A48 /* ControlResponse.swift in Sources */,
 				E237C0AA28EE1AFC002868D1 /* View.swift in Sources */,
+				E2CF661A2954B05A0062DB8F /* SharktopodaDataOpenVideo.swift in Sources */,
 				E2505D5328EF38B60027F280 /* OpenAlert.swift in Sources */,
 				E2020D732926E8AE0090B60B /* SharktopodaAppDelegate.swift in Sources */,
 				E28CEF0B291E9CCF009E73B3 /* LocalizationsFrames.swift in Sources */,
@@ -1018,6 +1025,7 @@
 				E2D47E9E28D8DF0F0068B192 /* UDPMessage.swift in Sources */,
 				E2EE0E3A28DB9AAD00138A86 /* ControlState.swift in Sources */,
 				E2989AC128D4BAD0009D2D65 /* SizeColorRow.swift in Sources */,
+				E2CF661C2954B1260062DB8F /* SharktopodaDataLatestVideo.swift in Sources */,
 				E2D1C85029131E6E00961A0A /* LocalizationMouse.swift in Sources */,
 				E28CEF09291E9C82009E73B3 /* LocalizationsRetrieve.swift in Sources */,
 				E2D47E9A28D8C17D0068B192 /* ClientCommand.swift in Sources */,

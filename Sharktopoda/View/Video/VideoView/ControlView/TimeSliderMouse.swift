@@ -31,6 +31,9 @@ extension NSTimeSliderView {
   override func mouseDragged(with event: NSEvent) {
     let quickTime = sliderTime(for: event)
     windowData.videoControl.quickSeek(to: quickTime)
+
+    windowData.playerView.clear()
+    windowData.displayPaused()
   }
   
   override func mouseUp(with event: NSEvent) {

@@ -166,6 +166,21 @@ extension WindowData {
   func pausedLocalizations() -> [Localization] {
     localizationData.fetch(.paused, at: videoControl.currentTime)
   }
+  
+  func spannedLocalizations() -> [Localization] {
+    /// If using localization duration, we currently beg out of attempting to find all "spanned" localizations
+    if localizationData.useDuration {
+      return pausedLocalizations()
+    }
+
+    /// Spanned localizations are all localizations that would be displayed at the current time during playback
+    let timeWindow = localizationData.timeWindow
+    let startTime = videoControl.currentTime - (timeWindow / 2)
+    
+    let displayedIds = localizationData.ids(startTime: startTime, duration: timeWindow)
+        
+    return localizationData.fetch(ids: displayedIds)
+  }
 }
 
 extension WindowData {

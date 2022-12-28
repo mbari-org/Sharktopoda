@@ -9,11 +9,14 @@ import AVFoundation
 
 extension CMTime {
   func asMillis() -> Int {
-    Int(self.seconds * Double(VideoAsset.timescaleMillis))
+    Int(seconds * Double(VideoAsset.timescaleMillis))
   }
   
   static func fromMillis(_ time: Double) -> CMTime {
-    fromMillis(Int(time))
+    guard !time.isNaN,
+          !time.isInfinite else { return .zero }
+    
+    return fromMillis(Int(time))
   }
   
   static func fromMillis(_ time: Int) -> CMTime {

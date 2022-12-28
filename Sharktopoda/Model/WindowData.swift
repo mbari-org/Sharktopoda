@@ -119,9 +119,12 @@ extension WindowData {
   }
 
   func seek(elapsedTime: Int) {
-    let frameTime = localizationData.frameTime(of: elapsedTime)
     pause(false)
+
+    playerView.clear()
+    localizationData.clearSelected()
     
+    let frameTime = localizationData.frameTime(of: elapsedTime)
     videoControl.seek(elapsedTime: frameTime) { [weak self] done in
       self?.displayPaused()
     }

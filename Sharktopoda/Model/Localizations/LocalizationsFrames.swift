@@ -22,6 +22,15 @@ extension LocalizationData {
   func frameTime(of elapsedTime: Int) -> Int {
     frameNumber(of: elapsedTime) * frameDuration
   }
+  
+  var timeWindow: Int {
+    UserDefaults.standard.integer(forKey: PrefKeys.displayTimeWindow)
+  }
+  
+  var useDuration: Bool {
+    UserDefaults.standard.bool(forKey: PrefKeys.displayUseDuration)
+  }
+  
 }
 
 // MARK: Pause frames
@@ -58,11 +67,7 @@ extension LocalizationData {
 // MARK: Forward frames
 extension LocalizationData {
   func forwardFrameInsert(_ localization: Localization) {
-    let useDuration = UserDefaults.standard.bool(forKey: PrefKeys.displayUseDuration)
-    let timeWindow = UserDefaults.standard.integer(forKey: PrefKeys.displayTimeWindow)
-    
-    let elapsed = localization.elapsedTime
-    let frameTime = useDuration ? elapsed : elapsed - (timeWindow / 2)
+    let frameTime = forwardFrameTime(localization)
     
     let (frame, action, index) = frame(for: localization, into: forwardFrames, at: frameTime)
     
@@ -75,11 +80,8 @@ extension LocalizationData {
   }
   
   func forwardFrameRemove(_ localization: Localization) {
-    let useDuration = UserDefaults.standard.bool(forKey: PrefKeys.displayUseDuration)
-    let timeWindow = UserDefaults.standard.integer(forKey: PrefKeys.displayTimeWindow)
+    let frameTime = forwardFrameTime(localization)
     
-    let elapsed = localization.elapsedTime
-    let frameTime = useDuration ? elapsed : elapsed - (timeWindow / 2)
     let index = frameIndex(for: forwardFrames, at: frameTime)
     guard index != forwardFrames.count else { return }
     
@@ -94,18 +96,18 @@ extension LocalizationData {
       forwardFrames[index] = frame
     }
   }
+  
+  private func forwardFrameTime(_ localization: Localization) -> Int {
+    let elapsed = localization.elapsedTime
+    return useDuration ? elapsed : elapsed - (timeWindow / 2)
+  }
 }
 
 // MARK: Reverse frames
 extension LocalizationData {
   func reverseFrameInsert(_ localization: Localization) {
-    let useDuration = UserDefaults.standard.bool(forKey: PrefKeys.displayUseDuration)
-    let timeWindow = UserDefaults.standard.integer(forKey: PrefKeys.displayTimeWindow)
+    let insertTime = reverseFrameTime(localization)
     
-    let elapsed = localization.elapsedTime
-    let duration = localization.duration
-    
-    let insertTime = useDuration ? elapsed + duration : elapsed + (timeWindow / 2)
     let (frame, action, index) = frame(for: localization, into: reverseFrames, at: insertTime)
     switch action {
       case .add:
@@ -116,13 +118,8 @@ extension LocalizationData {
   }
   
   func reverseFrameRemove(_ localization: Localization) {
-    let useDuration = UserDefaults.standard.bool(forKey: PrefKeys.displayUseDuration)
-    let timeWindow = UserDefaults.standard.integer(forKey: PrefKeys.displayTimeWindow)
+    let frameTime = reverseFrameTime(localization)
     
-    let elapsed = localization.elapsedTime
-    let duration = localization.duration
-    
-    let frameTime = useDuration ? elapsed + duration : elapsed + (timeWindow / 2)
     let index = frameIndex(for: reverseFrames, at: frameTime)
     guard index != reverseFrames.count else { return }
     
@@ -136,6 +133,13 @@ extension LocalizationData {
     } else {
       reverseFrames[index] = frame
     }
+  }
+  
+  private func reverseFrameTime(_ localization: Localization) -> Int {
+    let elapsed = localization.elapsedTime
+    let duration = localization.duration
+    
+    return useDuration ? elapsed + duration : elapsed + (timeWindow / 2)
   }
 }
 

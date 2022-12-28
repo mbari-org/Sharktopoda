@@ -19,7 +19,7 @@ struct ControlCapture: ControlMessage {
   func process() -> ControlResponse {
     withWindowData(id: uuid) { windowData in
       // CxNote Capture current time to get frame as close to command request as possible.
-      let captureTime = windowData.videoControl.currentTime
+      let captureTime = windowData.currentFrameTime
 
       let fileUrl = URL(fileURLWithPath: imageLocation)
 

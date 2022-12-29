@@ -68,11 +68,11 @@ final class VideoAsset {
     imageGenerator.requestedTimeToleranceBefore = CMTime.zero
 
     do {
-      let (cgImage, grabTime) = try await imageGenerator.image(at: frameTime)
+      let (cgImage, _) = try await imageGenerator.image(at: frameTime)
       if let error = cgImage.pngWrite(to: destination) {
         return .failure(error)
       } else {
-        return .success(grabTime.asMillis())
+        return .success(captureTime)
       }
     } catch(let error) {
       return .failure(error)

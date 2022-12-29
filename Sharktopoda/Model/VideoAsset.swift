@@ -61,6 +61,21 @@ final class VideoAsset {
   }
   
   func frameGrab(at captureTime: Int, destination: String) async -> FrameGrabResult {
-    avAsset.frameGrab(at: captureTime, destination: destination)
+    let frameTime = CMTime.fromMillis(captureTime)
+    
+    let imageGenerator = AVAssetImageGenerator(asset: avAsset)
+    imageGenerator.requestedTimeToleranceAfter = CMTime.zero
+    imageGenerator.requestedTimeToleranceBefore = CMTime.zero
+
+    do {
+      let (cgImage, _) = try await imageGenerator.image(at: frameTime)
+      if let error = cgImage.pngWrite(to: destination) {
+        return .failure(error)
+      } else {
+        return .success(captureTime)
+      }
+    } catch(let error) {
+      return .failure(error)
+    }
   }
 }

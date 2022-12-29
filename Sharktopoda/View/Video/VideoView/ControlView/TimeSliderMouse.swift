@@ -33,7 +33,8 @@ extension NSTimeSliderView {
     windowData.videoControl.quickSeek(to: quickTime)
 
     windowData.playerView.clear()
-    windowData.displayPaused()
+    let localizations = windowData.spannedLocalizations()
+    windowData.playerView.display(localizations: localizations)
   }
   
   override func mouseUp(with event: NSEvent) {

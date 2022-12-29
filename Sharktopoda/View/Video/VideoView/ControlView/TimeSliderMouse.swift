@@ -38,6 +38,8 @@ extension NSTimeSliderView {
   }
   
   override func mouseUp(with event: NSEvent) {
+    windowData.playerView.clear()
+    
     let frameTime = sliderTime(for: event)
     windowData.videoControl.frameSeek(to: frameTime) { [weak self] done in
       guard done else { return }

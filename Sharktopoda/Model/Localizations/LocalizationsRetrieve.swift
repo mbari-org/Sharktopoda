@@ -45,9 +45,10 @@ extension LocalizationData {
     return frame.ids
   }
   
-  func ids(startTime: Int, duration: Int) -> [String] {
+  func ids(startTime: Int, endTime: Int) -> [String] {
+    
     let startIndex = frameIndex(for: forwardFrames, at: startTime)
-    let endIndex = frameIndex(for: forwardFrames, at: startTime + duration)
+    let endIndex = frameIndex(for: forwardFrames, at: endTime)
 
     var indices = [String]()
     for index in startIndex...endIndex {

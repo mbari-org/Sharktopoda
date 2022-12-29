@@ -175,9 +175,12 @@ extension WindowData {
 
     /// Spanned localizations are all localizations that would be displayed at the current time during playback
     let timeWindow = localizationData.timeWindow
+
     let startTime = videoControl.currentTime - (timeWindow / 2)
+    let endTime = startTime + timeWindow
     
-    let displayedIds = localizationData.ids(startTime: startTime, duration: timeWindow)
+    let displayedIds = localizationData.ids(startTime: max(0, startTime),
+                                            endTime: min(endTime, videoAsset.durationMillis))
         
     return localizationData.fetch(ids: displayedIds)
   }

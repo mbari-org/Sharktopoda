@@ -49,10 +49,10 @@ extension LocalizationData {
   }
   
   func pauseFrameRemove(_ localization: Localization) {
-    let index = frameIndex(for: pauseFrames, at: localization.elapsedTime)
+    let index = insertionIndex(for: pauseFrames, at: localization.elapsedTime)
     var frame = pauseFrames[index]
     
-    guard frame.frameNumber == frameNumber(for: localization) else { return }
+    guard frame.number == frameNumber(for: localization) else { return }
     
     frame.remove(localization)
     
@@ -82,11 +82,11 @@ extension LocalizationData {
   func forwardFrameRemove(_ localization: Localization) {
     let frameTime = forwardFrameTime(localization)
     
-    let index = frameIndex(for: forwardFrames, at: frameTime)
+    let index = insertionIndex(for: forwardFrames, at: frameTime)
     guard index != forwardFrames.count else { return }
     
     var frame = forwardFrames[index]
-    guard frame.frameNumber == frameNumber(for: localization) else { return }
+    guard frame.number == frameNumber(for: localization) else { return }
     
     frame.remove(localization)
     
@@ -120,11 +120,11 @@ extension LocalizationData {
   func reverseFrameRemove(_ localization: Localization) {
     let frameTime = reverseFrameTime(localization)
     
-    let index = frameIndex(for: reverseFrames, at: frameTime)
+    let index = insertionIndex(for: reverseFrames, at: frameTime)
     guard index != reverseFrames.count else { return }
     
     var frame = reverseFrames[index]
-    guard frame.frameNumber == frameNumber(for: localization) else { return }
+    guard frame.number == frameNumber(for: localization) else { return }
     
     frame.remove(localization)
     
@@ -145,7 +145,8 @@ extension LocalizationData {
 
 // MARK: Abstract frame processing
 extension LocalizationData {
-  func frameIndex(for frames: [LocalizationFrame], at elapsedTime: Int) -> Int {
+  /// Binary search for frame insertion index
+  func insertionIndex(for frames: [LocalizationFrame], at elapsedTime: Int) -> Int {
     var left = 0
     var right = frames.count - 1
     
@@ -156,7 +157,7 @@ extension LocalizationData {
     
     while left <= right {
       index = (left + right) / 2
-      found = frames[index].frameNumber
+      found = frames[index].number
       
       if found == frameNumber {
         return index
@@ -175,6 +176,7 @@ extension LocalizationData {
              at insertTime: Int) -> PutInfo {
     
     let frameNumber = frameNumber(of: insertTime)
+    let frameTime = frameNumber * frameDuration
     
     var frame: LocalizationFrame
     var action: PutAction
@@ -182,25 +184,25 @@ extension LocalizationData {
     
     /// If no frames yet, insert at 0
     if frames.isEmpty {
-      frame = LocalizationFrame(localization, frameNumber: frameNumber)
+      frame = LocalizationFrame(number: frameNumber, time: frameTime)
       action = .insert
       index = 0
     } else {
       /// Find insertion index
-      index = frameIndex(for: frames, at: insertTime)
+      index = insertionIndex(for: frames, at: insertTime)
       /// If after end, insert there
       if index == frames.count {
-        frame = LocalizationFrame(localization, frameNumber: frameNumber)
+        frame = LocalizationFrame(number: frameNumber, time: frameTime)
         action = .insert
       } else {
         /// Fetch the frame at the insert index
         frame = frames[index]
         /// If frameNumber matches, add
-        if frame.frameNumber == frameNumber {
+        if frame.number == frameNumber {
           action = .add
         } else {
           /// else insert at index
-          frame = LocalizationFrame(localization, frameNumber: frameNumber)
+          frame = LocalizationFrame(number: frameNumber, time: frameTime)
           action = .insert
         }
       }

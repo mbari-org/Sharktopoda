@@ -6,14 +6,11 @@
 //
 
 struct LocalizationFrame: Comparable {
-  let frameNumber: Int
+
+  let number: Int
+  let time: Int
   
-  private(set) var ids: [String]
-  
-  init(_ localization: Localization, frameNumber: Int) {
-    self.frameNumber = frameNumber
-    ids = [String]()
-  }
+  private(set) var ids = [String]()
   
   mutating func add(_ localization: Localization) {
     ids.append(localization.id)
@@ -26,6 +23,6 @@ struct LocalizationFrame: Comparable {
   
   // Comparable
   static func < (lhs: LocalizationFrame, rhs: LocalizationFrame) -> Bool {
-    lhs.frameNumber < rhs.frameNumber
+    lhs.number < rhs.number
   }
 }

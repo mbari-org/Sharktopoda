@@ -36,7 +36,7 @@ extension LocalizationData {
     guard let frames = frames(for: direction),
           !frames.isEmpty else { return [] }
     
-    let index = frameIndex(for: frames, at: elapsedTime)
+    let index = insertionIndex(for: frames, at: elapsedTime)
     guard index != frames.count else { return [] }
     
     let frame = frames[index]
@@ -46,9 +46,11 @@ extension LocalizationData {
   }
   
   func ids(startTime: Int, endTime: Int) -> [String] {
+    guard !forwardFrames.isEmpty else { return [] }
     
-    let startIndex = frameIndex(for: forwardFrames, at: startTime)
-    let endIndex = frameIndex(for: forwardFrames, at: endTime)
+    /// CxNote frameIndex returns insertion 
+    let startIndex = insertionIndex(for: forwardFrames, at: startTime)
+    let endIndex = insertionIndex(for: forwardFrames, at: endTime)
 
     var indices = [String]()
     for index in startIndex...endIndex {

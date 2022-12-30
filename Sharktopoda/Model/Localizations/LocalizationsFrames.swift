@@ -49,7 +49,7 @@ extension LocalizationData {
   }
   
   func pauseFrameRemove(_ localization: Localization) {
-    let index = frameIndex(for: pauseFrames, at: localization.elapsedTime)
+    let index = insertionIndex(for: pauseFrames, at: localization.elapsedTime)
     var frame = pauseFrames[index]
     
     guard frame.number == frameNumber(for: localization) else { return }
@@ -82,7 +82,7 @@ extension LocalizationData {
   func forwardFrameRemove(_ localization: Localization) {
     let frameTime = forwardFrameTime(localization)
     
-    let index = frameIndex(for: forwardFrames, at: frameTime)
+    let index = insertionIndex(for: forwardFrames, at: frameTime)
     guard index != forwardFrames.count else { return }
     
     var frame = forwardFrames[index]
@@ -120,7 +120,7 @@ extension LocalizationData {
   func reverseFrameRemove(_ localization: Localization) {
     let frameTime = reverseFrameTime(localization)
     
-    let index = frameIndex(for: reverseFrames, at: frameTime)
+    let index = insertionIndex(for: reverseFrames, at: frameTime)
     guard index != reverseFrames.count else { return }
     
     var frame = reverseFrames[index]
@@ -145,7 +145,8 @@ extension LocalizationData {
 
 // MARK: Abstract frame processing
 extension LocalizationData {
-  func frameIndex(for frames: [LocalizationFrame], at elapsedTime: Int) -> Int {
+  /// Binary search for frame insertion index
+  func insertionIndex(for frames: [LocalizationFrame], at elapsedTime: Int) -> Int {
     var left = 0
     var right = frames.count - 1
     
@@ -188,7 +189,7 @@ extension LocalizationData {
       index = 0
     } else {
       /// Find insertion index
-      index = frameIndex(for: frames, at: insertTime)
+      index = insertionIndex(for: frames, at: insertTime)
       /// If after end, insert there
       if index == frames.count {
         frame = LocalizationFrame(number: frameNumber, time: frameTime)

@@ -7,7 +7,8 @@
 
 struct LocalizationFrame: Comparable {
 
-  let frameNumber: Int
+  let number: Int
+  let time: Int
   
   private(set) var ids = [String]()
   
@@ -22,6 +23,6 @@ struct LocalizationFrame: Comparable {
   
   // Comparable
   static func < (lhs: LocalizationFrame, rhs: LocalizationFrame) -> Bool {
-    lhs.frameNumber < rhs.frameNumber
+    lhs.number < rhs.number
   }
 }

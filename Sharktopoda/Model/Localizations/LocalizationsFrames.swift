@@ -52,7 +52,7 @@ extension LocalizationData {
     let index = frameIndex(for: pauseFrames, at: localization.elapsedTime)
     var frame = pauseFrames[index]
     
-    guard frame.frameNumber == frameNumber(for: localization) else { return }
+    guard frame.number == frameNumber(for: localization) else { return }
     
     frame.remove(localization)
     
@@ -86,7 +86,7 @@ extension LocalizationData {
     guard index != forwardFrames.count else { return }
     
     var frame = forwardFrames[index]
-    guard frame.frameNumber == frameNumber(for: localization) else { return }
+    guard frame.number == frameNumber(for: localization) else { return }
     
     frame.remove(localization)
     
@@ -124,7 +124,7 @@ extension LocalizationData {
     guard index != reverseFrames.count else { return }
     
     var frame = reverseFrames[index]
-    guard frame.frameNumber == frameNumber(for: localization) else { return }
+    guard frame.number == frameNumber(for: localization) else { return }
     
     frame.remove(localization)
     
@@ -156,7 +156,7 @@ extension LocalizationData {
     
     while left <= right {
       index = (left + right) / 2
-      found = frames[index].frameNumber
+      found = frames[index].number
       
       if found == frameNumber {
         return index
@@ -175,6 +175,7 @@ extension LocalizationData {
              at insertTime: Int) -> PutInfo {
     
     let frameNumber = frameNumber(of: insertTime)
+    let frameTime = frameNumber * frameDuration
     
     var frame: LocalizationFrame
     var action: PutAction
@@ -182,7 +183,7 @@ extension LocalizationData {
     
     /// If no frames yet, insert at 0
     if frames.isEmpty {
-      frame = LocalizationFrame(frameNumber: frameNumber)
+      frame = LocalizationFrame(number: frameNumber, time: frameTime)
       action = .insert
       index = 0
     } else {
@@ -190,17 +191,17 @@ extension LocalizationData {
       index = frameIndex(for: frames, at: insertTime)
       /// If after end, insert there
       if index == frames.count {
-        frame = LocalizationFrame(frameNumber: frameNumber)
+        frame = LocalizationFrame(number: frameNumber, time: frameTime)
         action = .insert
       } else {
         /// Fetch the frame at the insert index
         frame = frames[index]
         /// If frameNumber matches, add
-        if frame.frameNumber == frameNumber {
+        if frame.number == frameNumber {
           action = .add
         } else {
           /// else insert at index
-          frame = LocalizationFrame(frameNumber: frameNumber)
+          frame = LocalizationFrame(number: frameNumber, time: frameTime)
           action = .insert
         }
       }

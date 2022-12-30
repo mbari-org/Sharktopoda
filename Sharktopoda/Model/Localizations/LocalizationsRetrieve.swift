@@ -40,7 +40,7 @@ extension LocalizationData {
     guard index != frames.count else { return [] }
     
     let frame = frames[index]
-    guard frame.frameNumber == frameNumber(of: elapsedTime) else { return [] }
+    guard frame.number == frameNumber(of: elapsedTime) else { return [] }
     
     return frame.ids
   }

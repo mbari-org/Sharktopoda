@@ -20,6 +20,36 @@ extension LocalizationData {
   func fetch(_ direction: WindowData.PlayerDirection, at elapsedTime: Int) -> [Localization] {
     fetch(ids: ids(for: direction, at: elapsedTime))
   }
+  
+  func fetch(spanning time: Int) -> [Localization] {
+    guard !pauseFrames.isEmpty else { return [] }
+    
+    var ids = [String]()
+    let spanIndex = min(insertionIndex(for: pauseFrames, at: time), pauseFrames.count - 1)
+    
+    /// Add any localizations at the specified time
+    if withinTimeWindow(time, pauseFrames[spanIndex].time) {
+      ids.append(contentsOf: pauseFrames[spanIndex].ids)
+    }
+    
+    /// Scan left and add
+    var index = spanIndex - 1
+    while -1 < index,
+           withinTimeWindow(time, pauseFrames[index].time) {
+      ids.append(contentsOf: pauseFrames[index].ids)
+      index -= 1
+    }
+    
+    /// Scan right and add
+    index = spanIndex + 1
+    while index < pauseFrames.count,
+          withinTimeWindow(time, pauseFrames[index].time) {
+      ids.append(contentsOf: pauseFrames[index].ids)
+      index += 1
+    }
+    
+    return fetch(ids: ids)
+  }
 
   func frames(for direction: WindowData.PlayerDirection) -> [LocalizationFrame]? {
     switch direction {
@@ -45,18 +75,7 @@ extension LocalizationData {
     return frame.ids
   }
   
-  func ids(from startTime: Int, to endTime: Int) -> [String] {
-    guard !forwardFrames.isEmpty else { return [] }
-    
-    /// CxNote frameIndex returns insertion 
-    let startIndex = insertionIndex(for: forwardFrames, at: startTime)
-    let endIndex = insertionIndex(for: forwardFrames, at: endTime)
-
-    var indices = [String]()
-    for index in startIndex...endIndex {
-      let frame = forwardFrames[index]
-      indices.append(contentsOf: frame.ids)
-    }
-    return indices
+  func withinTimeWindow(_ a: Int, _ b: Int) -> Bool {
+    abs(a - b) <= timeWindow / 2
   }
 }

@@ -182,7 +182,7 @@ extension LocalizationData {
     
     /// If no frames yet, insert at 0
     if frames.isEmpty {
-      frame = LocalizationFrame(localization, frameNumber: frameNumber)
+      frame = LocalizationFrame(frameNumber: frameNumber)
       action = .insert
       index = 0
     } else {
@@ -190,7 +190,7 @@ extension LocalizationData {
       index = frameIndex(for: frames, at: insertTime)
       /// If after end, insert there
       if index == frames.count {
-        frame = LocalizationFrame(localization, frameNumber: frameNumber)
+        frame = LocalizationFrame(frameNumber: frameNumber)
         action = .insert
       } else {
         /// Fetch the frame at the insert index
@@ -200,7 +200,7 @@ extension LocalizationData {
           action = .add
         } else {
           /// else insert at index
-          frame = LocalizationFrame(localization, frameNumber: frameNumber)
+          frame = LocalizationFrame(frameNumber: frameNumber)
           action = .insert
         }
       }

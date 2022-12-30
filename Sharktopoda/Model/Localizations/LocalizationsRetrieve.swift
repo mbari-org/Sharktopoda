@@ -45,7 +45,7 @@ extension LocalizationData {
     return frame.ids
   }
   
-  func ids(startTime: Int, endTime: Int) -> [String] {
+  func ids(from startTime: Int, to endTime: Int) -> [String] {
     guard !forwardFrames.isEmpty else { return [] }
     
     /// CxNote frameIndex returns insertion 

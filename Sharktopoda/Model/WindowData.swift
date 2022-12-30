@@ -179,8 +179,8 @@ extension WindowData {
     let startTime = videoControl.currentTime - (timeWindow / 2)
     let endTime = startTime + timeWindow
     
-    let displayedIds = localizationData.ids(startTime: max(0, startTime),
-                                            endTime: min(endTime, videoAsset.durationMillis))
+    let displayedIds = localizationData.ids(from: max(0, startTime),
+                                            to: min(endTime, videoAsset.durationMillis))
         
     return localizationData.fetch(ids: displayedIds)
   }

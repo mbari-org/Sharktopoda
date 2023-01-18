@@ -55,10 +55,7 @@ extension VideoWindow {
         UDP.log(error.localizedDescription)
         return
       }
-      UDP.log(openVideoError.description)
-      if alert {
-        onMain { OpenAlert(path: url.absoluteString, error: openVideoError).show() }
-      }
+      openFailed(id: id, url: url, openVideoError: openVideoError, alert: alert)
     }
   }
   
@@ -69,6 +66,18 @@ extension VideoWindow {
     
     let openDoneMessage = ClientMessageOpenDone(uuid: id)
     client.process(openDoneMessage)
+  }
+
+  private static func openFailed(id: String, url: URL, openVideoError: OpenVideoError, alert: Bool) {
+    UDP.log(openVideoError.description)
+    if alert {
+      onMain { OpenAlert(path: url.absoluteString, error: openVideoError).show() }
+    } else {
+      guard let client = UDP.sharktopodaData.udpClient else { return }
+      let cause = openVideoError.alertMessage.filter { $0 != "\n" }
+      let openDoneMessage = ClientMessageOpenDone(uuid: id, cause)
+      client.process(openDoneMessage)
+    }
   }
   
   static func onMain(_ fn: @escaping () -> Void) {

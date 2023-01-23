@@ -14,18 +14,14 @@ extension VideoWindow {
       guard let windowData = self?.windowData else { return }
       guard windowData.playerView.showLocalizations else { return }
       
-      let elapsedTime = time.asMillis()
-      let direction = windowData.playerDirection
-      let opposite = direction.opposite()
-      
       DispatchQueue.main.async { [weak windowData] in
-        guard let playerView = windowData?.playerView,
-              let localizations = windowData?.localizationData else { return }
+        guard let windowData = windowData else { return }
 
-        playerView.display(localizations: localizations.fetch(direction, at: elapsedTime))
-        playerView.clear(localizations: localizations.fetch(opposite, at: elapsedTime))
+        windowData.playerView.clear()
+        let localizations = windowData.spannedLocalizations()
+        windowData.playerView.display(localizations: localizations)
 
-        windowData?.playerTime = elapsedTime
+        windowData.playerTime = time.asMillis()
       }
     }
     

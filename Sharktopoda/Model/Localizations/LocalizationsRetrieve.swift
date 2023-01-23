@@ -27,15 +27,15 @@ extension LocalizationData {
     var ids = [String]()
     let spanIndex = min(insertionIndex(for: pauseFrames, at: time), pauseFrames.count - 1)
     
-    /// Add any localizations at the specified time
-    if withinTimeWindow(time, pauseFrames[spanIndex].time) {
+    /// Add localizations at the specified time
+    if inTimeWindow(time, pauseFrames[spanIndex].time) {
       ids.append(contentsOf: pauseFrames[spanIndex].ids)
     }
     
     /// Scan left and add
     var index = spanIndex - 1
     while -1 < index,
-           withinTimeWindow(time, pauseFrames[index].time) {
+           inTimeWindow(time, pauseFrames[index].time) {
       ids.append(contentsOf: pauseFrames[index].ids)
       index -= 1
     }
@@ -43,7 +43,7 @@ extension LocalizationData {
     /// Scan right and add
     index = spanIndex + 1
     while index < pauseFrames.count,
-          withinTimeWindow(time, pauseFrames[index].time) {
+          inTimeWindow(time, pauseFrames[index].time) {
       ids.append(contentsOf: pauseFrames[index].ids)
       index += 1
     }
@@ -75,7 +75,7 @@ extension LocalizationData {
     return frame.ids
   }
   
-  func withinTimeWindow(_ a: Int, _ b: Int) -> Bool {
+  func inTimeWindow(_ a: Int, _ b: Int) -> Bool {
     abs(a - b) <= timeWindow / 2
   }
 }

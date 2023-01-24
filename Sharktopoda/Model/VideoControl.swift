@@ -76,18 +76,30 @@ final class VideoControl {
                 toleranceBefore: quickTolerance,
                 toleranceAfter: quickTolerance)
   }
+  
+  func frameSeek(to elapsedTime: Int) {
+    frameSeek(to: CMTime.fromMillis(elapsedTime))
+  }
+  
+  func frameSeek(to time: CMTime) {
+    let frameMillis = windowData.localizationData.frameTime(of: time.asMillis())
+    let frameTime = CMTime.fromMillis(frameMillis)
+    player.seek(to: frameTime,
+                toleranceBefore: frameTolerance,
+                toleranceAfter: frameTolerance)
+  }
+  
+  func frameSeek(to elapsedTime: Int, done: @escaping (Bool) -> Void) {
+    frameSeek(to: CMTime.fromMillis(elapsedTime), done: done)
+  }
 
   func frameSeek(to time: CMTime, done: @escaping (Bool) -> Void) {
     let frameMillis = windowData.localizationData.frameTime(of: time.asMillis())
     let frameTime = CMTime.fromMillis(frameMillis)
-    
+
     player.seek(to: frameTime,
                 toleranceBefore: frameTolerance,
                 toleranceAfter: frameTolerance,
                 completionHandler: done)
-  }
-
-  func seek(elapsedTime: Int, done: @escaping (Bool) -> Void) {
-    frameSeek(to: CMTime.fromMillis(elapsedTime), done: done)
   }
 }

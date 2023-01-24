@@ -72,7 +72,6 @@ final class WindowData: Identifiable, ObservableObject {
 
 extension WindowData {
   func advance(steps: Int) {
-    pause(false)
     step(steps)
   }
   
@@ -87,8 +86,7 @@ extension WindowData {
     playerView.clear()
     localizationData.clearSelected()
     
-    let frameTime = currentFrameTime
-    videoControl.seek(elapsedTime: frameTime) { [weak self] done in
+    videoControl.frameSeek(to: videoControl.currentTime) { [weak self] done in
       if withDisplay {
         self?.displayPaused()
       }
@@ -119,15 +117,10 @@ extension WindowData {
   }
 
   func seek(elapsedTime: Int) {
-    pause(false)
-
-    playerView.clear()
-    localizationData.clearSelected()
-    
-    let frameTime = localizationData.frameTime(of: elapsedTime)
-    videoControl.seek(elapsedTime: frameTime) { [weak self] done in
-      self?.displayPaused()
+    if !videoControl.paused {
+      play(rate: 0.0)
     }
+    videoControl.frameSeek(to: elapsedTime)
   }
   
   func step(_ steps: Int) {

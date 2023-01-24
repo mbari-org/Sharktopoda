@@ -8,7 +8,7 @@
 import AVFoundation
 
 extension CAShapeLayer {
-  convenience init(frame: CGRect, cgColor: CGColor) {
+  convenience init(frame: CGRect, borderColor: CGColor, borderSize: Int) {
     self.init()
     
     anchorPoint = .zero
@@ -16,8 +16,8 @@ extension CAShapeLayer {
     self.frame = frame
     isOpaque = true
     lineJoin = .round
-    lineWidth = CGFloat(UserDefaults.standard.integer(forKey: PrefKeys.displayBorderSize))
-    strokeColor = cgColor
+    lineWidth = CGFloat(borderSize)
+    strokeColor = borderColor
 
     // CxTBD Investigate
     shouldRasterize = true

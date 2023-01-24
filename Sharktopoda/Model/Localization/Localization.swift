@@ -49,8 +49,10 @@ class Localization {
     let origin = CGPoint(x: region.minX,
                          y: size.height - (region.minY + region.height))
     let layerFrame = CGRect(origin: origin, size: region.size)
-    let cgColor = Color(hex: hexColor)?.cgColor
-    layer = CAShapeLayer(frame: layerFrame, cgColor: cgColor!)
+
+    let borderColor = Color(hex: hexColor)?.cgColor
+    let borderSize = UserDefaults.standard.integer(forKey: PrefKeys.displayBorderSize)
+    layer = CAShapeLayer(frame: layerFrame, borderColor: borderColor!, borderSize: borderSize)
     
     conceptLayer = Localization.createConceptLayer(concept)
   }

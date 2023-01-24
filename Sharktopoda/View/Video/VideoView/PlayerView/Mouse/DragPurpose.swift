@@ -22,7 +22,7 @@ extension NSPlayerView {
     localizationData.clearSelected()
     currentLocalization = nil
     
-    dragLayer = shapeLayer(anchor)
+    dragLayer = shapeLayer(purpose: purpose)
     playerLayer.addSublayer(dragLayer!)
   }
   
@@ -74,9 +74,14 @@ extension NSPlayerView {
     dragPurpose = nil
   }
   
-  private func shapeLayer(_ origin: CGPoint) -> CAShapeLayer {
-    let hexColor = UserDefaults.standard.hexColor(forKey: PrefKeys.selectionBorderColor)
-    let cgColor = Color(hex: hexColor)?.cgColor
-    return CAShapeLayer(frame: .zero, cgColor: cgColor!)
+  private func shapeLayer(purpose: DragPurpose) -> CAShapeLayer {
+    let colorKey = purpose == .create ? PrefKeys.creationBorderColor : PrefKeys.selectionBorderColor
+    let hexColor = UserDefaults.standard.hexColor(forKey: colorKey)
+    let borderColor = Color(hex: hexColor)?.cgColor
+
+    let sizeKey = purpose == .create ? PrefKeys.creationBorderSize : PrefKeys.selectionBorderSize
+    let borderSize = UserDefaults.standard.integer(forKey: sizeKey)
+    
+    return CAShapeLayer(frame: .zero, borderColor: borderColor!, borderSize: borderSize)
   }
 }

@@ -40,12 +40,9 @@ extension LocalizationData {
   }
   
   func select(using rect: CGRect, at elapsedTime: Int) {
-    let pausedLocalizations = fetch(.paused, at: elapsedTime)
-    
-    let ids = pausedLocalizations
+    let ids = fetch(spanning: elapsedTime)
       .filter { rect.intersects($0.layer.frame) }
       .map(\.id)
-    
     select(ids: ids, notifyClient: true)
   }
   

@@ -50,7 +50,7 @@ class Localization {
                          y: size.height - (region.minY + region.height))
     let layerFrame = CGRect(origin: origin, size: region.size)
 
-    let borderColor = Color(hex: hexColor)?.cgColor
+    let borderColor = Color(hex: hexColor)?.cgColor ?? UserDefaults.standard.color(forKey: PrefKeys.displayBorderColor).cgColor // Fixed Issue #39
     let borderSize = UserDefaults.standard.integer(forKey: PrefKeys.displayBorderSize)
     layer = CAShapeLayer(frame: layerFrame, borderColor: borderColor!, borderSize: borderSize)
     

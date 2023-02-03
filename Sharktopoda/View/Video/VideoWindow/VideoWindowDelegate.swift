@@ -23,60 +23,55 @@ extension VideoWindow: NSWindowDelegate {
     windowData.windowKeyInfo = WindowData.WindowKeyInfo(isKey: false)
   }
   
-  func windowDidResize(_ notification: Notification) {
-    if !isResizing {
-      playerDirection = windowData.playerDirection
-      isResizing = true
-    }
-
-    let videoRect = windowData.playerView.videoRect
-    let pausedLocalizations = windowData.pausedLocalizations()
-
+  func windowWillStartLiveResize(_ notification: Notification) {
+    beginResizeWindowData()
+  }
+  
+  func windowDidEndLiveResize(_ notification: Notification) {
+    endResizeWindowData()
+  }
+  
+  // CxNote A number of strategies were attempted to facilitate localization repositioning when
+  // going full screen *and* when changing the screen. Tracking just windowDidChangeScreen
+  // handles both cases *except* that when going full screen, the currently displayed localizations
+  // are not "removed" before the window resizes, but only *after* the fact. However, no strategy
+  // was found to remove the localizations *before* going full screen.
+  func windowDidChangeScreen(_ notification: Notification) {
+    print("Changed screen")
+    beginResizeWindowData()
+    endResizeWindowData()
+  }
+  
+  func beginResizeWindowData() {
     DispatchQueue.main.async { [weak self] in
-      guard let windowData = self?.windowData else { return }
-
-      if windowData.playerDirection != .paused {
-        windowData.videoControl.play(rate: 0.0)
-        windowData.playerView.clear()
-        windowData.localizationData.clearSelected()
-      } else {
-        windowData.localizationData.clearSelected()
-      }
+      guard let self else { return }
+      let windowData = self.windowData
+      
+      self.playerDirection = windowData.playerDirection
+      windowData.videoControl.play(rate: 0.0)
+      windowData.playerView.clear()
+      windowData.localizationData.clearSelected()
+    }
+  }
+  
+  func endResizeWindowData() {
+    DispatchQueue.main.async { [weak self] in
+      guard let self else { return }
+      let windowData = self.windowData
+      
+      let videoRect = windowData.playerView.videoRect
+    
+      // When the window is closed, the video rect will be zero and nothing more need be done
+      guard videoRect != .zero else { return }
+      
+      let pausedLocalizations = windowData.pausedLocalizations()
       
       for localization in pausedLocalizations {
         localization.resize(for: videoRect)
       }
-
+      
       windowData.sliderView.setupControlViewAnimation()
-
-      // CxTBD This is a bit wonky. Investigate
-      DispatchQueue.main.asyncAfter(deadline: .now() + 0.666) { [weak self] in
-        guard let self = self else { return }
-        guard let playerDirection = self.playerDirection else { return }
-
-        self.isResizing = false
-        self.windowData.playerResume(playerDirection)
-      }
-    }
-    
-    /// Resize all non-paused localizations on background queue. Paused localizations are resized on the main
-    /// thread. If resized again here, the paused Location display is clunky.
-    resizingTask?.cancel()
-    resizingTask = Task.detached(priority: .background) { [weak windowData] in
-      guard let windowData = windowData else { return }
-
-      do {
-        try await Task.sleep(for: .milliseconds(500))
-      } catch {
-        // no-op
-      }
-
-      let pausedIds = pausedLocalizations.map(\.id)
-      for (id, localization) in windowData.localizationData.storage {
-        if !pausedIds.contains(id) {
-          localization.resize(for: videoRect)
-        }
-      }
+      windowData.playerResume(self.playerDirection ?? .paused)
     }
   }
 }

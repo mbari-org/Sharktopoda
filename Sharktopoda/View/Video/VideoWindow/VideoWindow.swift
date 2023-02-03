@@ -14,7 +14,10 @@ final class VideoWindow: NSWindow {
   
   /// Queue for playerTime observation
   let playerTimeQueue: DispatchQueue
-  
+
+  /// Background Task for resizing localizations
+  var resizingTask: Task<(), Never>?
+
   /// Used by delegate to pause/resume playback after resizing
   var playerDirection: WindowData.PlayerDirection?
 

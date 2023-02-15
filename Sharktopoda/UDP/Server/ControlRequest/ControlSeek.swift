@@ -15,7 +15,10 @@ struct ControlSeek: ControlMessage {
   func process() -> ControlResponse {
     withWindowData(id: uuid) { windowData in
       DispatchQueue.main.async { [weak windowData] in
-        windowData?.seek(elapsedTime: elapsedTimeMillis)
+        guard let windowData else { return }
+        let playerDirection = windowData.playerDirection
+        windowData.seek(elapsedTime: elapsedTimeMillis)
+        windowData.playerResume(playerDirection)
       }
       return ok()
     }

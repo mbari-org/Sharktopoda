@@ -38,6 +38,7 @@ final class VideoWindow: NSWindow {
     center()
     isReleasedWhenClosed = false
     title = videoAsset.id
+    backgroundColor = NSColor(Color.init(hex: "342A27")!)
 
     let frameDuration = videoAsset.frameDuration
     let playerItem = AVPlayerItem(asset: videoAsset.avAsset)

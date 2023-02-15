@@ -15,12 +15,10 @@ extension VideoWindow {
       guard windowData.playerView.showLocalizations else { return }
       
       DispatchQueue.main.async { [weak windowData] in
-        guard let windowData = windowData else { return }
+        guard let windowData else { return }
 
         windowData.playerView.clear()
-        let localizations = windowData.spannedLocalizations()
-        windowData.playerView.display(localizations: localizations)
-
+        windowData.displaySpanned()
         windowData.playerTime = time.asMillis()
       }
     }

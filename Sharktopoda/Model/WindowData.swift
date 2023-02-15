@@ -80,15 +80,17 @@ extension WindowData {
   }
   
   func pause(_ withDisplay: Bool = true) {
+    let currentTime = videoControl.currentTime
+
     guard !videoControl.paused else { return }
 
     play(rate: 0.0)
     playerView.clear()
     localizationData.clearSelected()
     
-    videoControl.frameSeek(to: videoControl.currentTime) { [weak self] done in
+    videoControl.frameSeek(to: currentTime) { [weak self] done in
       if withDisplay {
-        self?.displayPaused()
+        self?.displaySpanned()
       }
     }
   }
@@ -110,7 +112,7 @@ extension WindowData {
   
   func playerResume(_ direction: WindowData.PlayerDirection) {
     if direction == .paused {
-       displayPaused()
+       displaySpanned()
     } else {
       play(rate: videoControl.previousDirection.rawValue * videoControl.previousSpeed)
     }
@@ -151,13 +153,12 @@ extension WindowData {
     playerView.display(localizations: frameLocalizations)
   }
   
-  func displayPaused() {
-    let localizations = pausedLocalizations()
-    playerView.display(localizations: localizations)
-  }
-
   func pausedLocalizations() -> [Localization] {
     localizationData.fetch(.paused, at: videoControl.currentTime)
+  }
+
+  func displaySpanned() {
+    playerView.display(localizations: spannedLocalizations())
   }
 
   /// Spanned localizations are all localizations that would be displayed at the current time during playback

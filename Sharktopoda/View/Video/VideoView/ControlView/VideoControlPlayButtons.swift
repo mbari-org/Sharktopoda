@@ -23,7 +23,6 @@ struct VideoControlPlayButtons: View {
       Button(action: {
         guard playerDirection != .backward else { return }
         windowData.playBackward()
-//        previousDirection == .backward ? windowData.play() : windowData.reverse()
       }) {
         Image(systemName: playerDirection == .backward
               ? "arrowtriangle.backward.circle.fill"
@@ -44,7 +43,6 @@ struct VideoControlPlayButtons: View {
       Button(action: {
         guard playerDirection != .forward else { return }
         windowData.playForward()
-//        previousDirection == .forward ? windowData.play() : windowData.reverse()
       }) {
         Image(systemName: playerDirection == .forward
               ? "play.circle.fill"

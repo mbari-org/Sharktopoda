@@ -522,6 +522,7 @@
 		E2BC08E328EB7686007F4B5D /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				E2D1C85329132B1800961A0A /* CALayer.swift */,
 				E28C6820290C714D00987828 /* CAShapeLayer.swift */,
 				E2BC08EA28EB781C007F4B5D /* CGImage.swift */,
 				E2BDE211290CABC3001CC439 /* CGPoint.swift */,
@@ -534,7 +535,6 @@
 				E2BC08E828EB7795007F4B5D /* NSImage.swift */,
 				E2BC08E428EB76D6007F4B5D /* UserDefaults.swift */,
 				E237C0A928EE1AFC002868D1 /* View.swift */,
-				E2D1C85329132B1800961A0A /* CALayer.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";

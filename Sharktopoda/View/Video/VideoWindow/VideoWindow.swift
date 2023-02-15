@@ -61,7 +61,7 @@ final class VideoWindow: NSWindow {
     delegate = self
     
     let pollingInterval = CMTimeMultiplyByFloat64(videoAsset.frameDuration,
-                                                  multiplier: 0.66)
+                                                  multiplier: 0.33)
     setPlayerObserver(pollingInterval)
         
     bringToFront()

@@ -12,14 +12,16 @@ extension VideoWindow {
     windowData.player.addPeriodicTimeObserver(forInterval: pollingInterval,
                                               queue: playerTimeQueue) { [weak self] time in
       guard let windowData = self?.windowData else { return }
+
       guard windowData.playerView.showLocalizations else { return }
       
       DispatchQueue.main.async { [weak windowData] in
         guard let windowData else { return }
 
+        windowData.playerTime = time.asMillis()
+
         windowData.playerView.clear()
         windowData.displaySpanned()
-        windowData.playerTime = time.asMillis()
       }
     }
     

@@ -84,7 +84,7 @@ extension WindowData {
 
     guard !videoControl.paused else { return }
 
-    play(rate: 0.0)
+    videoControl.play(rate: 0.0)
     playerView.clear()
     localizationData.clearSelected()
     
@@ -96,10 +96,12 @@ extension WindowData {
   }
   
   func play(rate: Float) {
-    localizationData.clearSelected()
     playerDirection = PlayerDirection.at(rate: rate)
-    playerView.clear(localizations: pausedLocalizations())
     videoControl.play(rate: rate)
+
+    localizationData.clearSelected()
+    playerView.clear()
+//    playerView.clear(localizations: pausedLocalizations())
   }
   
   func playBackward() {

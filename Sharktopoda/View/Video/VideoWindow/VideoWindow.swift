@@ -37,7 +37,7 @@ final class VideoWindow: NSWindow {
     
     center()
     isReleasedWhenClosed = false
-    title = videoAsset.id
+    title = videoAsset.url.lastPathComponent
     backgroundColor = NSColor(Color.init(hex: "342A27")!)
 
     let frameDuration = videoAsset.frameDuration

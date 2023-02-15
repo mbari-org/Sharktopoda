@@ -84,10 +84,7 @@ extension WindowData {
 
     guard !videoControl.paused else { return }
 
-    videoControl.play(rate: 0.0)
-    playerView.clear()
-    localizationData.clearSelected()
-    
+    play(rate: 0.0)
     videoControl.frameSeek(to: currentTime) { [weak self] done in
       if withDisplay {
         self?.displaySpanned()
@@ -101,7 +98,6 @@ extension WindowData {
 
     localizationData.clearSelected()
     playerView.clear()
-//    playerView.clear(localizations: pausedLocalizations())
   }
   
   func playBackward() {

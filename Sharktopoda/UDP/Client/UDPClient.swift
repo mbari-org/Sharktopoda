@@ -33,6 +33,8 @@ class UDPClient: ObservableObject {
 
     if let client = UDP.sharktopodaData.udpClient {
       if clientData.endpoint == client.clientData.endpoint {
+        client.udpActive(false)
+        client.pingConnection()
         return
       } else if client.clientData.active {
         client.stop()

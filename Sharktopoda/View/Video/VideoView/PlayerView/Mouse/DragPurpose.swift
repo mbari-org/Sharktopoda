@@ -16,7 +16,6 @@ extension NSPlayerView {
   }
  
   func startDragPurpose(_ purpose: DragPurpose) {
-    guard let anchor = dragAnchor else { return }
     dragPurpose = purpose
     
     localizationData.clearSelected()

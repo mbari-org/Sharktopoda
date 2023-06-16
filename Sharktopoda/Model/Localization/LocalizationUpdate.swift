@@ -32,7 +32,7 @@ extension Localization {
                          y: fullSize.height - region.origin.y - region.size.height)
 
     CALayer.noAnimation { [weak self] in
-      self?.layer.shapeFrame(origin: origin, size: region.size)
+      self?.layer.shapeFrame(origin: origin, size: (self?.region.size)!)
     }
   }
 }

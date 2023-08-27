@@ -21,9 +21,11 @@ final class WindowData: Identifiable, ObservableObject {
   var _videoAsset: VideoAsset?
   var _videoControl: VideoControl?
   
+  var showLocalizations = UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations)
+  
   @Published var playerTime: Int = 0
   @Published var playerDirection: PlayerDirection = .paused
-
+  
   var id: String {
     get { _id! }
     set { _id = newValue }
@@ -126,10 +128,6 @@ extension WindowData {
   func step(_ steps: Int) {
     let stepTime = currentFrameTime + steps * localizationData.frameDuration
     seek(elapsedTime: stepTime)
-  }
-  
-  var showLocalizations: Bool {
-    UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations)
   }
 }
 

@@ -21,10 +21,9 @@ final class WindowData: Identifiable, ObservableObject {
   var _videoAsset: VideoAsset?
   var _videoControl: VideoControl?
   
-  var showLocalizations = UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations)
-  
   @Published var playerTime: Int = 0
   @Published var playerDirection: PlayerDirection = .paused
+  @Published var showLocalizations: Bool = UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations)
   
   var id: String {
     get { _id! }
@@ -146,6 +145,8 @@ extension WindowData {
       }
 
     guard videoControl.paused else { return }
+    guard showLocalizations else { return }
+
     playerView.display(localizations: frameLocalizations)
   }
   
@@ -154,6 +155,7 @@ extension WindowData {
   }
 
   func displaySpanned() {
+    guard showLocalizations else { return }
     playerView.display(localizations: spannedLocalizations())
   }
 

@@ -21,13 +21,23 @@ struct VideoControlView: View {
   var body: some View {
     VStack {
       VideoControlTimeView()
-      VideoControlPlayButtons()
+      HStack {
+        Toggle("  Show Annotations", isOn: $windowData.showLocalizations)
+          .toggleStyle(.checkbox)
+          .frame(maxWidth: .infinity, alignment: .leading)
+          .padding(.leading, 15)
+        VideoControlPlayButtons()
+          .frame(maxWidth: .infinity, alignment: .center)
+        Text("CxTBD: Volume Control")
+          .frame(maxWidth: .infinity, alignment: .trailing)
+          .padding(.trailing, 15)
+      }
     }
   }
 }
 
 //struct VideoControlView_Previews: PreviewProvider {
 //  static var previews: some View {
-//    VideoControlView().environmentObject(VideoControl())
+//    VideoControlView().environmentObject(WindowData())
 //  }
 //}

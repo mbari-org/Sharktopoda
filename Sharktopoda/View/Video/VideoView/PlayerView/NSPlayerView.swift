@@ -142,15 +142,11 @@ extension NSPlayerView {
   }
   
   func display(localization: Localization) {
-    guard windowData.showLocalizations else { return }
-    
     playerLayer.addSublayer(localization.layer)
     playerLayer.addSublayer(localization.conceptLayer)
   }
 
   func display(localizations: [Localization]) {
-    guard windowData.showLocalizations else { return }
-    
     localizations.forEach {
       playerLayer.addSublayer($0.layer)
       playerLayer.addSublayer($0.conceptLayer)

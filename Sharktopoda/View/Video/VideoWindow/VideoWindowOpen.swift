@@ -43,7 +43,7 @@ extension VideoWindow {
       let videoWindow = VideoWindow(for: videoAsset, with: UDP.sharktopodaData)
       await UDP.sharktopodaData.windowOpened(videoWindow: videoWindow)
       onMain { [weak videoWindow] in
-        videoWindow?.windowData.sliderView.setupControlViewAnimation()
+        videoWindow?.windowData.timeSliderView.setupControlViewAnimation()
         videoWindow?.bringToFront()
       }
       

@@ -16,7 +16,7 @@ struct VideoControlTimeView: View {
         .padding(.leading, 5)
         .frame(width: 80)
       
-      VideoControlSliderView()
+      VideoControlTimeSliderView()
         .frame(height: 15)
 
 

@@ -64,6 +64,7 @@
 		E2675E2F28DB729900F5F114 /* ControlInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2E28DB729900F5F114 /* ControlInfo.swift */; };
 		E2675E3428DB7A4000F5F114 /* ControlAdvance.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E3328DB7A4000F5F114 /* ControlAdvance.swift */; };
 		E27471072931273800EDDAD6 /* WindowData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27471062931273800EDDAD6 /* WindowData.swift */; };
+		E27479CD2AA5E29C005C91DE /* VideoControlVolumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27479CC2AA5E29C005C91DE /* VideoControlVolumeView.swift */; };
 		E277E3EE293FCF670088B8FC /* OpenedVideos.swift in Sources */ = {isa = PBXBuildFile; fileRef = E277E3ED293FCF670088B8FC /* OpenedVideos.swift */; };
 		E27E526F2936ACDD003CF785 /* VideoControlTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27E526E2936ACDD003CF785 /* VideoControlTimeView.swift */; };
 		E280384529284A380017E28C /* WindowDataKeyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E280384429284A380017E28C /* WindowDataKeyInfo.swift */; };
@@ -140,7 +141,7 @@
 		E2EE0E4028DB9DD200138A86 /* ControlAllInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EE0E3F28DB9DD200138A86 /* ControlAllInfo.swift */; };
 		E2F3A2302925513B00F2551F /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F3A22F2925513B00F2551F /* VideoView.swift */; };
 		E2F3A2322925705A00F2551F /* SharktopodaAppDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F3A2312925705A00F2551F /* SharktopodaAppDefaults.swift */; };
-		E2F691F2293693BB00F7ADC3 /* VideoControlSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F691F1293693BB00F7ADC3 /* VideoControlSliderView.swift */; };
+		E2F691F2293693BB00F7ADC3 /* VideoControlTimeSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F691F1293693BB00F7ADC3 /* VideoControlTimeSliderView.swift */; };
 		E2F691F4293694A200F7ADC3 /* VideoControlPlayButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F691F3293694A200F7ADC3 /* VideoControlPlayButtons.swift */; };
 		E2F691F82936A04F00F7ADC3 /* NSTimeSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F691F72936A04F00F7ADC3 /* NSTimeSliderView.swift */; };
 		E2FA39AD292D88F800008CBD /* VideoWindowPlayerObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FA39AC292D88F800008CBD /* VideoWindowPlayerObserver.swift */; };
@@ -231,6 +232,7 @@
 		E2675E2E28DB729900F5F114 /* ControlInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlInfo.swift; sourceTree = "<group>"; };
 		E2675E3328DB7A4000F5F114 /* ControlAdvance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlAdvance.swift; sourceTree = "<group>"; };
 		E27471062931273800EDDAD6 /* WindowData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowData.swift; sourceTree = "<group>"; };
+		E27479CC2AA5E29C005C91DE /* VideoControlVolumeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoControlVolumeView.swift; sourceTree = "<group>"; };
 		E277E3ED293FCF670088B8FC /* OpenedVideos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenedVideos.swift; sourceTree = "<group>"; };
 		E27E526E2936ACDD003CF785 /* VideoControlTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoControlTimeView.swift; sourceTree = "<group>"; };
 		E280384429284A380017E28C /* WindowDataKeyInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowDataKeyInfo.swift; sourceTree = "<group>"; };
@@ -312,7 +314,7 @@
 		E2EE0E3F28DB9DD200138A86 /* ControlAllInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlAllInfo.swift; sourceTree = "<group>"; };
 		E2F3A22F2925513B00F2551F /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
 		E2F3A2312925705A00F2551F /* SharktopodaAppDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharktopodaAppDefaults.swift; sourceTree = "<group>"; };
-		E2F691F1293693BB00F7ADC3 /* VideoControlSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoControlSliderView.swift; sourceTree = "<group>"; };
+		E2F691F1293693BB00F7ADC3 /* VideoControlTimeSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoControlTimeSliderView.swift; sourceTree = "<group>"; };
 		E2F691F3293694A200F7ADC3 /* VideoControlPlayButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoControlPlayButtons.swift; sourceTree = "<group>"; };
 		E2F691F72936A04F00F7ADC3 /* NSTimeSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSTimeSliderView.swift; sourceTree = "<group>"; };
 		E2FA39AC292D88F800008CBD /* VideoWindowPlayerObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoWindowPlayerObserver.swift; sourceTree = "<group>"; };
@@ -672,10 +674,11 @@
 			isa = PBXGroup;
 			children = (
 				E2020D76292834770090B60B /* VideoControlView.swift */,
-				E2F691F3293694A200F7ADC3 /* VideoControlPlayButtons.swift */,
-				E2F691F1293693BB00F7ADC3 /* VideoControlSliderView.swift */,
-				E2F691F72936A04F00F7ADC3 /* NSTimeSliderView.swift */,
+				E2F691F1293693BB00F7ADC3 /* VideoControlTimeSliderView.swift */,
 				E27E526E2936ACDD003CF785 /* VideoControlTimeView.swift */,
+				E2F691F3293694A200F7ADC3 /* VideoControlPlayButtons.swift */,
+				E27479CC2AA5E29C005C91DE /* VideoControlVolumeView.swift */,
+				E2F691F72936A04F00F7ADC3 /* NSTimeSliderView.swift */,
 				E2BDBB972938706B00BD16D8 /* TimeSliderMouse.swift */,
 			);
 			path = ControlView;
@@ -976,7 +979,7 @@
 				E27471072931273800EDDAD6 /* WindowData.swift in Sources */,
 				E2803847292931E60017E28C /* VideoControl.swift in Sources */,
 				E296BA8F293D24D100FDB2E7 /* MessageCommand.swift in Sources */,
-				E2F691F2293693BB00F7ADC3 /* VideoControlSliderView.swift in Sources */,
+				E2F691F2293693BB00F7ADC3 /* VideoControlTimeSliderView.swift in Sources */,
 				E27E526F2936ACDD003CF785 /* VideoControlTimeView.swift in Sources */,
 				E2FA39AD292D88F800008CBD /* VideoWindowPlayerObserver.swift in Sources */,
 				E28CEF02291DF42B009E73B3 /* UDPMessageCoder.swift in Sources */,
@@ -998,6 +1001,7 @@
 				E2FAB21028E213A9006D2676 /* MainTitleView.swift in Sources */,
 				E223C31028F21D8500274C3E /* ControlClearLocalizations.swift in Sources */,
 				E2AAFC3328F8F35000BBC703 /* VideoPlayerError.swift in Sources */,
+				E27479CD2AA5E29C005C91DE /* VideoControlVolumeView.swift in Sources */,
 				E2D1C85B291AC38000961A0A /* DragPurpose.swift in Sources */,
 				E277E3EE293FCF670088B8FC /* OpenedVideos.swift in Sources */,
 				E2505D4F28EF22E10027F280 /* EnvironmentValues.swift in Sources */,
@@ -1217,7 +1221,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Sharktopoda/Preview Content\"";
-				DEVELOPMENT_TEAM = 9TN7A342V4;
+				DEVELOPMENT_TEAM = QHNP3SAEAP;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

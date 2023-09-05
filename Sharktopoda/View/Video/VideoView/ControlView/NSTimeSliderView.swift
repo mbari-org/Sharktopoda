@@ -54,7 +54,6 @@ final class NSTimeSliderView: NSView {
     horizontalLine.stroke()  // draw line
   }
 
-
   private func addMarkerLayer(to syncLayer: AVSynchronizedLayer) {
     markerLayer.frame = NSRect(x: 0, y: 0, width: radius, height: radius)
     markerLayer.cornerRadius = radius / 2

@@ -25,12 +25,12 @@ struct VideoControlView: View {
         Toggle("  Show Annotations", isOn: $windowData.showLocalizations)
           .toggleStyle(.checkbox)
           .frame(maxWidth: .infinity, alignment: .leading)
-          .padding(.leading, 15)
+          .padding(.leading, 90)
         VideoControlPlayButtons()
           .frame(maxWidth: .infinity, alignment: .center)
-        Text("CxTBD: Volume Control")
+        VolumeControlView()
           .frame(maxWidth: .infinity, alignment: .trailing)
-          .padding(.trailing, 15)
+          .padding(.trailing, 90)
       }
     }
   }

@@ -23,6 +23,16 @@ final class WindowData: Identifiable, ObservableObject {
   
   @Published var playerTime: Int = 0
   @Published var playerDirection: PlayerDirection = .paused
+  @Published var playerVolumeLevel: Float = 1.0 {
+    didSet {
+      player.volume = playerVolumeLevel
+    }
+  }
+  @Published var playerVolumeMute: Bool = false {
+    didSet {
+      player.volume = playerVolumeMute ? 0.0 : playerVolumeLevel
+    }
+  }
   @Published var showLocalizations: Bool = UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations)
   
   var id: String {

@@ -64,7 +64,9 @@
 		E2675E2F28DB729900F5F114 /* ControlInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2E28DB729900F5F114 /* ControlInfo.swift */; };
 		E2675E3428DB7A4000F5F114 /* ControlAdvance.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E3328DB7A4000F5F114 /* ControlAdvance.swift */; };
 		E27471072931273800EDDAD6 /* WindowData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27471062931273800EDDAD6 /* WindowData.swift */; };
-		E27479CD2AA5E29C005C91DE /* VideoControlVolumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27479CC2AA5E29C005C91DE /* VideoControlVolumeView.swift */; };
+		E27479D32AA7501F005C91DE /* VolumeControlButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27479D22AA7501F005C91DE /* VolumeControlButton.swift */; };
+		E27479D52AA75049005C91DE /* VolumeControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27479D42AA75049005C91DE /* VolumeControlView.swift */; };
+		E27479D72AA750A0005C91DE /* VolumeControlSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27479D62AA750A0005C91DE /* VolumeControlSlider.swift */; };
 		E277E3EE293FCF670088B8FC /* OpenedVideos.swift in Sources */ = {isa = PBXBuildFile; fileRef = E277E3ED293FCF670088B8FC /* OpenedVideos.swift */; };
 		E27E526F2936ACDD003CF785 /* VideoControlTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27E526E2936ACDD003CF785 /* VideoControlTimeView.swift */; };
 		E280384529284A380017E28C /* WindowDataKeyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E280384429284A380017E28C /* WindowDataKeyInfo.swift */; };
@@ -232,7 +234,9 @@
 		E2675E2E28DB729900F5F114 /* ControlInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlInfo.swift; sourceTree = "<group>"; };
 		E2675E3328DB7A4000F5F114 /* ControlAdvance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlAdvance.swift; sourceTree = "<group>"; };
 		E27471062931273800EDDAD6 /* WindowData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowData.swift; sourceTree = "<group>"; };
-		E27479CC2AA5E29C005C91DE /* VideoControlVolumeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoControlVolumeView.swift; sourceTree = "<group>"; };
+		E27479D22AA7501F005C91DE /* VolumeControlButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeControlButton.swift; sourceTree = "<group>"; };
+		E27479D42AA75049005C91DE /* VolumeControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeControlView.swift; sourceTree = "<group>"; };
+		E27479D62AA750A0005C91DE /* VolumeControlSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeControlSlider.swift; sourceTree = "<group>"; };
 		E277E3ED293FCF670088B8FC /* OpenedVideos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenedVideos.swift; sourceTree = "<group>"; };
 		E27E526E2936ACDD003CF785 /* VideoControlTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoControlTimeView.swift; sourceTree = "<group>"; };
 		E280384429284A380017E28C /* WindowDataKeyInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowDataKeyInfo.swift; sourceTree = "<group>"; };
@@ -474,6 +478,16 @@
 			path = ControlRequest;
 			sourceTree = "<group>";
 		};
+		E27479D92AA75244005C91DE /* Volume */ = {
+			isa = PBXGroup;
+			children = (
+				E27479D42AA75049005C91DE /* VolumeControlView.swift */,
+				E27479D22AA7501F005C91DE /* VolumeControlButton.swift */,
+				E27479D62AA750A0005C91DE /* VolumeControlSlider.swift */,
+			);
+			path = Volume;
+			sourceTree = "<group>";
+		};
 		E28CEF05291E9BCC009E73B3 /* Localizations */ = {
 			isa = PBXGroup;
 			children = (
@@ -674,12 +688,12 @@
 			isa = PBXGroup;
 			children = (
 				E2020D76292834770090B60B /* VideoControlView.swift */,
-				E2F691F1293693BB00F7ADC3 /* VideoControlTimeSliderView.swift */,
 				E27E526E2936ACDD003CF785 /* VideoControlTimeView.swift */,
-				E2F691F3293694A200F7ADC3 /* VideoControlPlayButtons.swift */,
-				E27479CC2AA5E29C005C91DE /* VideoControlVolumeView.swift */,
+				E2F691F1293693BB00F7ADC3 /* VideoControlTimeSliderView.swift */,
 				E2F691F72936A04F00F7ADC3 /* NSTimeSliderView.swift */,
 				E2BDBB972938706B00BD16D8 /* TimeSliderMouse.swift */,
+				E2F691F3293694A200F7ADC3 /* VideoControlPlayButtons.swift */,
+				E27479D92AA75244005C91DE /* Volume */,
 			);
 			path = ControlView;
 			sourceTree = "<group>";
@@ -966,6 +980,7 @@
 				E2CF66182953797C0062DB8F /* LocalizationConcept.swift in Sources */,
 				E2448BFF292D6EAE00F2C2E2 /* LocalizationRegion.swift in Sources */,
 				E21DF7922910391A00038B41 /* PlayerMouse.swift in Sources */,
+				E27479D32AA7501F005C91DE /* VolumeControlButton.swift in Sources */,
 				E28C6821290C714D00987828 /* CAShapeLayer.swift in Sources */,
 				E229F4C228D9150A001F220E /* ControlConnect.swift in Sources */,
 				E2989AC328D4F6EE009D2D65 /* AnnotationCreationPreferencesView.swift in Sources */,
@@ -974,7 +989,9 @@
 				E28C681F290C6D5D00987828 /* CGRect.swift in Sources */,
 				E28CEF00291DF282009E73B3 /* ClientMessageLocalizations.swift in Sources */,
 				E2675E2A28DB52C600F5F114 /* ControlUnknown.swift in Sources */,
+				E27479D52AA75049005C91DE /* VolumeControlView.swift in Sources */,
 				E2BC08E728EB7703007F4B5D /* CMTime.swift in Sources */,
+				E27479D72AA750A0005C91DE /* VolumeControlSlider.swift in Sources */,
 				E2C22ED528D36832003CD976 /* Localization.swift in Sources */,
 				E27471072931273800EDDAD6 /* WindowData.swift in Sources */,
 				E2803847292931E60017E28C /* VideoControl.swift in Sources */,
@@ -1001,7 +1018,6 @@
 				E2FAB21028E213A9006D2676 /* MainTitleView.swift in Sources */,
 				E223C31028F21D8500274C3E /* ControlClearLocalizations.swift in Sources */,
 				E2AAFC3328F8F35000BBC703 /* VideoPlayerError.swift in Sources */,
-				E27479CD2AA5E29C005C91DE /* VideoControlVolumeView.swift in Sources */,
 				E2D1C85B291AC38000961A0A /* DragPurpose.swift in Sources */,
 				E277E3EE293FCF670088B8FC /* OpenedVideos.swift in Sources */,
 				E2505D4F28EF22E10027F280 /* EnvironmentValues.swift in Sources */,

@@ -9,13 +9,10 @@ import SwiftUI
 
 struct VolumeControlSlider: View {
   @EnvironmentObject var windowData: WindowData
-  
 
-  
   var body: some View {
     Slider(value: $windowData.playerVolumeLevel)
-//      .tint(Color(red: 0.99, green: 0.99, blue: 0.99))
-      .tint(.white)
+      .tint(Color(red: 85, green: 85, blue: 85))
       .disabled(windowData.playerVolumeMute)
   }
 }

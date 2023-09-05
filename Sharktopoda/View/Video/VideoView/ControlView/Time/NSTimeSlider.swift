@@ -46,18 +46,19 @@ final class NSTimeSlider: NSView {
   }
 
   override func draw(_ dirtyRect: NSRect) {
-    NSColor.lightGray.set()
+    NSColor.darkGray.set()
+//    NSColor(red: 71, green: 64, blue: 61, alpha: 1.0).set()
     let horizontalLine = NSBezierPath()
     horizontalLine.move(to: NSMakePoint(0, radius))
     horizontalLine.line(to: NSMakePoint(frame.width, radius))
-    horizontalLine.lineWidth = 3
+    horizontalLine.lineWidth = 4
     horizontalLine.stroke()  // draw line
   }
 
   private func addMarkerLayer(to syncLayer: AVSynchronizedLayer) {
     markerLayer.frame = NSRect(x: 0, y: 0, width: radius, height: radius)
     markerLayer.cornerRadius = radius / 2
-    markerLayer.backgroundColor = NSColor.white.cgColor
+    markerLayer.backgroundColor = NSColor.systemGray.cgColor
     syncLayer.addSublayer(markerLayer)
   }
 

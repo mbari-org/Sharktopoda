@@ -1,5 +1,5 @@
 //
-//  NSSliderView.swift
+//  NSTimeSlider
 //  Created for Sharktopoda on 11/29/22.
 //
 //  Apache License 2.0 — See project LICENSE file
@@ -9,7 +9,7 @@ import AppKit
 import AVFoundation
 import SwiftUI
 
-final class NSTimeSliderView: NSView {
+final class NSTimeSlider: NSView {
   // MARK: properties
   var _windowData: WindowData? = nil
 

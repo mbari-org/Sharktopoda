@@ -20,7 +20,7 @@ struct VideoControlView: View {
   
   var body: some View {
     VStack {
-      VideoControlTimeView()
+      VideoTimeView()
       HStack {
         Toggle("  Show Annotations", isOn: $windowData.showLocalizations)
           .toggleStyle(.checkbox)

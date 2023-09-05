@@ -699,8 +699,8 @@
 			isa = PBXGroup;
 			children = (
 				E2020D76292834770090B60B /* VideoControlView.swift */,
-				E27479DA2AA774E7005C91DE /* Time */,
 				E2F691F3293694A200F7ADC3 /* VideoControlPlayButtons.swift */,
+				E27479DA2AA774E7005C91DE /* Time */,
 				E27479D92AA75244005C91DE /* Volume */,
 			);
 			path = ControlView;

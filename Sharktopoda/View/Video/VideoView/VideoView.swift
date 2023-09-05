@@ -18,10 +18,8 @@ struct VideoView: View {
 
       VideoControlView()
         .environmentObject(windowData)
-        .frame(height: 50)
     }
     .padding(.bottom, 10)
-
   }
 }
 

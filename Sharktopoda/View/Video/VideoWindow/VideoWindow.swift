@@ -69,7 +69,7 @@ final class VideoWindow: NSWindow {
     
     showLocalizationsSubscription = windowData.$showLocalizations.sink(receiveValue: { [weak windowData] newValue in
       if (newValue) {
-        windowData?.displaySpanned()
+        windowData?.displaySpanned(force: true)
       } else {
         windowData?.playerView.clear()
       }

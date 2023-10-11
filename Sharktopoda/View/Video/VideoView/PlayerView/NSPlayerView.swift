@@ -66,11 +66,11 @@ extension NSPlayerView {
   var currentItem: AVPlayerItem? {
     windowData.videoControl.currentItem
   }
-  
-  var currentTime: Int {
+
+  var currentTime: CMTime {
     windowData.videoControl.currentTime
   }
-  
+
   var currentLocalization: Localization? {
     get { _currentLocalization }
     set {

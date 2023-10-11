@@ -5,7 +5,7 @@
 //  Apache License 2.0 — See project LICENSE file
 //
 
-import Foundation
+import AVFoundation
 
 extension LocalizationData {
   func clearSelected(notifyClient: Bool = true) {
@@ -39,8 +39,8 @@ extension LocalizationData {
     }
   }
   
-  func select(using rect: CGRect, at elapsedTime: Int) {
-    let ids = fetch(spanning: elapsedTime)
+  func select(using rect: CGRect, at time: CMTime) {
+    let ids = fetch(spanning: time)
       .filter { rect.intersects($0.layer.frame) }
       .map(\.id)
     select(ids: ids, notifyClient: true)

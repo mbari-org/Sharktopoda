@@ -5,26 +5,25 @@
 //  Apache License 2.0 — See project LICENSE file
 //
 
-import Foundation
+import AVFoundation
 
 // MARK: Frame number
 extension LocalizationData {
   func frameNumber(for localization: Localization) -> Int {
-    frameNumber(of: localization.elapsedTime)
+    frameNumber(of: localization.time)
   }
   
-  func frameNumber(of elapsedTime: Int) -> Int {
-    guard 0 < elapsedTime else { return 0 }
-    
-    return (elapsedTime + frameMillis / 2) / frameMillis
+  func frameNumber(of time: CMTime) -> Int {
+    guard .zero < time else { return 0 }
+
+    return Int(time.seconds / videoAsset.frameDuration.seconds)
   }
-  
-  func frameTime(of elapsedTime: Int) -> Int {
-    frameNumber(of: elapsedTime) * frameMillis
-  }
-  
-  var timeWindow: Int {
-    UserDefaults.standard.integer(forKey: PrefKeys.displayTimeWindow)
+
+  // CxTBD Add listener to only change this when UserDefaults value changes
+  var halfTimeWindow: CMTime {
+    let millis = UserDefaults.standard.integer(forKey: PrefKeys.displayTimeWindow)
+    let timeWindow = CMTime.from(millis: millis, timescale: videoAsset.timescale)
+    return CMTimeMultiplyByFloat64(timeWindow, multiplier: 0.5)
   }
   
   var useDuration: Bool {
@@ -36,10 +35,9 @@ extension LocalizationData {
 // MARK: Pause frames
 extension LocalizationData {
   func pauseFrameInsert(_ localization: Localization) {
-    let insertTime = localization.elapsedTime
     let (frame, action, index) = frame(for: localization,
                                        into: pauseFrames,
-                                       at: insertTime)
+                                       at: localization.time)
     switch action {
       case .add:
         pauseFrames[index] = frame
@@ -49,7 +47,7 @@ extension LocalizationData {
   }
   
   func pauseFrameRemove(_ localization: Localization) {
-    let index = insertionIndex(for: pauseFrames, at: localization.elapsedTime)
+    let index = insertionIndex(for: pauseFrames, at: localization.time)
     var frame = pauseFrames[index]
     
     guard frame.number == frameNumber(for: localization) else { return }
@@ -97,9 +95,8 @@ extension LocalizationData {
     }
   }
   
-  private func forwardFrameTime(_ localization: Localization) -> Int {
-    let elapsed = localization.elapsedTime
-    return useDuration ? elapsed : elapsed - (timeWindow / 2)
+  private func forwardFrameTime(_ localization: Localization) -> CMTime {
+    return useDuration ? localization.time : localization.time - halfTimeWindow
   }
 }
 
@@ -135,25 +132,25 @@ extension LocalizationData {
     }
   }
   
-  private func reverseFrameTime(_ localization: Localization) -> Int {
-    let elapsed = localization.elapsedTime
+  private func reverseFrameTime(_ localization: Localization) -> CMTime {
+    let elapsed = localization.time
     let duration = localization.duration
     
-    return useDuration ? elapsed + duration : elapsed + (timeWindow / 2)
+    return useDuration ? elapsed + duration : elapsed + halfTimeWindow
   }
 }
 
 // MARK: Abstract frame processing
 extension LocalizationData {
   /// Binary search for frame insertion index
-  func insertionIndex(for frames: [LocalizationFrame], at elapsedTime: Int) -> Int {
+  func insertionIndex(for frames: [LocalizationFrame], at time: CMTime) -> Int {
     var left = 0
     var right = frames.count - 1
     
     var index = 0
     var found = 0
     
-    let frameNumber = frameNumber(of: elapsedTime)
+    let frameNumber = frameNumber(of: time)
     
     while left <= right {
       index = (left + right) / 2
@@ -173,10 +170,10 @@ extension LocalizationData {
   
   func frame(for localization: Localization,
              into frames: [LocalizationFrame],
-             at insertTime: Int) -> PutInfo {
+             at insertTime: CMTime) -> PutInfo {
     
     let frameNumber = frameNumber(of: insertTime)
-    let frameTime = frameNumber * frameMillis
+    let frameTime = CMTimeMultiply(videoAsset.frameDuration, multiplier: CMTimeScale(frameNumber))
     
     var frame: LocalizationFrame
     var action: PutAction

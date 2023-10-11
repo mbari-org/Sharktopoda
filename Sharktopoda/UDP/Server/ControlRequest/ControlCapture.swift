@@ -5,7 +5,7 @@
 //  Apache License 2.0 — See project LICENSE file
 //
 
-import Foundation
+import AVFoundation
 import Network
 
 typealias FrameGrabResult = Result<Int, Error>
@@ -19,7 +19,7 @@ struct ControlCapture: ControlMessage {
   func process() -> ControlResponse {
     withWindowData(id: uuid) { windowData in
       // CxNote Capture current time to get frame as close to command request as possible.
-      let captureTime = windowData.currentFrameTime
+      let captureTime = windowData.videoControl.currentTime
 
       let fileUrl = URL(fileURLWithPath: imageLocation)
 
@@ -43,7 +43,7 @@ struct ControlCapture: ControlMessage {
     }
   }
   
-  func doCapture(captureTime: Int) async -> ClientMessage {
+  func doCapture(captureTime: CMTime) async -> ClientMessage {
     guard let videoWindow = UDP.sharktopodaData.window(for: uuid) else {
       return ClientMessageCaptureDone(for: self, cause: "Video for uuid was closed")
     }

@@ -21,8 +21,8 @@ struct ClientLocalization: Codable {
   init(for localization: Localization) {
     uuid = localization.id
     concept = localization.concept
-    durationMillis = localization.duration
-    elapsedTimeMillis = localization.elapsedTime
+    durationMillis = localization.duration.millis
+    elapsedTimeMillis = localization.time.millis
     x = Int(localization.region.minX)
     y = Int(localization.region.minY)
     width = Int(localization.region.width)

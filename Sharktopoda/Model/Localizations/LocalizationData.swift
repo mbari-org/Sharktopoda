@@ -24,10 +24,6 @@ class LocalizationData {
 
   let videoAsset: VideoAsset
 
-  var frameMillis: Int {
-    videoAsset.frameDuration.asMillis()
-  }
-  
   init(videoAsset: VideoAsset) {
     self.videoAsset = videoAsset
   }

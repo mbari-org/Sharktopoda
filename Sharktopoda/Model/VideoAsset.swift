@@ -10,8 +10,6 @@ import AVFoundation
 // CxNote Binds to first AVAsset video track
 
 final class VideoAsset {
-  static let timescaleMillis: Int32 = 1000
-  
   let id: String
   let url: URL
   
@@ -22,14 +20,13 @@ final class VideoAsset {
   var frameRate: Float
   var fullSize: NSSize
   
-  var durationMillis: Int {
-    duration.asMillis()
+  var timescale: CMTimeScale {
+    frameDuration.timescale
   }
   
   init(id: String, url: URL) async throws {
     self.id = id
     self.url = url
-
     
     do {
       avAsset = AVURLAsset(url: url)
@@ -45,7 +42,7 @@ final class VideoAsset {
 
       duration = try await avAsset.load(.duration)
       (frameRate, frameDuration) = try await videoTrack.load(.nominalFrameRate, .minFrameDuration)
-
+      
       let (videoPreferredTransform, videoNaturalSize) =
         try await videoTrack.load(.preferredTransform, .naturalSize)
 
@@ -56,19 +53,17 @@ final class VideoAsset {
     }
   }
   
-  func frameGrab(at captureTime: Int, destination: String) async -> FrameGrabResult {
-    let frameTime = CMTime.fromMillis(captureTime)
-    
+  func frameGrab(at captureTime: CMTime, destination: String) async -> FrameGrabResult {
     let imageGenerator = AVAssetImageGenerator(asset: avAsset)
     imageGenerator.requestedTimeToleranceAfter = CMTime.zero
     imageGenerator.requestedTimeToleranceBefore = CMTime.zero
 
     do {
-      let (cgImage, _) = try await imageGenerator.image(at: frameTime)
+      let (cgImage, _) = try await imageGenerator.image(at: captureTime)
       if let error = cgImage.pngWrite(to: destination) {
         return .failure(error)
       } else {
-        return .success(captureTime)
+        return .success(captureTime.millis)
       }
     } catch(let error) {
       return .failure(error)

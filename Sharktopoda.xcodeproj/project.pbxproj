@@ -43,7 +43,6 @@
 		E237C0A828EE14B5002868D1 /* FloatingPanelModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E237C0A728EE14B5002868D1 /* FloatingPanelModifier.swift */; };
 		E237C0AA28EE1AFC002868D1 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = E237C0A928EE1AFC002868D1 /* View.swift */; };
 		E2448BFF292D6EAE00F2C2E2 /* LocalizationRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2448BFE292D6EAE00F2C2E2 /* LocalizationRegion.swift */; };
-		E2448C01292D6F5D00F2C2E2 /* LocalizationUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2448C00292D6F5D00F2C2E2 /* LocalizationUpdate.swift */; };
 		E2448C03292D6FC300F2C2E2 /* LocalizationMisc.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2448C02292D6FC300F2C2E2 /* LocalizationMisc.swift */; };
 		E2448C07292D7A6600F2C2E2 /* VideoWindowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2448C06292D7A6600F2C2E2 /* VideoWindowDelegate.swift */; };
 		E2448C09292D7A8300F2C2E2 /* VideoWindowOpen.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2448C08292D7A8300F2C2E2 /* VideoWindowOpen.swift */; };
@@ -213,7 +212,6 @@
 		E237C0A728EE14B5002868D1 /* FloatingPanelModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPanelModifier.swift; sourceTree = "<group>"; };
 		E237C0A928EE1AFC002868D1 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		E2448BFE292D6EAE00F2C2E2 /* LocalizationRegion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationRegion.swift; sourceTree = "<group>"; };
-		E2448C00292D6F5D00F2C2E2 /* LocalizationUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationUpdate.swift; sourceTree = "<group>"; };
 		E2448C02292D6FC300F2C2E2 /* LocalizationMisc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationMisc.swift; sourceTree = "<group>"; };
 		E2448C06292D7A6600F2C2E2 /* VideoWindowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoWindowDelegate.swift; sourceTree = "<group>"; };
 		E2448C08292D7A8300F2C2E2 /* VideoWindowOpen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoWindowOpen.swift; sourceTree = "<group>"; };
@@ -766,7 +764,6 @@
 				E2448C02292D6FC300F2C2E2 /* LocalizationMisc.swift */,
 				E2448BFE292D6EAE00F2C2E2 /* LocalizationRegion.swift */,
 				E22B6A7D2940EE7500ABB22D /* LocalizationSelect.swift */,
-				E2448C00292D6F5D00F2C2E2 /* LocalizationUpdate.swift */,
 			);
 			path = Localization;
 			sourceTree = "<group>";
@@ -958,7 +955,6 @@
 				E2505D5A28EF91960027F280 /* LocalizationData.swift in Sources */,
 				E2BC08E928EB7795007F4B5D /* NSImage.swift in Sources */,
 				E295627928D4FC2000E88ED1 /* AnnotationCaptionPreferencesView.swift in Sources */,
-				E2448C01292D6F5D00F2C2E2 /* LocalizationUpdate.swift in Sources */,
 				E213252528F7651F00D6BFF6 /* AppDefaults.swift in Sources */,
 				E2BDE212290CABC3001CC439 /* CGPoint.swift in Sources */,
 				E2EE0E4028DB9DD200138A86 /* ControlAllInfo.swift in Sources */,

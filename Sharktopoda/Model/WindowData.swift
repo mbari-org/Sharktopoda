@@ -19,7 +19,7 @@ final class WindowData: Identifiable, ObservableObject {
   var _videoAsset: VideoAsset?
   var _videoControl: VideoControl?
   
-  @Published var playerTime: Int = 0
+  @Published var playerTime: CMTime = .zero
   @Published var playerDirection: PlayerDirection = .paused
   @Published var playerVolumeLevel: Float = 1.0 {
     didSet {
@@ -74,21 +74,11 @@ extension WindowData {
     step(steps)
   }
   
-  var currentFrameTime: Int {
-    localizationData.frameTime(of: videoControl.currentTime)
-  }
-  
   func pause(_ withDisplay: Bool = true) {
-    let currentTime = videoControl.currentTime
-
     guard !videoControl.paused else { return }
 
     play(rate: 0.0)
-    videoControl.frameSeek(to: currentTime) { [weak self] done in
-      if withDisplay {
-        self?.displaySpanned()
-      }
-    }
+    displaySpanned()
   }
   
   func play(rate: Float) {
@@ -114,17 +104,17 @@ extension WindowData {
       play(rate: videoControl.previousDirection.rawValue * videoControl.previousSpeed)
     }
   }
-
-  func seek(elapsedTime: Int) {
+  
+  func seek(time: CMTime) {
     if !videoControl.paused {
       play(rate: 0.0)
     }
-    videoControl.frameSeek(to: elapsedTime)
+    videoControl.frameSeek(to: time)
   }
-  
+
   func step(_ steps: Int) {
-    let stepTime = currentFrameTime + steps * localizationData.frameMillis
-    seek(elapsedTime: stepTime)
+    let delta = CMTimeMultiply(videoAsset.frameDuration, multiplier: CMTimeScale(steps))
+    seek(time: videoControl.currentTime + delta)
   }
 }
 
@@ -133,7 +123,7 @@ extension WindowData {
     let currentFrameNumber = localizationData.frameNumber(of: videoControl.currentTime)
 
     let frameLocalizations = controlLocalizations
-      .map { Localization(from: $0, size: videoAsset.fullSize) }
+      .map { Localization(from: $0, videoAsset: videoAsset) }
       .reduce(into: [Localization]()) { acc, localization in
         localization.resize(for: playerView.videoRect)
         localizationData.add(localization)

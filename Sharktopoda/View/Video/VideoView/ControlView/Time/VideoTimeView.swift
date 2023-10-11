@@ -5,6 +5,7 @@
 //  Apache License 2.0 — See project LICENSE file
 //
 
+import AVFoundation
 import SwiftUI
 
 struct VideoTimeView: View {
@@ -19,18 +20,16 @@ struct VideoTimeView: View {
       VideoTimeSlider()
         .frame(height: 20)
 
-      Text(humanTime(windowData.videoAsset.durationMillis - windowData.playerTime))
+      Text(humanTime(windowData.videoAsset.duration - windowData.playerTime))
         .padding(.trailing, 5)
         .frame(width: 80)
     }
   }
   
-  func humanTime(_ elapsed: Int) -> String {
-    let totalSeconds: Double = Double(elapsed) / 1000.0
-    
-    let hours = Int(totalSeconds / 3600.0)
-    let minutes = Int(totalSeconds / 60.0) - (hours * 60)
-    let seconds = totalSeconds - Double(hours * 3600) - Double(minutes * 60)
+  func humanTime(_ time: CMTime) -> String {
+    let hours = Int(time.seconds / 3600.0)
+    let minutes = Int(time.seconds / 60.0) - (hours * 60)
+    let seconds = time.seconds - Double(hours * 3600) - Double(minutes * 60)
     
     let hh = String(format: "%02d", hours)
     let mm = String(format: "%02d", minutes)

@@ -48,7 +48,7 @@ final class NSPlayerView: NSView {
     wantsLayer = true
     layer = rootLayer
     
-    let size = windowData.fullSize
+    let size = windowData.videoAsset.fullSize
     frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
 
     playerLayer.player = windowData.player
@@ -85,7 +85,7 @@ extension NSPlayerView {
   }
   
   var fullSize: CGSize {
-    windowData.fullSize
+    windowData.videoAsset.fullSize
   }
   
   // CxTBD This doesn't seem right

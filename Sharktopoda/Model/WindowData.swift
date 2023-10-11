@@ -12,8 +12,6 @@ final class WindowData: Identifiable, ObservableObject {
   
   var windowKeyInfo: WindowKeyInfo = WindowKeyInfo()
   
-  var _frameDuration: CMTime?
-  var _fullSize: CGSize?
   var _localizationData: LocalizationData?
   var _player: AVPlayer?
   var _playerView: PlayerView?
@@ -38,16 +36,6 @@ final class WindowData: Identifiable, ObservableObject {
   var id: String {
     get { _id! }
     set { _id = newValue }
-  }
-  
-  var frameDuration: CMTime {
-    get { _frameDuration! }
-    set { _frameDuration = newValue }
-  }
-  
-  var fullSize: CGSize {
-    get { _fullSize! }
-    set { _fullSize = newValue }
   }
   
   var localizationData: LocalizationData {
@@ -135,7 +123,7 @@ extension WindowData {
   }
   
   func step(_ steps: Int) {
-    let stepTime = currentFrameTime + steps * localizationData.frameDuration
+    let stepTime = currentFrameTime + steps * localizationData.frameMillis
     seek(elapsedTime: stepTime)
   }
 }
@@ -145,7 +133,7 @@ extension WindowData {
     let currentFrameNumber = localizationData.frameNumber(of: videoControl.currentTime)
 
     let frameLocalizations = controlLocalizations
-      .map { Localization(from: $0, size: fullSize) }
+      .map { Localization(from: $0, size: videoAsset.fullSize) }
       .reduce(into: [Localization]()) { acc, localization in
         localization.resize(for: playerView.videoRect)
         localizationData.add(localization)

@@ -17,12 +17,10 @@ final class VideoAsset {
   
   var avAsset: AVURLAsset
 
-  var avAssetTrack: AVAssetTrack
   var duration: CMTime
   var frameDuration: CMTime
   var frameRate: Float
   var fullSize: NSSize
-  var isPlayable: Bool
   
   var durationMillis: Int {
     duration.asMillis()
@@ -32,28 +30,26 @@ final class VideoAsset {
     self.id = id
     self.url = url
 
-    avAsset = AVURLAsset(url: url)
     
     do {
-      isPlayable = try await avAsset.load(.isPlayable)
-      guard isPlayable else {
+      avAsset = AVURLAsset(url: url)
+      
+      let videoTracks = try await avAsset.loadTracks(withMediaType: .video)
+      guard let videoTrack = videoTracks.first else {
+        throw OpenVideoError.noVideo(url)
+      }
+      
+      guard try await videoTrack.load(.isPlayable) else {
         throw OpenVideoError.notPlayable(url)
       }
 
       duration = try await avAsset.load(.duration)
-      
-      let tracks = try await avAsset.loadTracks(withMediaType: AVMediaType.video)
-      guard let track = tracks.first else {
-        throw OpenVideoError.noTrack(url)
-      }
-      avAssetTrack = track
-      
-      frameDuration = try await track.load(.minFrameDuration)
-      frameRate = try await track.load(.nominalFrameRate)
+      (frameRate, frameDuration) = try await videoTrack.load(.nominalFrameRate, .minFrameDuration)
 
-      let trackTransform = try await track.load(.preferredTransform)
-      let trackSize = try await track.load(.naturalSize)
-      let size = trackSize.applying(trackTransform)
+      let (videoPreferredTransform, videoNaturalSize) =
+        try await videoTrack.load(.preferredTransform, .naturalSize)
+
+      let size = videoNaturalSize.applying(videoPreferredTransform)
       fullSize = NSMakeSize(abs(size.width), abs(size.height))
     } catch let error {
       throw OpenVideoError.loadProperty(url, error: error)

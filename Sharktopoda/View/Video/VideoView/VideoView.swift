@@ -18,15 +18,14 @@ struct VideoView: View {
 
       VideoControlView()
         .environmentObject(windowData)
-        .frame(height: 50)
-        .padding(.bottom, 10)
     }
+    .padding(.bottom, 10)
   }
 }
 
 //struct VideoView_Previews: PreviewProvider {
 //  static var previews: some View {
-////    VideoView(id: "CxDebug").environmentObject(SharktopodaData())
+//    VideoView(id: "CxDebug").environmentObject(SharktopodaData())
 //    VideoView(VideoAsset(), videoId: "CxDebug")
 //  }
 //}

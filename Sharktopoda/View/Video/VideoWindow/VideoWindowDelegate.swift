@@ -69,7 +69,7 @@ extension VideoWindow: NSWindowDelegate {
         localization.resize(for: videoRect)
       }
       
-      windowData.sliderView.setupControlViewAnimation()
+      windowData.timeSlider.setupControlViewAnimation()
       windowData.playerResume(self.playerDirection ?? .paused)
       
       // If there is a current resizing task running, it's stale

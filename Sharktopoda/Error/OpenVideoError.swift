@@ -11,7 +11,7 @@ enum OpenVideoError: Error, CustomDebugStringConvertible {
   
   case invalidPath(_ path: String)
   case loadProperty(_ url: URL, error: Error)
-  case noTrack(_ url: URL)
+  case noVideo(_ url: URL)
   case notPlayable(_ url: URL)
   case notReachable(_ url: URL)
   case unknown(_ cause: String)
@@ -24,8 +24,8 @@ enum OpenVideoError: Error, CustomDebugStringConvertible {
       case .loadProperty(let url, let error):
         return "Video \(url.absoluteString): \(error.localizedDescription)"
 
-      case .noTrack(let url):
-        return "Video has no tracks: \(url.absoluteString)"
+      case .noVideo(let url):
+        return "File has no video track: \(url.absoluteString)"
         
       case .notPlayable(let url):
         return "Video not playable: \(url.absoluteString)"
@@ -46,7 +46,7 @@ enum OpenVideoError: Error, CustomDebugStringConvertible {
       case .loadProperty(let url, let error):
         return "Video \(url.absoluteString): \n\n\(error.localizedDescription)"
         
-      case .noTrack(let url):
+      case .noVideo(let url):
         return "Video has no tracks: \n\n\(url.absoluteString)"
         
       case .notPlayable(let url):

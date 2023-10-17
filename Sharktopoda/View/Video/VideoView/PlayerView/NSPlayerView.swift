@@ -48,7 +48,7 @@ final class NSPlayerView: NSView {
     wantsLayer = true
     layer = rootLayer
     
-    let size = windowData.fullSize
+    let size = windowData.videoAsset.fullSize
     frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
 
     playerLayer.player = windowData.player
@@ -66,11 +66,11 @@ extension NSPlayerView {
   var currentItem: AVPlayerItem? {
     windowData.videoControl.currentItem
   }
-  
-  var currentTime: Int {
+
+  var currentTime: CMTime {
     windowData.videoControl.currentTime
   }
-  
+
   var currentLocalization: Localization? {
     get { _currentLocalization }
     set {
@@ -85,7 +85,7 @@ extension NSPlayerView {
   }
   
   var fullSize: CGSize {
-    windowData.fullSize
+    windowData.videoAsset.fullSize
   }
   
   // CxTBD This doesn't seem right
@@ -142,15 +142,11 @@ extension NSPlayerView {
   }
   
   func display(localization: Localization) {
-    guard showLocalizations else { return }
-    
     playerLayer.addSublayer(localization.layer)
     playerLayer.addSublayer(localization.conceptLayer)
   }
 
   func display(localizations: [Localization]) {
-    guard showLocalizations else { return }
-    
     localizations.forEach {
       playerLayer.addSublayer($0.layer)
       playerLayer.addSublayer($0.conceptLayer)
@@ -158,6 +154,6 @@ extension NSPlayerView {
   }
   
   var showLocalizations: Bool {
-    UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations)
+    windowData.showLocalizations
   }
 }

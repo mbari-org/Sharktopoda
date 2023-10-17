@@ -20,14 +20,24 @@ struct VideoControlView: View {
   
   var body: some View {
     VStack {
-      VideoControlTimeView()
-      VideoControlPlayButtons()
+      VideoTimeView()
+      HStack {
+        Toggle("  Show Annotations", isOn: $windowData.showLocalizations)
+          .toggleStyle(.checkbox)
+          .frame(maxWidth: .infinity, alignment: .leading)
+          .padding(.leading, 90)
+        VideoControlPlayButtons()
+          .frame(maxWidth: .infinity, alignment: .center)
+        VolumeControlView()
+          .frame(maxWidth: .infinity, alignment: .trailing)
+          .padding(.trailing, 90)
+      }
     }
   }
 }
 
 //struct VideoControlView_Previews: PreviewProvider {
 //  static var previews: some View {
-//    VideoControlView().environmentObject(VideoControl())
+//    VideoControlView().environmentObject(WindowData())
 //  }
 //}

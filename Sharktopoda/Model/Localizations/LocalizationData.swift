@@ -22,12 +22,10 @@ class LocalizationData {
   
   var selected = Set<String>()
 
-  let id: String
-  let frameDuration: Int
-  
-  init(id: String, frameDuration: Int) {
-    self.id = id
-    self.frameDuration = frameDuration
+  let videoAsset: VideoAsset
+
+  init(videoAsset: VideoAsset) {
+    self.videoAsset = videoAsset
   }
 }
 

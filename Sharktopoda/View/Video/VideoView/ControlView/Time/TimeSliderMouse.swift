@@ -8,7 +8,7 @@
 import AppKit
 import AVFoundation
 
-extension NSTimeSliderView {
+extension NSTimeSlider {
   
   var markerX: CGFloat {
     (CGFloat(windowData.playerTime) / CGFloat(duration)) * bounds.width

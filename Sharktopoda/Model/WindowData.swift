@@ -17,13 +17,24 @@ final class WindowData: Identifiable, ObservableObject {
   var _localizationData: LocalizationData?
   var _player: AVPlayer?
   var _playerView: PlayerView?
-  var _sliderView: NSTimeSliderView?
+  var _timeSlider: NSTimeSlider?
   var _videoAsset: VideoAsset?
   var _videoControl: VideoControl?
   
   @Published var playerTime: Int = 0
   @Published var playerDirection: PlayerDirection = .paused
-
+  @Published var playerVolumeLevel: Float = 1.0 {
+    didSet {
+      player.volume = playerVolumeLevel
+    }
+  }
+  @Published var playerVolumeMute: Bool = false {
+    didSet {
+      player.volume = playerVolumeMute ? 0.0 : playerVolumeLevel
+    }
+  }
+  @Published var showLocalizations: Bool = UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations)
+  
   var id: String {
     get { _id! }
     set { _id = newValue }
@@ -54,9 +65,9 @@ final class WindowData: Identifiable, ObservableObject {
     set { _playerView = newValue }
   }
   
-  var sliderView: NSTimeSliderView {
-    get { _sliderView! }
-    set { _sliderView = newValue }
+  var timeSlider: NSTimeSlider {
+    get { _timeSlider! }
+    set { _timeSlider = newValue }
   }
   
   var videoAsset: VideoAsset {
@@ -127,10 +138,6 @@ extension WindowData {
     let stepTime = currentFrameTime + steps * localizationData.frameDuration
     seek(elapsedTime: stepTime)
   }
-  
-  var showLocalizations: Bool {
-    UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations)
-  }
 }
 
 extension WindowData {
@@ -148,6 +155,8 @@ extension WindowData {
       }
 
     guard videoControl.paused else { return }
+    guard showLocalizations else { return }
+
     playerView.display(localizations: frameLocalizations)
   }
   
@@ -155,7 +164,8 @@ extension WindowData {
     localizationData.fetch(.paused, at: videoControl.currentTime)
   }
 
-  func displaySpanned() {
+  func displaySpanned(force: Bool = true) {
+    guard force || showLocalizations else { return }
     playerView.display(localizations: spannedLocalizations())
   }
 

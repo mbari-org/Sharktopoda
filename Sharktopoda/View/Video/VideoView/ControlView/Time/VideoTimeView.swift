@@ -1,5 +1,5 @@
 //
-//  VideoControlTimeView.swift
+//  VideoTimeView
 //  Created for Sharktopoda on 11/29/22.
 //
 //  Apache License 2.0 — See project LICENSE file
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct VideoControlTimeView: View {
+struct VideoTimeView: View {
   @EnvironmentObject var windowData: WindowData
   
   var body: some View {
@@ -16,9 +16,8 @@ struct VideoControlTimeView: View {
         .padding(.leading, 5)
         .frame(width: 80)
       
-      VideoControlSliderView()
-        .frame(height: 15)
-
+      VideoTimeSlider()
+        .frame(height: 20)
 
       Text(humanTime(windowData.videoAsset.durationMillis - windowData.playerTime))
         .padding(.trailing, 5)
@@ -42,7 +41,7 @@ struct VideoControlTimeView: View {
 
 struct VideoControlTimeView_Previews: PreviewProvider {
   static var previews: some View {
-    VideoControlTimeView()
+    VideoTimeView()
       .environmentObject(WindowData())
   }
 }

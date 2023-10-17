@@ -7,6 +7,7 @@
 
 import AppKit
 import AVKit
+import Combine
 import SwiftUI
 
 final class VideoWindow: NSWindow {
@@ -20,7 +21,9 @@ final class VideoWindow: NSWindow {
 
   /// Used by delegate to pause/resume playback after resizing
   var playerDirection: WindowData.PlayerDirection?
-
+  
+  var showLocalizationsSubscription: AnyCancellable?
+  
   init(for videoAsset: VideoAsset, with sharktopodaData: SharktopodaData) {
     playerTimeQueue = DispatchQueue(label: "Sharktopoda Player Time Queue: \(videoAsset.id)")
 
@@ -63,6 +66,15 @@ final class VideoWindow: NSWindow {
     let pollingInterval = CMTimeMultiplyByFloat64(videoAsset.frameDuration,
                                                   multiplier: 0.33)
     setPlayerObserver(pollingInterval)
+    
+    showLocalizationsSubscription = windowData.$showLocalizations.sink(receiveValue: { [weak windowData] newValue in
+      if (newValue) {
+        windowData?.displaySpanned(force: true)
+      } else {
+        windowData?.playerView.clear()
+      }
+    })
+
         
     bringToFront()
   }

@@ -142,15 +142,11 @@ extension NSPlayerView {
   }
   
   func display(localization: Localization) {
-    guard showLocalizations else { return }
-    
     playerLayer.addSublayer(localization.layer)
     playerLayer.addSublayer(localization.conceptLayer)
   }
 
   func display(localizations: [Localization]) {
-    guard showLocalizations else { return }
-    
     localizations.forEach {
       playerLayer.addSublayer($0.layer)
       playerLayer.addSublayer($0.conceptLayer)
@@ -158,6 +154,6 @@ extension NSPlayerView {
   }
   
   var showLocalizations: Bool {
-    UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations)
+    windowData.showLocalizations
   }
 }

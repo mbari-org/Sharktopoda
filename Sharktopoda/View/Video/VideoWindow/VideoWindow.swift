@@ -43,15 +43,11 @@ final class VideoWindow: NSWindow {
     title = videoAsset.url.lastPathComponent
     backgroundColor = NSColor(Color.init(hex: "342A27")!)
 
-    let frameDuration = videoAsset.frameDuration
     let playerItem = AVPlayerItem(asset: videoAsset.avAsset)
     
     windowData.id = videoAsset.id
+    windowData.localizationData = LocalizationData(videoAsset: videoAsset)
 
-    windowData.frameDuration = frameDuration
-    windowData.fullSize = videoAsset.fullSize
-    windowData.localizationData = LocalizationData(id: videoAsset.id,
-                                                   frameDuration: frameDuration.asMillis())
     windowData.player = AVPlayer(playerItem: playerItem)
     windowData.playerView = PlayerView()
     windowData.videoAsset = videoAsset

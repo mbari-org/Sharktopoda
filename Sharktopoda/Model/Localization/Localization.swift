@@ -11,8 +11,8 @@ import SwiftUI
 class Localization {
   let id: String
   var concept: String
-  var duration: Int
-  var elapsedTime: Int
+  var duration: CMTime
+  var time: CMTime
   var hexColor: String
   var layer: CAShapeLayer
   var region: CGRect
@@ -20,13 +20,13 @@ class Localization {
   var fullSize: CGSize
   var conceptLayer: CATextLayer
   
-  init(at elapsedTime: Int, with region: CGRect, layer: CAShapeLayer, fullSize: CGSize) {
+  init(at time: CMTime, with region: CGRect, layer: CAShapeLayer, fullSize: CGSize) {
     id = SharktopodaData.normalizedId()
     concept = UserDefaults.standard.string(forKey: PrefKeys.captionDefault)!
-    duration = 0
+    duration = .zero
     hexColor = UserDefaults.standard.hexColor(forKey: PrefKeys.displayBorderColor)
     
-    self.elapsedTime = elapsedTime
+    self.time = time
     self.region = region
     self.fullSize = fullSize
     self.layer = layer
@@ -34,12 +34,14 @@ class Localization {
     conceptLayer = Localization.createConceptLayer(concept)
   }
 
-  init(from controlLocalization: ControlLocalization, size: CGSize) {
+  init(from controlLocalization: ControlLocalization, videoAsset: VideoAsset) {
     id = SharktopodaData.normalizedId(controlLocalization.uuid)
     concept = controlLocalization.concept
-    duration = controlLocalization.durationMillis
-    elapsedTime = controlLocalization.elapsedTimeMillis
-    fullSize = size
+    duration = CMTime.from(millis: controlLocalization.durationMillis,
+                           timescale: videoAsset.timescale)
+    time = CMTime.from(millis: controlLocalization.elapsedTimeMillis,
+                               timescale: videoAsset.timescale)
+    fullSize = videoAsset.fullSize
     hexColor = controlLocalization.color
     region = CGRect(x: CGFloat(controlLocalization.x),
                     y: CGFloat(controlLocalization.y),
@@ -47,7 +49,7 @@ class Localization {
                     height: CGFloat(controlLocalization.height))
 
     let origin = CGPoint(x: region.minX,
-                         y: size.height - (region.minY + region.height))
+                         y: fullSize.height - (region.minY + region.height))
     let layerFrame = CGRect(origin: origin, size: region.size)
 
     let borderColor = Color(hex: hexColor)?.cgColor ?? UserDefaults.standard.color(forKey: PrefKeys.displayBorderColor).cgColor // Fixed Issue #39
@@ -58,6 +60,6 @@ class Localization {
   }
   
   var debugDescription: String {
-    "id: \(id), concept: \(concept), time: \(elapsedTime), duration: \(duration), color: \(hexColor)"
+    "id: \(id), concept: \(concept), time: \(time.millis), duration: \(duration.millis), color: \(hexColor)"
   }
 }

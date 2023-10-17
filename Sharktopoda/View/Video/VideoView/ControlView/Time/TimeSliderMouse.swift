@@ -11,7 +11,10 @@ import AVFoundation
 extension NSTimeSlider {
   
   var markerX: CGFloat {
-    (CGFloat(windowData.playerTime) / CGFloat(duration)) * bounds.width
+    let playerSeconds = windowData.playerTime.seconds
+    let durationSeconds = windowData.videoAsset.duration.seconds
+    
+    return (playerSeconds / durationSeconds) * bounds.width
   }
 
   var windowLayer: CALayer? {
@@ -39,8 +42,8 @@ extension NSTimeSlider {
   override func mouseUp(with event: NSEvent) {
     windowData.playerView.clear()
     
-    let frameTime = sliderTime(for: event)
-    windowData.videoControl.frameSeek(to: frameTime) { [weak self] done in
+    let time = sliderTime(for: event)
+    windowData.videoControl.frameSeek(to: time) { [weak self] done in
       guard done else { return }
       guard let self = self else { return }
       guard let playerDirection = self.playerDirection else { return }
@@ -63,6 +66,9 @@ extension NSTimeSlider {
   
   private func sliderTime(for event: NSEvent) -> CMTime {
     let sliderPoint = location(in: layer!, of: event)
-    return CMTime.fromMillis(Double(duration) * (sliderPoint.x / bounds.width))
+    
+    let fraction = sliderPoint.x / bounds.width
+    return CMTimeMultiplyByFloat64(windowData.videoAsset.duration,
+                                   multiplier: fraction)
   }
 }

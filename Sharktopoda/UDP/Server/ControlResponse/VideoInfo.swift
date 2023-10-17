@@ -16,7 +16,7 @@ struct VideoInfo: Codable {
     let videoAsset = videoWindow.windowData.videoAsset
     self.uuid = videoAsset.id
     self.url = videoAsset.url.absoluteString
-    self.durationMillis = videoAsset.durationMillis
+    self.durationMillis = videoAsset.duration.millis
     self.frameRate = videoAsset.frameRate
     self.isKey = videoWindow.windowData.windowKeyInfo.isKey
   }

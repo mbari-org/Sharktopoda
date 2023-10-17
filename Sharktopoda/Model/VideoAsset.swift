@@ -10,69 +10,60 @@ import AVFoundation
 // CxNote Binds to first AVAsset video track
 
 final class VideoAsset {
-  static let timescaleMillis: Int32 = 1000
-  
   let id: String
   let url: URL
   
   var avAsset: AVURLAsset
 
-  var avAssetTrack: AVAssetTrack
   var duration: CMTime
   var frameDuration: CMTime
   var frameRate: Float
   var fullSize: NSSize
-  var isPlayable: Bool
   
-  var durationMillis: Int {
-    duration.asMillis()
+  var timescale: CMTimeScale {
+    frameDuration.timescale
   }
   
   init(id: String, url: URL) async throws {
     self.id = id
     self.url = url
-
-    avAsset = AVURLAsset(url: url)
     
     do {
-      isPlayable = try await avAsset.load(.isPlayable)
-      guard isPlayable else {
+      avAsset = AVURLAsset(url: url)
+      
+      let videoTracks = try await avAsset.loadTracks(withMediaType: .video)
+      guard let videoTrack = videoTracks.first else {
+        throw OpenVideoError.noVideo(url)
+      }
+      
+      guard try await videoTrack.load(.isPlayable) else {
         throw OpenVideoError.notPlayable(url)
       }
 
       duration = try await avAsset.load(.duration)
+      (frameRate, frameDuration) = try await videoTrack.load(.nominalFrameRate, .minFrameDuration)
       
-      let tracks = try await avAsset.loadTracks(withMediaType: AVMediaType.video)
-      guard let track = tracks.first else {
-        throw OpenVideoError.noTrack(url)
-      }
-      avAssetTrack = track
-      
-      frameDuration = try await track.load(.minFrameDuration)
-      frameRate = try await track.load(.nominalFrameRate)
+      let (videoPreferredTransform, videoNaturalSize) =
+        try await videoTrack.load(.preferredTransform, .naturalSize)
 
-      let trackTransform = try await track.load(.preferredTransform)
-      let trackSize = try await track.load(.naturalSize)
-      let size = trackSize.applying(trackTransform)
+      let size = videoNaturalSize.applying(videoPreferredTransform)
       fullSize = NSMakeSize(abs(size.width), abs(size.height))
     } catch let error {
       throw OpenVideoError.loadProperty(url, error: error)
     }
   }
   
-  func frameGrab(at captureTime: Int, destination: String) async -> FrameGrabResult {
-    let frameTime = CMTime.fromMillis(captureTime)
-    
+  func frameGrab(at captureTime: CMTime, destination: String) async -> FrameGrabResult {
     let imageGenerator = AVAssetImageGenerator(asset: avAsset)
     imageGenerator.requestedTimeToleranceAfter = CMTime.zero
     imageGenerator.requestedTimeToleranceBefore = CMTime.zero
 
     do {
-      let (cgImage, _) = try await imageGenerator.image(at: frameTime)
+      let (cgImage, _) = try await imageGenerator.image(at: captureTime)
       if let error = cgImage.pngWrite(to: destination) {
         return .failure(error)
       } else {
-        return .success(captureTime)
+        return .success(captureTime.millis)
       }
     } catch(let error) {
       return .failure(error)

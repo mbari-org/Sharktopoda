@@ -5,10 +5,12 @@
 //  Apache License 2.0 — See project LICENSE file
 //
 
+import AVFoundation
+
 struct LocalizationFrame: Comparable {
 
   let number: Int
-  let time: Int
+  let time: CMTime
   
   private(set) var ids = [String]()
   

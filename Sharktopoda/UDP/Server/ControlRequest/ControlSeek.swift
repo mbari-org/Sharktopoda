@@ -5,7 +5,7 @@
 //  Apache License 2.0 — See project LICENSE file
 //
 
-import Foundation
+import AVFoundation
 
 struct ControlSeek: ControlMessage {
   var command: ControlCommand
@@ -16,9 +16,10 @@ struct ControlSeek: ControlMessage {
     withWindowData(id: uuid) { windowData in
       DispatchQueue.main.async { [weak windowData] in
         guard let windowData else { return }
-        let playerDirection = windowData.playerDirection
-        windowData.seek(elapsedTime: elapsedTimeMillis)
-        windowData.playerResume(playerDirection)
+
+        windowData.seek(time: CMTime.from(millis: elapsedTimeMillis,
+                                          timescale: windowData.videoAsset.timescale))
+        windowData.playerResume(windowData.playerDirection)
       }
       return ok()
     }

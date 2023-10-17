@@ -8,18 +8,15 @@
 import AVFoundation
 
 extension CMTime {
-  func asMillis() -> Int {
-    Int(seconds * Double(VideoAsset.timescaleMillis))
-  }
+  private static let millisTimescale: CMTimeScale = 1000
+  private static let millisScaleFactor = Double(millisTimescale)
   
-  static func fromMillis(_ time: Double) -> CMTime {
-    guard !time.isNaN,
-          !time.isInfinite else { return .zero }
+  var millis: Int {
+    Int(round(seconds * CMTime.millisScaleFactor))
+  }
     
-    return fromMillis(Int(time))
-  }
-  
-  static func fromMillis(_ time: Int) -> CMTime {
-    CMTimeMake(value: Int64(time), timescale: VideoAsset.timescaleMillis)
+  static func from(millis: Int, timescale: CMTimeScale) -> CMTime {
+    let millisTime = CMTimeMake(value: CMTimeValue(millis), timescale: CMTime.millisTimescale)
+    return millisTime.convertScale(timescale, method: .roundTowardZero)
   }
 }

@@ -15,10 +15,6 @@ final class NSTimeSlider: NSView {
 
   let markerLayer = CALayer()
 
-  var duration: Int {
-    windowData.videoAsset.durationMillis
-  }
-  
   /// Hold current player direction during slider scrubbing
   var playerDirection: WindowData.PlayerDirection?
   
@@ -30,7 +26,7 @@ final class NSTimeSlider: NSView {
   func attach(windowData: WindowData) {
     _windowData = windowData
     
-    frame = NSRect(x: 0, y: 0, width: windowData.fullSize.width, height: 40)
+    frame = NSRect(x: 0, y: 0, width: windowData.videoAsset.fullSize.width, height: 40)
 
     guard let playerItem = windowData.videoControl.currentItem else { return }
     let syncLayer = AVSynchronizedLayer(playerItem: playerItem)

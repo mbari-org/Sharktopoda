@@ -18,5 +18,6 @@ extension CMTime {
   static func from(millis: Int, timescale: CMTimeScale) -> CMTime {
     let millisTime = CMTimeMake(value: CMTimeValue(millis), timescale: CMTime.millisTimescale)
     return millisTime.convertScale(timescale, method: .roundTowardZero)
+
   }
 }

@@ -15,14 +15,14 @@ extension SharktopodaData {
   }
   
   func releaseWindow(_ videoWindow: VideoWindow) {
-    videoWindow.windowData.player.replaceCurrentItem(with: nil)
-    videoWindows.removeValue(forKey: videoWindow.id)
-    
+    let id = videoWindow.id
+    videoWindows.removeValue(forKey: id)
+
     let nextLatest = latestVideoWindow()
-    
+
     Task {
-      await releaseVideo(id: videoWindow.id)
-      
+      await openVideos.close(id: id)
+
       if let latestVideoWindow = nextLatest {
         await latestVideoWindow.bringToFront()
       } else {

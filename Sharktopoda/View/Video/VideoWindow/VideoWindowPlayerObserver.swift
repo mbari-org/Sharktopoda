@@ -9,7 +9,7 @@ import AVFoundation
 
 extension VideoWindow {
   func setPlayerObserver(_ pollingInterval: CMTime) {
-    windowData.player.addPeriodicTimeObserver(forInterval: pollingInterval,
+    periodicTimeObserverToken = windowData.player.addPeriodicTimeObserver(forInterval: pollingInterval,
                                               queue: playerTimeQueue) { [weak self] time in
       guard let windowData = self?.windowData else { return }
 

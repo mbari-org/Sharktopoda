@@ -10,8 +10,10 @@ import SwiftUI
 
 extension VideoWindow: NSWindowDelegate {
   func windowWillClose(_ notification: Notification) {
+    cleanup()
+
     guard let sharktopodaData = UDP.sharktopodaData else { return }
-    
+
     sharktopodaData.releaseWindow(self)
   }
   

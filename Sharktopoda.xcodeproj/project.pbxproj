@@ -176,6 +176,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D305DEB62F3EAB9800ED6306 /* Sharktopoda.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Sharktopoda.xctestplan; sourceTree = "<group>"; };
 		E200F268294B7EFA004AEBF9 /* OpenMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMainView.swift; sourceTree = "<group>"; };
 		E2020D722926E8AE0090B60B /* SharktopodaAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharktopodaAppDelegate.swift; sourceTree = "<group>"; };
 		E2020D76292834770090B60B /* VideoControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoControlView.swift; sourceTree = "<group>"; };
@@ -591,6 +592,7 @@
 		E2C22E7828CFDC26003CD976 = {
 			isa = PBXGroup;
 			children = (
+				D305DEB62F3EAB9800ED6306 /* Sharktopoda.xctestplan */,
 				E2C22E8328CFDC26003CD976 /* Sharktopoda */,
 				E2C22E9528CFDC28003CD976 /* SharktopodaTests */,
 				E2C22E9F28CFDC28003CD976 /* SharktopodaUITests */,

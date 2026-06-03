@@ -1,0 +1,38 @@
+{
+  "configurations" : [
+    {
+      "id" : "5776494B-C6A9-4AA1-B86E-B88FC3A31794",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "performanceAntipatternCheckerEnabled" : true,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:Sharktopoda.xcodeproj",
+      "identifier" : "E2C22E8028CFDC26003CD976",
+      "name" : "Sharktopoda"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Sharktopoda.xcodeproj",
+        "identifier" : "E2C22E9128CFDC28003CD976",
+        "name" : "SharktopodaTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Sharktopoda.xcodeproj",
+        "identifier" : "E2C22E9B28CFDC28003CD976",
+        "name" : "SharktopodaUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

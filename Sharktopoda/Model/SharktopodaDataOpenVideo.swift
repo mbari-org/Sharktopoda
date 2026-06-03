@@ -37,11 +37,6 @@ extension SharktopodaData {
   
   func releaseVideo(id: String) async {
     await openVideos.close(id: id)
-    
-    guard let videoWindow = videoWindows[id] else { return }
-    
-    await videoWindow.windowData.player.replaceCurrentItem(with: nil)
-    await videoWindows.removeValue(forKey: videoWindow.id)
   }
 }
 

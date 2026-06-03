@@ -12,16 +12,19 @@ import SwiftUI
 
 final class VideoWindow: NSWindow {
   var windowData = WindowData()
-  
+
   /// Queue for playerTime observation
   let playerTimeQueue: DispatchQueue
+
+  /// Token for removing the periodic time observer
+  var periodicTimeObserverToken: Any?
 
   /// Background Task for resizing localizations
   var resizingTask: Task<(), Never>?
 
   /// Used by delegate to pause/resume playback after resizing
   var playerDirection: WindowData.PlayerDirection?
-  
+
   var showLocalizationsSubscription: AnyCancellable?
   
   init(for videoAsset: VideoAsset, with sharktopodaData: SharktopodaData) {
@@ -81,5 +84,36 @@ final class VideoWindow: NSWindow {
   
   func bringToFront() {
     makeKeyAndOrderFront(nil)
+  }
+
+  func cleanup() {
+    // Remove periodic time observer
+    if let token = periodicTimeObserverToken {
+      windowData.player.removeTimeObserver(token)
+      periodicTimeObserverToken = nil
+    }
+
+    // Remove NotificationCenter observer
+    NotificationCenter.default.removeObserver(self)
+
+    // Cancel Combine subscriptions
+    showLocalizationsSubscription?.cancel()
+    showLocalizationsSubscription = nil
+    windowData.timeSlider?.playerTimeSubscription?.cancel()
+    windowData.timeSlider?.playerTimeSubscription = nil
+
+    // Cancel any in-flight resizing task
+    resizingTask?.cancel()
+    resizingTask = nil
+
+    // Clear the player layer's reference to the player
+    windowData.playerView.nsPlayerView.playerLayer.player = nil
+
+    // Clear localization layers
+    windowData.playerView.clear()
+
+    // Stop the player
+    windowData.player.pause()
+    windowData.player.replaceCurrentItem(with: nil)
   }
 }

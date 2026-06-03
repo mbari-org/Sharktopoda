@@ -72,10 +72,9 @@ final class NSTimeSlider: NSView {
     let trackWidth = bounds.width - markerLayer.bounds.width
     let xPosition = halfWidth + CGFloat(fraction) * trackWidth
 
-    CATransaction.begin()
-    CATransaction.setDisableActions(true)
-    markerLayer.position = CGPoint(x: xPosition, y: markerLayer.position.y)
-    CATransaction.commit()
+    CALayer.noAnimation {
+      markerLayer.position = CGPoint(x: xPosition, y: markerLayer.position.y)
+    }
   }
 
   func setupControlViewAnimation() {

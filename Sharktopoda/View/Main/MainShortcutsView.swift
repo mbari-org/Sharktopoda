@@ -13,10 +13,7 @@ struct MainShortcutsView: View {
   var body: some View {
     HStack {
       Button("Open file...") {
-        let dialog = OpenFileView.openFileDialog()
-        guard dialog.runModal() == NSApplication.ModalResponse.OK else { return }
-        guard let fileUrl = dialog.url else { return }
-        VideoWindow.open(url: fileUrl)
+        OpenFileView.openFile()
       }
       .buttonStyle(.borderless)
       .font(.title2)

@@ -23,10 +23,12 @@ extension SharktopodaData {
     Task {
       await openVideos.close(id: id)
 
-      if let latestVideoWindow = nextLatest {
-        await latestVideoWindow.bringToFront()
-      } else {
-        await mainViewWindow?.deminiaturize(nil)
+      await MainActor.run {
+        if let latestVideoWindow = nextLatest {
+          latestVideoWindow.bringToFront()
+        } else {
+          mainViewWindow?.deminiaturize(nil)
+        }
       }
     }
   }

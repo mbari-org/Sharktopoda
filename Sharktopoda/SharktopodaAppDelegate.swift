@@ -8,7 +8,10 @@ import AppKit
 
 class SharktopodaAppDelegate: NSObject, NSApplicationDelegate {
   func applicationDidFinishLaunching(_ notification: Notification) {
-    // CxTBD This seems fragile
-    UDP.sharktopodaData.mainViewWindow = NSApp.windows.last
+    DispatchQueue.main.async {
+      guard UDP.sharktopodaData.mainViewWindow == nil else { return }
+      UDP.sharktopodaData.mainViewWindow =
+        NSApp.windows.first(where: { $0.title == "Sharktopoda" }) ?? NSApp.mainWindow
+    }
   }
 }

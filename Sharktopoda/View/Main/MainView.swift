@@ -34,6 +34,9 @@ struct MainView: View {
       .frame(maxWidth: .infinity)
     }
     .frame(width: MainView.width, height: MainView.height)
+    .onAppear {
+      sharktopodaData.mainViewWindow = NSApp.keyWindow ?? NSApp.mainWindow
+    }
   }
 }
 

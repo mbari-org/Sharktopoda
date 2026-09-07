@@ -11,19 +11,15 @@ struct OpenFileView: View {
 
   var body: some View {
     Button("Open file...") {
-      let dialog = OpenFileView.openFileDialog()
-      
-      dialog.showsResizeIndicator    = true
-      dialog.showsHiddenFiles        = false
-      dialog.allowsMultipleSelection = false
-      dialog.canChooseDirectories    = false
-      dialog.isFloatingPanel         = true
-      
-      guard dialog.runModal() == NSApplication.ModalResponse.OK else { return }
-      guard let fileUrl = dialog.url else { return }
-      
-      VideoWindow.open(url: fileUrl)
+      OpenFileView.openFile()
     }
+  }
+  
+  static func openFile() {
+    let dialog = openFileDialog()
+    guard dialog.runModal() == .OK, let fileUrl = dialog.url else { return }
+    dialog.orderOut(nil)
+    VideoWindow.open(url: fileUrl)
   }
   
   static func openFileDialog() -> NSOpenPanel {
@@ -33,7 +29,6 @@ struct OpenFileView: View {
     dialog.showsHiddenFiles        = false
     dialog.allowsMultipleSelection = false
     dialog.canChooseDirectories    = false
-    dialog.isFloatingPanel         = true
     
     return dialog
   }

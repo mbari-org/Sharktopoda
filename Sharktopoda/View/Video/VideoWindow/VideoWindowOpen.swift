@@ -40,7 +40,9 @@ extension VideoWindow {
       await UDP.sharktopodaData.openingVideo(id: id)
 
       let videoAsset = try await VideoAsset(id: id, url: url)
-      let videoWindow = VideoWindow(for: videoAsset, with: UDP.sharktopodaData)
+      let videoWindow = await MainActor.run {
+        VideoWindow(for: videoAsset, with: UDP.sharktopodaData)
+      }
       await UDP.sharktopodaData.windowOpened(videoWindow: videoWindow)
       onMain { [weak videoWindow] in
         videoWindow?.windowData.timeSlider.setupControlViewAnimation()
@@ -60,7 +62,9 @@ extension VideoWindow {
   }
   
   private static func openDone(id: String) {
-    UDP.sharktopodaData.mainViewWindow?.miniaturize(nil)
+    onMain {
+      UDP.sharktopodaData.mainViewWindow?.miniaturize(nil)
+    }
     
     guard let client = UDP.sharktopodaData.udpClient else { return }
     

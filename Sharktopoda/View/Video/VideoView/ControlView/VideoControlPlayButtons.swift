@@ -20,6 +20,7 @@ struct VideoControlPlayButtons: View {
   
   var body: some View {
     HStack {
+      
       Button(action: {
         guard playerDirection != .backward else { return }
         windowData.playBackward()
@@ -27,6 +28,7 @@ struct VideoControlPlayButtons: View {
         Image(systemName: playerDirection == .backward
               ? "arrowtriangle.backward.circle.fill"
               : "arrowtriangle.backward.circle")
+          .foregroundColor(iconColor(for: .backward))
       }
       
       Button(action: {
@@ -36,6 +38,7 @@ struct VideoControlPlayButtons: View {
         Image(systemName: playerDirection == .paused
               ? "pause.circle.fill"
               : "pause.circle")
+          .foregroundColor(iconColor(for: .paused))
       }
       .padding(.leading, 15)
       .padding(.trailing, 15)
@@ -47,8 +50,13 @@ struct VideoControlPlayButtons: View {
         Image(systemName: playerDirection == .forward
               ? "play.circle.fill"
               : "play.circle")
+          .foregroundColor(iconColor(for: .forward))
       }
     }
+  }
+  
+  private func iconColor(for direction: WindowData.PlayerDirection) -> Color {
+    playerDirection == direction ? .green : .blue
   }
 }
 

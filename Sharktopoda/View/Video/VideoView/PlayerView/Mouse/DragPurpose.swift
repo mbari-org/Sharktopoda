@@ -47,7 +47,7 @@ extension NSPlayerView {
       if 10 < totalDelta.x, 10 < totalDelta.y {
         switch purpose {
           case .create:
-            let localization = Localization(at: currentTime,
+            let localization = Localization(at: windowData.videoControl.currentFrameTime,
                                             with: region(from: dragLayer),
                                             layer: dragLayer,
                                             fullSize: fullSize)

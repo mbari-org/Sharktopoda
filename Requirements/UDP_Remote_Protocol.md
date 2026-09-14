@@ -437,7 +437,7 @@ or, in the case of failure, such as the requested video `uuid` does not exist:
 
 ### <a name="elapsed"></a> Request elapsed time
 
-Return currently viewed moment of the video, i.e. the elapsed time (from the start) of the video as milliseconds.
+Return the `elapsedTimeMillis` of the currently displayed frame (see [`REQUIREMENTS.md` special note on `elapsedTimeMillis`](REQUIREMENTS.md#elapsedTimeMillis)).
 
 ```json
 {
@@ -508,7 +508,7 @@ or a failed response if the `uuid` does not exist:
 
 ### <a name="seek"></a> Seek Elapsed Time
 
-Seek to the provided elapsed time (which will be in milliseconds)
+Seek to the frame identified by `elapsedTimeMillis` (see [`REQUIREMENTS.md` special note on `elapsedTimeMillis`](REQUIREMENTS.md#elapsedTimeMillis)).
 
 ```json
 {
@@ -585,7 +585,7 @@ The frame capture command specifies the local image file path as well as a refer
 }
 ```
 
-Sharktopoda should grab the current elapsed time for the specified **uuid** and respond immediately. 
+Capture the currently displayed frame for the specified **uuid** and respond immediately. On success, `frame capture done` includes that frame’s `elapsedTimeMillis` (see [`REQUIREMENTS.md` special note on `elapsedTimeMillis`](REQUIREMENTS.md#elapsedTimeMillis)). 
 
 ```json
 {
@@ -699,8 +699,8 @@ A localization defines a rectangular region of interest on the video. Users shou
 
 - `uuid` - The unique identifier for an annotation. UUID v4 (random) is recommended.
 - `concept` - The label associated with a localization that identifies the object in the region of interest. In theory, the concept can be up to 256 characters long, but in practice it is much shorter.
-- `elapsedTimeMillis` - The elapsed time from the start of the video that the localization is to be displayed.
-- `durationMillis` - This field may be present but can be ignored for now. It represents how long the localization is valid. It will span from `elapsedTimeMillis` to `elapsedTimeMillis` + `durationMillis`. The default is 0 which means the localization is valid for a single frame.
+- `elapsedTimeMillis` - Frame anchor for display (see [`REQUIREMENTS.md` special note on `elapsedTimeMillis`](REQUIREMENTS.md#elapsedTimeMillis)).
+- `durationMillis` - How long the localization remains valid from that anchor (`elapsedTimeMillis` … `elapsedTimeMillis` + `durationMillis`). Default `0` means a single frame. This field may be present but can be ignored for now.
 - `x` - The x coordinate of the localization in pixels.
 - `y` - The y coordinate of the localization in pixels.
 - `width` - The width of the localization in pixels.

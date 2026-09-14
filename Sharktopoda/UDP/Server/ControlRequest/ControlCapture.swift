@@ -5,7 +5,7 @@
 //  Apache License 2.0 — See project LICENSE file
 //
 
-import AVFoundation
+import Foundation
 import Network
 
 typealias FrameGrabResult = Result<Int, Error>
@@ -18,8 +18,8 @@ struct ControlCapture: ControlMessage {
   
   func process() -> ControlResponse {
     withWindowData(id: uuid) { windowData in
-      // CxNote Capture current time to get frame as close to command request as possible.
-      let captureTime = windowData.videoControl.currentTime
+      // Snapshot frame identity immediately so capture matches what was on screen.
+      let captureFrame = windowData.videoControl.currentFrame
 
       let fileUrl = URL(fileURLWithPath: imageLocation)
 
@@ -33,7 +33,7 @@ struct ControlCapture: ControlMessage {
       }
       
       Task {
-        let captureDoneMessage = await doCapture(captureTime: captureTime)
+        let captureDoneMessage = await doCapture(frame: captureFrame)
         if let client = UDP.sharktopodaData.udpClient {
           client.process(captureDoneMessage)
         }
@@ -43,14 +43,14 @@ struct ControlCapture: ControlMessage {
     }
   }
   
-  func doCapture(captureTime: CMTime) async -> ClientMessage {
+  func doCapture(frame: Int) async -> ClientMessage {
     guard let videoWindow = UDP.sharktopodaData.window(for: uuid) else {
       return ClientMessageCaptureDone(for: self, cause: "Video for uuid was closed")
     }
     
     let videoAsset = await videoWindow.windowData.videoAsset
 
-    switch await videoAsset.frameGrab(at: captureTime, destination: imageLocation) {
+    switch await videoAsset.frameGrab(atFrame: frame, destination: imageLocation) {
       case .success(let grabTime):
         return ClientMessageCaptureDone(for: self, grabTime: grabTime)
 

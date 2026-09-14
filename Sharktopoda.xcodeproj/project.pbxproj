@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A1F7A0012F6F4101000A0001 /* FrameTiming.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F7A0022F6F4101000A0002 /* FrameTiming.swift */; };
+		A1F7A0032F6F4101000A0003 /* FrameTimingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F7A0042F6F4101000A0004 /* FrameTimingTests.swift */; };
 		E200F269294B7EFA004AEBF9 /* OpenMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200F268294B7EFA004AEBF9 /* OpenMainView.swift */; };
 		E2020D732926E8AE0090B60B /* SharktopodaAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2020D722926E8AE0090B60B /* SharktopodaAppDelegate.swift */; };
 		E2020D77292834770090B60B /* VideoControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2020D76292834770090B60B /* VideoControlView.swift */; };
@@ -176,6 +178,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A1F7A0022F6F4101000A0002 /* FrameTiming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameTiming.swift; sourceTree = "<group>"; };
+		A1F7A0042F6F4101000A0004 /* FrameTimingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameTimingTests.swift; sourceTree = "<group>"; };
 		D305DEB62F3EAB9800ED6306 /* Sharktopoda.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Sharktopoda.xctestplan; sourceTree = "<group>"; };
 		E200F268294B7EFA004AEBF9 /* OpenMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMainView.swift; sourceTree = "<group>"; };
 		E2020D722926E8AE0090B60B /* SharktopodaAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharktopodaAppDelegate.swift; sourceTree = "<group>"; };
@@ -643,6 +647,7 @@
 			isa = PBXGroup;
 			children = (
 				E2C22E9628CFDC28003CD976 /* SharktopodaTests.swift */,
+				A1F7A0042F6F4101000A0004 /* FrameTimingTests.swift */,
 			);
 			path = SharktopodaTests;
 			sourceTree = "<group>";
@@ -666,6 +671,7 @@
 				E280384429284A380017E28C /* WindowDataKeyInfo.swift */,
 				E2803846292931E60017E28C /* VideoControl.swift */,
 				E2C22ED628D36888003CD976 /* VideoAsset.swift */,
+				A1F7A0022F6F4101000A0002 /* FrameTiming.swift */,
 				E2DAF8BC28F8EE460010ECB8 /* Localization */,
 				E28CEF05291E9BCC009E73B3 /* Localizations */,
 			);
@@ -1016,6 +1022,7 @@
 				E2675E3428DB7A4000F5F114 /* ControlAdvance.swift in Sources */,
 				E2448C0B292D7B1000F2C2E2 /* VideoWindowKeys.swift in Sources */,
 				E2C22ED728D36888003CD976 /* VideoAsset.swift in Sources */,
+				A1F7A0012F6F4101000A0001 /* FrameTiming.swift in Sources */,
 				E2989AB728D3B261009D2D65 /* NetworkPreferencesView.swift in Sources */,
 				E223C30C28F20D5D00274C3E /* ControlRemoveLocalizations.swift in Sources */,
 				E2675E1E28DAB65D00F5F114 /* ControlPing.swift in Sources */,
@@ -1081,6 +1088,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2C22E9728CFDC28003CD976 /* SharktopodaTests.swift in Sources */,
+				A1F7A0032F6F4101000A0003 /* FrameTimingTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

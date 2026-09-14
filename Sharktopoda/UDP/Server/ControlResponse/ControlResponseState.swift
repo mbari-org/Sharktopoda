@@ -20,7 +20,7 @@ struct ControlResponseState: ControlResponse {
     status = .ok
     rate = windowData.videoControl.rate
     state = PlayState(rate: rate)
-    elapsedTimeMillis = windowData.videoControl.currentTime.millis
+    elapsedTimeMillis = windowData.videoAsset.millis(ofFrame: windowData.videoControl.currentFrame)
   }
 }
 

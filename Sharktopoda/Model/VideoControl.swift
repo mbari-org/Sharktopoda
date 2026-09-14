@@ -12,7 +12,6 @@ final class VideoControl {
   private var windowData: WindowData
 
   let quickTolerance: CMTime
-  let seekTolerance: CMTime
 
   var previousDirection: WindowData.PlayerDirection = .paused
   var previousSpeed: Float = 1.0
@@ -22,8 +21,6 @@ final class VideoControl {
 
     quickTolerance = CMTimeMultiplyByFloat64(windowData.videoAsset.frameDuration,
                                              multiplier: 10)
-    seekTolerance = CMTime.from(millis: 1,
-                                timescale: windowData.videoAsset.timescale)
   }
   
   func canStep(_ steps: Int) -> Bool {
@@ -37,6 +34,14 @@ final class VideoControl {
   
   var currentTime: CMTime {
     player.currentItem?.currentTime() ?? .zero
+  }
+
+  var currentFrame: Int {
+    windowData.videoAsset.frame(displayedAt: currentTime)
+  }
+
+  var currentFrameTime: CMTime {
+    windowData.videoAsset.time(ofFrame: currentFrame)
   }
 
   func pause() {
@@ -81,26 +86,34 @@ final class VideoControl {
                 toleranceBefore: quickTolerance,
                 toleranceAfter: quickTolerance)
   }
+
+  func frameSeek(toFrame frame: Int, done: ((Bool) -> Void)? = nil) {
+    let time = windowData.videoAsset.time(ofFrame: max(0, frame))
+    if let done {
+      player.seek(to: time,
+                  toleranceBefore: .zero,
+                  toleranceAfter: .zero,
+                  completionHandler: done)
+    } else {
+      player.seek(to: time,
+                  toleranceBefore: .zero,
+                  toleranceAfter: .zero)
+    }
+  }
   
   func frameSeek(to elapsedTime: Int) {
-    frameSeek(to: CMTime.from(millis: elapsedTime, timescale: videoTimeScale))
+    frameSeek(toFrame: windowData.videoAsset.frame(forMillis: max(0, elapsedTime)))
   }
   
   func frameSeek(to time: CMTime) {
-    player.seek(to: time,
-                toleranceBefore: seekTolerance,
-                toleranceAfter: seekTolerance)
+    frameSeek(toFrame: windowData.videoAsset.frame(displayedAt: time))
   }
   
   func frameSeek(to elapsedTime: Int, done: @escaping (Bool) -> Void) {
-    frameSeek(to: CMTime.from(millis: elapsedTime, timescale: videoTimeScale),
-              done: done)
+    frameSeek(toFrame: windowData.videoAsset.frame(forMillis: max(0, elapsedTime)), done: done)
   }
 
   func frameSeek(to time: CMTime, done: @escaping (Bool) -> Void) {
-    player.seek(to: time,
-                toleranceBefore: seekTolerance,
-                toleranceAfter: seekTolerance,
-                completionHandler: done)
+    frameSeek(toFrame: windowData.videoAsset.frame(displayedAt: time), done: done)
   }
 }

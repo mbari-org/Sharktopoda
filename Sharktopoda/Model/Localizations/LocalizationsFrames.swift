@@ -14,9 +14,7 @@ extension LocalizationData {
   }
   
   func frameNumber(of time: CMTime) -> Int {
-    guard .zero < time else { return 0 }
-
-    return Int(time.seconds / videoAsset.frameDuration.seconds)
+    videoAsset.frame(displayedAt: time)
   }
 
   // CxTBD Add listener to only change this when UserDefaults value changes
@@ -173,7 +171,7 @@ extension LocalizationData {
              at insertTime: CMTime) -> PutInfo {
     
     let frameNumber = frameNumber(of: insertTime)
-    let frameTime = CMTimeMultiply(videoAsset.frameDuration, multiplier: CMTimeScale(frameNumber))
+    let frameTime = videoAsset.time(ofFrame: frameNumber)
     
     var frame: LocalizationFrame
     var action: PutAction

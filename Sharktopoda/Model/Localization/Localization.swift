@@ -39,8 +39,7 @@ class Localization {
     concept = controlLocalization.concept
     duration = CMTime.from(millis: controlLocalization.durationMillis,
                            timescale: videoAsset.timescale)
-    time = CMTime.from(millis: controlLocalization.elapsedTimeMillis,
-                               timescale: videoAsset.timescale)
+    time = videoAsset.time(ofFrame: videoAsset.frame(forMillis: max(0, controlLocalization.elapsedTimeMillis)))
     fullSize = videoAsset.fullSize
     hexColor = controlLocalization.color
     region = CGRect(x: CGFloat(controlLocalization.x),

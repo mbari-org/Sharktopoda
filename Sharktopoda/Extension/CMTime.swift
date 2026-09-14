@@ -9,12 +9,14 @@ import AVFoundation
 
 extension CMTime {
   private static let millisTimescale: CMTimeScale = 1000
-  private static let millisScaleFactor = Double(millisTimescale)
-  
+
+  /// Whole milliseconds truncated toward zero. Frame PTS must not round up or ffmpeg
+  /// accurate `-ss` will select the next frame.
   var millis: Int {
-    Int(round(seconds * CMTime.millisScaleFactor))
+    Int(value * 1000 / Int64(timescale))
   }
-    
+
+  /// Duration / display-window conversion only. Frame-addressed times use `FrameTiming`.
   static func from(millis: Int, timescale: CMTimeScale) -> CMTime {
     let millisTime = CMTimeMake(value: CMTimeValue(millis), timescale: CMTime.millisTimescale)
     return millisTime.convertScale(timescale, method: .roundTowardZero)

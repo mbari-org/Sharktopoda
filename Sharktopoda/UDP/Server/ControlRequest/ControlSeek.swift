@@ -14,11 +14,19 @@ struct ControlSeek: ControlMessage {
   
   func process() -> ControlResponse {
     withWindowData(id: uuid) { windowData in
+      guard elapsedTimeMillis >= 0 else {
+        return failed("elapsedTimeMillis before start")
+      }
+
+      let frame = windowData.videoAsset.frame(forMillis: elapsedTimeMillis)
+      guard frame <= windowData.videoAsset.lastFrame else {
+        return failed("elapsedTimeMillis past end")
+      }
+
       DispatchQueue.main.async { [weak windowData] in
         guard let windowData else { return }
 
-        windowData.seek(time: CMTime.from(millis: elapsedTimeMillis,
-                                          timescale: windowData.videoAsset.timescale))
+        windowData.seek(frame: frame)
         windowData.playerResume(windowData.playerDirection)
       }
       return ok()

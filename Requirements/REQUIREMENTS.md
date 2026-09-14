@@ -14,6 +14,9 @@ Sharktopoda will display videos (either local files or remote URL's) in windows 
 
 Sharktopoda will support the creating, editing, deletion, and display of bounding boxes over top of the video. The video player will display prexisting bounding boxes over the video at the correct frame.
 
+**Special note — <a name="elapsedTimeMillis"></a>`elapsedTimeMillis`:**
+MBARI annotation and ML tooling address video frame presentation using ffmpeg's presentation timestamp (PTS) rules. For compatibility purposes, an `elapsedTimeMillis` value in Sharktopoda will identify the first video frame whose PTS is greater than or equal to that time — the same rule ffmpeg uses for accurate seek (`-ss` before `-i`). Outbound `elapsedTimeMillis` values will be that frame's PTS truncated to whole milliseconds. Seek, capture, elapsed-time query, and localization anchors will all use this contract so Sharktopoda and ffmpeg-based services resolve the same frame for the same millisecond value.
+
 ## UI
 
 The UI can be based on the stock AVKit toolkit. Do not use floating controls in the video player as this will interfere with the ability to draw bounding bxoes on top of the video. If using AVKit, use inline controls (i.e. `AVPlayerViewControlsStyle.inline`) The window should be able to be resized. The ability to make a video window full-screen is nice-to-have, but not required.

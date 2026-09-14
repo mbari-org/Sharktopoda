@@ -5,6 +5,7 @@
 //  Apache License 2.0 — See project LICENSE file
 //
 
+import AVFoundation
 import Foundation
 
 enum OpenVideoError: Error, CustomDebugStringConvertible {
@@ -14,6 +15,7 @@ enum OpenVideoError: Error, CustomDebugStringConvertible {
   case noVideo(_ url: URL)
   case notPlayable(_ url: URL)
   case notReachable(_ url: URL)
+  case nonZeroStart(_ url: URL, start: CMTime)
   case unknown(_ cause: String)
   
   var description: String {
@@ -32,6 +34,9 @@ enum OpenVideoError: Error, CustomDebugStringConvertible {
 
       case .notReachable(let url):
         return "Video not reachable: \(url.absoluteString)"
+
+      case .nonZeroStart(let url, let start):
+        return "Video track start \(start.seconds)s is non-zero (ffmpeg/AVF time bases would disagree): \(url.absoluteString)"
 
       case .unknown(let cause):
         return cause
@@ -54,6 +59,9 @@ enum OpenVideoError: Error, CustomDebugStringConvertible {
         
       case .notReachable(let url):
         return "Video not reachable: \n\n\(url.absoluteString)"
+
+      case .nonZeroStart(let url, let start):
+        return "Video track does not start at zero (\(start.seconds)s):\n\n\(url.absoluteString)"
         
       case .unknown(let cause):
         return cause

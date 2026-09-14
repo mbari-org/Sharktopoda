@@ -78,7 +78,12 @@ extension WindowData {
     guard !videoControl.paused else { return }
 
     play(rate: 0.0)
-    displaySpanned()
+    videoControl.frameSeek(toFrame: videoControl.currentFrame) { [weak self] _ in
+      guard let self else { return }
+      if withDisplay {
+        self.displaySpanned()
+      }
+    }
   }
   
   func play(rate: Float) {
@@ -112,9 +117,15 @@ extension WindowData {
     videoControl.frameSeek(to: time)
   }
 
+  func seek(frame: Int) {
+    if !videoControl.paused {
+      play(rate: 0.0)
+    }
+    videoControl.frameSeek(toFrame: frame)
+  }
+
   func step(_ steps: Int) {
-    let delta = CMTimeMultiply(videoAsset.frameDuration, multiplier: CMTimeScale(steps))
-    seek(time: videoControl.currentTime + delta)
+    seek(frame: videoControl.currentFrame + steps)
   }
 }
 

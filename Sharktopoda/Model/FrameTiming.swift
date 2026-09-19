@@ -12,6 +12,8 @@ import AVFoundation
 /// Wire contract matches ffmpeg accurate `-ss` before `-i`:
 /// `elapsedTimeMillis` identifies the first frame whose PTS is ≥ that value (ceil).
 /// Emitted millis are a frame PTS truncated to whole milliseconds.
+///
+/// Frame duration is the constant PTS step (sample delta), not merely `minFrameDuration`.
 struct FrameTiming {
   let frameDuration: CMTime
 
@@ -19,6 +21,62 @@ struct FrameTiming {
     precondition(frameDuration.isValid && !frameDuration.isIndefinite)
     precondition(frameDuration.value > 0 && frameDuration.timescale > 0)
     self.frameDuration = frameDuration
+  }
+
+  /// Builds timing from ordered sample presentation timestamps (CFR).
+  static func from(presentationTimes: [CMTime], naturalTimeScale: CMTimeScale? = nil) throws -> FrameTiming {
+    let duration = try Self.resolveFrameDuration(
+      presentationTimes: presentationTimes,
+      naturalTimeScale: naturalTimeScale
+    )
+    return FrameTiming(frameDuration: duration)
+  }
+
+  static func resolveFrameDuration(
+    presentationTimes: [CMTime],
+    naturalTimeScale: CMTimeScale? = nil
+  ) throws -> CMTime {
+    guard presentationTimes.count >= 2 else {
+      throw FrameTimingError.insufficientSamples(presentationTimes.count)
+    }
+
+    var deltas: [CMTime] = []
+    deltas.reserveCapacity(presentationTimes.count - 1)
+    for i in 1..<presentationTimes.count {
+      let delta = CMTimeSubtract(presentationTimes[i], presentationTimes[i - 1])
+      guard delta.isValid, !delta.isIndefinite, delta.value > 0 else {
+        throw FrameTimingError.nonIncreasingPresentationTime
+      }
+      deltas.append(delta)
+    }
+
+    let targetScale = preferredTimescale(deltas: deltas, naturalTimeScale: naturalTimeScale)
+    var counts: [CMTimeValue: Int] = [:]
+    for delta in deltas {
+      let normalized = delta.convertScale(targetScale, method: .default)
+      guard normalized.isValid, normalized.value > 0 else {
+        throw FrameTimingError.nonIncreasingPresentationTime
+      }
+      counts[normalized.value, default: 0] += 1
+    }
+
+    guard let (bestValue, bestCount) = counts.max(by: { $0.value < $1.value }) else {
+      throw FrameTimingError.insufficientSamples(presentationTimes.count)
+    }
+
+    let majorityBasis = (bestCount * 100) / deltas.count
+    guard majorityBasis >= 80 else {
+      throw FrameTimingError.variableFrameRate(distinctSteps: counts.count, majorityPercent: majorityBasis)
+    }
+
+    return CMTime(value: bestValue, timescale: targetScale)
+  }
+
+  private static func preferredTimescale(deltas: [CMTime], naturalTimeScale: CMTimeScale?) -> CMTimeScale {
+    if let naturalTimeScale, naturalTimeScale > 0 {
+      return naturalTimeScale
+    }
+    return deltas.map(\.timescale).max() ?? 600
   }
 
   func frame(forMillis ms: Int) -> Int {
@@ -47,4 +105,11 @@ struct FrameTiming {
   func lastFrame(duration: CMTime) -> Int {
     frame(displayedAt: duration)
   }
+}
+
+enum FrameTimingError: Error, Equatable {
+  case insufficientSamples(Int)
+  case nonIncreasingPresentationTime
+  case variableFrameRate(distinctSteps: Int, majorityPercent: Int)
+  case sampleReadFailed
 }

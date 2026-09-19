@@ -16,6 +16,7 @@ enum OpenVideoError: Error, CustomDebugStringConvertible {
   case notPlayable(_ url: URL)
   case notReachable(_ url: URL)
   case nonZeroStart(_ url: URL, start: CMTime)
+  case irregularFrameTiming(_ url: URL, reason: String)
   case unknown(_ cause: String)
   
   var description: String {
@@ -37,6 +38,9 @@ enum OpenVideoError: Error, CustomDebugStringConvertible {
 
       case .nonZeroStart(let url, let start):
         return "Video track start \(start.seconds)s is non-zero (ffmpeg/AVF time bases would disagree): \(url.absoluteString)"
+
+      case .irregularFrameTiming(let url, let reason):
+        return "Cannot establish constant frame duration for \(url.absoluteString): \(reason)"
 
       case .unknown(let cause):
         return cause
@@ -62,6 +66,9 @@ enum OpenVideoError: Error, CustomDebugStringConvertible {
 
       case .nonZeroStart(let url, let start):
         return "Video track does not start at zero (\(start.seconds)s):\n\n\(url.absoluteString)"
+
+      case .irregularFrameTiming(let url, let reason):
+        return "Cannot establish constant frame timing:\n\n\(reason)\n\n\(url.absoluteString)"
         
       case .unknown(let cause):
         return cause

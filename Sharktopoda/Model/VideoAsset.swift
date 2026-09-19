@@ -170,6 +170,8 @@ final class VideoAsset {
     let imageGenerator = AVAssetImageGenerator(asset: avAsset)
     imageGenerator.requestedTimeToleranceAfter = CMTime.zero
     imageGenerator.requestedTimeToleranceBefore = CMTime.zero
+    imageGenerator.apertureMode = .encodedPixels
+    imageGenerator.appliesPreferredTrackTransform = true
 
     do {
       let (cgImage, actualTime) = try await imageGenerator.image(at: captureTime)

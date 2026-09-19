@@ -32,9 +32,6 @@ final class VideoWindow: NSWindow {
 
     let fullSize = videoAsset.fullSize
 
-    // CxTBD The explicit sizing of the window (via width - 120) and the VideoControlView
-    // frame (via height: 50) needs to be investigated
-    
     super.init(
       contentRect: NSMakeRect(0, 0, fullSize.width - 120, fullSize.height),
       styleMask: [.titled, .closable, .miniaturizable, .resizable],
@@ -47,6 +44,7 @@ final class VideoWindow: NSWindow {
     backgroundColor = NSColor(Color.init(hex: "342A27")!)
 
     let playerItem = AVPlayerItem(asset: videoAsset.avAsset)
+    playerItem.videoApertureMode = .encodedPixels
     
     windowData.id = videoAsset.id
     windowData.localizationData = LocalizationData(videoAsset: videoAsset)

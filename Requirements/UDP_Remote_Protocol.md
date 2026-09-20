@@ -214,6 +214,8 @@ Each form of the `open` command receives an immediate an `ok` message response.
 }
 ```
 
+While a video is loading (after the `open` response, before `open done`), Sharktopoda accepts fire-and-forget commands targeting that video's `uuid` (e.g. `add localizations`, `clear localizations`, `play`, `seek`, `close`) and queues them, responding with an immediate `ok`. Queued commands are applied in arrival order once the window has opened. If the video fails to open, queued commands are dropped and an `open done` with `status: failed` is sent. Query commands whose response carries data (`request elapsed time`, `request player state`) are not queued and still respond `failed` with cause `No video for uuid` until the video has loaded.
+
 Sharktopoda will proceed with processing the command on a background thread. Upon completion of background processing, Sharktopoda shall send an `open done` message to the **host/port** established via a `connect` command:
 
 ##### Successfully opened video response

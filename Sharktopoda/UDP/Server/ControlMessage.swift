@@ -31,21 +31,30 @@ extension ControlMessage {
   typealias VideoWindowFn = (_ videoWindow: VideoWindow) -> ControlResponse
 
   func withVideoWindow(id: String,
-                       fn: VideoWindowFn) -> ControlResponse {
+                       deferIfLoading: Bool = true,
+                       fn: @escaping VideoWindowFn) -> ControlResponse {
     let idNorm = id.lowercased()
-    
+
+    if deferIfLoading,
+       UDP.sharktopodaData.openVideos.enqueueIfLoading(id: idNorm, command: { videoWindow in
+         _ = fn(videoWindow)
+       }) {
+      return ok()
+    }
+
     guard let videoWindow = UDP.sharktopodaData.window(for: idNorm) else {
       return failed("No video for uuid")
     }
-    
+
     return fn(videoWindow)
   }
-  
+
   typealias WindowDataFn = (_ windowData: WindowData) -> ControlResponse
 
   func withWindowData(id: String,
-                      fn: WindowDataFn) -> ControlResponse {
-    withVideoWindow(id: id) { videoWindow in
+                      deferIfLoading: Bool = true,
+                      fn: @escaping WindowDataFn) -> ControlResponse {
+    withVideoWindow(id: id, deferIfLoading: deferIfLoading) { videoWindow in
       fn(videoWindow.windowData)
     }
   }

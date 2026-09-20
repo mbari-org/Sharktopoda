@@ -22,10 +22,3 @@ struct VideoView: View {
     .padding(.bottom, 10)
   }
 }
-
-//struct VideoView_Previews: PreviewProvider {
-//  static var previews: some View {
-//    VideoView(id: "CxDebug").environmentObject(SharktopodaData())
-//    VideoView(VideoAsset(), videoId: "CxDebug")
-//  }
-//}

@@ -34,6 +34,16 @@ final class NSPlayerView: NSView {
   }
   
   private var _currentLocalization: Localization?
+  private var needsInitialReframe = true
+
+  override func layout() {
+    super.layout()
+    guard needsInitialReframe, let windowData = _windowData else { return }
+    let videoRect = playerLayer.videoRect
+    guard videoRect != .zero else { return }
+    needsInitialReframe = false
+    windowData.localizationData.resize(for: videoRect)
+  }
   
   override public init(frame frameRect: NSRect) {
     super.init(frame: frameRect)

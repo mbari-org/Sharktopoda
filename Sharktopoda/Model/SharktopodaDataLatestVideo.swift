@@ -20,9 +20,9 @@ extension SharktopodaData {
 
     let nextLatest = latestVideoWindow()
 
-    Task {
-      await openVideos.close(id: id)
+    openVideos.close(id: id)
 
+    Task {
       await MainActor.run {
         if let latestVideoWindow = nextLatest {
           latestVideoWindow.bringToFront()

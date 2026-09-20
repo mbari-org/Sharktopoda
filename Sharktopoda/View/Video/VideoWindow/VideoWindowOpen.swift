@@ -14,36 +14,32 @@ extension VideoWindow {
   
   static func open(id: String, url: URL, alert: Bool = false) {
     let id = SharktopodaData.normalizedId(id)
-    
-    Task {
-      let videoState = await UDP.sharktopodaData.openVideoState(id: id)
-      
-      switch videoState {
-        case .loading:
-          return
-          
-        case .loaded:
-          guard let videoWindow = UDP.sharktopodaData.window(for: id) else { return }
-          onMain { [weak videoWindow] in
-            videoWindow?.bringToFront()
-          }
-          openDone(id: id)
-        
-        case .notOpen:
+
+    switch UDP.sharktopodaData.openVideos.beginOpening(id: id) {
+      case .loading:
+        return
+
+      case .loaded:
+        guard let videoWindow = UDP.sharktopodaData.window(for: id) else { return }
+        onMain { [weak videoWindow] in
+          videoWindow?.bringToFront()
+        }
+        openDone(id: id)
+
+      case .notOpen:
+        Task {
           await openVideo(id: id, url: url, alert: alert)
-      }
+        }
     }
   }
-  
+
   private static func openVideo(id: String, url: URL, alert: Bool) async {
     do {
-      await UDP.sharktopodaData.openingVideo(id: id)
-
       let videoAsset = try await VideoAsset(id: id, url: url)
       let videoWindow = await MainActor.run {
         VideoWindow(for: videoAsset, with: UDP.sharktopodaData)
       }
-      await UDP.sharktopodaData.windowOpened(videoWindow: videoWindow)
+      UDP.sharktopodaData.windowOpened(videoWindow: videoWindow)
       onMain { [weak videoWindow] in
         videoWindow?.windowData.timeSlider.setupControlViewAnimation()
         videoWindow?.bringToFront()
@@ -51,7 +47,7 @@ extension VideoWindow {
       
       openDone(id: id)
     } catch {
-      await UDP.sharktopodaData.releaseVideo(id: id)
+      UDP.sharktopodaData.releaseVideo(id: id)
       
       guard let openVideoError = error as? OpenVideoError else {
         UDP.log(error.localizedDescription)

@@ -132,11 +132,14 @@ extension WindowData {
 extension WindowData {
   func add(localizations controlLocalizations: [ControlLocalization]) {
     let currentFrameNumber = localizationData.frameNumber(of: videoControl.currentTime)
+    let videoRect = playerView.videoRect
 
     let frameLocalizations = controlLocalizations
       .map { Localization(from: $0, videoAsset: videoAsset) }
       .reduce(into: [Localization]()) { acc, localization in
-        localization.resize(for: playerView.videoRect)
+        if videoRect != .zero {
+          localization.resize(for: videoRect)
+        }
         localizationData.add(localization)
         if localizationData.frameNumber(for: localization) == currentFrameNumber {
           acc.append(localization)

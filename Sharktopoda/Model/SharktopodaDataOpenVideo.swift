@@ -21,22 +21,15 @@ extension SharktopodaData {
   }
 
   // MARK: Concurrency Control for Open Video
-  func openingVideo(id: String) async {
-    await openVideos.opening(id: id)
-  }
-  
-  func openVideoState(id: String) async -> SharktopodaData.OpenVideoState {
-    await openVideos.state(id: id)
-  }
-  
-  func windowOpened(videoWindow: VideoWindow) async {
-    let id = await videoWindow.windowData.id
-    await openVideos.opened(id: id)
+  func windowOpened(videoWindow: VideoWindow) {
+    let id = videoWindow.id
     videoWindows[id] = videoWindow
+
+    let pending = openVideos.opened(id: id)
+    pending.forEach { $0(videoWindow) }
   }
   
-  func releaseVideo(id: String) async {
-    await openVideos.close(id: id)
+  func releaseVideo(id: String) {
+    openVideos.close(id: id)
   }
 }
-

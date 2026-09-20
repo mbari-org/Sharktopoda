@@ -12,7 +12,7 @@ struct ControlElapsed: ControlMessage {
   var uuid: String
   
   func process() -> ControlResponse {
-    withWindowData(id: uuid) { windowData in
+    withWindowData(id: uuid, deferIfLoading: false) { windowData in
       ControlResponseElapsed(using: windowData)
     }
   }

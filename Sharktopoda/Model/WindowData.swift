@@ -111,17 +111,19 @@ extension WindowData {
   }
   
   func seek(time: CMTime) {
-    if !videoControl.paused {
-      play(rate: 0.0)
-    }
+    pauseForSeek()
     videoControl.frameSeek(to: time)
   }
 
   func seek(frame: Int) {
-    if !videoControl.paused {
-      play(rate: 0.0)
-    }
+    pauseForSeek()
     videoControl.frameSeek(toFrame: frame)
+  }
+
+  private func pauseForSeek() {
+    guard !videoControl.paused else { return }
+    playerDirection = .paused
+    videoControl.pause()
   }
 
   func step(_ steps: Int) {
@@ -132,6 +134,8 @@ extension WindowData {
 extension WindowData {
   func add(localizations controlLocalizations: [ControlLocalization]) {
     let currentFrameNumber = localizationData.frameNumber(of: videoControl.currentTime)
+    playerView.nsPlayerView.layoutSubtreeIfNeeded()
+    playerView.nsPlayerView.resizeLocalizationsIfNeeded()
     let videoRect = playerView.videoRect
 
     let frameLocalizations = controlLocalizations
@@ -158,6 +162,7 @@ extension WindowData {
 
   func displaySpanned(force: Bool = true) {
     guard force || showLocalizations else { return }
+    playerView.nsPlayerView.resizeLocalizationsIfNeeded()
     playerView.display(localizations: spannedLocalizations())
   }
 

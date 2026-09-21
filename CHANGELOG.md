@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.2.1] - 2026-09-21
+
+### Added
+
+- Release build/signing helpers
+
+### Changed
+
+- Frame timing / `elapsedTimeMillis` handling generalized for arbitrary frame rates
+- Queue inbound UDP commands during async video loading
+- Frame grab and playback use encoded-pixel aperture so geometry aligns with MBARI Beholder captures
+- UDP debug logging distinguishes incoming and outbound control traffic more clearly
+
+### Fixed
+
+- Localization had incorrect size/position/color on display after an initial video open command
+    - This was likely a regression from other work in the 2.2.0 release or this release as it was not reported as a previous issue
+
 ## [2.2.0] - 2026-09-16
 
 ### Changed

@@ -50,7 +50,7 @@ extension VideoWindow {
       UDP.sharktopodaData.releaseVideo(id: id)
       
       guard let openVideoError = error as? OpenVideoError else {
-        UDP.log(error.localizedDescription)
+        UDP.log(.incoming, error.localizedDescription)
         return
       }
       openFailed(id: id, url: url, openVideoError: openVideoError, alert: alert)
@@ -69,7 +69,7 @@ extension VideoWindow {
   }
 
   private static func openFailed(id: String, url: URL, openVideoError: OpenVideoError, alert: Bool) {
-    UDP.log(openVideoError.description)
+    UDP.log(.incoming, openVideoError.description)
     if alert {
       onMain { OpenAlert(path: url.absoluteString, error: openVideoError).show() }
     } else {

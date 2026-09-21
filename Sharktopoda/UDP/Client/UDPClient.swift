@@ -55,7 +55,7 @@ class UDPClient: ObservableObject {
     connection?.stateUpdateHandler = stateUpdate(to:)
     connection?.start(queue: UDPClient.messageQueue)
 
-    log("connecting to \(clientData.endpoint)")
+    UDP.log(.outgoing, "connecting to \(clientData.endpoint)")
   }
   
   func stateUpdate(to update: NWConnection.State) {
@@ -68,28 +68,24 @@ class UDPClient: ObservableObject {
 
       case .failed(let error):
         udpError(error: error)
-        log("failed with error \(error)")
+        UDP.log(.outgoing, "failed with error \(error)")
         connectCompletion?(self)
 
       case .cancelled:
         udpActive(false)
-        log("state \(update)")
+        UDP.log(.outgoing, "state \(update)")
         connectCompletion?(self)
 
       @unknown default:
-        log("unknown state \(update)")
+        UDP.log(.outgoing, "unknown state \(update)")
     }
   }
   
   func pingConnection() {
     process(ClientMessagePing()) { [weak self] data in
       if data != nil {
-        self?.log("Received ping")
         self?.udpActive(true)
-      } else {
-        self?.log("Missing ping")
       }
-      
       self?.connectCompletion?(self!)
     }
   }
@@ -100,11 +96,15 @@ class UDPClient: ObservableObject {
   
   func process(_ message: ClientMessage, completion: @escaping UDPClientMessageCompletion) {
     guard let connection = connection else {
-      self.log("\(message.command) not processed. No client connection.")
+      UDP.log(.outgoing, "\(message.command) not processed. No client connection.")
       return
     }
     
     let data = message.data()
+    let squelched = UDP.logSquelch.contains(message.command.rawValue)
+    if !squelched {
+      UDP.log(.outgoing, String(decoding: data, as: UTF8.self))
+    }
     var receivedReply = false
     
     UDPClient.timeoutQueue.asyncAfter(deadline: .now() + timeout) {
@@ -117,33 +117,34 @@ class UDPClient: ObservableObject {
       receivedReply = true
       if let error = error {
         self?.udpError(error: error)
-        self?.log("\(message) error: \(error)")
+        UDP.log(.outgoing, "\(message.command) error: \(error)")
       } else {
+        if !squelched, let data = data {
+          UDP.log(.incoming, String(decoding: data, as: UTF8.self))
+        }
         completion(data)
       }
     })
   }
   
   private func completionOk(_ command: ClientCommand) -> UDPClientMessageCompletion {
-    return { [weak self] data in
-      guard let data = data else {
-        self?.log("No response to \(command)")
-        return
+    return { data in
+      if data == nil {
+        UDP.log(.outgoing, "No response to \(command)")
       }
-//      let response = String(decoding: data, as: UTF8.self?)
-      self?.log("command \(command) got response: \(data)")
     }
   }
   
   func send(_ message: ClientMessage, completion: NWConnection.SendCompletion) {
     guard clientData.active else {
-      log("client connection not active ")
+      UDP.log(.outgoing, "client connection not active ")
       return
     }
     
-    log("send \(message.command)")
-    
     let data = message.data()
+    if !UDP.logSquelch.contains(message.command.rawValue) {
+      UDP.log(.outgoing, String(decoding: data, as: UTF8.self))
+    }
     connection?.send(content: data, completion: completion)
   }
   
@@ -157,7 +158,7 @@ class UDPClient: ObservableObject {
     clientData = UDPClientData(host: host, port: port, active: active)
     
     let activeState = (clientData.active ? "" : "in") + "active"
-    log("\(clientData.endpoint) \(activeState)")
+    UDP.log(.outgoing, "\(clientData.endpoint) \(activeState)")
   }
   
   func udpError(message: String) {
@@ -178,11 +179,7 @@ class UDPClient: ObservableObject {
       let endpoint = clientData.endpoint
       clientData = UDPClientData(host: "", port: 0)
       
-      log("stopped \(endpoint)")
+      UDP.log(.outgoing, "stopped \(endpoint)")
     }
-  }
-  
-  func log(_ msg: String) {
-    UDP.log("-> \(msg)")
   }
 }

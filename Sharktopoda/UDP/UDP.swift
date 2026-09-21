@@ -48,7 +48,7 @@ extension UDP {
       controlCommand = validCommand
     }
     catch let error {
-      UDP.log("state update failed error \(error)")
+      UDP.log(.incoming, "state update failed error \(error)")
       return ControlInvalid(cause: error.localizedDescription)
     }
     
@@ -121,9 +121,20 @@ extension UDP {
     }
   }
   
-  static func log(_ msg: String) {
+  static var logSquelch: Set<String> = [
+    "request elapsed time",
+    "request player state",
+  ]
+
+  enum UDPLogChannel: String {
+    case server = "server"
+    case incoming = "<-"
+    case outgoing = "->"
+  }
+
+  static func log(_ channel: UDPLogChannel, _ msg: String) {
     #if DEBUG
-    NSLog("UDP \(msg)")
+    NSLog("UDP \(channel.rawValue) \(msg)")
     #endif
   }
 }

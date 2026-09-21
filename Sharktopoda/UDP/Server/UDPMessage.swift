@@ -39,15 +39,15 @@ class UDPMessage {
         processMessage()
 
       case .failed(let error):
-        log("state update failed error \(error)")
+        UDP.log(.incoming, "state update failed error \(error)")
         exit(EXIT_FAILURE)
 
       case .cancelled:
-        log("state \(update)")
+        UDP.log(.incoming, "state \(update)")
         return
 
       @unknown default:
-        log("state unknown")
+        UDP.log(.incoming, "state unknown")
         return
     }
   }
@@ -62,32 +62,34 @@ class UDPMessage {
 
       // CxTBD guard may not be necessary: Preliminary futzing shows empty data never gets here
       guard let data = data, !data.isEmpty else {
-        self.log("empty message")
+        UDP.log(.incoming, "empty message")
         return
       }
 
       let controlMessage = UDP.controlMessage(from: data)
-      self.log("\(controlMessage)")
+      let squelched = UDP.logSquelch.contains(controlMessage.command.rawValue)
+      if !squelched {
+        UDP.log(.incoming, String(decoding: data, as: UTF8.self))
+      }
 
       let responseData = controlMessage.process().data()
+      if !squelched {
+        UDP.log(.outgoing, String(decoding: responseData, as: UTF8.self))
+      }
       self.connection.send(content: responseData, completion: .contentProcessed({ _ in
         self.stop()
       }))
     }
   }
-
+  
   func connectionDidFail(error: Error) {
     let cause = error.localizedDescription
-    log("Message failed: \(cause)")
+    UDP.log(.incoming, "Message failed: \(cause)")
     stop()
   }
-
+  
   func stop() {
     connection.cancel()
     connection.stateUpdateHandler = nil
-  }
-  
-  func log(_ msg: String) {
-    UDP.log("<- \(msg)")
   }
 }

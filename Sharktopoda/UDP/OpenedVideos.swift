@@ -55,7 +55,7 @@ final class OpenedVideos {
     lock.unlock()
 
     if !dropped.isEmpty {
-      UDP.log("Dropping \(dropped.count) queued command(s) for \(id); video did not open")
+      UDP.log(.incoming, "Dropping \(dropped.count) queued command(s) for \(id); video did not open")
     }
   }
 }

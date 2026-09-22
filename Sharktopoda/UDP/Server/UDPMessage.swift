@@ -40,7 +40,7 @@ class UDPMessage {
 
       case .failed(let error):
         UDP.log(.incoming, "state update failed error \(error)")
-        exit(EXIT_FAILURE)
+        stop()
 
       case .cancelled:
         UDP.log(.incoming, "state \(update)")
@@ -54,15 +54,22 @@ class UDPMessage {
   
   func processMessage() {
     connection.receiveMessage { [weak self] (data, _, isComplete, error) in
-      guard isComplete else {
-        return
-      }
-      
       guard let self = self else { return }
 
-      // CxTBD guard may not be necessary: Preliminary futzing shows empty data never gets here
+      if let error = error {
+        UDP.log(.incoming, "receive failed: \(error.localizedDescription)")
+        stop()
+        return
+      }
+
+      guard isComplete else {
+        processMessage()
+        return
+      }
+
       guard let data = data, !data.isEmpty else {
         UDP.log(.incoming, "empty message")
+        processMessage()
         return
       }
 
@@ -77,7 +84,7 @@ class UDPMessage {
         UDP.log(.outgoing, String(decoding: responseData, as: UTF8.self))
       }
       self.connection.send(content: responseData, completion: .contentProcessed({ _ in
-        self.stop()
+        self.processMessage()
       }))
     }
   }

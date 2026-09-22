@@ -97,8 +97,8 @@ final class VideoWindow: NSWindow {
     // Cancel Combine subscriptions
     showLocalizationsSubscription?.cancel()
     showLocalizationsSubscription = nil
-    windowData.timeSlider.playerTimeSubscription?.cancel()
-    windowData.timeSlider.playerTimeSubscription = nil
+    windowData.timeSlider?.playerTimeSubscription?.cancel()
+    windowData.timeSlider?.playerTimeSubscription = nil
 
     // Cancel any in-flight resizing task
     resizingTask?.cancel()

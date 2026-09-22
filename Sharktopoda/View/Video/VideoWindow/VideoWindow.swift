@@ -84,6 +84,16 @@ final class VideoWindow: NSWindow {
     makeKeyAndOrderFront(nil)
   }
 
+  override func performKeyEquivalent(with event: NSEvent) -> Bool {
+    if event.type == .keyDown,
+       event.modifierFlags.intersection(.deviceIndependentFlagsMask) == [.command],
+       event.charactersIgnoringModifiers == "i" {
+      VideoInfoPanel.show()
+      return true
+    }
+    return super.performKeyEquivalent(with: event)
+  }
+
   func cleanup() {
     // Remove periodic time observer
     if let token = periodicTimeObserverToken {

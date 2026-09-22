@@ -13,28 +13,17 @@ struct VideoTimeView: View {
   
   var body: some View {
     HStack {
-      Text(humanTime(windowData.playerTime))
+      Text(windowData.playerTime.humanTime)
         .padding(.leading, 5)
         .frame(width: 80)
-      
+
       VideoTimeSlider()
         .frame(height: 20)
 
-      Text(humanTime(windowData.videoAsset.duration - windowData.playerTime))
+      Text((windowData.videoAsset.duration - windowData.playerTime).humanTime)
         .padding(.trailing, 5)
         .frame(width: 80)
     }
-  }
-  
-  func humanTime(_ time: CMTime) -> String {
-    let hours = Int(time.seconds / 3600.0)
-    let minutes = Int(time.seconds / 60.0) - (hours * 60)
-    let seconds = time.seconds - Double(hours * 3600) - Double(minutes * 60)
-    
-    let hh = String(format: "%02d", hours)
-    let mm = String(format: "%02d", minutes)
-    let ss = String(format: "%02.0f", seconds)
-    return "\(hh):\(mm):\(ss)"
   }
 }
 

@@ -34,20 +34,23 @@ final class NSPlayerView: NSView {
   }
   
   private var _currentLocalization: Localization?
-  private var lastResizedVideoRect: CGRect = .null
+  private var lastMarkedVideoRect: CGRect = .null
 
   override func layout() {
     super.layout()
-    resizeLocalizationsIfNeeded()
+    markLocalizationsDirtyIfNeeded()
   }
 
   @discardableResult
-  func resizeLocalizationsIfNeeded() -> Bool {
+  func markLocalizationsDirtyIfNeeded() -> Bool {
     guard let windowData = _windowData else { return false }
     let videoRect = playerLayer.videoRect
-    guard videoRect != .zero, videoRect != lastResizedVideoRect else { return false }
-    lastResizedVideoRect = videoRect
-    windowData.localizationData.resize(for: videoRect)
+    guard videoRect != .zero, videoRect != lastMarkedVideoRect else { return false }
+    lastMarkedVideoRect = videoRect
+    clear()
+    for localization in windowData.localizationData.storage.values {
+      localization.needsResize = true
+    }
     return true
   }
   
@@ -158,15 +161,15 @@ extension NSPlayerView {
   }
   
   func display(localization: Localization) {
+    if localization.needsResize {
+      localization.resize(for: playerLayer.videoRect)
+    }
     playerLayer.addSublayer(localization.layer)
     playerLayer.addSublayer(localization.conceptLayer)
   }
 
   func display(localizations: [Localization]) {
-    localizations.forEach {
-      playerLayer.addSublayer($0.layer)
-      playerLayer.addSublayer($0.conceptLayer)
-    }
+    localizations.forEach { display(localization: $0) }
   }
   
   var showLocalizations: Bool {

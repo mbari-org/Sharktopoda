@@ -13,16 +13,12 @@ extension LocalizationData {
     
     storage[localization.id] = localization
     pauseFrameInsert(localization)
-    forwardFrameInsert(localization)
-    reverseFrameInsert(localization)
   }
-  
+
   func clear() {
     selected.removeAll()
-    
+
     pauseFrames.removeAll()
-    forwardFrames.removeAll()
-    reverseFrames.removeAll()
 
     storage.removeAll()
   }
@@ -38,8 +34,6 @@ extension LocalizationData {
       guard let localization = storage[normalizedId] else { return }
 
       pauseFrameRemove(localization)
-      forwardFrameRemove(localization)
-      reverseFrameRemove(localization)
       selected.remove(id)
       storage[normalizedId] = nil
       

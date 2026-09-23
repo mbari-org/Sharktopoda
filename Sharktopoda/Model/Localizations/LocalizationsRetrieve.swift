@@ -17,21 +17,21 @@ extension LocalizationData {
     }
   }
 
-  func fetch(_ direction: WindowData.PlayerDirection, at time: CMTime) -> [Localization] {
-    fetch(ids: ids(for: direction, at: time))
+  func fetch(pausedAt time: CMTime) -> [Localization] {
+    fetch(ids: ids(at: time))
   }
 
   func fetch(spanning time: CMTime) -> [Localization] {
     guard !pauseFrames.isEmpty else { return [] }
-    
+
     var ids = [String]()
     let spanIndex = min(insertionIndex(for: pauseFrames, at: time), pauseFrames.count - 1)
-    
+
     /// Add localizations at the specified time
     if inTimeWindow(time, pauseFrames[spanIndex].time) {
       ids.append(contentsOf: pauseFrames[spanIndex].ids)
     }
-    
+
     /// Scan left and add
     var index = spanIndex - 1
     while -1 < index,
@@ -39,7 +39,7 @@ extension LocalizationData {
       ids.append(contentsOf: pauseFrames[index].ids)
       index -= 1
     }
-    
+
     /// Scan right and add
     index = spanIndex + 1
     while index < pauseFrames.count,
@@ -47,31 +47,19 @@ extension LocalizationData {
       ids.append(contentsOf: pauseFrames[index].ids)
       index += 1
     }
-    
+
     return fetch(ids: ids)
   }
 
-  func frames(for direction: WindowData.PlayerDirection) -> [LocalizationFrame]? {
-    switch direction {
-      case .forward:
-        return forwardFrames
-      case .paused:
-        return pauseFrames
-      case .backward:
-        return reverseFrames
-    }
-  }
+  func ids(at time: CMTime) -> [String] {
+    guard !pauseFrames.isEmpty else { return [] }
 
-  func ids(for direction: WindowData.PlayerDirection, at time: CMTime) -> [String] {
-    guard let frames = frames(for: direction),
-          !frames.isEmpty else { return [] }
-    
-    let index = insertionIndex(for: frames, at: time)
-    guard index != frames.count else { return [] }
-    
-    let frame = frames[index]
+    let index = insertionIndex(for: pauseFrames, at: time)
+    guard index != pauseFrames.count else { return [] }
+
+    let frame = pauseFrames[index]
     guard frame.number == frameNumber(of: time) else { return [] }
-    
+
     return frame.ids
   }
 

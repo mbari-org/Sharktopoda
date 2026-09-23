@@ -60,34 +60,13 @@ extension VideoWindow: NSWindowDelegate {
     DispatchQueue.main.async { [weak self] in
       guard let self else { return }
       let windowData = self.windowData
-      
+
       let videoRect = windowData.playerView.videoRect
       // When the window is closed, the video rect will be zero and nothing more need be done
       guard videoRect != .zero else { return }
-      
-      let pausedLocalizations = windowData.pausedLocalizations()
-      
-      for localization in pausedLocalizations {
-        localization.resize(for: videoRect)
-      }
-      
+
       windowData.timeSlider.setupControlViewAnimation()
       windowData.playerResume(self.playerDirection ?? .paused)
-      
-      // If there is a current resizing task running, it's stale
-      self.resizingTask?.cancel()
-      
-      // Resize all non-paused localizations on background queue. Paused localizations are resized above
-      self.resizingTask = Task.detached(priority: .background) { [weak windowData] in
-        guard let windowData = windowData else { return }
-        
-        let pausedIds = pausedLocalizations.map(\.id)
-        for (id, localization) in windowData.localizationData.storage {
-          if !pausedIds.contains(id) {
-            localization.resize(for: videoRect)
-          }
-        }
-      }
     }
   }
 }

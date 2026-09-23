@@ -135,7 +135,7 @@ extension WindowData {
   func add(localizations controlLocalizations: [ControlLocalization]) {
     let currentFrameNumber = localizationData.frameNumber(of: videoControl.currentTime)
     playerView.nsPlayerView.layoutSubtreeIfNeeded()
-    playerView.nsPlayerView.resizeLocalizationsIfNeeded()
+    playerView.nsPlayerView.markLocalizationsDirtyIfNeeded()
     let videoRect = playerView.videoRect
 
     let frameLocalizations = controlLocalizations
@@ -157,12 +157,12 @@ extension WindowData {
   }
   
   func pausedLocalizations() -> [Localization] {
-    localizationData.fetch(.paused, at: videoControl.currentTime)
+    localizationData.fetch(pausedAt: videoControl.currentTime)
   }
 
   func displaySpanned(force: Bool = true) {
     guard force || showLocalizations else { return }
-    playerView.nsPlayerView.resizeLocalizationsIfNeeded()
+    playerView.nsPlayerView.markLocalizationsDirtyIfNeeded()
     playerView.display(localizations: spannedLocalizations())
   }
 

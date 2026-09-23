@@ -19,9 +19,6 @@ extension CAShapeLayer {
     lineWidth = CGFloat(borderSize)
     strokeColor = borderColor
 
-    // CxTBD Investigate
-    shouldRasterize = true
-    
     boundsPath()
   }
   

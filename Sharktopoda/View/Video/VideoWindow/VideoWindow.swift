@@ -19,9 +19,6 @@ final class VideoWindow: NSWindow {
   /// Token for removing the periodic time observer
   var periodicTimeObserverToken: Any?
 
-  /// Background Task for resizing localizations
-  var resizingTask: Task<(), Never>?
-
   /// Used by delegate to pause/resume playback after resizing
   var playerDirection: WindowData.PlayerDirection?
 
@@ -109,10 +106,6 @@ final class VideoWindow: NSWindow {
     showLocalizationsSubscription = nil
     windowData.timeSlider.playerTimeSubscription?.cancel()
     windowData.timeSlider.playerTimeSubscription = nil
-
-    // Cancel any in-flight resizing task
-    resizingTask?.cancel()
-    resizingTask = nil
 
     // Clear the player layer's reference to the player
     windowData.playerView.nsPlayerView.playerLayer.player = nil

@@ -55,5 +55,6 @@ extension Localization {
       layer.shapeFrame(frame(for: videoRect))
       positionConceptLayer(for: videoRect)
     }
+    needsResize = false
   }
 }

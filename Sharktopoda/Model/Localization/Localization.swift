@@ -16,6 +16,7 @@ class Localization {
   var hexColor: String
   var layer: CAShapeLayer
   var region: CGRect
+  var needsResize = false
 
   var fullSize: CGSize
   var conceptLayer: CATextLayer

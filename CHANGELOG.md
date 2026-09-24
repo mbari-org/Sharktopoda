@@ -1,4 +1,19 @@
 # Changelog
+## [2.2.2] - 2026-09-24
+
+### Added
+
+- Enhancement: Video information dialog bound to Cmd-I
+
+### Changed
+
+- Optimize localization processing on window resize event.
+    - Localizations are stored by frame f with postion x,y and size h,w calculated based on current video window size. On window resize, x,y,h,w must be re-calcuated before redisplay. This commit implements a new strategy for resizing by maintaining a dirty flag per frame f and resizing localizations when a frame is displayed only if necessary as indicated by the dirty flag for the frame.
+
+### Fixed
+
+- Fix Issue #55
+    - UDP connections were incorrectly cycled after each command response. This fix instead keeps the connection alive and re-arms the message receive processing after the response so subsequent commands from the same UDP remote controller use that same connection. Previously, it was indeterminately possible for a message to be assigned to a connection that was being recycled, which resulted in application failure.
 
 ## [2.2.1] - 2026-09-21
 
@@ -10,6 +25,7 @@
 
 - Frame timing / `elapsedTimeMillis` handling generalized for arbitrary frame rates
 - Queue inbound UDP commands during async video loading
+    - Though a UDP remote controller ***should*** wait to receive an 'open done' command before sending video UUID specific commands, this patch queues such commands to prevent failure
 - Frame grab and playback use encoded-pixel aperture so geometry aligns with MBARI Beholder captures
 - UDP debug logging distinguishes incoming and outbound control traffic more clearly
 

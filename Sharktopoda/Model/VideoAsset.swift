@@ -151,17 +151,26 @@ final class VideoAsset {
     times.reserveCapacity(limit)
     while times.count < limit {
       guard let sample = output.copyNextSampleBuffer() else { break }
+      // Passthrough reading can emit a leading zero-sample buffer carrying only
+      // out-of-band data (e.g. HEVC VPS/SPS/PPS), whose PTS is a meaningless 0 rather
+      // than a real frame time; skip it or it collides with the real first frame's PTS.
+      guard CMSampleBufferGetNumSamples(sample) > 0 else { continue }
       let pts = CMSampleBufferGetPresentationTimeStamp(sample)
       guard pts.isValid, !pts.isIndefinite else { continue }
-      if let last = times.last, CMTimeCompare(pts, last) <= 0 {
-        continue
-      }
       times.append(pts)
     }
 
     if reader.status == .failed {
       throw FrameTimingError.sampleReadFailed
     }
+
+    // Passthrough (nil outputSettings) reads compressed samples in decode order, which
+    // differs from presentation order whenever the stream has B-frames (common in H.264/
+    // H.265). Sorting recovers true frame-to-frame spacing; without it, B-frames get
+    // discarded as "non-increasing" and the surviving gaps between anchor frames are
+    // misread as a slower, constant frame rate (e.g. 59.94fps footage resolving to
+    // 29.97 or 14.985fps depending on GOP reorder depth).
+    times.sort { CMTimeCompare($0, $1) < 0 }
     return times
   }
   

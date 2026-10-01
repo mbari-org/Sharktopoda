@@ -15,12 +15,17 @@ struct ControlResponseState: ControlResponse {
   var state: PlayState
   var elapsedTimeMillis: Int
 
-  init(using windowData: WindowData) {
+  init(rate: Float, elapsedTimeMillis: Int) {
     response = .state
     status = .ok
-    rate = windowData.videoControl.rate
+    self.rate = rate
     state = PlayState(rate: rate)
-    elapsedTimeMillis = windowData.videoAsset.millis(ofFrame: windowData.videoControl.currentFrame)
+    self.elapsedTimeMillis = elapsedTimeMillis
+  }
+
+  init(using windowData: WindowData) {
+    self.init(rate: windowData.videoControl.rate,
+              elapsedTimeMillis: windowData.videoAsset.millis(ofFrame: windowData.videoControl.currentFrame))
   }
 }
 

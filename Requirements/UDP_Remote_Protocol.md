@@ -51,38 +51,48 @@ sequenceDiagram
 
 All commands are expected to be valid JSON messages as per the individual command descriptions herein. 
 
-Invalid JSON command values will be reported as:
+NOTE: JSON examples in this document are illustrative. `//` comments and `<placeholders>` are not valid JSON and must not be sent.
+
+A message whose JSON is valid but whose field *values* are invalid (e.g. a malformed URL) is reported using that command's normal `failed` response with a descriptive `cause`.
+
+A message that cannot be parsed, or whose structure is wrong (missing or mistyped fields), is reported as:
 
 ```json
 {
-  "command": <request command>,
-  "status": "failed",
-  "cause": <failure cause>
-}
-```
-
-Invalid JSON message structure will be reported as:
-
-```json
-{
-  "command": <request command>,
+  "response": "<request command>",
   "status": "failed",
   "cause": "Invalid message"
 }
 ```
 
+If the `command` itself cannot be determined, `<request command>` is `"unknown"`. A well-formed message with an unrecognized `command` is also reported with `"response": "unknown"` and `"status": "failed"`; its `cause` is `"unknown command: <command>"`.
+
 NOTE: Sharktopoda does not determine or report why the message structure was invalid. It is expected the developer of the control messaging app will consult these requirements to determine the actual cause.
+
+##### Failure Causes
+
+| Cause | Used by |
+|---|---|
+| `No video for uuid` | all commands addressed by `uuid`, except `close` (which always responds `ok`) |
+| `No open videos` | `request information` |
+| `Malformed URL` | `open` |
+| `elapsedTimeMillis before start` / `elapsedTimeMillis past end` | `seek elapsed time` |
+| `Cannot advance video in that direction` | `frame advance` |
+| `Image exists at location` / `Image location not writable` | `frame capture` |
+| `Invalid message` | any unparseable or mis-structured message |
 
 
 ### Client Commands
 
-Sharktopoda can also send certain commands to the Remote App. These commands are explicitly sent to the **host/port** established by a preceding [connect](#---connect) control command. The amount of time to wait for a response (i.e. timeout) will be set in the preferences UI. These commands are:
+Sharktopoda can also send certain commands to the Remote App. These commands are explicitly sent to the **host/port** established by a preceding [connect](#connect) control command. The amount of time to wait for a response (i.e. timeout) will be set in the preferences UI. These commands are:
 
-- [Add localizations](#add_localizations)
+- [Add localizations](#add_localizations) — remote replies `{"response":"add localizations",...}`
 - [Remove localizations](#remove_localizations)
 - [Update localizations](#update_localizations)
 - [Select localizations](#select_localizations)
 - [Ping](#ping)
+- [Open done](#open) — no reply required
+- [Frame capture done](#frame_capture) — remote replies `{"response":"frame capture done","status":"ok"}`
 
 ```mermaid
 sequenceDiagram
@@ -104,7 +114,7 @@ The application should support the following commands and corresponding function
 
 ### <a name="connect"></a> Connect
 
- Establishes a remote host and port number that Sharktopoda (the video player) can send outgoing UDP messages to another application. When a `connect` command is received, Sharktopoda should send a [ping](#---ping) command to verify that the port is reachable.
+ Establishes a remote host and port number that Sharktopoda (the video player) can send outgoing UDP messages to another application. When a `connect` command is received, Sharktopoda should send a [ping](#ping) command to verify that the port is reachable.
 
  ```mermaid
 sequenceDiagram 
@@ -170,18 +180,17 @@ sequenceDiagram
     participant S as Sharktopoda
     participant V as Open Videos
 
-    R->>+S: {"command": "open", ...}
-    S->V: Check if UUID already exists
-    alt UUID exists
+    R->>S: {"command": "open", ...}
+    alt URL malformed
+      S-->>R: {"response": "open", "status": "failed", "cause": "Malformed URL"}
+    else UUID already open
       S->>V: Bring window to front/focus
-      S-->>R: {"response": "open", "status": "ok"} 
-    else UUID is does not exist
-      S-)V: Open video and association UUID with window
-      alt Successfully opened video
-        S-->>R: {"response": "open", "status": "ok"} 
-      else Failed to open videoN
-        S-->>-R: {"response": "open", "status": "failed"} 
-      end
+      S-->>R: {"response": "open", "status": "ok"}
+      S-)R: {"command": "open done", "status": "ok", ...}
+    else UUID not open
+      S-->>R: {"response": "open", "status": "ok"}
+      S-)V: Open video and associate UUID with window (background thread)
+      S-)R: {"command": "open done", "status": "ok" or "failed", ...}
     end
 ```
 
@@ -205,7 +214,7 @@ sequenceDiagram
 }
 ```
 
-Each form of the `open` command receives an immediate an `ok` message response.
+Sharktopoda validates the request synchronously and responds immediately. An `ok` response means the request was accepted; the video may still fail to load (see `open done`). The only immediate `failed` response is cause `Malformed URL`, when the `url` cannot be parsed.
 
 ```json
 {
@@ -216,27 +225,30 @@ Each form of the `open` command receives an immediate an `ok` message response.
 
 While a video is loading (after the `open` response, before `open done`), Sharktopoda accepts fire-and-forget commands targeting that video's `uuid` (e.g. `add localizations`, `clear localizations`, `play`, `seek`, `close`) and queues them, responding with an immediate `ok`. Queued commands are applied in arrival order once the window has opened. If the video fails to open, queued commands are dropped and an `open done` with `status: failed` is sent. Query commands whose response carries data (`request elapsed time`, `request player state`) are not queued and still respond `failed` with cause `No video for uuid` until the video has loaded.
 
-Sharktopoda will proceed with processing the command on a background thread. Upon completion of background processing, Sharktopoda shall send an `open done` message to the **host/port** established via a `connect` command:
+Sharktopoda will proceed with processing the command on a background thread. Upon completion of background processing, Sharktopoda shall send an `open done` message to the **host/port** established via a `connect` command. This is a Sharktopoda-initiated message, so (like `frame capture done`) it uses the `command` key. The remote app is not required to reply.
 
-##### Successfully opened video response
+##### Successfully opened video
 
 ```json
 {
-  "response": "open done",
+  "command": "open done",
   "uuid": "b52cf7f1-e19c-40ba-b176-a7e479a3b170",
   "status": "ok"
 }
 ```
 
-##### Failed to open video response
+##### Failed to open video
 
 ```json
 {
-  "cause": <cause>,
-  "response": "open done",
-  "status": "failed"
+  "cause": "<cause>",
+  "command": "open done",
+  "status": "failed",
+  "uuid": "b52cf7f1-e19c-40ba-b176-a7e479a3b170"
 }
 ```
+
+If an `open` command names a `uuid` that is already open, Sharktopoda brings that window to the front, responds `ok`, and also sends `open done` with `status: ok`.
 
 [Back](#control_commands)
 
@@ -251,13 +263,12 @@ It should close the window with the corresponding `uuid`:
 }
 ```
 
-Close should respond with an `status` **failewd"" if no window with a matching `uuid` is found:
+Close is idempotent and always responds with `ok`, including when no window with a matching `uuid` exists (the video is already closed, which is the state the caller wanted):
 
 ```json
 {
-  "cause":"No video for uuid",
   "response": "close",
-  "status": "failed"
+  "status": "ok"
 }
 ```
 
@@ -289,7 +300,7 @@ If the window with `uuid` does not exist it should respond with
 {
   "response": "show",
   "status": "failed",
-  "cause": ""No video for uuid"
+  "cause": "No video for uuid"
 }
 ```
 
@@ -342,14 +353,14 @@ It should return info for all open videos like the following:
   "videos": [
     {
       "uuid": "b52cf7f1-e19c-40ba-b176-a7e479a3b170",
-      "url": "http://someurl/and/moviefile.mov"
+      "url": "http://someurl/and/moviefile.mov",
       "durationMillis": 150000,
       "frameRate": 29.97,
       "isKey": false
     },
     {
-      "uuid": "b52cf7f1-e19c-40ba-b176-a7e479a3b170",
-      "url": "file://sometoherurl/and/moviefile.mp4"
+      "uuid": "c63df8a2-f20d-41cb-b287-b8f580b4c281",
+      "url": "file://someotherurl/and/moviefile.mp4",
       "durationMillis": 250300,
       "frameRate": 59.97,
       "isKey": true
@@ -358,7 +369,15 @@ It should return info for all open videos like the following:
 }
 ```
 
-If no currently available video windows, it should respond the same as `request information`.
+If there are no open video windows, it responds `ok` with an empty `videos` array (unlike `request information`, which responds `failed` with cause `No open videos`):
+
+```json
+{
+  "response": "request all information",
+  "status": "ok",
+  "videos": []
+}
+```
 
 [Back](#control_commands)
 
@@ -486,13 +505,15 @@ Return the current playback state of the video (by `uuid`) and the actual rate t
 }
 ```
 
-An example response is:
+An example response is shown below. `status` is always `ok` or `failed`, as with every other response; the play state is in `state`:
 
 ```json
 {
-  "response": "request player state", 
-  "status": "playing",
-  "rate": 1.0
+  "response": "request player state",
+  "status": "ok",
+  "state": "playing",
+  "rate": 1.0,
+  "elapsedTimeMillis": 12345
 }
 ```
 
@@ -661,18 +682,18 @@ sequenceDiagram
     R->>+S: {"command": "frame capture", ... }
     S->>V: find video by UUID
     alt video UUID does not exist
-      S-->>R: {"response": "frame capture", "status": "failed" }
+      S-->>R: {"response": "frame capture", "status": "failed", "cause": "<cause>" }
     else video UUID exists
       S-->>-R: {"response": "frame capture", "status": "ok" }
       Note over S,disk: On a separate thread. Don't block incoming UDP commands
       S->>V: Capture image and elapsed time into video
-      S->>disk: write lossless PNG to disk at image_location
-      alt Unable to write PNG to image_location
+      S->>disk: write lossless PNG to disk at imageLocation
+      alt Unable to write PNG to imageLocation
         S->>+R: {"command": "frame capture done", "status": "failed", ...}
       else write PNG was successful
         S->>R: {"command": "frame capture done", "status": "ok", ...}
       end
-      R-->>-S: {"response": "frame capture done", "status": "ok: }
+      R-->>-S: {"response": "frame capture done", "status": "ok"}
     end
 ```
 
@@ -770,7 +791,7 @@ The initiating app will send a notification of localizations to be deleted.
 
 ```json
 {
-  "commmand": "remove localizations",
+  "command": "remove localizations",
   "uuid": "<the video's uuid>",
   "localizations": [
     "<uuid for localization A>",
@@ -885,7 +906,7 @@ This indicates which localizations are _selected_. Selected localizations should
 
 ```json
 {
-  "command": "select localizations"
+  "command": "select localizations",
   "uuid": "<the video's uuid>",
   "localizations": [
     "<uuid for localization A>",
@@ -906,6 +927,7 @@ or a failure if the video with `uuid` does not exist:
 ```json
 {
   "response": "select localizations",
-  "status": "failed"
+  "status": "failed",
+  "cause": "No video for uuid"
 }
 ```

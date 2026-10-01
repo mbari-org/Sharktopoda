@@ -12,6 +12,7 @@ struct ControlInvalid: ControlMessage {
   var cause: String
   
   func process() -> ControlResponse {
-    failed("invalid message format: \(cause)")
+    UDP.log(.incoming, "invalid message format: \(cause)")
+    return failed("Invalid message")
   }
 }

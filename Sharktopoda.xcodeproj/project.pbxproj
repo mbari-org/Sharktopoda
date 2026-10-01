@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A1F7A0012F6F4101000A0001 /* FrameTiming.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F7A0022F6F4101000A0002 /* FrameTiming.swift */; };
+		A1F7A0052F6F4101000A0005 /* ControlResponseStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F7A0062F6F4101000A0006 /* ControlResponseStateTests.swift */; };
 		A1F7A0032F6F4101000A0003 /* FrameTimingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F7A0042F6F4101000A0004 /* FrameTimingTests.swift */; };
 		E200F269294B7EFA004AEBF9 /* OpenMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200F268294B7EFA004AEBF9 /* OpenMainView.swift */; };
 		E2020D732926E8AE0090B60B /* SharktopodaAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2020D722926E8AE0090B60B /* SharktopodaAppDelegate.swift */; };
@@ -187,6 +188,7 @@
 
 /* Begin PBXFileReference section */
 		A1F7A0022F6F4101000A0002 /* FrameTiming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameTiming.swift; sourceTree = "<group>"; };
+		A1F7A0062F6F4101000A0006 /* ControlResponseStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseStateTests.swift; sourceTree = "<group>"; };
 		A1F7A0042F6F4101000A0004 /* FrameTimingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameTimingTests.swift; sourceTree = "<group>"; };
 		D305DEB62F3EAB9800ED6306 /* Sharktopoda.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Sharktopoda.xctestplan; sourceTree = "<group>"; };
 		E200F268294B7EFA004AEBF9 /* OpenMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMainView.swift; sourceTree = "<group>"; };
@@ -673,6 +675,7 @@
 			children = (
 				E2C22E9628CFDC28003CD976 /* SharktopodaTests.swift */,
 				A1F7A0042F6F4101000A0004 /* FrameTimingTests.swift */,
+				A1F7A0062F6F4101000A0006 /* ControlResponseStateTests.swift */,
 			);
 			path = SharktopodaTests;
 			sourceTree = "<group>";
@@ -1121,6 +1124,7 @@
 				E253D25530632C5B005F1D10 /* VideoInfoContent.swift in Sources */,
 				E2C22E9728CFDC28003CD976 /* SharktopodaTests.swift in Sources */,
 				A1F7A0032F6F4101000A0003 /* FrameTimingTests.swift in Sources */,
+				A1F7A0052F6F4101000A0005 /* ControlResponseStateTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

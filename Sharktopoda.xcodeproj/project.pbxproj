@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A1F7A0012F6F4101000A0001 /* FrameTiming.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F7A0022F6F4101000A0002 /* FrameTiming.swift */; };
-		A1F7A0052F6F4101000A0005 /* ControlResponseStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F7A0062F6F4101000A0006 /* ControlResponseStateTests.swift */; };
 		A1F7A0032F6F4101000A0003 /* FrameTimingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F7A0042F6F4101000A0004 /* FrameTimingTests.swift */; };
+		A1F7A0052F6F4101000A0005 /* ControlResponseStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F7A0062F6F4101000A0006 /* ControlResponseStateTests.swift */; };
 		E200F269294B7EFA004AEBF9 /* OpenMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200F268294B7EFA004AEBF9 /* OpenMainView.swift */; };
 		E2020D732926E8AE0090B60B /* SharktopodaAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2020D722926E8AE0090B60B /* SharktopodaAppDelegate.swift */; };
 		E2020D77292834770090B60B /* VideoControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2020D76292834770090B60B /* VideoControlView.swift */; };
@@ -188,8 +188,8 @@
 
 /* Begin PBXFileReference section */
 		A1F7A0022F6F4101000A0002 /* FrameTiming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameTiming.swift; sourceTree = "<group>"; };
-		A1F7A0062F6F4101000A0006 /* ControlResponseStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseStateTests.swift; sourceTree = "<group>"; };
 		A1F7A0042F6F4101000A0004 /* FrameTimingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameTimingTests.swift; sourceTree = "<group>"; };
+		A1F7A0062F6F4101000A0006 /* ControlResponseStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlResponseStateTests.swift; sourceTree = "<group>"; };
 		D305DEB62F3EAB9800ED6306 /* Sharktopoda.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Sharktopoda.xctestplan; sourceTree = "<group>"; };
 		E200F268294B7EFA004AEBF9 /* OpenMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMainView.swift; sourceTree = "<group>"; };
 		E2020D722926E8AE0090B60B /* SharktopodaAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharktopodaAppDelegate.swift; sourceTree = "<group>"; };
@@ -898,7 +898,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1400;
-				LastUpgradeCheck = 1410;
+				LastUpgradeCheck = 2700;
 				TargetAttributes = {
 					E2C22E8028CFDC26003CD976 = {
 						CreatedOnToolsVersion = 14.0;
@@ -1193,6 +1193,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1214,6 +1215,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_DEFINITION_PLIST = Sharktopoda/Sharktopoda.plist;
 				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -1257,6 +1259,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1271,6 +1274,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_DEFINITION_PLIST = Sharktopoda/Sharktopoda.plist;
 				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
@@ -1301,7 +1305,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				MARKETING_VERSION = 2.2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = org.mbari.Sharktopoda2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1335,7 +1339,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				MARKETING_VERSION = 2.2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = org.mbari.Sharktopoda2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1347,14 +1351,13 @@
 		E2C22EAA28CFDC28003CD976 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = QHNP3SAEAP;
 				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.mbari.SharktopodaTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1367,14 +1370,13 @@
 		E2C22EAB28CFDC28003CD976 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = QHNP3SAEAP;
 				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.mbari.SharktopodaTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1387,12 +1389,12 @@
 		E2C22EAD28CFDC28003CD976 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = QHNP3SAEAP;
 				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.mbari.SharktopodaUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1405,12 +1407,12 @@
 		E2C22EAE28CFDC28003CD976 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = QHNP3SAEAP;
 				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.mbari.SharktopodaUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

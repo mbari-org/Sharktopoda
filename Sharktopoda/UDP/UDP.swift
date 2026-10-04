@@ -22,11 +22,7 @@ extension UDP {
   static func endpoint(_ host: String, _ port: Int) -> NWEndpoint {
     NWEndpoint.hostPort(host: NWEndpoint.Host(host), port: UDP.port(port))
   }
-  
-  static func listener(port: Int) throws -> NWListener {
-    try NWListener(using: .udp, on: UDP.port(port))
-  }
-  
+
   static func port(_ port: Int) -> NWEndpoint.Port {
     NWEndpoint.Port(integerLiteral: NWEndpoint.Port.IntegerLiteralType(port))
   }

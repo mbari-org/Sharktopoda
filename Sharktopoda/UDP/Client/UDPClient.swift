@@ -29,6 +29,12 @@ class UDPClient: ObservableObject {
   static func connect(using controlConnect: ControlConnect, completion: @escaping UDPClientConnectCompletion) {
     let host = controlConnect.host
     let port = controlConnect.port
+
+    guard (1...Int(UInt16.max)).contains(port) else {
+      UDP.log(.outgoing, "invalid client port \(port)")
+      return
+    }
+
     let clientData = UDPClientData(host: host, port: port)
 
     if let client = UDP.sharktopodaData.udpClient {

@@ -6,14 +6,15 @@
 //
 
 import Foundation
-import Network
 import Darwin
 
 class UDPServer: ObservableObject {
-  let queue: DispatchQueue = DispatchQueue(label: "Sharktopoda UDP Server Queue",
-                                           qos: .userInteractive)
+  private let queue = DispatchQueue(label: "Sharktopoda UDP Server Queue",
+                                    qos: .userInitiated)
 
-  var listener: NWListener?
+  private var socketFD: Int32 = -1
+  private var readSource: DispatchSourceRead?
+
   var port: Int
 
   init(port: Int) {
@@ -21,27 +22,149 @@ class UDPServer: ObservableObject {
     UserDefaults.standard.setValue(port, forKey: PrefKeys.port)
 
     UDP.sharktopodaData?.udpServerError = nil
-    UDPServer.raiseFileDescriptorLimit()
 
-    // The preferences view only checks the upper bound, so a negative value can
-    // arrive here; UInt16(exactly:) rejects that instead of trapping.
-    guard let port16 = UInt16(exactly: port) else {
+    guard let port16 = UInt16(exactly: port), port16 > 0 else {
       reportError("Invalid port \(port)")
       return
     }
 
-    do {
-      listener = try UDP.listener(port: Int(port16))
-    } catch {
-      reportError("Failed to start: \(error.localizedDescription)")
-      return
-    }
+    guard bind(port: port16) else { return }
 
-    listener?.stateUpdateHandler = stateUpdate(to:)
-    listener?.newConnectionHandler = UDPMessage.handle(connection:)
-    listener?.start(queue: queue)
+    var rcvBuf = 4 * 1024 * 1024
+    setsockopt(socketFD, SOL_SOCKET, SO_RCVBUF, &rcvBuf, socklen_t(MemoryLayout<Int>.size))
+
+    let source = DispatchSource.makeReadSource(fileDescriptor: socketFD, queue: queue)
+    source.setEventHandler { [weak self] in
+      self?.receiveDatagrams()
+    }
+    source.setCancelHandler { [socketFD] in
+      close(socketFD)
+    }
+    source.resume()
+    readSource = source
 
     UDP.log(.server, "started on port \(port)")
+  }
+
+  deinit {
+    stop()
+  }
+
+  private func bind(port: UInt16) -> Bool {
+    var fd = socket(AF_INET6, SOCK_DGRAM, IPPROTO_UDP)
+    if fd >= 0 {
+      var v6Only: Int32 = 0
+      setsockopt(fd, IPPROTO_IPV6, IPV6_V6ONLY, &v6Only, socklen_t(MemoryLayout<Int32>.size))
+
+      var addr = sockaddr_in6()
+      addr.sin6_len = UInt8(MemoryLayout<sockaddr_in6>.size)
+      addr.sin6_family = sa_family_t(AF_INET6)
+      addr.sin6_port = port.bigEndian
+      addr.sin6_addr = in6addr_any
+      let bound = withUnsafePointer(to: &addr) {
+        $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {
+          Darwin.bind(fd, $0, socklen_t(MemoryLayout<sockaddr_in6>.size))
+        }
+      }
+      if bound == 0 {
+        socketFD = fd
+        return true
+      }
+      close(fd)
+    }
+
+    fd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)
+    guard fd >= 0 else {
+      reportError("Failed to create socket: \(String(cString: strerror(errno)))")
+      return false
+    }
+
+    var addr = sockaddr_in()
+    addr.sin_len = UInt8(MemoryLayout<sockaddr_in>.size)
+    addr.sin_family = sa_family_t(AF_INET)
+    addr.sin_port = port.bigEndian
+    addr.sin_addr = in_addr(s_addr: INADDR_ANY)
+    let bound = withUnsafePointer(to: &addr) {
+      $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {
+        Darwin.bind(fd, $0, socklen_t(MemoryLayout<sockaddr_in>.size))
+      }
+    }
+    guard bound == 0 else {
+      let error = String(cString: strerror(errno))
+      close(fd)
+      reportError("Failed to bind port \(port): \(error)")
+      return false
+    }
+
+    socketFD = fd
+    return true
+  }
+
+  // Protocol caps messages at 4096 bytes
+  private static let maxMessageSize = 4096
+
+  private func receiveDatagrams() {
+    var buffer = [UInt8](repeating: 0, count: UDPServer.maxMessageSize + 1)
+    var sender = sockaddr_storage()
+
+    while true {
+      var senderLen = socklen_t(MemoryLayout<sockaddr_storage>.size)
+      let count = withUnsafeMutablePointer(to: &sender) {
+        $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {
+          recvfrom(socketFD, &buffer, buffer.count, MSG_DONTWAIT, $0, &senderLen)
+        }
+      }
+
+      if count < 0 {
+        if errno != EAGAIN && errno != EWOULDBLOCK {
+          UDP.log(.incoming, "receive failed: \(String(cString: strerror(errno)))")
+        }
+        return
+      }
+
+      if count == 0 {
+        UDP.log(.incoming, "empty message")
+        continue
+      }
+
+      if count > UDPServer.maxMessageSize {
+        UDP.log(.incoming, "oversize message (> \(UDPServer.maxMessageSize) bytes)")
+        let responseData = ControlUnknown("message exceeds \(UDPServer.maxMessageSize) bytes")
+          .process().data()
+        UDP.log(.outgoing, String(decoding: responseData, as: UTF8.self))
+        send(responseData, to: sender, senderLen: senderLen)
+        continue
+      }
+
+      let data = Data(buffer[0..<count])
+      let controlMessage = UDP.controlMessage(from: data)
+      let squelched = UDP.logSquelch.contains(controlMessage.command.rawValue)
+      if !squelched {
+        UDP.log(.incoming, String(decoding: data, as: UTF8.self))
+      }
+
+      let responseData = controlMessage.process().data()
+      if !squelched {
+        UDP.log(.outgoing, String(decoding: responseData, as: UTF8.self))
+      }
+
+      send(responseData, to: sender, senderLen: senderLen)
+    }
+  }
+
+  private func send(_ responseData: Data, to sender: sockaddr_storage, senderLen: socklen_t) {
+    responseData.withUnsafeBytes { response in
+      guard let responseBytes = response.baseAddress else { return }
+      var sender = sender
+      let sent = withUnsafePointer(to: &sender) {
+        $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {
+          sendto(socketFD, responseBytes, responseData.count, 0, $0, senderLen)
+        }
+      }
+      if sent < 0 {
+        UDP.log(.outgoing, "send failed: \(String(cString: strerror(errno)))")
+      }
+    }
   }
 
   private func reportError(_ message: String) {
@@ -50,51 +173,11 @@ class UDPServer: ObservableObject {
       UDP.sharktopodaData?.udpServerError = message
     }
   }
-  
-  func runningOnPort() -> Int {
-    Int(listener?.port?.rawValue ?? 0)
-  }
-  
-  func stateUpdate(to update: NWListener.State) {
-    switch update {
-      case .setup, .waiting, .ready:
-        return
-        
-      case .cancelled:
-        UDP.log(.server, "state \(update)")
-        
-      case .failed(let error):
-        // CxNote This is a bit fragile. 
-        let errorLast = "\(error)".split(separator: ":").last
-        let errorMsg: String = "\(errorLast ?? "Failed to connect")".trimmingCharacters(in: .whitespaces)
-        
-        UDP.log(.server, "failed with error \(errorMsg))")
-        DispatchQueue.main.async {
-          UDP.sharktopodaData.udpServerError = errorMsg
-        }
-        
-      @unknown default:
-        UDP.log(.server, "state unknown")
-    }
-  }
-  
-  func stop() {
-    let port = runningOnPort()
 
-    listener?.stateUpdateHandler = nil
-    listener?.newConnectionHandler = nil
-    listener?.cancel()
+  func stop() {
+    readSource?.cancel()
+    readSource = nil
 
     UDP.log(.server, "stopped on port \(port)")
-  }
-
-  // macOS defaults GUI apps to a 256 open-file soft limit, which a burst of
-  // rapid-fire UDP commands (e.g. thousands of localizations) can exhaust
-  // well before UDPMessage's idle timeout reaps the leftover sockets.
-  private static func raiseFileDescriptorLimit() {
-    var limit = rlimit()
-    guard getrlimit(RLIMIT_NOFILE, &limit) == 0 else { return }
-    limit.rlim_cur = min(limit.rlim_max, 4096)
-    setrlimit(RLIMIT_NOFILE, &limit)
   }
 }

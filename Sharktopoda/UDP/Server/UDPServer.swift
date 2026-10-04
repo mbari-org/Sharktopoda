@@ -13,7 +13,7 @@ class UDPServer: ObservableObject {
   let queue: DispatchQueue = DispatchQueue(label: "Sharktopoda UDP Server Queue",
                                            qos: .userInteractive)
 
-  var listener: NWListener
+  var listener: NWListener?
   var port: Int
 
   init(port: Int) {
@@ -23,16 +23,36 @@ class UDPServer: ObservableObject {
     UDP.sharktopodaData?.udpServerError = nil
     UDPServer.raiseFileDescriptorLimit()
 
-    listener = try! UDP.listener(port: port)
-    listener.stateUpdateHandler = stateUpdate(to:)
-    listener.newConnectionHandler = UDPMessage.handle(connection:)
-    listener.start(queue: queue)
-    
+    // The preferences view only checks the upper bound, so a negative value can
+    // arrive here; UInt16(exactly:) rejects that instead of trapping.
+    guard let port16 = UInt16(exactly: port) else {
+      reportError("Invalid port \(port)")
+      return
+    }
+
+    do {
+      listener = try UDP.listener(port: Int(port16))
+    } catch {
+      reportError("Failed to start: \(error.localizedDescription)")
+      return
+    }
+
+    listener?.stateUpdateHandler = stateUpdate(to:)
+    listener?.newConnectionHandler = UDPMessage.handle(connection:)
+    listener?.start(queue: queue)
+
     UDP.log(.server, "started on port \(port)")
+  }
+
+  private func reportError(_ message: String) {
+    UDP.log(.server, message)
+    DispatchQueue.main.async {
+      UDP.sharktopodaData?.udpServerError = message
+    }
   }
   
   func runningOnPort() -> Int {
-    Int(listener.port?.rawValue ?? 0)
+    Int(listener?.port?.rawValue ?? 0)
   }
   
   func stateUpdate(to update: NWListener.State) {
@@ -61,9 +81,9 @@ class UDPServer: ObservableObject {
   func stop() {
     let port = runningOnPort()
 
-    listener.stateUpdateHandler = nil
-    listener.newConnectionHandler = nil
-    listener.cancel()
+    listener?.stateUpdateHandler = nil
+    listener?.newConnectionHandler = nil
+    listener?.cancel()
 
     UDP.log(.server, "stopped on port \(port)")
   }

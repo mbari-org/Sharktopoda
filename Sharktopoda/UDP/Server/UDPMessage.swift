@@ -9,8 +9,6 @@ import Foundation
 import Network
 
 class UDPMessage {
-  typealias MessageResult = (_ result: Data) -> Void
-
   static let messageQueue = DispatchQueue(label: "Sharktopoda UDP Message Queue",
                                           qos: .userInitiated)
 
@@ -25,17 +23,25 @@ class UDPMessage {
   let connection: NWConnection
   private var idleTimer: DispatchSourceTimer?
 
+  // The connection retains its stateUpdateHandler, so that closure captures the
+  // handler weakly; ownership lives here instead. Entries are removed by stop(),
+  // which every terminal path (idle timeout, failure, cancel) funnels through.
+  private static var activeHandlers: [ObjectIdentifier: UDPMessage] = [:]
+  private static let activeHandlersLock = NSLock()
+
   private
-  init(for connection: NWConnection, completion: @escaping MessageResult) {
+  init(for connection: NWConnection) {
     self.connection = connection
-    connection.stateUpdateHandler = stateUpdate(to:)
+    connection.stateUpdateHandler = { [weak self] update in
+      self?.stateUpdate(to: update)
+    }
   }
 
   static func handle(connection: NWConnection) {
-    let handler = UDPMessage(for: connection) { data in
-      connection.send(content: data, completion: .contentProcessed({ _ in }))
-    }
-    connection.stateUpdateHandler = handler.stateUpdate(to:)
+    let handler = UDPMessage(for: connection)
+    activeHandlersLock.lock()
+    activeHandlers[ObjectIdentifier(handler)] = handler
+    activeHandlersLock.unlock()
     connection.start(queue: UDPMessage.messageQueue)
   }
 
@@ -54,7 +60,7 @@ class UDPMessage {
 
       case .cancelled:
         UDP.log(.incoming, "state \(update)")
-        return
+        stop()
 
       @unknown default:
         UDP.log(.incoming, "state unknown")
@@ -101,12 +107,6 @@ class UDPMessage {
     }
   }
   
-  func connectionDidFail(error: Error) {
-    let cause = error.localizedDescription
-    UDP.log(.incoming, "Message failed: \(cause)")
-    stop()
-  }
-
   private func scheduleIdleTimeout() {
     idleTimer?.cancel()
     let timer = DispatchSource.makeTimerSource(queue: UDPMessage.messageQueue)
@@ -122,7 +122,11 @@ class UDPMessage {
   func stop() {
     idleTimer?.cancel()
     idleTimer = nil
-    connection.cancel()
     connection.stateUpdateHandler = nil
+    connection.cancel()
+
+    UDPMessage.activeHandlersLock.lock()
+    UDPMessage.activeHandlers.removeValue(forKey: ObjectIdentifier(self))
+    UDPMessage.activeHandlersLock.unlock()
   }
 }

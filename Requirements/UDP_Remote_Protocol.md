@@ -47,6 +47,8 @@ sequenceDiagram
     S-->>-R: {"response": "some command" ...}
 ```
 
+Both the Remote App and Sharktopoda act in CLIENT and SERVER roles: a `"command"` message is a CLIENT message; a `"response"` message is the SERVER's direct reply to a received command, with its `response` value set to that command. Some commands (e.g. `open`, `frame capture`) are acknowledged immediately and completed on a background thread. Upon completion, Sharktopoda sends a CLIENT message (e.g. `open done`, `frame capture done`) to the **host/port** established via `connect`; as a CLIENT message it carries a `"command"` key, not a `"response"` key.
+
 ##### Command Message Failures
 
 All commands are expected to be valid JSON messages as per the individual command descriptions herein. 
@@ -218,22 +220,23 @@ While a video is loading (after the `open` response, before `open done`), Sharkt
 
 Sharktopoda will proceed with processing the command on a background thread. Upon completion of background processing, Sharktopoda shall send an `open done` message to the **host/port** established via a `connect` command:
 
-##### Successfully opened video response
+##### Successfully opened video message
 
 ```json
 {
-  "response": "open done",
+  "command": "open done",
   "uuid": "b52cf7f1-e19c-40ba-b176-a7e479a3b170",
   "status": "ok"
 }
 ```
 
-##### Failed to open video response
+##### Failed to open video message
 
 ```json
 {
   "cause": <cause>,
-  "response": "open done",
+  "command": "open done",
+  "uuid": "b52cf7f1-e19c-40ba-b176-a7e479a3b170",
   "status": "failed"
 }
 ```
@@ -616,7 +619,7 @@ Errors include:
 
 Upon sending an `ok` response message, Sharktopoda will proceed with frame capture processing on a background thread.
 
-Upon completion of background frame capture processing, Sharktopoda shall use the **host/port** established with a prior `connect` command to send the response:
+Upon completion of background frame capture processing, Sharktopoda shall use the **host/port** established with a prior `connect` command to send the message:
 
 ```json
 {

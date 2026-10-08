@@ -770,7 +770,7 @@ The initiating app will send a notification of localizations to be deleted.
 
 ```json
 {
-  "commmand": "remove localizations",
+  "command": "remove localizations",
   "uuid": "<the video's uuid>",
   "localizations": [
     "<uuid for localization A>",

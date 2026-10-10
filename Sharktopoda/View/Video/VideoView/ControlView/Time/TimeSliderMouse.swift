@@ -28,6 +28,7 @@ extension NSTimeSlider {
     playerDirection = windowData.playerDirection
     
     windowData.pause(false)
+    windowData.clearLocalizationSelection()
     windowData.playerView.clear()
   }
   

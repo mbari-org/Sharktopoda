@@ -94,7 +94,7 @@ extension WindowData {
     playerDirection = PlayerDirection.at(rate: rate)
     videoControl.play(rate: rate)
 
-    localizationData.clearSelected()
+    clearLocalizationSelection()
     playerView.clear()
   }
   
@@ -116,12 +116,19 @@ extension WindowData {
   
   func seek(time: CMTime) {
     pauseForSeek()
+    clearLocalizationSelection()
     videoControl.frameSeek(to: time)
   }
 
   func seek(frame: Int) {
     pauseForSeek()
+    clearLocalizationSelection()
     videoControl.frameSeek(toFrame: frame)
+  }
+
+  func clearLocalizationSelection() {
+    playerView.nsPlayerView.removeCurrentLocalization()
+    localizationData.clearSelected()
   }
 
   private func pauseForSeek() {

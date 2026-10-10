@@ -120,6 +120,7 @@ extension UDP {
   static var logSquelch: Set<String> = [
     "request elapsed time",
     "request player state",
+    "ping",
   ]
 
   enum UDPLogChannel: String {

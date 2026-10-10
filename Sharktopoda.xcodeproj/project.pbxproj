@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		A1F7A0012F6F4101000A0001 /* FrameTiming.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F7A0022F6F4101000A0002 /* FrameTiming.swift */; };
 		A1F7A0032F6F4101000A0003 /* FrameTimingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F7A0042F6F4101000A0004 /* FrameTimingTests.swift */; };
+		A1F7A0052F6F4201000A0005 /* UDPClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F7A0062F6F4201000A0006 /* UDPClientTests.swift */; };
 		E200F269294B7EFA004AEBF9 /* OpenMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200F268294B7EFA004AEBF9 /* OpenMainView.swift */; };
 		E2020D732926E8AE0090B60B /* SharktopodaAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2020D722926E8AE0090B60B /* SharktopodaAppDelegate.swift */; };
 		E2020D77292834770090B60B /* VideoControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2020D76292834770090B60B /* VideoControlView.swift */; };
@@ -57,12 +58,8 @@
 		E2505D5A28EF91960027F280 /* LocalizationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2505D5928EF91960027F280 /* LocalizationData.swift */; };
 		E253D23F30619363005F1D10 /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = E253D23C30619363005F1D10 /* CHANGELOG.md */; };
 		E253D24130619363005F1D10 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = E253D23D30619363005F1D10 /* LICENSE */; };
-		E253D25430632C5B005F1D10 /* VideoInfoPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E253D25030632C5B005F1D10 /* VideoInfoPanel.swift */; };
-		E253D25530632C5B005F1D10 /* VideoInfoContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E253D24F30632C5B005F1D10 /* VideoInfoContent.swift */; };
 		E253D25730632C5B005F1D10 /* VideoInfoPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E253D25030632C5B005F1D10 /* VideoInfoPanel.swift */; };
 		E253D25830632C5B005F1D10 /* VideoInfoContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E253D24F30632C5B005F1D10 /* VideoInfoContent.swift */; };
-		E253D25A30632C5B005F1D10 /* VideoInfoPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E253D25030632C5B005F1D10 /* VideoInfoPanel.swift */; };
-		E253D25B30632C5B005F1D10 /* VideoInfoContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E253D24F30632C5B005F1D10 /* VideoInfoContent.swift */; };
 		E2675E1E28DAB65D00F5F114 /* ControlPing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E1D28DAB65D00F5F114 /* ControlPing.swift */; };
 		E2675E2228DABE4900F5F114 /* ControlClose.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2128DABE4900F5F114 /* ControlClose.swift */; };
 		E2675E2428DABEAC00F5F114 /* ControlShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2675E2328DABEAC00F5F114 /* ControlShow.swift */; };
@@ -187,6 +184,7 @@
 /* Begin PBXFileReference section */
 		A1F7A0022F6F4101000A0002 /* FrameTiming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameTiming.swift; sourceTree = "<group>"; };
 		A1F7A0042F6F4101000A0004 /* FrameTimingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameTimingTests.swift; sourceTree = "<group>"; };
+		A1F7A0062F6F4201000A0006 /* UDPClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDPClientTests.swift; sourceTree = "<group>"; };
 		D305DEB62F3EAB9800ED6306 /* Sharktopoda.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Sharktopoda.xctestplan; sourceTree = "<group>"; };
 		E200F268294B7EFA004AEBF9 /* OpenMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMainView.swift; sourceTree = "<group>"; };
 		E2020D722926E8AE0090B60B /* SharktopodaAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharktopodaAppDelegate.swift; sourceTree = "<group>"; };
@@ -670,6 +668,7 @@
 			children = (
 				E2C22E9628CFDC28003CD976 /* SharktopodaTests.swift */,
 				A1F7A0042F6F4101000A0004 /* FrameTimingTests.swift */,
+				A1F7A0062F6F4201000A0006 /* UDPClientTests.swift */,
 			);
 			path = SharktopodaTests;
 			sourceTree = "<group>";
@@ -1113,10 +1112,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E253D25430632C5B005F1D10 /* VideoInfoPanel.swift in Sources */,
-				E253D25530632C5B005F1D10 /* VideoInfoContent.swift in Sources */,
-				E2C22E9728CFDC28003CD976 /* SharktopodaTests.swift in Sources */,
+						E2C22E9728CFDC28003CD976 /* SharktopodaTests.swift in Sources */,
 				A1F7A0032F6F4101000A0003 /* FrameTimingTests.swift in Sources */,
+				A1F7A0052F6F4201000A0005 /* UDPClientTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1124,9 +1122,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E253D25A30632C5B005F1D10 /* VideoInfoPanel.swift in Sources */,
-				E253D25B30632C5B005F1D10 /* VideoInfoContent.swift in Sources */,
-				E2C22EA128CFDC28003CD976 /* SharktopodaUITests.swift in Sources */,
+						E2C22EA128CFDC28003CD976 /* SharktopodaUITests.swift in Sources */,
 				E2C22EA328CFDC28003CD976 /* SharktopodaUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1204,7 +1200,6 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_DEFINITION_PLIST = Sharktopoda/Sharktopoda.plist;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1261,7 +1256,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_DEFINITION_PLIST = Sharktopoda/Sharktopoda.plist;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -1346,7 +1340,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = QHNP3SAEAP;
 				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.mbari.SharktopodaTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1366,7 +1360,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = QHNP3SAEAP;
 				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.mbari.SharktopodaTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

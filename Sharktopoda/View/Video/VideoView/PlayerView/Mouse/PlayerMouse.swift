@@ -10,6 +10,7 @@ import AppKit
 extension NSPlayerView {
   override func mouseDown(with event: NSEvent) {
     guard windowData.videoControl.paused else { return }
+    guard showLocalizations else { return }
     
     let playerPoint = location(in: playerLayer, of: event)
     guard videoRect.contains(playerPoint) else { return }

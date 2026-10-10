@@ -164,7 +164,7 @@ extension WindowData {
     localizationData.fetch(pausedAt: videoControl.currentTime)
   }
 
-  func displaySpanned(force: Bool = true) {
+  func displaySpanned(force: Bool = false) {
     guard force || showLocalizations else { return }
     playerView.nsPlayerView.markLocalizationsDirtyIfNeeded()
     playerView.display(localizations: spannedLocalizations())

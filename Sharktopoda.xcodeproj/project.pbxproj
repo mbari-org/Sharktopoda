@@ -1112,7 +1112,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-						E2C22E9728CFDC28003CD976 /* SharktopodaTests.swift in Sources */,
+				E2C22E9728CFDC28003CD976 /* SharktopodaTests.swift in Sources */,
 				A1F7A0032F6F4101000A0003 /* FrameTimingTests.swift in Sources */,
 				A1F7A0052F6F4201000A0005 /* UDPClientTests.swift in Sources */,
 			);
@@ -1122,7 +1122,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-						E2C22EA128CFDC28003CD976 /* SharktopodaUITests.swift in Sources */,
+				E2C22EA128CFDC28003CD976 /* SharktopodaUITests.swift in Sources */,
 				E2C22EA328CFDC28003CD976 /* SharktopodaUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1288,7 +1288,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 2.2.3;
+				MARKETING_VERSION = 2.2.4;
 				PRODUCT_BUNDLE_IDENTIFIER = org.mbari.Sharktopoda2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1322,7 +1322,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 2.2.3;
+				MARKETING_VERSION = 2.2.4;
 				PRODUCT_BUNDLE_IDENTIFIER = org.mbari.Sharktopoda2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

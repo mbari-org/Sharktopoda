@@ -36,8 +36,13 @@ extension NSImage {
       try data.write(to: fileUrl, options: .withoutOverwriting)
 
       return nil
-    } catch {
-      
+    } catch let error as NSError {
+      // A file that appeared between the exists check above and this write
+      // (e.g. two captures racing to the same path) surfaces here; report it
+      // with the same cause as the check-time collision.
+      if error.domain == NSCocoaErrorDomain, error.code == NSFileWriteFileExistsError {
+        return FrameCaptureError.exists
+      }
       return error
     }
   }

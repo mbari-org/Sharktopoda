@@ -13,7 +13,6 @@ enum FrameCaptureError: Error {
   case exists
   case malformedUrl
   case pngRepresentation
-  case notFileUrl
   case unexpectedActualTime(requested: CMTime, actual: CMTime)
 
   public var description: String {
@@ -21,13 +20,11 @@ enum FrameCaptureError: Error {
       case .notWritable:
         return "Image location not writable"
       case .exists:
-        return "Image file exists"
+        return "Image exists at location"
       case .malformedUrl:
-        return "Image location is malformed URL"
+        return "Image location is malformed"
       case .pngRepresentation:
         return "Failed representing image as PNG"
-      case .notFileUrl:
-        return "Image location not a file URL"
       case .unexpectedActualTime(let requested, let actual):
         return "Frame grab actualTime \(actual.seconds)s != requested \(requested.seconds)s"
     }

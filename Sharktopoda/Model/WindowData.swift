@@ -31,7 +31,11 @@ final class WindowData: Identifiable, ObservableObject {
       player.volume = playerVolumeMute ? 0.0 : playerVolumeLevel
     }
   }
-  @Published var showLocalizations: Bool = UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations)
+  @Published var showLocalizations: Bool = UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations) {
+    didSet {
+      UserDefaults.standard.set(showLocalizations, forKey: PrefKeys.showAnnotations)
+    }
+  }
   
   var id: String {
     get { _id! }

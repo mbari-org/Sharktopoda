@@ -34,7 +34,7 @@ extension LocalizationData {
       guard let localization = storage[normalizedId] else { return }
 
       pauseFrameRemove(localization)
-      selected.remove(id)
+      selected.remove(normalizedId)
       storage[normalizedId] = nil
       
       acc.append(localization)

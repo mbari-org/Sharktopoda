@@ -9,8 +9,8 @@
 
 extension SharktopodaData {
   func close(id: String) {
-    guard let videoWindow = videoWindows[id] else { return }
-    
+    guard let videoWindow = videoWindows[SharktopodaData.normalizedId(id)] else { return }
+
     videoWindow.close()
   }
   

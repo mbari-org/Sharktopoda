@@ -56,10 +56,11 @@ extension LocalizationData {
   
   func unselect(ids: [String], notifyClient: Bool = true) {
     ids.forEach { id in
-      guard let localization = storage[id] else { return }
+      let normalizedId = SharktopodaData.normalizedId(id)
+      guard let localization = storage[normalizedId] else { return }
 
       localization.unselect()
-      selected.remove(id)
+      selected.remove(normalizedId)
     }
 
     if notifyClient {

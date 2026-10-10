@@ -45,4 +45,11 @@ extension SharktopodaData {
     let id = SharktopodaData.normalizedId(uuid)
     return videoWindows[id]
   }
+
+  /// Keep open windows aligned with the Preferences / UserDefaults show flag
+  func setShowLocalizations(_ show: Bool) {
+    for window in videoWindows.values where window.windowData.showLocalizations != show {
+      window.windowData.showLocalizations = show
+    }
+  }
 }

@@ -25,6 +25,9 @@ struct AnnotationPreferencesView: View {
       HStack {
         Toggle("  Show Annotations", isOn: $showAnnotations)
           .toggleStyle(.checkbox)
+          .onChange(of: showAnnotations) { show in
+            UDP.sharktopodaData?.setShowLocalizations(show)
+          }
         Spacer()
       }
       .padding(.leading, 30)

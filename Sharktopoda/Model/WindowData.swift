@@ -172,7 +172,10 @@ extension WindowData {
   }
 
   func displaySpanned(force: Bool = false) {
-    guard force || showLocalizations else { return }
+    guard force || showLocalizations else {
+      playerView.clear()
+      return
+    }
     playerView.nsPlayerView.markLocalizationsDirtyIfNeeded()
     playerView.display(localizations: spannedLocalizations())
   }

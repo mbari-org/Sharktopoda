@@ -45,6 +45,7 @@ final class VideoWindow: NSWindow {
     
     windowData.id = videoAsset.id
     windowData.localizationData = LocalizationData(videoAsset: videoAsset)
+    windowData.localizationData.windowData = windowData
 
     windowData.player = AVPlayer(playerItem: playerItem)
     windowData.playerView = PlayerView()

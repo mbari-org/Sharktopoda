@@ -45,5 +45,10 @@ extension LocalizationData {
       $0.conceptLayer.removeFromSuperlayer()
       $0.unselect()
     }
+
+    if let current = windowData?.playerView.nsPlayerView.currentLocalization,
+       removed.contains(where: { $0 === current }) {
+      windowData?.playerView.nsPlayerView.removeCurrentLocalization()
+    }
   }
 }

@@ -102,6 +102,11 @@ extension NSPlayerView {
       }
     }
   }
+
+  func removeCurrentLocalization() {
+    _currentLocalization = nil
+    currentLocation = nil
+  }
   
   var fullSize: CGSize {
     windowData.videoAsset.fullSize

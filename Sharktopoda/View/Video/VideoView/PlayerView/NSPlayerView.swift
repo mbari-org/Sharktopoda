@@ -102,6 +102,11 @@ extension NSPlayerView {
       }
     }
   }
+
+  func removeCurrentLocalization() {
+    _currentLocalization = nil
+    currentLocation = nil
+  }
   
   var fullSize: CGSize {
     windowData.videoAsset.fullSize
@@ -161,14 +166,16 @@ extension NSPlayerView {
   }
   
   func display(localization: Localization) {
+    guard showLocalizations else { return }
     if localization.needsResize {
       localization.resize(for: playerLayer.videoRect)
     }
     playerLayer.addSublayer(localization.layer)
     playerLayer.addSublayer(localization.conceptLayer)
   }
-
+  
   func display(localizations: [Localization]) {
+    guard showLocalizations else { return }
     localizations.forEach { display(localization: $0) }
   }
   

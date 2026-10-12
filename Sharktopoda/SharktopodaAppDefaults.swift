@@ -31,6 +31,9 @@ extension SharktopodaApp {
     }
     
     /// Annotation Display
+    if UserDefaults.standard.object(forKey: PrefKeys.showAnnotations) == nil {
+      UserDefaults.standard.setValue(appDefault.showAnnotations, forKey: PrefKeys.showAnnotations)
+    }
     if UserDefaults.standard.color(forKey: PrefKeys.displayBorderColor) == .black {
       UserDefaults.standard.setHexColor(appDefault.colorHex, forKey: PrefKeys.displayBorderColor)
     }

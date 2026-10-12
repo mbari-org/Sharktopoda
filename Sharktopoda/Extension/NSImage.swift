@@ -36,8 +36,11 @@ extension NSImage {
       try data.write(to: fileUrl, options: .withoutOverwriting)
 
       return nil
-    } catch {
-      
+    } catch let error as NSError {
+      // Covers a file appearing between the exists check above and this write
+      if error.domain == NSCocoaErrorDomain, error.code == NSFileWriteFileExistsError {
+        return FrameCaptureError.exists
+      }
       return error
     }
   }

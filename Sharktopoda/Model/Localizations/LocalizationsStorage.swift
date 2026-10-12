@@ -34,7 +34,7 @@ extension LocalizationData {
       guard let localization = storage[normalizedId] else { return }
 
       pauseFrameRemove(localization)
-      selected.remove(id)
+      selected.remove(normalizedId)
       storage[normalizedId] = nil
       
       acc.append(localization)
@@ -44,6 +44,11 @@ extension LocalizationData {
       $0.layer.removeFromSuperlayer()
       $0.conceptLayer.removeFromSuperlayer()
       $0.unselect()
+    }
+
+    if let current = windowData?.playerView.nsPlayerView.currentLocalization,
+       removed.contains(where: { $0 === current }) {
+      windowData?.playerView.nsPlayerView.removeCurrentLocalization()
     }
   }
 }

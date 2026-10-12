@@ -1,3 +1,9 @@
 ## XCode
 xcuserdata/
 *~
+
+## Build output from Scripts/release.sh
+/build/
+
+## macOS
+.DS_Store

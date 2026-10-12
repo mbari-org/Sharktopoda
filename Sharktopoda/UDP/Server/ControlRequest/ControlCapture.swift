@@ -21,17 +21,21 @@ struct ControlCapture: ControlMessage {
       // Snapshot frame identity immediately so capture matches what was on screen.
       let captureFrame = windowData.videoControl.currentFrame
 
+      guard !imageLocation.trimmingCharacters(in: .whitespaces).isEmpty else {
+        return failed(FrameCaptureError.malformedUrl.description)
+      }
+
       let fileUrl = URL(fileURLWithPath: imageLocation)
 
       guard !FileManager.default.fileExists(atPath: fileUrl.path) else {
-        return failed("Image exists at location")
+        return failed(FrameCaptureError.exists.description)
       }
 
       let dirPath = fileUrl.deletingLastPathComponent().path
       guard FileManager.default.isWritableFile(atPath: dirPath) else {
-        return failed("Image location not writable")
+        return failed(FrameCaptureError.notWritable.description)
       }
-      
+
       Task {
         let captureDoneMessage = await doCapture(frame: captureFrame)
         if let client = UDP.sharktopodaData.udpClient {
@@ -42,10 +46,10 @@ struct ControlCapture: ControlMessage {
       return ok()
     }
   }
-  
+
   func doCapture(frame: Int) async -> ClientMessage {
     guard let videoWindow = UDP.sharktopodaData.window(for: uuid) else {
-      return ClientMessageCaptureDone(for: self, cause: "Video for uuid was closed")
+      return ClientMessageCaptureDone(for: self, cause: "Video for \(uuid) was closed")
     }
     
     let videoAsset = await videoWindow.windowData.videoAsset

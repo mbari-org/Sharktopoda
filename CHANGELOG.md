@@ -1,4 +1,45 @@
 # Changelog
+
+## [2.2.4] - 2026-10-10
+
+### Changed
+
+- Add ping heartbeat from Sharktopoda to remote controller
+    - The main window shows the status of the UDP connection. If a connected remote controller exits, there is no UDP message indicating the fact. This heartbeat allows Sharktopoda to update the current UDP status to reflect there is no longer a connect remote controller.
+
+### Fixed
+
+- Fix current selection on delete
+    - After a remote controller delete localizations call, the current localization was not properly nulled. IF the next mouse click action occurred in the “ghost” box (of the previously deleted localization), that action was applied to the dangling reference of the prior current localization.
+
+- Normalization of UUID strings
+    - Sharktopoda manages a number objects keyed by UUID string. The spec does not indicate the case of these strings, so it permissible for a remote client to send any case version of UUID strings. Sharktopoda internally manages all UUID strings in a single, normalized fashion. This fix extends the internal use of UUID strings to always use a normalized version.
+    
+- Fix issue #56
+    - Unresponsive scrubber timeline when Show Annotations false
+    - Ensure annotations not displayed under any remote messaging if Show Annotations false
+    - Properly persist Show Annotations flag when changed
+    
+- Fix auto-select of annotation on seek
+    - When receiving a remote control seek command to a frame for which localizations existed, Sharktopoda was incorrectly select one of the localizations. This fix corrects that behavior.
+
+- Fix show annotation on seek
+    - With the Show Annotation false, when receiving a remote control seek command to a frame for which localizations existed, Sharktopoda was incorrectly showing the localizations. This fix corrects that behavior.
+
+- Fix mouse drag behavior when Show Annotations false
+    - When Show Annotations was false, a user could still mouse drag a new localization. On completion, that localization was discarded. This fix prevents the mouse drag feedback when Show Annotations is false.
+
+## [2.2.3] - 2026-10-08
+
+### Changed
+
+- Optimize UDP incoming message processing
+    - All remote UDP messaging are now processed from a single dual-stack POSIX socket, using kernel event notifications instead of per-client connections.
+    - The UDP spec’s stateless request/response protocol necessitates messages are serially processed as there is not a per message ID. However, the actual JSON message processing is quite trivial and the real work load is passed to an async dispatch queue before sending a UDP message back as response, so this  change does not introduce a processing bottleneck.
+
+- UDP Spec
+    - Various updates for clarity and correctness
+
 ## [2.2.2] - 2026-09-24
 
 ### Added

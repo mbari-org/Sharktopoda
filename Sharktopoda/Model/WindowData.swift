@@ -31,7 +31,11 @@ final class WindowData: Identifiable, ObservableObject {
       player.volume = playerVolumeMute ? 0.0 : playerVolumeLevel
     }
   }
-  @Published var showLocalizations: Bool = UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations)
+  @Published var showLocalizations: Bool = UserDefaults.standard.bool(forKey: PrefKeys.showAnnotations) {
+    didSet {
+      UserDefaults.standard.set(showLocalizations, forKey: PrefKeys.showAnnotations)
+    }
+  }
   
   var id: String {
     get { _id! }
@@ -90,7 +94,7 @@ extension WindowData {
     playerDirection = PlayerDirection.at(rate: rate)
     videoControl.play(rate: rate)
 
-    localizationData.clearSelected()
+    clearLocalizationSelection()
     playerView.clear()
   }
   
@@ -112,12 +116,19 @@ extension WindowData {
   
   func seek(time: CMTime) {
     pauseForSeek()
+    clearLocalizationSelection()
     videoControl.frameSeek(to: time)
   }
 
   func seek(frame: Int) {
     pauseForSeek()
+    clearLocalizationSelection()
     videoControl.frameSeek(toFrame: frame)
+  }
+
+  func clearLocalizationSelection() {
+    playerView.nsPlayerView.removeCurrentLocalization()
+    localizationData.clearSelected()
   }
 
   private func pauseForSeek() {
@@ -160,8 +171,11 @@ extension WindowData {
     localizationData.fetch(pausedAt: videoControl.currentTime)
   }
 
-  func displaySpanned(force: Bool = true) {
-    guard force || showLocalizations else { return }
+  func displaySpanned(force: Bool = false) {
+    guard force || showLocalizations else {
+      playerView.clear()
+      return
+    }
     playerView.nsPlayerView.markLocalizationsDirtyIfNeeded()
     playerView.display(localizations: spannedLocalizations())
   }

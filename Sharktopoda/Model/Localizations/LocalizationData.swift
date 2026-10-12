@@ -15,6 +15,8 @@ class LocalizationData {
 
   let videoAsset: VideoAsset
 
+  weak var windowData: WindowData?
+
   init(videoAsset: VideoAsset) {
     self.videoAsset = videoAsset
   }

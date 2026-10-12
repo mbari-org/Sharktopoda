@@ -8,11 +8,14 @@
 import Foundation
 
 extension LocalizationData {
-  func add(_ localization: Localization) {
-    guard storage[localization.id] == nil else { return }
+  /// Returns false, and does not store the localization, if one with the same id already exists
+  @discardableResult
+  func add(_ localization: Localization) -> Bool {
+    guard storage[localization.id] == nil else { return false }
     
     storage[localization.id] = localization
     pauseFrameInsert(localization)
+    return true
   }
 
   func clear() {

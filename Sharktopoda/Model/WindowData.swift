@@ -155,7 +155,8 @@ extension WindowData {
         if videoRect != .zero {
           localization.resize(for: videoRect)
         }
-        localizationData.add(localization)
+        /// Skip duplicates, otherwise an undeletable orphan layer gets displayed
+        guard localizationData.add(localization) else { return }
         if localizationData.frameNumber(for: localization) == currentFrameNumber {
           acc.append(localization)
         }

@@ -43,7 +43,7 @@
             buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E2C22E9F28CFDC28003CD976"
+               BlueprintIdentifier = "E2C22E9B28CFDC28003CD976"
                BuildableName = "SharktopodaUITests.xctest"
                BlueprintName = "SharktopodaUITests"
                ReferencedContainer = "container:Sharktopoda.xcodeproj">

@@ -637,7 +637,7 @@ Errors include:
 
 Upon sending an `ok` response message, Sharktopoda will proceed with frame capture processing on a background thread.
 
-Upon completion of background frame capture processing, Sharktopoda shall use the **host/port** established with a prior `connect` command to send the response:
+Upon completion of background frame capture processing, Sharktopoda shall use the **host/port** established with a prior `connect` command to send the message:
 
 ```json
 {

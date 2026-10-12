@@ -23,7 +23,7 @@ struct ControlClose: ControlMessage {
     }
 
     DispatchQueue.main.async {
-      UDP.sharktopodaData.close(id: idNorm)
+      UDP.sharktopodaData.close(id: uuid)
     }
 
     return ok()
